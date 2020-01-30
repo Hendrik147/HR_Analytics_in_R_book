@@ -110,7 +110,6 @@
 \newif\if@krantzb
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \ExecuteOptions{letterpaper,10pt,twoside,onecolumn,final,openright}
 \ProcessOptions
 
@@ -350,12 +349,12 @@
 \top@cornermarks
   {\@the@page\RunningHeadFont
     \hfill
-\if@mainmatter\ifnum\value{chapter}>0 \thechapter\enspace\fi\fi\leftmark
+\if@mainmatter\thechapter\enspace\fi\leftmark
     }}
 \def\odd@head{%
 \top@cornermarks
   \hfil{\RunningHeadFont
-\if@mainmatter\ifnum\value{section}>0 \thesection\enspace\fi\fi\rightmark
+\if@mainmatter\thesection\enspace\else\fi\rightmark
     }
 \hfill
     \@the@page
@@ -664,19 +663,13 @@
 %%%                     \@ifstar{\@schapter}{\@trplarg{\@chapter}}
                      }
 
-\newif\ifappendix
-\global\appendixfalse
 
 \def\@chapter[#1]#2{%
   \ifnum\c@secnumdepth>\m@ne
     \if@mainmatter
       \refstepcounter{chapter}%
       \typeout{\@chapapp\space\thechapter.}%
-\ifappendix
-      \addcontentsline{toc}{chapter}{\protect\noindent{Appendix~\thechapter\hskip14pt}#1}%
-\else
       \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
-\fi
     \else
       \addcontentsline{toc}{chapter}{#1}\fi
   \else
@@ -961,7 +954,7 @@
      \fi
     }
 \fi
-\newcommand\appendix{\par\appendixtrue
+\newcommand\appendix{\par
   \setcounter{chapter}{0}%
   \setcounter{section}{0}%
   \gdef\@chapapp{\appendixname}%

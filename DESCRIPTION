@@ -9,7 +9,7 @@ Imports:
   gapminder,
   ggplot2, 
   tibble, 
-  tidyr (>= 1.0.0),
+  tidyr,
   dplyr, 
   readr, 
   dygraphs, 
