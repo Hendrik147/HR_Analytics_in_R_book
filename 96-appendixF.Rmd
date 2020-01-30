@@ -1,0 +1,144 @@
+# Archive HR datasets {#appendixE}
+
+```{r archive_HR_datasets, include=FALSE, purl=FALSE}
+knitr::opts_chunk$set(tidy = FALSE, out.width = '\\textwidth')
+# This bit of code is a bug fix on asis blocks, which we use to show/not show LC solutions, which are written like markdown text. In theory, it shouldn't be necessary for knitr versions <=1.11.6, but I've found I still need to for everything to knit properly in asis blocks. More info here:
+# https://stackoverflow.com/questions/32944715/conditionally-display-block-of-markdown-text-using-knitr
+library(knitr)
+knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knit_child(text = options$code)
+})
+```
+
+The appendix describes the datasets used in this companion book.
+
+## Gender Pay Gap {#gender_pay_gap}
+
+The Gender Pay Gap dataset comes from the "Glassdor Research" website. It is contains the salary details for an hypothetical employer with 1,000 employees, spread across 10 job roles and 5 company departments.
+
+The dataset can be accessed using:
+
+"https://glassdoor.box.com/shared/static/beukjzgrsu35fqe59f7502hruribd5tt.csv"
+
+Here are sample rows from this dataset:
+
+```{r pay_gap_data, echo=FALSE}
+data <- read.csv("https://glassdoor.box.com/shared/static/beukjzgrsu35fqe59f7502hruribd5tt.csv", stringsAsFactors=FALSE) # N = 1000 total observations
+knitr::kable(head(data), "html")
+```
+
+## Overhead value analysis {#overhead}
+
+
+## HR Service Desk {#service_desk_data}
+
+There are two publicly available datasets on the HR service desk.
+
+"https://www.ibm.com/communities/analytics/watson-analytics-blog/it-help-desk/""
+
+"https://www.kaggle.com/lyndonsundmark/service-request-analysis/data""
+
+The datasets can be accessed using:
+
+"https://community.watsonanalytics.com/wp-content/uploads/2015/03/WA_Fn-UseC_-IT-Help-Desk.xlsx"
+
+Here are sample rows from this dataset:
+
+<!-- The following 5 lines are not working, so I commented them. Hendrik -->
+<!-- require(gdata) -->
+<!-- servicedesk <- read.xls("https://community.watsonanalytics.com/wp-content/uploads/2015/03/WA_Fn-UseC_-IT-Help-Desk.xlsx", sheet = 1, header = TRUE, method="csv") -->
+<!-- knitr::kable(head(servicedesk), "html") -->
+
+
+## HR recruitment, selection and performance data {#HRrecruitment}
+
+Large dataset of selected HR applicants and performance data purchased from the Data and Sons website. Row Count: 1312450
+
+IMPORTANT: this file was generated solely for pedagogical purposes. Due to the method of generation (R: BinOrdNonNor), it should NOT be used for research purposes. Note that the files will need to be joined in order to fully explore most relevant questions. This was intentionally left to the students to do as an exercise in order to further develop relevant skills. Selection Data Description provides a description of the variables contained in each of the remaining files.
+
+Dataset Terms & Conditions: Creative Commons Attribution-ShareAlike 4.0 International Public License
+
+There are two publicly available datasets on the HR service desk.
+
+"https://www.dataandsons.com/dataset/preview/90"
+
+## Job classification
+
+The Job classification dataset comes from a blog article from Lyndon Sundmark. It is contains the salary details for an hypothetical employer with 1,000 employees, spread across 10 job roles and 5 company departments.
+
+The dataset can be accessed using:
+
+https://onedrive.live.com/?authkey=%21ABv-gHg5jVluYpc&cid=4EF2CCBEDB98D0F5&id=4EF2CCBEDB98D0F5%216440&parId=4EF2CCBEDB98D0F5%216433&o=OneUp
+
+Here are ten sample rows from this dataset:
+
+ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade	
+--  --------- --------------------  --------  ------------------- --------
+
+EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
+--------------  ----------  --------- --------------  ----------- ------------  --------------- --
+
+## Job classification
+
+The Job classification dataset comes from a blog article from Lyndon Sundmark. It is contains the salary details for an hypothetical employer with 1,000 employees, spread across 10 job roles and 5 company departments.
+
+The dataset can be accessed using:
+
+https://onedrive.live.com/?authkey=%21ABv-gHg5jVluYpc&cid=4EF2CCBEDB98D0F5&id=4EF2CCBEDB98D0F5%216440&parId=4EF2CCBEDB98D0F5%216433&o=OneUp
+
+Here are ten sample rows from this dataset:
+
+ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade	
+--  --------- --------------------  --------  ------------------- --------
+
+EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
+--------------  ----------  --------- --------------  ----------- ------------  --------------- --
+
+
+## Absenteeism at work
+
+The Abesnteeism at work dataset can be accessed from the UC Irvine Machine Learning Repository. The data set allows for several new combinations of attributes and attribute exclusions, or the modification of the attribute type (categorical, integer, or real) depending on the purpose of the research.
+
+The dataset can be accessed using:
+
+https://archive.ics.uci.edu/ml/datasets/Absenteeism+at+work
+
+Here are ten sample rows from this dataset:
+
+ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade	
+--  --------- --------------------  --------  ------------------- --------
+
+EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
+--------------  ----------  --------- --------------  ----------- ------------  --------------- --
+
+The database was created with records of absenteeism at work from July 2007 to July 2010 at a courier company in Brazil.
+
+Creators original owner and donors: Andrea Martiniano (1), Ricardo Pinto Ferreira (2), and Renato Jose Sassi (3).
+
+E-mail address: 
+andrea.martiniano@gmail.com (1) - PhD student;
+log.kasparov@gmail.com (2) - PhD student;
+sassi@uni9.pro.br (3) - Prof. Doctor.
+
+Universidade Nove de Julho - Postgraduate Program in Informatics and Knowledge Management.
+
+Address: Rua Vergueiro, 235/249 Liberdade, Sao Paulo, SP, Brazil. Zip code: 01504-001.
+
+Website: http://www.uninove.br/curso/informatica-e-gestao-do-conhecimento/
+
+
+## Job classification
+
+The Job classification dataset comes from a blog article from Lyndon Sundmark. It is contains the job classification details of 66 positions.
+
+The dataset can be accessed using:
+
+https://onedrive.live.com/?authkey=%21ABv-gHg5jVluYpc&cid=4EF2CCBEDB98D0F5&id=4EF2CCBEDB98D0F5%216440&parId=4EF2CCBEDB98D0F5%216433&o=OneUp
+
+Here are ten sample rows from this dataset:
+
+ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade	
+--  --------- --------------------  --------  ------------------- --------
+
+EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
+--------------  ----------  --------- --------------  ----------- ------------
