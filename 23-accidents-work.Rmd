@@ -1,0 +1,83 @@
+# Accidents at work {#accidents-work}
+
+```{r accidents-work, include=FALSE, purl=FALSE}
+chap <- 23
+lc <- 0
+rq <- 0
+# **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**
+# **`r paste0("(RQ", chap, ".", (rq <- rq + 1), ")")`**
+
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  out.width = '\\textwidth', 
+  fig.height = 4,
+  warning = FALSE
+  )
+
+options(scipen = 99, digits = 3)
+
+# Set random number generator see value for replicable pseudorandomness. Why 76?
+# https://www.youtube.com/watch?v=xjJ7FheCkCU
+set.seed(76)
+```
+
+
+According to the International Labour Organization (ILO), more than 337 million accidents happen on the job each year, resulting, together with occupational diseases, in more than 2.3 million deaths annually. 
+
+Accidents arise from unsafe behavior and/or unsafe conditions. An important factor is the safety climate or safety culture of an organization. Safety culture concerns how workplace safety is managed, consisting of the shared attitudes, beliefs, perceptions, and values among employees.
+
+Your incident and DART (Days Away, Restrictions and Transfers) rates are OSHA safety metrics that help you understand the effectiveness of your safety and risk management programs: 
+* Your incident rate shows the total number of OSHA-recordable injuries and illness per 200,000 hours. The rate is viewed as a percentage of injuries per 100 employees per year. 
+* Your DART rate calculates the rate of days away, restrictions and transfers per 200,000 worked.
+  
+#Source: https://data.louisvilleky.gov/dataset/absenteeism
+
+This dataset shows the number of hours employees were absent from work during a given pay period. The data is broken down by department and type of absence and includes the last 6 years worth of pay periods. Vacation and holiday time is not consider an absence.
+
+
+Data dictionary
+
+DEPT - The name of the department where employees were absent
+BIWEEKLY_PAY_PERIOD_END_DATE - The end date for the pay period when employees were absent
+PARETO_TYPE - The type of absence (vacation and holiday time is excluded)
+TOTAL_HOURS - The total amount of absent hours for the given type of absence, department, and pay period
+TOTAL EMPLOYEE - The total number of employees that worked in the given department and pay period
+TOTAL AVAL HOURS - The total number of hours scheduled for work for all employees in the given department and pay period
+LOST WORKTIME RATE - The total amount of absent hours for the given type of absence, department, and pay period divided by The total number of hours scheduled for work for all employees in the given department and pay period (metric defined by the Bureau of Labor Statistics)
+
+```{r}
+library(readr)
+```
+
+```{r eval=FALSE}
+LTI_Analysis <- read_delim(na = "NA", delim = ";", col_types = cols(col = col_character()), "https://hranalytics.netlify.com/data/LTI Analysis Data.csv")
+```
+
+```{r read_data30, echo=FALSE, warning=FALSE, message=FALSE}
+LTI_Analysis <- read_delim(na = "NA", delim = ";", col_types = cols(col = col_character()), "data/LTI Analysis Data.csv")
+```
+
+Your incident and DART (Days Away, Restrictions and Transfers) rates are OSHA safety metrics that help you understand the effectiveness of your safety and risk management programs: 
+* Your incident rate shows the total number of OSHA-recordable injuries and illness per 200,000 hours. The rate is viewed as a percentage of injuries per 100 employees per year. 
+* Your DART rate calculates the rate of days away, restrictions and transfers per 200,000 worked.
+  
+Data dictionary
+
+DEPT - The name of the department where employees were absent
+  BIWEEKLY_PAY_PERIOD_END_DATE = col_character(),
+  LTI = col_character(),
+  DART = col_character(),
+  DESCRIPTION = col_character(),
+  Number_OF_Incidents = col_integer(),
+  HOURS_YOY = col_double(),
+  LTI_YOY = col_integer(),
+  DART_YOY = col_integer(),
+  OSHA_YOY = col_integer(),
+  
+  LTI_Rate = Lost Time Incident Rate: Total number of boxes checked in Column H X 200,000 / Total hours worked by all employees = OSHA Lost Time Incident Rate 
+
+  DART_Rate = DART Rate (Days Away Restricted Time); Total number of boxes checked in Columns H and I X 200,000 / Total hours worked by all employees = OSHA DART Rate
+
+  OSHA_Rate = OSHA Incident Rate: Total number of boxes checked in Column G, H, I and J X 200,000 / Total hours worked by all employees = OSHA Lost Time Incident Rate 
+
+

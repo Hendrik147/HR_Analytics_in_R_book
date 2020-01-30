@@ -1,0 +1,208 @@
+# Interview attendance problem {#interview-attendance}
+
+```{r interview-attendance, include=FALSE}
+chap <- 25
+lc <- 0
+rq <- 0
+# **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**
+# **`r paste0("(RQ", chap, ".", (rq <- rq + 1), ")")`**
+
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  out.width = '\\textwidth', 
+  fig.height = 4,
+  warning = FALSE
+  )
+
+options(scipen = 99, digits = 3)
+
+# Set random number generator see value for replicable pseudorandomness. Why 76?
+# https://www.youtube.com/watch?v=xjJ7FheCkCU
+set.seed(76)
+```
+
+
+The dataset consists of details of nore than 1200 candidates and the interviews they have attended during the course of the period 2014-2016. 
+
+The following are the variables columns:
+
+- Date of Interview refers to the day the candidates were scheduled for the interview. The formats vary.
+- Client that gave the recruitment vendor the requisite mandate
+- Industry refers to the sector the client belongs to (Candidates can job hunt in vrious industries.)
+- Location refers to the current location of the candidate.
+- Position to be closed: Niche refers to rare skill sets, while routine refers to more common skill sets.
+- Nature of Skillset refers to the skill the client has and specifies the same.
+- Interview Type: There are three interview types: 
+  1. Walk in drives - These are unscheduled. Candidates are either contacted or they come to the interview on their own volition, 
+  2. Scheduled - Here the candidates profiles are screened by the client and subsequent to this, the vendor fixes an appointment between the client and the candidate. 
+  3. The third one is a scheduled walkin. Here the number of candidates is larger and the candidates are informed beforehand of a tentative date to ascertain their availability. The profiles are screened as in a scheduled interview. In a sense it bears features of both a walk-in and a scheduled interview.
+- Name( Cand ID) This is a substitute to keep the candidates identity a secret
+- Gender
+- Candidate Current Location
+- Candidate Job Location
+- Interview Venue
+- Candidate Native location
+- Have you obtained the necessary permission to start at the required time?
+- I hope there will be no unscheduled meetings.
+- Can I call you three hours before the interview and follow up on your attendance for the interview?
+- Can I have an alternative telephone number? I assure you that I will not trouble you too much.
+- Have you taken a printout of your updated resume? Have you read the JD and understood it?
+- Are you clear with the venue details and the landmark?
+- Has the call letter been shared
+- Expected Attendance: Whether the candidate was expected to attend the interview. Here the alternatives are yes, no or uncertain.
+- Observed Attendance: Whether the candidate attended the interview. This is binary and will form our dependent variable to be predicted.
+- Marital Status: Single or married.
+
+Source: https://www.kaggle.com/hugohk/learning-ml-with-caret
+
+## Data reading
+
+```{r}
+library(tidyverse)
+```
+
+```{r eval=FALSE}
+interview_attendance <- read_csv("https://hranalyticslive.netlify.com/data/interview.csv")
+```
+
+```{r read_interview_data, echo=FALSE, warning=FALSE, message=FALSE}
+interview_attendance <- read_csv("data/interview.csv")
+```
+
+```{r}
+head(interview_attendance, 5)
+```
+
+## Data cleaning
+
+```{r}
+
+interview_attendance <- interview_attendance[-1234,] #remove the last row that contains only missing values
+
+interview_attendance$X24   <- NULL #get rid of unnecesary columns on the right side
+interview_attendance$X25 <- NULL #get rid of unnecesary columns on the right side
+interview_attendance$X26 <- NULL #get rid of unnecesary columns on the right side
+interview_attendance$X27 <- NULL #get rid of unnecesary columns on the right side
+interview_attendance$X28 <- NULL #get rid of unnecesary columns on the right side
+
+# Here we create a vector with column titles
+mycolnames <-c('date_of_interview','client_name','industry','location','position',
+               'skillset','interview_type','name', 'gender','current_location',
+               'cjob_location','interview_venue','cnative_location',
+               'permission_obtained','unscheduled_meetings','call_three_hours_before',
+               'alternative_number','printout_resume_jd','clear_with_venue',
+               'letter_been_shared','expected_attendance','observed_attendance',
+               'marital_status')  
+
+#Here we assign the previously defined column titles
+colnames(interview_attendance) <- mycolnames 
+
+rm(mycolnames) # Here we remove the mycolnames vector, as it is not required anymore
+
+interview_attendance<- mutate_all(interview_attendance, funs(tolower)) # Sets all words to lower case
+
+# Cancels all empty spaces in the observed attendance column
+interview_attendance$observed_attendance <- gsub(" ", "", interview_attendance$observed_attendance)
+
+# Cancels all empty spaces in the location column
+interview_attendance$location <- gsub(" ", "", interview_attendance$location) 
+
+# Cancels all empty spaces in the interview type column
+interview_attendance$interview_type <- gsub(" ", "", interview_attendance$interview_type)
+
+# Corrects a typo in the interview type column
+interview_attendance$interview_type <- gsub("sceduledwalkin", "scheduledwalkin", interview_attendance$interview_type)
+
+# Cancels all empty spaces in the candidate current location column
+interview_attendance$current_location <- gsub(" ", "", interview_attendance$current_location)
+
+
+#Converts values from character to numbers for Yes/no answers, just to keep things simple.
+  colstoyesno <- c(14:22) # Here we define which column numbers to look at.
+for (i in 1:length(colstoyesno)){   # Here we tell R to examine all variables in the previously defined columns
+  j <- colstoyesno[i]
+  interview_attendance[,j][interview_attendance[,j] !="yes"] <- "no"   
+  interview_attendance[,j][is.na(interview_attendance[,j]) == TRUE] <- "no"
+  #With the previous two lines all values different to yes, become a no, i.e. "uncertain" and "NA" are set to a "no".
+}
+rm(colstoyesno, i, j) #Here we remove the three just created vectors as a claen up.
+```
+
+In the following step we figure out what is the content of each relevant column and identify its unique values. Once we have done that a number is assigned for a later step.
+
+```{r}
+dir.create("codefiles_interview_attendance", showWarnings = FALSE)
+#detach("package:plyr", unload = TRUE)
+for(i in 1:length(colnames(interview_attendance))){
+  vvar <- colnames(interview_attendance)[i]
+  outdata <- interview_attendance %>% dplyr::group_by(.dots = vvar) %>% dplyr::count(.dots = vvar)
+  outdata$idt <- LETTERS[seq(from=1, to=nrow(outdata))]
+  outdata$id  <- row.names(outdata)
+  outfile <- paste0("codefiles_interview_attendance/", vvar, ".csv")
+  write.csv(outdata, file=outfile, row.names = FALSE)
+}
+rm(outdata, i, outfile, vvar)
+```
+
+This step uses the csv files created in the previous step and replaces the words with a number (except for the variable that we would like to predict) in order to prepare the data for machine learning.
+
+```{r eval = FALSE}
+colstomap <- c(2:7, 9:21, 23)
+library(plyr)
+for(i in 1:length(colstomap)){
+    j <- colstomap[i]
+    vfilename <- paste0("codefiles_interview_attendance/", colnames(interview_attendance)[j], ".csv")
+    dfcodes <- read.csv(vfilename, stringsAsFactors=FALSE)
+    vfrom <- as.vector(dfcodes[,1])
+    vto <- as.vector(dfcodes[,4])
+    interview_attendance[,j] <- mapvalues(interview_attendance[,j], from=vfrom, to=vto)
+    interview_attendance[,j] <- as.integer(interview_attendance[,j])
+}
+rm(colstomap, i, j, vfilename, vfrom, vto, dfcodes)
+```
+
+Here we pick the data that are needed for the predictor.
+
+```{r eval = FALSE}
+interview_attendanceml <- interview_attendance %>% dplyr::select(-date_of_interview, -name)
+interview_attendanceml <- interview_attendanceml %>% dplyr::select(client_name:expected_attendance, 
+                                observed_attendance)
+head(interview_attendanceml, 5)
+```
+
+Here we start the real machine learning part. The training dataset is created containing 75% of the observations [interview_attendanceml_train] and the remaining observations are assigned to the test dataset [interview_attendanceml_test].
+
+```{r eval = FALSE}
+
+library(caret) # Calls the caret library
+
+set.seed(144) # Sets a seed for reproducability
+
+index <- createDataPartition(interview_attendanceml$observed_attendance, p=0.75, list=FALSE) #Creates an index vector of the length of all the observations
+
+interview_attendanceml_train <- interview_attendanceml[index,] # Creates a subset of 75% of data for training dataset
+interview_attendanceml_test  <- interview_attendanceml[-index,] # Creates a subset of the remaining 25% of data for test dataset
+
+rm(index,interview_attendanceml)
+```
+
+## Choosing a model
+
+We didn't want to tune anything and just let the code figure it out. Since the output is 1 for a no show and 2 for a show, we decided to use the gbm method (generalized boosting machine) from caret for creating the algorithm.
+
+## Training
+
+We use the train function of the caret library to train the training data set determined in the previous step.
+
+```{r eval = FALSE}
+myml_model <- train(interview_attendanceml_train[,1:19], interview_attendanceml_train[,20], method='gbm')
+
+summary(myml_model)
+
+predictions <- predict(object = myml_model, interview_attendanceml_test,
+                       type = 'raw')
+
+head(predictions)
+
+print(postResample(pred=predictions, obs=as.factor(interview_attendanceml_test[,20])))
+```

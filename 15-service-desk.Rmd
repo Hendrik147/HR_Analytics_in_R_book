@@ -1,0 +1,254 @@
+# HR Service Desk {#service-desk}
+
+```{r service-desk, include=FALSE}
+chap <- 15
+lc <- 0
+rq <- 0
+# **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**
+# **`r paste0("(RQ", chap, ".", (rq <- rq + 1), ")")`**
+
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  out.width = '\\textwidth', 
+  fig.height = 4,
+  warning = FALSE
+  )
+
+options(scipen = 99, digits = 3)
+
+# Set random number generator see value for replicable pseudorandomness. Why 76?
+# https://www.youtube.com/watch?v=xjJ7FheCkCU
+set.seed(76)
+```
+
+
+How to use metrics:
+
+- Inform your stakeholders
+- Report measurements so that stakeholders can understand activities and results
+- Promote the value of the organization
+- Determine the best way to communicate the information to the stakeholders
+- Perform better stakeholder analysis to facilitate stakeholder buy-in
+- Improve performance - people do what is measured
+
+Four types of process metrics:
+
+- Monitor progress by checking in process maturity
+- Monitor efficiency by checking use of resources
+- Monitor effectiveness by checking how many correct and complete first time
+- Monitor compliance in relation to process and regulatory requirements
+
+Factors to consider when reporting:
+
+- Who are the stakeholders?
+- How does what you are reporting impact the stakeholders?
+- Reports must be easy to read and understood, thus they need to be developed with
+the stakeholder in mind.
+- Reports need to show how the support center is contributing to the goals of each
+stakeholder and the business.
+- Reports must identify the appropriate channels to communicate with each of the
+stakeholders.
+
+Source: https://www.kaggle.com/lyndonsundmark/service-request-analysis/data
+
+Ensure all needed libraries are installed
+
+```{r include=FALSE}
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(DataExplorer)) install.packages("DataExplorer")
+if(!require(RcmdrMisc)) install.packages("RcmdrMisc")
+if(!require(qcc)) install.packages("qcc")
+```
+
+```{r}
+library(tidyverse)
+library(lubridate)
+```
+
+First, let's get some data from our service desk by exporting a CSV. We can then read this CSV (or excel spreadsheet) into R for us to perform analysis.
+
+```{r eval=FALSE}
+service_requests <- read_csv("https:///hranalytics.netlify.com/data/ServiceRequestExtract2.csv")
+```
+
+```{r read_data_servicedesk, echo=FALSE, warning=FALSE, message=FALSE}
+service_requests <- read_csv("data/ServiceRequestExtract2.csv")
+```
+
+
+Note that we can solve some things as we load the data using `read_csv()` like the column data types and handling different ways people can represent missing or unknown data.
+
+We then need to get this data analysis-ready. First of all, we need to make sure dates are filled in and/or reasonable.
+
+```{r}
+service_requests %>% 
+  mutate(DateStarted = coalesce(DateStarted, DateSubmitted),
+         DateCompleted=coalesce(DateCompleted, DateStarted + hours(2))) %>% 
+  mutate(DateCompleted = 
+           pmin(DateCompleted,
+              DateStarted + hours(floor(rnorm(n(), mean = 71, sd=20))))) ->
+  service_requests
+```
+
+Then we can work out how long it took to complete different stages of a request.
+
+```{r}
+service_requests %>% 
+  mutate(RequestID = as.character(RequestID)) %>% 
+  mutate(
+    WaitTime = difftime(DateStarted, 
+                        DateSubmitted, 
+                        units = "hours")
+    ,TaskTime = difftime(DateCompleted, 
+                        DateStarted, 
+                        units = "hours")
+    ,TotalTime = difftime(DateCompleted, 
+                        DateSubmitted, 
+                        units = "hours")) %>% 
+  mutate_at(vars(ends_with("Time")), as.numeric)->
+  service_requests
+
+service_requests
+```
+
+We should now be able to get a view as to the distribution of the times taken to start, complete, and the overall turnaround time for requests.
+
+```{r}
+library(DataExplorer)
+plot_density(service_requests, 
+             title = "Distribution of task times",
+             ggtheme = theme_minimal())
+```
+
+```{r}
+plot_bar(service_requests,
+         title="Distributions",
+         ggtheme = theme_minimal())
+
+```
+
+```{r}
+service_requests %>% 
+  group_by(Category) %>% 
+  summarise_at(vars(ends_with("Time")),
+              .funs = c("mean","min","max")) %>% 
+  arrange(WaitTime_mean)
+```
+
+Now that we've checked our data for issues and tidied it up, we can start understanding what's happening in-depth.
+
+For instance, are the differences in category mean times significant or could it be due to the different volumes of requests? We can use the ANOVA test to check to see if each category does indeed seem to have differing response times. If the resulting P-value is small then we have more certainty that there is likely to be a difference by request category.
+
+
+```{r}
+library(RcmdrMisc)
+lm(WaitTime ~ Category, data=service_requests) %>% 
+  Anova()
+```
+
+```{r}
+lm(TaskTime ~ Category, data=service_requests) %>% 
+  Anova()
+```
+
+
+```{r}
+lm(TotalTime ~ Category, data=service_requests) %>% 
+  Anova()
+```
+
+As well as statistical tests, we can apply quality control principles too. The `qcc` package allows us to use a number of relevant models and charts to understand what is happening.
+
+<!-- This is outside my day to day knowledge so this is likely to be a terrible explanation! -->
+Here we use the package to take a number of samples from the data and prepare a `qcc` base transformation containing information needed to make common charts. We use the `xbar.one` transformation to get the mean using one-at-time data of a continuous process variable.
+```{r}
+library(qcc)
+
+service_requests %>% 
+  {qcc.groups(.$WaitTime, .$RequestID)} %>% 
+  qcc(type="xbar.one") %>% 
+  summary()
+```
+
+```{r}
+service_requests %>% 
+  {qcc.groups(.$TaskTime, .$RequestID)} %>% 
+  qcc(type="xbar.one") %>% 
+  summary()
+```
+
+```{r}
+service_requests %>% 
+  {qcc.groups(.$TotalTime, .$RequestID)} %>% 
+  qcc(type="xbar.one") %>% 
+  summary()
+```
+
+These show overall patterns. What if we wanted one per category?
+
+```{r}
+# Need to get categories being added as titles
+service_requests %>% 
+  {split(., .$Category)} %>% 
+  map(~qcc.groups(.$TotalTime, .$RequestID)) %>% 
+  map(qcc, type ="xbar.one")
+```
+
+
+5 Valuable Service Desk Metrics
+
+Source: https://www.ibm.com/communities/analytics/watson-analytics-blog/it-help-desk/
+
+Number of tickets processed and ticket/service agent ratio –Two simple metrics that add up the number of tickets submitted during specific times (i.e. shift, hour, day, week, etc.) and create a ratio of tickets/available service agents during those times. This is a key KPI that speaks to staffing levels and informs other Service Desk metrics.
+
+Wait times – How long after a customer submits a service request do they have to wait before Service Desk agents start working on the ticket? Your wait time metrics also speak to Service Desk staffing levels. Once you identify whether your Service Desk has excessive wait times, you can drill down to see what might be causing wait times to run long (i.e. low staff levels at certain times of the day or week; not enough service agents trained for a specific service; processing issues; etc.) and create a remedy that applies to your entire Service Desk organization or to an individual IT service.
+
+Transfer analysis (tickets solved on first-touch versus multi-touch tickets) – Number of tickets that are solved by the first agent to handle the ticket (first-touch) versus the number of tickets that are assigned to one or more groups through the ticket’s lifespan. Great for determining which tickets need special attention, particularly those tickets where automation might reduce the amount of ticket passing between technical groups.
+
+Ticket growth over time and backlog – Trending data showing the increase (or decrease) in the number of Service Desk tickets over time. It can help spot unexpected changes in user requests that may indicate a need for more Service Desk staff or more automation. Or, it may identify that a specific change resulted in increased Service Desk resources. You also want to check the trends for your backlog of tickets in progress and the number of unresolved tickets. A growth in backlogged tickets can indicate a change in service desk demand or problems with service deployment.
+
+Top IT services with the most incidents – Spotlights which services are failing, causing the most Service Desk support. Helpful for spotting problem IT services that need modification.
+
+
+```{r eval=FALSE}
+it_helpdesk <- read_csv("https://hranalytics.netlify.com/data/WA_Fn-UseC_-IT-Help-Desk.csv")
+```
+
+```{r read_data_ithelpdesk, echo=FALSE, warning=FALSE, message=FALSE}
+it_helpdesk <- read_csv("data/WA_Fn-UseC_-IT-Help-Desk.csv")
+```
+
+```{r}
+it_helpdesk %>% 
+  ggplot() +
+  aes(x=ITOwner) +
+  geom_bar() +
+  labs(x="IT Owner", 
+       y="Number of tickets", 
+       title="Tickets by IT Owner") +
+  theme_minimal()
+```
+
+```{r}
+it_helpdesk %>% 
+  ggplot() +
+  aes(x=daysOpen) +
+  geom_bar() +
+  labs(x="Number of days ticket was open for", 
+       y="Number of tickets", 
+       title="Time to resolve/close tickets") +
+  theme_minimal()
+```
+
+```{r}
+it_helpdesk %>% 
+  count(Requestor) %>% 
+  ggplot() +
+  aes(x=n) +
+  geom_density() +
+  labs(x="Number of tickets raised per person", 
+       y="Density", 
+       title="Distribution of tickets per person") +
+  theme_minimal() 
+```
+

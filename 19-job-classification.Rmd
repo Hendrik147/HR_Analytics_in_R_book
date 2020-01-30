@@ -1,0 +1,607 @@
+# Job classification analysis {#job-classification}
+
+```{r job-classification, include=FALSE}
+chap <- 19
+lc <- 0
+rq <- 0
+# **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**
+# **`r paste0("(RQ", chap, ".", (rq <- rq + 1), ")")`**
+
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  out.width = '\\textwidth', 
+  fig.height = 4,
+  warning = FALSE
+  )
+
+options(scipen = 99, digits = 3)
+
+# Set random number generator see value for replicable pseudorandomness. Why 76?
+# https://www.youtube.com/watch?v=xjJ7FheCkCU
+set.seed(76)
+```
+
+
+Job classification is a way for objectively and accurately defining and evaluating the duties, responsibilities, tasks, and authority level of a job. When done correctly, the job classification is a thorough description of the job responsibilities of a position without regard to the knowledge, skills, experience, and education of the individuals currently performing the job.
+
+Job classification is most frequently, formally performed in large companies, civil service and government employment, nonprofit organisations, colleges and universities. The approach used in these organizations is formal and structured.
+
+One popular, commercial job classification system is the Hay Classification system. The Hay job classification system assigns points to evaluate job components to determine the relative value of a particular job to other jobs.
+
+The primary goal of a job classification is to classify job descriptions into job classifications using the power of statistical algorithms to assist in predicting the best fit. The secondary goal can be to improve the design of our job classification framework.
+
+##2.Collect And Manage Data
+
+For purposes of this application of People Analytics, this step in the data science process will take the longest initially. This is because in almost every organization, the existing job classifications or categories, and the job descriptions themselves are not typically represented in numerical format suitable for statistical analysis. Sometimes, that which we are predicting- the pay grade is numeric because point methods are used in evaluation and different paygrades have different point ranges. But more often the job descriptions are narrative as are the job classification specs or summaries. For this blog article, we will assume that and  delineate the steps required.
+
+###Collecting The Data
+
+The following are typical steps:
+
+1. Gather together the entire set of narrative, written job classification specifications.
+2. Review all of them to determine what the common denominators are- what the organization is paying attention to , to differentiate them from each other.
+3. For each of the common denominators, pay attention to descriptions of how much of that common denominator exists  in each narrative, writing down the phrases that  are used.
+4. For each common denominator, develop an ordinal scale which assigns numbers and places them in a 'less to more' order
+5. Create a datafile where each record (row) is one job classification, and where each column is either a common denominator or the job classification identifier or paygrade.
+6. Code each job classification  narrative into the datafile recording their common denominator information and other pertinent categorical information.
+
+####Gather together the entire set of narrative, written job classification specifications.
+
+This initially represents the 'total' population of what will be a 'known' population. Ones that by definition represent the prescribed intended categories and levels of paygrades. These are going to be used to compare an 'unknown' population- unclassified job descriptions,  to determine best fit. But before this can happen, we should have confidence that the job classifications themselves are well designed- since they will be the standard against which all job descriptions will be compared.
+
+####Review all of them to determine what the common denominators are
+
+Technically speaking, anything that appears in the narrative could be considered a feature that is a common denominator including  the tasks, knowledges described. But few organizations have that level of automation in their job descriptions. So generally broader features are used to describe common denominators. Often they may include the following:
+
+* Education Level
+* Experience
+* Organizational Impact
+* Problem Solving
+* Supervision Received
+* Contact Level
+* Financial Budget Responsibility
+
+To be a common denominator they need to be mentioned or discernable in every job classification specification
+
+####Pay attention to  the descriptions of how much of that common denominator exists  in each narrative
+
+For each of the above common denominators ( if these are ones you use), go through each narrative identify where the common denominator is mentioned and write down the words used to describe how much of it exists. Go through you entire set of job classification specs and tabulate these for each common denominator and each class spec.
+
+####For each common denominator, develop an ordinal scale
+
+Ordinal means in order. You order the descriptions  from less than to more than. Then apply a numerical indicator to it. 0 might mean it doesnt exist in any significant way, 1 might mean something at a low or introductory level, higher numbers meaning more of it. The scale should have as many numbers as distinguishable descriptions.(You may have to merge or collapse descriptions if it's impossible to distinguish order)
+
+####Create a datafile
+
+This might be a spreadsheet.
+
+each record(row) will be one job classification, and  each column will be either a common denominator or the job classification identifier or paygrade or other categorical information.
+
+####Code each job classification  narrative into the datafile
+
+Record their common denominator information and other pertinent categorical or identifying information. At the end of this task you will have as many records as you have written job classification specs.
+
+At the end of this effort you will have something that looks like the data found at the following link:
+
+https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6435&authkey=!AL37Wt0sVLrsUYA&ithint=file%2ctxt
+
+Ensure all needed libraries are installed
+
+```{r include=FALSE}
+list.of.packages <- c("plyr", "dplyr",  "ROCR", "caret", "randomForest",
+"kernlab", "magrittr", "rpart", "ggplot2", "nnet", "car",
+"rpart.plot", "pROC", "ada", "readr")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[, "Package"])]
+if (length(new.packages))
+	install.packages(new.packages)
+```
+
+```{r}
+library(tidyverse)
+library(caret)
+library(rattle)
+library(rpart)
+library(randomForest)
+library(kernlab)
+library(nnet)
+library(car)
+library(rpart.plot)
+library(pROC)
+library(ada)
+```
+
+###Manage The Data
+
+In this step we check the data for errors, organize the data for model building, and take an initial look at what the data is telling us.
+
+####Check the data for errors
+
+
+```{r eval=FALSE}
+MYdataset <- read_csv("https://https://hranalytics.netlify.com/data/jobclassinfo2.csv")
+```
+
+```{r read_data6, echo=FALSE, warning=FALSE, message=FALSE}
+MYdataset <- read_csv("data/jobclassinfo2.csv")
+```
+
+```{r message=FALSE, warning=FALSE}
+str(MYdataset)
+summary(MYdataset)
+```
+
+On the surface there doesn't seem to be any issues with data. This gives a summary of the layout of the data and the likely values we can expect. PG is the category we will predict. It's a categorical representation of the numeric paygrade. Education level through Financial Budgeting Responsibility will be the independent variables/measures we will use to predict. The other columns in file will be ignored.
+
+####Organize the data 
+
+Let's narrow down the information to just the data used in the model.
+
+```{r}
+MYnobs <- nrow(MYdataset) # The data set is made of 66 observations
+
+MYsample <- MYtrain <- sample(nrow(MYdataset), 0.7*MYnobs) # 70% of those 66 observations (i.e. 46 observations) will form our training dataset.
+
+MYvalidate <- sample(setdiff(seq_len(nrow(MYdataset)), MYtrain), 0.14*MYnobs) # 14% of those 66 observations (i.e. 9 observations) will form our validation dataset.
+
+MYtest <- setdiff(setdiff(seq_len(nrow(MYdataset)), MYtrain), MYvalidate) # # The remaining observations (i.e. 11 observations) will form our test dataset.
+
+
+# The following variable selections have been noted.
+MYinput <- c("EducationLevel", "Experience", "OrgImpact", "ProblemSolving",
+     "Supervision", "ContactLevel", "FinancialBudget")
+
+MYnumeric <- c("EducationLevel", "Experience", "OrgImpact", "ProblemSolving",
+     "Supervision", "ContactLevel", "FinancialBudget")
+
+MYcategoric <- NULL
+
+MYtarget  <- "PG"
+MYrisk    <- NULL
+MYident   <- "ID"
+MYignore  <- c("JobFamily", "JobFamilyDescription", "JobClass", "JobClassDescription", "PayGrade")
+MYweights <- NULL
+
+```
+
+We are predominantly interested in MYinput and MYtarget because they represent the predictors and what needs to be predicted respectively. You will notice for the time being that we are not partitioning the data. This will be elaborated upon in model building.
+
+###What the data is initially telling us
+
+```{r}
+
+MYdataset %>%
+  ggplot() +
+  aes(x = factor(PG)) +
+  geom_bar(stat = "count", width = 0.7, fill = "steelblue") +
+  theme_minimal() + 
+  coord_flip() +
+  ggtitle("Number of job classifications per PG category") 
+
+MYdataset %>%
+  ggplot() +
+  aes(x = factor(JobFamilyDescription)) +
+  geom_bar(stat = "count", width = 0.7, fill = "steelblue") +
+  theme_minimal() + 
+  coord_flip() +
+  ggtitle("Number of job classifications per job family") 
+
+MYdataset %>%
+  ggplot() +
+  aes(EducationLevel) + 
+  geom_bar(stat = "count", width = 0.7, fill = "steelblue")  +
+  ggtitle("Number of job classifications per Education level") 
+
+MYdataset %>%
+  ggplot() +
+  aes(Experience) + 
+  geom_bar(stat = "count", width = 0.7, fill = "steelblue")  +
+  ggtitle("Number of job classifications per experience") 
+
+MYdataset %>%
+  ggplot() +
+  aes(OrgImpact) + 
+    geom_bar(stat = "count", width = 0.7, fill = "steelblue")  +
+  ggtitle("Number of job classifications per organisational impact") 
+
+MYdataset %>%
+  ggplot() +
+  aes(ProblemSolving) + 
+    geom_bar(stat = "count", width = 0.7, fill = "steelblue")  +
+  ggtitle("Number of job classifications per problem solving") 
+
+MYdataset %>%
+  ggplot() +
+  aes(Supervision) + 
+    geom_bar(stat = "count", width = 0.7, fill = "steelblue")  +
+  ggtitle("Number of job classifications per supervision") 
+
+MYdataset %>%
+  ggplot() +
+  aes(ContactLevel) + 
+  geom_bar(stat = "count", width = 0.7, fill = "steelblue")  +
+  ggtitle("Number of job classifications per contact level") 
+
+```
+
+Let's use the caret library again for some graphical representations of this data.
+
+```{r} 
+library(caret)
+
+MYdataset$PG <- as.factor(MYdataset$PG)
+
+featurePlot(x = MYdataset[,7:13], 
+            y = MYdataset$PG, 
+            plot = "density", 
+            auto.key = list(columns = 2))
+
+featurePlot(x = MYdataset[,7:13], 
+            y = MYdataset$PG, 
+            plot = "box", 
+            auto.key = list(columns = 2))
+```
+
+
+The first set of charts shows the distribution of the independent variable values (predictors) by PG.
+
+The second set of charts show the range of values of the predictors by PG. PG is ordered left to right in ascending order from PG1 to PG10. In each of the predictors we would expect increasing levels as we move up the paygrades and from left to right (or at least not dropping from previous paygrade).
+
+This is the first indication by a graphic 'visual' that we  'may' have problems in the data or the interpretation of the coding of the information. Then again the coding may be accurate based on our descriptions and our assumptions false. We will probably want to recheck our coding from the job description to make sure.
+
+##3.Build The Model
+
+Let's use the rattle library to efficiently generate the code to run the following classification algorithms against our data:
+
+* Decision Tree
+* Random Forest
+* Support Vector Machines
+* Linear Regression Model
+
+Please note that in our case we want to use the job description to predict the payscale grade (PG), so we make the formula (PG ~ .). In other words, we're representing the relationship between payscale grades (PG) and the remaining variables (.).
+
+###Decision Tree
+
+```{r}
+# The 'rattle' package provides a graphical user interface to very many other packages that provide functionality for data mining.
+
+library(rattle)
+
+# The 'rpart' package provides the 'rpart' function.
+
+library(rpart, quietly=TRUE)
+
+# Reset the random number seed to obtain the same results each time.
+crv$seed <- 42 
+set.seed(crv$seed)
+
+# Build the Decision Tree model.
+
+MYrpart <- rpart(PG ~ .,
+    data=MYdataset[, c(MYinput, MYtarget)],
+    method="class",
+    parms=list(split="information"),
+      control=rpart.control(minsplit=10,
+           minbucket=2,
+           maxdepth=10,
+        usesurrogate=0, 
+        maxsurrogate=0))
+
+# Generate a textual view of the Decision Tree model.
+
+print(MYrpart)
+printcp(MYrpart)
+cat("\n")
+
+```
+###Random Forest
+
+```{r}
+
+# The 'randomForest' package provides the 'randomForest' function.
+
+library(randomForest, quietly=TRUE)
+
+# Build the Random Forest model.
+
+set.seed(crv$seed)
+
+MYrf <- randomForest::randomForest(PG ~ ., # PG ~ .
+      data=MYdataset[,c(MYinput, MYtarget)], 
+      ntree=500,
+      mtry=2,
+      importance=TRUE,
+      na.action=randomForest::na.roughfix,
+      replace=FALSE)
+
+# Generate textual output of 'Random Forest' model.
+
+MYrf
+
+# List the importance of the variables.
+
+rn <- round(randomForest::importance(MYrf), 2)
+rn[order(rn[,3], decreasing=TRUE),]
+
+```
+###Support Vector Machine
+
+```{r}
+
+# The 'kernlab' package provides the 'ksvm' function.
+
+library(kernlab, quietly=TRUE)
+
+# Build a Support Vector Machine model.
+
+#set.seed(crv$seed)
+MYksvm <- ksvm(as.factor(PG) ~ .,
+      data=MYdataset[,c(MYinput, MYtarget)],
+      kernel="rbfdot",
+      prob.model=TRUE)
+
+# Generate a textual view of the SVM model.
+
+MYksvm
+
+```
+###Linear Regression Model
+
+```{r}
+
+# Build a multinomial model using the nnet package.
+
+library(nnet, quietly=TRUE)
+
+# Summarise multinomial model using Anova from the car package.
+
+library(car, quietly=TRUE)
+
+# Build a Regression model.
+
+MYglm <- multinom(PG ~ ., data=MYdataset[,c(MYinput, MYtarget)], trace=FALSE, maxit=1000)
+
+# Generate a textual view of the Linear model.
+
+rattle.print.summary.multinom(summary(MYglm,
+                              Wald.ratios=TRUE))
+cat(sprintf("Log likelihood: %.3f (%d df)
+", logLik(MYglm)[1], attr(logLik(MYglm), "df")))
+if (is.null(MYglm$na.action)) omitted <- TRUE else omitted <- -MYglm$na.action
+cat(sprintf("Pseudo R-Square: %.8f
+
+",cor(apply(MYglm$fitted.values, 1, function(x) which(x == max(x))),
+as.integer(MYdataset[omitted,]$PG))))
+
+cat('==== ANOVA ====')
+print(Anova(MYglm))
+
+```
+
+Now let's plot the Decision Tree
+
+###Decision Tree Plot
+
+```{r}
+
+# Plot the resulting Decision Tree. 
+
+# We use the rpart.plot package.
+
+fancyRpartPlot(MYrpart, main="Decision Tree MYdataset $ PG")
+
+```
+A readable view of the decision tree can be found at the following pdf:
+
+https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6449&authkey=!ACgJAX951UZuo4s&ithint=file%2cpdf
+
+
+##4.Evaluation of the best fitting model
+
+###Evaluate
+
+In the following we will evaluate the best fitting model creating a confusion matrix. A confusion matrix is a specific table layout that allows visualization of the performance of an algorithm. Each row of the matrix represents the instances in a predicted class while each column represents the instances in an actual class (or vice versa). The name stems from the fact that it makes it easy to see if the system is confusing two classes (i.e. commonly mislabeling one as another).
+
+####Decision Tree
+
+```{r}
+
+# Predict new job classsifications utilising the Decision Tree model.
+
+MYpr <- predict(MYrpart, newdata=MYdataset[,c(MYinput, MYtarget)], type="class")
+
+# Generate the confusion matrix showing counts.
+
+table(MYdataset[,c(MYinput, MYtarget)]$PG, MYpr,
+        dnn=c("Actual", "Predicted"))
+
+# Generate the confusion matrix showing proportions and misclassification error in the last column. Misclassification error, represents how often is the prediction wrong,
+
+pcme <- function(actual, cl)
+{
+  x <- table(actual, cl)
+  nc <- nrow(x)
+  tbl <- cbind(x/length(actual),
+               Error=sapply(1:nc,
+                 function(r) round(sum(x[r,-r])/sum(x[r,]), 2)))
+  names(attr(tbl, "dimnames")) <- c("Actual", "Predicted")
+  return(tbl)
+}
+per <- pcme(MYdataset[,c(MYinput, MYtarget)]$PG, MYpr)
+round(per, 2)
+
+
+# First we calculate the overall miscalculation rate (also known as error rate or percentage error).
+#Please note that diag(per) extracts the diagonal of confusion matrix.
+
+cat(100*round(1-sum(diag(per), na.rm=TRUE), 2)) # 23%
+
+# Calculate the averaged miscalculation rate for each job classification. 
+# per[,"Error"] extracts the last column, which represents the miscalculation rate per.
+
+cat(100*round(mean(per[,"Error"], na.rm=TRUE), 2))  # 28%
+
+```
+####Random Forest
+
+```{r}
+# Generate the Confusion Matrix for the Random Forest model.
+
+# Obtain the response from the Random Forest model.
+
+MYpr <- predict(MYrf, newdata=na.omit(MYdataset[,c(MYinput, MYtarget)]))
+
+# Generate the confusion matrix showing counts.
+
+table(na.omit(MYdataset[,c(MYinput, MYtarget)])$PG, MYpr,
+        dnn=c("Actual", "Predicted"))
+
+# Generate the confusion matrix showing proportions.
+
+pcme <- function(actual, cl)
+{
+  x <- table(actual, cl)
+  nc <- nrow(x)
+  tbl <- cbind(x/length(actual),
+               Error=sapply(1:nc,
+                 function(r) round(sum(x[r,-r])/sum(x[r,]), 2)))
+  names(attr(tbl, "dimnames")) <- c("Actual", "Predicted")
+  return(tbl)
+}
+per <- pcme(na.omit(MYdataset[,c(MYinput, MYtarget)])$PG, MYpr)
+round(per, 2)
+
+# Calculate the overall error percentage.
+
+cat(100*round(1-sum(diag(per), na.rm=TRUE), 2))
+
+# Calculate the averaged class error percentage.
+
+cat(100*round(mean(per[,"Error"], na.rm=TRUE), 2))
+
+```
+
+####Support Vector Machine
+
+```{r}
+# Generate the Confusion Matrix for the SVM model.
+
+# Obtain the response from the SVM model.
+
+MYpr <- kernlab::predict(MYksvm, newdata=na.omit(MYdataset[,c(MYinput, MYtarget)]))
+
+# Generate the confusion matrix showing counts.
+
+table(na.omit(MYdataset[,c(MYinput, MYtarget)])$PG, MYpr,
+        dnn=c("Actual", "Predicted"))
+
+# Generate the confusion matrix showing proportions.
+
+pcme <- function(actual, cl)
+{
+  x <- table(actual, cl)
+  nc <- nrow(x)
+  tbl <- cbind(x/length(actual),
+               Error=sapply(1:nc,
+                 function(r) round(sum(x[r,-r])/sum(x[r,]), 2)))
+  names(attr(tbl, "dimnames")) <- c("Actual", "Predicted")
+  return(tbl)
+}
+per <- pcme(na.omit(MYdataset[,c(MYinput, MYtarget)])$PG, MYpr)
+round(per, 2)
+
+# Calculate the overall error percentage.
+
+cat(100*round(1-sum(diag(per), na.rm=TRUE), 2))
+
+# Calculate the averaged class error percentage.
+
+cat(100*round(mean(per[,"Error"], na.rm=TRUE), 2))
+
+```
+####Linear regression model
+
+```{r}
+# Generate the confusion matrix for the linear regression model.
+
+# Obtain the response from the Linear model.
+
+MYpr <- predict(MYglm, newdata=MYdataset[,c(MYinput, MYtarget)])
+
+# Generate the confusion matrix showing counts.
+
+table(MYdataset[,c(MYinput, MYtarget)]$PG, MYpr,
+        dnn=c("Actual", "Predicted"))
+
+# Generate the confusion matrix showing proportions.
+
+pcme <- function(actual, cl)
+{
+  x <- table(actual, cl)
+  nc <- nrow(x)
+  tbl <- cbind(x/length(actual),
+               Error=sapply(1:nc,
+                 function(r) round(sum(x[r,-r])/sum(x[r,]), 2)))
+  names(attr(tbl, "dimnames")) <- c("Actual", "Predicted")
+  return(tbl)
+}
+per <- pcme(MYdataset[,c(MYinput, MYtarget)]$PG, MYpr)
+round(per, 2)
+
+# Calculate the overall error percentage.
+
+cat(100*round(1-sum(diag(per), na.rm=TRUE), 2))
+
+# Calculate the averaged class error percentage.
+
+cat(100*round(mean(per[,"Error"], na.rm=TRUE), 2))
+
+```
+### Final evaluation of the various models
+
+It turns out that:
+
+* The model that performed best was Random Forests at 2% error 
+* The linear model was next at 6% error.  
+* Support Vector Machines performed less well at 18% error. 
+* Decision trees, while being able to give us a 'visual' representation of what rules are being used, performed worst of all at 23% error.
+
+While the above results were found on just the job classification specs, it would be wise to have a much larger population before deciding which model to deploy in real life.
+
+Another observation: You noticed in the results of the various models, that some model had predictions that were one or two paygrades off 'higher or lower'  than the actual existing paygrade. 
+
+In a practical sense, this might mean:
+
+* these might be candidates for determining whether criteria/features for these pay grades should be redefined
+* and or whether there are, in reality, fewer categories needed. 
+
+We could extend our analysis and modelling to 'cluster' analysis. This would create a newer grouping based on the existing characteristics, and then the classification algorithms could be rerun to see if there was any improvement.
+
+Some articles on People Analytics suggest that on a 'maturity level' basis, the step/stage beyond prediction is 'experimental design'. If we are using our results to modify our design of our systems to predict better, that might be an example of this.
+
+##5.Deploy the model
+
+The easiest way to deploying our model, is to run your unknown data with the model. 
+
+Here, is the unclassified dataset:
+
+https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6478&authkey=!ALYidIIpaCrfnf4&ithint=file%2ccsv
+
+Put the data in a separate dataset and run the following R commands:
+
+```{r eval=FALSE}
+DeployDataset <- read_csv("https://hranalytics.netlify.com/data/Deploydata.csv")
+```
+
+```{r read_data11, echo=FALSE, warning=FALSE, message=FALSE}
+DeployDataset <- read_csv("data/Deploydata.csv")
+```
+
+
+```{r}
+DeployDataset
+
+PredictedJobGrade <- predict(MYrf, newdata=DeployDataset)
+PredictedJobGrade
+```
+
+The DeployDataset represents the information coded from a single job description (paygrade not known). PredictedJobGrade compares the coded values against the MYrf (random forest model) and the prediction is determined. In this case, the job description predicts PG05.

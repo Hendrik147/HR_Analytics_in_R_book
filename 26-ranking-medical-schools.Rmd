@@ -1,0 +1,126 @@
+# Ranking Medical Schools {#ranking-medical-school}
+
+```{r ranking-medical1, include=FALSE}
+chap <- 26
+lc <- 0
+rq <- 0
+# **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**
+# **`r paste0("(RQ", chap, ".", (rq <- rq + 1), ")")`**
+
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  out.width = '\\textwidth', 
+  fig.height = 4,
+  warning = TRUE
+  )
+
+options(scipen = 99, digits = 3)
+
+# Set random number generator see value for replicable pseudorandomness. Why 76?
+# https://www.youtube.com/watch?v=xjJ7FheCkCU
+set.seed(76)
+```
+
+
+In this module, we will do another type of web scraping, this time we scrape from a pdf document. We will analyse the results of the “épreuves classantes nationales (ECN)”, which is a nationwide competitive examination at the end of the 6th year of medical schools in France. The candidates ranking first can choose first where they want to continue their medical training. It is a very clean dataset in pdf format containing the results of 8370 medical school examns for a total of 124 pages.
+
+Source code: https://privefl.github.io/blog/scraping-some-french-medical-school-rankings/
+
+Source pdf document: http://www.remede.org/documents/IMG/pdf/liste_classement_ecn_20170628.pdf
+
+```{r}
+library(tidyverse)
+library(pdftools)
+library(data.table)
+library(bigstatsr)
+library(plotly)
+library(stringr)
+#library(gsubfn)
+```
+
+First, let's get some data from our service desk by exporting a CSV. We can then read this CSV (or excel spreadsheet) into R for us to perform analysis.
+
+```{r}
+Sys.setenv(TZ = "Europe/London")
+Sys.setlocale(locale="fr_FR.UTF-8")
+```
+
+We will use package pdftools to get the text from the pdf document. to be on the safe side, I have dowloaded the document already, but it is also possible to dowload it afresh from the internet.
+
+
+```{r eval=FALSE}
+#pdfdocument <- "https://goo.gl/wUXvjk" #Internet download
+#pdfdocument <- "https://hranalyticslive.netlify.com/data/liste_classement_ecn_20170628.pdf"
+```
+
+```{r read_data_medical_schools, echo=FALSE, warning=FALSE, message=FALSE}
+pdfdocument <- "data/liste_classement_ecn_20170628.pdf"
+```
+
+
+gsub
+```{r}
+
+txt <- pdftools::pdf_text(pdfdocument)
+head(txt, n = 1) #Inspection of first page
+
+data <- strsplit(txt, "\n")
+
+head(data)
+
+data_parsed <- matrix(NA_character_, length(data), 7)
+data_words <- str_extract_all(data, boundary("word"))
+data_parsed[, 1:4] <- t(sapply(data_words, head, n = 4))
+data_parsed[, 5:7] <- t(sapply(data_words, tail, n = 3))
+head(data_parsed)
+
+data_parsed2 <- as_tibble(data_parsed) %>%
+  transmute(
+    ranking = as.integer(V1),
+    is_male = (V2 == "M"),
+    family_name = V3,
+    first_name = V4,
+    birth_date = pmap(list(V5, V6, V7), function(d, m, y) {
+      paste(d, m, y, collapse = " ")
+    }) %>% lubridate::dmy()
+  ) 
+
+data_parsed2
+```
+
+Note: there is a problem with people who have a family name composed of multiple words.
+
+```{r eval=FALSE}
+# Proportion male/female
+mean(data_parsed2$is_male)
+# 43% of males.
+
+
+myggplot <- function(...) bigstatsr:::MY_THEME(ggplot(...))
+
+myggplot(data_parsed2) +
+  geom_histogram(aes(x = birth_date), bins = 100)
+
+```
+
+If a recent A-level graduate attempts the exam for the first time, they would be born in 1993. Due to the very competitive nature of the exam, a second and more attempts are also possible. Those who attempts the exam for the second time were born in 1992. Nonetheless, one can attempt the exam at any age, so a lot of older people are also appearing in the dataset.
+
+```{r eval=FALSE}
+myggplot(mutate(data_parsed2, prop_male = cummean(data_parsed2$is_male))) + 
+  geom_hline(yintercept = mean(data_parsed2$is_male), col = "red") +
+  geom_line(aes(x = ranking, y = prop_male))
+
+(myggplot(data_parsed2) +
+   geom_point(aes(ranking, birth_date, color = is_male)) +
+   aes(text = bigstatsr::asPlotlyText(data_parsed2))) %>%
+  plotly::ggplotly(tooltip = "text")
+```
+
+We can see a female 19 year old (with a really high ranking!) and a 54-year old man (with a poor ranking).
+
+```{r eval=FALSE}
+myggplot(data_parsed2, aes(ranking, birth_date)) +
+  geom_point() +
+  geom_smooth(aes(color = is_male), lwd = 2)
+
+```

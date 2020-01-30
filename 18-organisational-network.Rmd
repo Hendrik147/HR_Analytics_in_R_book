@@ -1,0 +1,291 @@
+# Organisational network analysis {#orgnisational-network}
+
+```{r organisational-network, include=FALSE}
+chap <- 18
+lc <- 0
+rq <- 0
+# **`r paste0("(LC", chap, ".", (lc <- lc + 1), ")")`**
+# **`r paste0("(RQ", chap, ".", (rq <- rq + 1), ")")`**
+
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  out.width = '\\textwidth', 
+  fig.height = 4,
+  warning = FALSE
+  )
+
+options(scipen = 99, digits = 3)
+
+# Set random number generator see value for replicable pseudorandomness. Why 76?
+# https://www.youtube.com/watch?v=xjJ7FheCkCU
+set.seed(76)
+```
+
+
+Visualizing and analysing formal and informal relationships in your organization can help you shape business strategy that maximizes organic exchange of information, thereby helping your business become more sustainable and effective.
+
+For example in Organisational network analysis (ONA), we can ask employees three simple questions: 1) who is important to your ability to accomplish work priorities? 2) who is important for you to have greater access to, and 3) who provides you with career-related advice?
+
+Nowadays, HR professionals use Organizational Network Analysis (ONA) use to their advantage. A whole new skill set is develping. HR professionals need to develop a structured way to visualise how communications, information, and decisions flow through an organization. 
+
+Organizational networks consist of nodes and edges.
+
+In the following example, we will use the character interaction network for George R. R. Martin's "A Song of Ice and Fire" saga.
+
+These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in "A Song of Ice and Fire." The edge weight corresponds to the number of interactions. A Song of Ice and Fire is an ongoing a series of epic fantasy novels.
+
+You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.
+
+This is the data for the work presented here: https://networkofthrones.wordpress.com by Andrew Beveridge.
+
+Source: https://github.com/mathbeveridge/asoiaf
+Source code: https://shirinsplayground.netlify.com/2018/03/got_network/
+Source code: https://shiring.github.io/networks/2017/05/15/got_final
+
+With the following we ensure that all needed libraries are installed.
+
+```{r include=FALSE}
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(tidygraph)) install.packages("tidygraph")
+if(!require(ggraph)) install.packages("ggraph")
+if(!require(igraph)) install.packages("igraph")
+if(!require(visNetwork)) install.packages("visNetwork")
+```
+
+```{r}
+library(tidyverse) # tidy data analysis
+library(tidygraph) # tidy graph analysis
+library(ggraph)    # for plotting
+library(igraph)    # for plotting
+library(visNetwork) # for visualising graph
+```
+
+First, let's get the data from the characters from the "Song of Ice and Fire" novels.
+
+
+```{r eval=FALSE}
+cooc_all_edges <- read_csv("https://hranalytics.netlify.com/data/asoiaf-all-edges.csv")
+```
+
+```{r read_data_ona, echo=FALSE, warning=FALSE, message=FALSE}
+cooc_all_edges <- read_csv("data/asoiaf-all-edges.csv")
+```
+
+Let us identify first the main characters contained either as Source or as a target and later the 50 most important charcters:
+
+```{r}
+main_ch <- cooc_all_edges %>%
+  select(-Type) %>%
+  gather(x, name, Source:Target) %>%
+  group_by(name) %>%
+  summarise(sum_weight = sum(weight)) %>%
+  ungroup()
+
+main_ch_l <- main_ch %>%
+  arrange(desc(sum_weight)) %>%
+  top_n(50, sum_weight)
+main_ch_l
+```
+
+In the following we select the relationships of the top 50 characters. The edges are undirected, therefore there are no redundant Source-Target combinations; because of this, Source and Target data have been gathered before summing up the weights.
+
+```{r}
+cooc_all_f <- cooc_all_edges %>%
+  filter(Source %in% main_ch_l$name & Target %in% main_ch_l$name)
+```
+
+The first step is to convert our edge table into a tbl_graph object structure. Here, we use the as_tbl_graph() function from tidygraph; it can take many different types of input data, like data.frame, matrix, dendrogram, igraph, etc. 
+
+A central aspect of tidygraph is that you can directly manipulate node and edge data from this tbl_graph object by activating nodes or edges. When we first create a tbl_graph object, the nodes will be activated. We can then directly calculate node or edge metrics, like centrality, using tidyverse functions.
+
+We can change that with the activate() function. We can now, for example, remove multiple edges. 
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE)
+
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(edges) %>%
+  filter(!edge_is_multiple())
+```
+
+Node ranking
+
+There are many options for node ranking (go to ?node_rank for a full list); let’s try out Minimize hamiltonian path length using a travelling salesperson solver.
+
+```{r}
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(n_rank_trv = node_rank_traveller()) %>%
+  arrange(n_rank_trv)
+```
+
+Centrality
+
+Centrality describes the number of edges that are in- or outgoing to/from nodes. High centrality networks have few nodes with many connections, low centrality networks have many nodes with similar numbers of edges. The centrality of a node measures the importance of it in the network.
+
+```{r}
+#Centrality
+
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(neighbors = centrality_degree()) %>%
+  arrange(-neighbors)
+```
+
+Grouping and clustering
+
+Another common operation is to group nodes based on the graph topology, sometimes referred to as community detection based on its commonality in social network analysis. All clustering algorithms from igraph is available in tidygraph using the group_* prefix. All of these functions return an integer vector with nodes (or edges) sharing the same integer being grouped together. https://www.data-imaginist.com/2017/introducing-tidygraph/
+
+We can use ?group_graph for an overview about all possible ways to cluster and group nodes. Here I am using group_infomap(): Group nodes by minimizing description length using.
+
+```{r}
+#Grouping and clustering
+
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(group = group_infomap()) %>%
+  arrange(-group)
+```
+
+Querying node types
+
+We can also query different node types (?node_types gives us a list of options):
+
+These functions all lets the user query whether each node is of a certain type. All of the functions returns a logical vector indicating whether the node is of the type in question. Do note that the types are not mutually exclusive and that nodes can thus be of multiple types.
+
+Here, I am trying out node_is_center() (does the node have the minimal eccentricity in the graph) and node_is_keyplayer() to identify the top 10 key-players in the network. 
+
+```{r}
+#Querying node types
+
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(center = node_is_center(),
+         keyplayer = node_is_keyplayer(k = 10))
+```
+
+Node pairs
+
+Some statistics are a measure between two nodes, such as distance or similarity between nodes. In a tidy context one of the ends must always be the node defined by the row, while the other can be any other node. All of the node pair functions are prefixed with node_* and ends with _from/_to if the measure is not symmetric and _with if it is; e.g. there’s both a node_max_flow_to() and node_max_flow_from() function while only a single node_cocitation_with() function. The other part of the node pair can be specified as an integer vector that will get recycled if needed, or a logical vector which will get recycled and converted to indexes with which(). This means that output from node type functions can be used directly in the calls. https://www.data-imaginist.com/2017/introducing-tidygraph/
+
+```{r}
+#Node pairs
+
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(nodes) %>% 
+  mutate(dist_to_center = node_distance_to(node_is_center()))
+```
+
+Edge betweenness
+
+Similarly to node metrics, we can calculate all kinds of edge metrics. Betweenness, for example, describes the shortest paths between nodes. 
+
+```{r}
+#Edge betweenness
+
+as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  activate(edges) %>% 
+  mutate(centrality_e = centrality_edge_betweenness())
+
+#The complete code
+
+cooc_all_f_graph <- as_tbl_graph(cooc_all_f, directed = FALSE) %>%
+  mutate(n_rank_trv = node_rank_traveller(),
+         neighbors = centrality_degree(),
+         group = group_infomap(),
+         center = node_is_center(),
+         dist_to_center = node_distance_to(node_is_center()),
+         keyplayer = node_is_keyplayer(k = 10)) %>%
+  activate(edges) %>% 
+  filter(!edge_is_multiple()) %>%
+  mutate(centrality_e = centrality_edge_betweenness())
+
+cooc_all_f_graph %>%
+  activate(nodes) %>% # %N>%
+  as_tibble()
+
+cooc_all_f_graph %>%
+  activate(edges) %>% # %E>%
+  as_tibble()
+```
+
+Plotting with the package "ggraph" 
+
+First, I am going to define a layout. There are lots of options for layouts, here I am using a Fruchterman-Reingold algorithm.
+
+```{r}
+#Plotting
+
+layout <- create_layout(cooc_all_f_graph, 
+                        layout = "fr")
+```
+
+The rest works like any ggplot2 function call, just that we use special geoms for our network, like geom_edge_density() to draw a shadow where the edge density is higher, geom_edge_link() to connect edges with a straight line, geom_node_point() to draw node points and geom_node_text() to draw the labels. 
+
+```{r}
+ggraph(layout) + 
+  geom_edge_density(aes(fill = weight)) +
+  geom_edge_link(aes(width = weight), alpha = 0.2) + 
+  geom_node_point(aes(color = factor(group)), size = 5) +
+  geom_node_text(aes(label = name), size = 3, repel = TRUE) +
+  scale_color_brewer(palette = "Set1") +
+  theme_graph(base_family="sans") +
+  labs(title = "A Song of Ice and Fire character network",
+       subtitle = "Nodes are colored by group")
+
+ggsave("plotshiringroup.pdf", width = 21, height = 29.7, units = "cm")
+
+cols <- RColorBrewer::brewer.pal(3, "Set1")
+
+ggraph(layout) + 
+  geom_edge_density(aes(fill = weight)) +
+  geom_edge_link(aes(width = weight), alpha = 0.2) + 
+  geom_node_point(aes(color = factor(center), size = dist_to_center)) +
+  geom_node_text(aes(label = name), size = 3, repel = TRUE) +
+  scale_colour_manual(values = c(cols[2], cols[1])) +
+  theme_graph(base_family="sans") +
+  labs(title = "A Song of Ice and Fire character network",
+       subtitle = "Nodes are colored by centeredness")
+        
+
+ggsave("plotshirin.pdf", width = 21, height = 29.7, units = "cm")
+```
+
+Another visualisation, this time with the package "visNetwork"
+
+Graph-based analyses are many and diverse: whenever you can describe your data in terms of "outgoing" and "receiving" entities, a graph-based analysis and/or visualisation is possible. Let us try visualising previous results with another package called "visNetwork".
+
+visNetwork is an R package for network visualization, using vis.js javascript library. Being based on htmlwidgets, it is compatible with shiny, R Markdown documents, and RStudio viewer. It is particularly easy to use, one can customise shapes, styles, colors, size. It works smoothly on any modern browser for up to a few thousand nodes and edges.
+
+```{r}
+
+nodes2 <- data.frame(id = (unique(c(cooc_all_f$Source, cooc_all_f$Target))), group = layout$group)
+                               
+edges2 <- data.frame(from = cooc_all_f$Source,
+                    to = (cooc_all_f$Target))
+
+visNetwork(nodes2, edges2, height = "1000px", width = "100%") %>%
+  visLayout(randomSeed = 12) %>% # to have always the same network 
+  visGroups(groupname = "1", color = "red") %>% 
+  visGroups(groupname = "2", color = "blue") %>%
+  visGroups(groupname = "3", color = "green") %>% 
+  visGroups(groupname = "4", color = "purple") %>%
+  visGroups(groupname = "5", color = "orange") %>% 
+  visIgraphLayout() %>%
+  visOptions(highlightNearest = TRUE) %>%
+  visNodes(size = 15)
+
+visNetwork(nodes2, edges2, height = "1000px", width = "100%") %>%
+  visLayout(randomSeed = 12) %>% # to have always the same network 
+  visGroups(groupname = "1", color = "red") %>% 
+  visGroups(groupname = "2", color = "blue") %>%
+  visGroups(groupname = "3", color = "green") %>% 
+  visGroups(groupname = "4", color = "purple") %>%
+  visGroups(groupname = "5", color = "orange") %>% 
+  visIgraphLayout() %>%
+  visOptions(highlightNearest = TRUE) %>%
+  visNodes(size = 15) %>%
+  visEdges(arrows = "to", arrowStrikethrough = F) %>%
+visSave(file = "transfers2.html", selfcontained = T)
+
+```
