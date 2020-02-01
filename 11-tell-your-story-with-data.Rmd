@@ -1,4 +1,4 @@
-# (PART) Conclusion {-} 
+# (PART) Learnings so far {-}
 
 # Tell Your Story with Data {#thinking-with-data}
 
