@@ -1,3 +1,5 @@
+# (PART) Data Science with 'tidyverse' {-}
+
 (ref:tidyversepart) Data Science with `tidyverse`
 
 ```{r echo=FALSE, results="asis"}
