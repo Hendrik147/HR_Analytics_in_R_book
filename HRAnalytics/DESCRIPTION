@@ -1,0 +1,19 @@
+Package: HRAnalytics
+Title: Helper functions for HR Analytics Course
+Version: 0.0.0.9000
+Authors@R: person("Steph", "Locke", email = "steph@itsalocke.com", role = c("aut", "cre"))
+Description: Provides functions for making the HR Anlytics code nicer
+Depends: R (>= 3.5.1)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr,
+    ggplot2,
+    magrittr,
+    purrr,
+    googleway,
+    memoise,
+    rlang
+Suggests: tidyverse,
+    tidymodels
+RoxygenNote: 6.1.0
