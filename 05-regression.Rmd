@@ -1,4 +1,4 @@
-# (PART) Data Modeling via moderndive {-}
+# (PART) Data Modeling with 'moderndive' {-}
 
 (ref:moderndivepart) Data Modeling with `moderndive`
 
