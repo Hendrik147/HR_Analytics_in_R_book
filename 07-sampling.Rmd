@@ -1,4 +1,4 @@
-# (PART) Statistical inferencewith 'infer' {-}
+# (PART) Statistical inference with 'infer' {-}
 
 (ref:inferpart) Statistical Inference with `infer`
 
