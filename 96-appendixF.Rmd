@@ -1,4 +1,4 @@
-# Archive HR datasets {#appendixE}
+# Archive HR datasets {#appendixF}
 
 ```{r archive_HR_datasets, include=FALSE, purl=FALSE}
 knitr::opts_chunk$set(tidy = FALSE, out.width = '\\textwidth')
@@ -78,22 +78,6 @@ ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade
 EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
 --------------  ----------  --------- --------------  ----------- ------------  --------------- --
 
-## Job classification
-
-The Job classification dataset comes from a blog article from Lyndon Sundmark. It is contains the salary details for an hypothetical employer with 1,000 employees, spread across 10 job roles and 5 company departments.
-
-The dataset can be accessed using:
-
-https://onedrive.live.com/?authkey=%21ABv-gHg5jVluYpc&cid=4EF2CCBEDB98D0F5&id=4EF2CCBEDB98D0F5%216440&parId=4EF2CCBEDB98D0F5%216433&o=OneUp
-
-Here are ten sample rows from this dataset:
-
-ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade	
---  --------- --------------------  --------  ------------------- --------
-
-EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
---------------  ----------  --------- --------------  ----------- ------------  --------------- --
-
 
 ## Absenteeism at work
 
@@ -126,19 +110,3 @@ Address: Rua Vergueiro, 235/249 Liberdade, Sao Paulo, SP, Brazil. Zip code: 0150
 
 Website: http://www.uninove.br/curso/informatica-e-gestao-do-conhecimento/
 
-
-## Job classification
-
-The Job classification dataset comes from a blog article from Lyndon Sundmark. It is contains the job classification details of 66 positions.
-
-The dataset can be accessed using:
-
-https://onedrive.live.com/?authkey=%21ABv-gHg5jVluYpc&cid=4EF2CCBEDB98D0F5&id=4EF2CCBEDB98D0F5%216440&parId=4EF2CCBEDB98D0F5%216433&o=OneUp
-
-Here are ten sample rows from this dataset:
-
-ID	JobFamily	JobFamilyDescription	JobClass	JobClassDescription	PayGrade	
---  --------- --------------------  --------  ------------------- --------
-
-EducationLevel	Experience	OrgImpact	ProblemSolving	Supervision	ContactLevel	FinancialBudget	PG
---------------  ----------  --------- --------------  ----------- ------------

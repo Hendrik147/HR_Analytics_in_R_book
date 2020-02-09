@@ -1,5 +1,3 @@
-# (PART) Data Modeling with 'moderndive' {-}
-
 (ref:moderndivepart) Data Modeling with `moderndive`
 
 ```{r echo=FALSE, results="asis"}

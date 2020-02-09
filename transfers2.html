@@ -238,13 +238,38 @@
           theseArgs = theseArgs.concat([task.data]);
           task = task.code;
         }
-        var taskFunc = eval("(" + task + ")");
+        var taskFunc = tryEval(task);
         if (typeof(taskFunc) !== "function") {
           throw new Error("Task must be a function! Source:\n" + task);
         }
         taskFunc.apply(target, theseArgs);
       });
     }
+  }
+
+  // Attempt eval() both with and without enclosing in parentheses.
+  // Note that enclosing coerces a function declaration into
+  // an expression that eval() can parse
+  // (otherwise, a SyntaxError is thrown)
+  function tryEval(code) {
+    var result = null;
+    try {
+      result = eval(code);
+    } catch(error) {
+      if (!error instanceof SyntaxError) {
+        throw error;
+      }
+      try {
+        result = eval("(" + code + ")");
+      } catch(e) {
+        if (e instanceof SyntaxError) {
+          throw error;
+        } else {
+          throw e;
+        }
+      }
+    }
+    return result;
   }
 
   function initSizing(el) {
@@ -639,17 +664,56 @@
     invokePostRenderHandlers();
   }
 
-  // Wait until after the document has loaded to render the widgets.
+
+  function has_jQuery3() {
+    if (!window.jQuery) {
+      return false;
+    }
+    var $version = window.jQuery.fn.jquery;
+    var $major_version = parseInt($version.split(".")[0]);
+    return $major_version >= 3;
+  }
+
+  /*
+  / Shiny 1.4 bumped jQuery from 1.x to 3.x which means jQuery's
+  / on-ready handler (i.e., $(fn)) is now asyncronous (i.e., it now
+  / really means $(setTimeout(fn)).
+  / https://jquery.com/upgrade-guide/3.0/#breaking-change-document-ready-handlers-are-now-asynchronous
+  /
+  / Since Shiny uses $() to schedule initShiny, shiny>=1.4 calls initShiny
+  / one tick later than it did before, which means staticRender() is
+  / called renderValue() earlier than (advanced) widget authors might be expecting.
+  / https://github.com/rstudio/shiny/issues/2630
+  /
+  / For a concrete example, leaflet has some methods (e.g., updateBounds)
+  / which reference Shiny methods registered in initShiny (e.g., setInputValue).
+  / Since leaflet is privy to this life-cycle, it knows to use setTimeout() to
+  / delay execution of those methods (until Shiny methods are ready)
+  / https://github.com/rstudio/leaflet/blob/18ec981/javascript/src/index.js#L266-L268
+  /
+  / Ideally widget authors wouldn't need to use this setTimeout() hack that
+  / leaflet uses to call Shiny methods on a staticRender(). In the long run,
+  / the logic initShiny should be broken up so that method registration happens
+  / right away, but binding happens later.
+  */
+  function maybeStaticRenderLater() {
+    if (shinyMode && has_jQuery3()) {
+      window.jQuery(window.HTMLWidgets.staticRender);
+    } else {
+      window.HTMLWidgets.staticRender();
+    }
+  }
+
   if (document.addEventListener) {
     document.addEventListener("DOMContentLoaded", function() {
       document.removeEventListener("DOMContentLoaded", arguments.callee, false);
-      window.HTMLWidgets.staticRender();
+      maybeStaticRenderLater();
     }, false);
   } else if (document.attachEvent) {
     document.attachEvent("onreadystatechange", function() {
       if (document.readyState === "complete") {
         document.detachEvent("onreadystatechange", arguments.callee);
-        window.HTMLWidgets.staticRender();
+        maybeStaticRenderLater();
       }
     });
   }
@@ -737,7 +801,7 @@
       if (o !== null && typeof o === "object" && part in o) {
         if (i == (l - 1)) { // if we are at the end of the line then evalulate
           if (typeof o[part] === "string")
-            o[part] = eval("(" + o[part] + ")");
+            o[part] = tryEval(o[part]);
         } else { // otherwise continue to next embedded object
           o = o[part];
         }
@@ -1978,7 +2042,9 @@ function collapsedNetwork(nodes, fit, resetHighlight, clusterParams, labelSuffix
             },
             returnType :'Array'
           });
-              
+          
+          
+          
           for (j = 0; j < connectedToNodes.length; j++) {
             firstLevelNodes = firstLevelNodes.concat(connectedToNodes[j].to);
           }
@@ -2021,7 +2087,7 @@ function collapsedNetwork(nodes, fit, resetHighlight, clusterParams, labelSuffix
               finalClusterNodes = finalClusterNodes.concat(findnode[0]);
             }
           }
-    
+
           if(set_position){ 
             network.storePositions();
           }
@@ -2653,6 +2719,9 @@ if (HTMLWidgets.shinyMode){
             if(data.options.byselection.hideColor){
               el.byselectionColor = data.options.byselection.hideColor;
             }
+            if(data.options.byselection.highlight !== undefined){
+              el.byselectionHighlight = data.options.byselection.highlight;
+            }
           }
           
           if(data.options.byselection !== undefined){
@@ -3090,8 +3159,10 @@ HTMLWidgets.widget({
 
     if(x.byselection.enabled){
       el_id.byselectionColor = x.byselection.hideColor;
+      el_id.byselectionHighlight = x.byselection.highlight;
     } else {
       el_id.byselectionColor = 'rgba(200,200,200,0.5)';
+      el_id.byselectionHighlight = false;
     }
     
     if(x.idselection.enabled){
@@ -3176,7 +3247,7 @@ HTMLWidgets.widget({
         instance.network.selectNodes([id]);
       }
       if(el_id.highlight){
-        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm);
+        neighbourhoodHighlight(instance.network.getSelection().nodes, "click", el_id.highlightAlgorithm, true);
       }else{
         if(init){
           selectNode = document.getElementById('nodeSelect'+el.id);
@@ -3753,7 +3824,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            }
+            } else { clearPopUp(); callback(null); }
         };
       } else if(typeof(x.options.manipulation.deleteNode) === typeof(true)){
         if(x.options.manipulation.deleteNode){
@@ -3761,7 +3832,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.nodes.length + " node(s) and " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              }
+              } else { clearPopUp(); callback(null); }
           };
         } else {
           options.manipulation.deleteNode = false;
@@ -3775,7 +3846,7 @@ HTMLWidgets.widget({
             var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
             if (r === true) {
               deleteSubGraph(data, callback);
-            }
+            } else { clearPopUp(); callback(null); }
         };
       } else if(typeof(x.options.manipulation.deleteEdge) === typeof(true)){
         if(x.options.manipulation.deleteEdge){
@@ -3783,7 +3854,7 @@ HTMLWidgets.widget({
               var r = confirm("Do you want to delete " + data.edges.length + " edges ?");
               if (r === true) {
                 deleteSubGraph(data, callback);
-              }
+              } else { clearPopUp(); callback(null); }
           };
         } else {
           options.manipulation.deleteEdge = false;
@@ -4104,6 +4175,12 @@ HTMLWidgets.widget({
           edges.update(edgesHardToRead);
             
           nodes.update(updateArray);
+          
+          // select for highlight
+          if(el_id.highlight && x.nodes && el_id.byselectionHighlight){
+              neighbourhoodHighlight(connectedNodes, "click", el_id.highlightAlgorithm, false);
+              instance.network.selectNodes(connectedNodes)
+          }
         }
       }
       else if (el_id.selectActive === true) {
@@ -4119,7 +4196,7 @@ HTMLWidgets.widget({
     var is_hovered = false;
     var is_clicked = false;
     
-    function neighbourhoodHighlight(params, action_type, algorithm) {
+    function neighbourhoodHighlight(params, action_type, algorithm, reset_selectedBy) {
 
       var nodes_in_clusters = instance.network.body.modules.clustering.clusteredNodes;
       var have_cluster_nodes = false;
@@ -4533,7 +4610,7 @@ HTMLWidgets.widget({
         }
       }
       // reset selectedBy list if actived
-      if(el_id.byselection){
+      if(el_id.byselection && reset_selectedBy){
         resetList("selectedBy", el.id, 'selectedBy');
       }
     }
@@ -4571,7 +4648,7 @@ HTMLWidgets.widget({
     // shared click function (selectedNodes)
     document.getElementById("graph"+el.id).myclick = function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         }
@@ -4580,7 +4657,7 @@ HTMLWidgets.widget({
     // Set event in relation with highlightNearest      
     instance.network.on("click", function(params){
         if(el_id.highlight && x.nodes){
-          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight(params.nodes, "click", el_id.highlightAlgorithm, true);
         }else if((el_id.idselection || el_id.byselection) && x.nodes){
           onClickIDSelection(params)
         } 
@@ -4588,13 +4665,13 @@ HTMLWidgets.widget({
     
     instance.network.on("hoverNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm);
+        neighbourhoodHighlight([params.node], "hover", el_id.highlightAlgorithm, true);
       } 
     });
 
     instance.network.on("blurNode", function(params){
       if(el_id.hoverNearest && x.nodes){
-        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm);
+        neighbourhoodHighlight([], "hover", el_id.highlightAlgorithm, true);
       }      
     });
     
@@ -4758,7 +4835,7 @@ HTMLWidgets.widget({
         // reset some parameters / data before
         if (el_id.selectActive === true | el_id.highlightActive === true) {
           //reset nodes
-          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm);
+          neighbourhoodHighlight([], "click", el_id.highlightAlgorithm, true);
           if (el_id.selectActive === true){
             el_id.selectActive = false;
             resetList('selectedBy',el.id, 'selectedBy');
@@ -4773,7 +4850,7 @@ HTMLWidgets.widget({
           clusterByColor();
         }
         if(x.clusteringGroup){
-          clusterByGroup();
+          clusterByGroup(x.clusteringGroup.groups);
         }
         if(x.clusteringHubsize){
           clusterByHubsize();
@@ -4795,6 +4872,18 @@ HTMLWidgets.widget({
             instance.network.openCluster(params.nodes[0], {releaseFunction : function(clusterPosition, containedNodesPositions) {
               return containedNodesPositions;
             }});
+          } else {
+            if(x.clusteringGroup){
+              var array_group = nodes.get({
+                fields: ['group'],
+                filter: function (item) {
+                  return  item.id === params.nodes[0] ;
+                },
+                returnType :'Array'
+              });
+            
+              clusterByGroup([array_group[0].group]);
+            }
           }
         }
       });
@@ -4913,59 +5002,62 @@ HTMLWidgets.widget({
     //*************************
     if(x.clusteringGroup){
       
-      function clusterByGroup() {
-        var groups = x.clusteringGroup.groups;
+      function clusterByGroup(groups) {
         var clusterOptionsByData;
         for (var i = 0; i < groups.length; i++) {
           var group = groups[i];
-          var col = x.clusteringGroup.color[i];
-          var sh = x.clusteringGroup.shape[i];
-          var force = x.clusteringGroup.force[i];
-          var sc_size = x.clusteringGroup.scale_size[i];
-          
-          clusterOptionsByData = {
-              joinCondition: function (childOptions) {
-                  return childOptions.group == group; //
-              },
-              processProperties: function (clusterOptions, childNodes, childEdges) {
-                  var totalMass = 0;
-                  var cluster_level = 9999999;
-                  for (var i = 0; i < childNodes.length; i++) {
-                      totalMass += childNodes[i].mass;
-                      if(childNodes[i].level){
-                        cluster_level = Math.min(cluster_level, childNodes[i].level)
-                      }
-                      if(force === false){
-                        if(i === 0){
-                          clusterOptions.shape =  childNodes[i].shape;
-                          clusterOptions.color =  childNodes[i].color.background;
-                        }else{
-                          if(childNodes[i].shape !== clusterOptions.shape){
-                            clusterOptions.shape = sh;
-                          }
-                          if(childNodes[i].color.background !== clusterOptions.color){
-                            clusterOptions.color = col;
-                          }
+          var j = x.clusteringGroup.groups.indexOf(group);
+          if(j !== -1) {
+            var col = x.clusteringGroup.color[j];
+            var sh = x.clusteringGroup.shape[j];
+            var force = x.clusteringGroup.force[j];
+            var sc_size = x.clusteringGroup.scale_size[j];
+            
+            clusterOptionsByData = {
+                joinCondition: function (childOptions) {
+                    return childOptions.group == group; //
+                },
+                processProperties: function (clusterOptions, childNodes, childEdges) {
+                    var totalMass = 0;
+                    var cluster_level = 9999999;
+                    for (var i = 0; i < childNodes.length; i++) {
+                        totalMass += childNodes[i].mass;
+                        if(childNodes[i].level){
+                          cluster_level = Math.min(cluster_level, childNodes[i].level)
                         }
-                      } else {
-                        clusterOptions.shape = sh;
-                        clusterOptions.color = col;
-                      }
-                  }
-                  if(sc_size){
-                     clusterOptions.value = totalMass;
-                  }
-                  if(cluster_level !== 9999999){
-                    clusterOptions.level = cluster_level
-                  }
-                  return clusterOptions;
-              },
-              clusterNodeProperties: {id: 'cluster:' + group, borderWidth: 3, label:x.clusteringGroup.label + group}
+                        if(force === false){
+                          if(i === 0){
+                            clusterOptions.shape =  childNodes[i].shape;
+                            clusterOptions.color =  childNodes[i].color.background;
+                          }else{
+                            if(childNodes[i].shape !== clusterOptions.shape){
+                              clusterOptions.shape = sh;
+                            }
+                            if(childNodes[i].color.background !== clusterOptions.color){
+                              clusterOptions.color = col;
+                            }
+                          }
+                        } else {
+                          clusterOptions.shape = sh;
+                          clusterOptions.color = col;
+                        }
+                    }
+                    if(sc_size){
+                       clusterOptions.value = totalMass;
+                    }
+                    if(cluster_level !== 9999999){
+                      clusterOptions.level = cluster_level
+                    }
+                    return clusterOptions;
+                },
+                clusterNodeProperties: {id: 'cluster:' + group, borderWidth: 3, label:x.clusteringGroup.label + group}
+            }
+            instance.network.cluster(clusterOptionsByData);
           }
-          instance.network.cluster(clusterOptionsByData);
+
         }
       }
-      clusterByGroup();
+      clusterByGroup(x.clusteringGroup.groups);
     }
   
     //*************************
@@ -5097,11 +5189,11 @@ HTMLWidgets.widget({
 </head>
 <body style="background-color: white;">
 <div id="htmlwidget_container">
-<div id="htmlwidget-87e20d2e7a138b9035fc" class="visNetwork html-widget" style="width:100%;height:1000px;">
+<div id="htmlwidget-9652d33d9c12063b16ce" class="visNetwork html-widget" style="width:100%;height:1000px;">
 
 </div>
 </div>
-<script type="application/json" data-for="htmlwidget-87e20d2e7a138b9035fc">{"x":{"nodes":{"id":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"],"group":[3,1,4,2,1,1,1,1,4,5,4,1,1,1,3,4,2,1,1,3,1,2,3,4,1,2,1,3,1,2,5,1,1,1,1,1,2,2,1,2,3,1,1,5,2,1,1,1,4,1],"x":[-0.685698596635045,-0.120846906332323,0.409029538910895,-0.380360966633503,0.195070798601017,0.0719398677265044,-0.0744862140564516,0.148114752131464,0.462333613500676,-0.297075952683165,0.361273548226124,-0.0011048284972226,0.240480946573876,0.33036486704596,-1,1,-0.667344500471967,0.437168455089162,0.133810221476936,-0.484982910329752,-0.0391151682491675,-0.949179936916836,-0.390165637123497,0.105047939613665,0.221271930040997,-0.463636236080712,0.295637702970356,-0.619172314449138,0.186471852778613,-0.898221956466764,-0.506074692591124,0.46198608824002,-0.0790180899348085,0.178301509956184,0.383527815975522,-0.0215708913405532,-0.492565751222295,-0.188935763708704,0.0696768755972521,-0.207528027854331,-0.7830672778847,0.284243438956296,0.0765838031826733,-0.184160944241559,-0.335734770723374,-0.00712429551393523,0.0246646113122897,0.0825930325901014,0.875550010208892,0.291705175603687],"y":[-0.245980998840009,0.294331563805844,-0.193972739804727,0.415925966213535,0.591988468653609,0.837716611927393,0.55446721492667,0.213905900679512,-0.427213556916036,-0.283216287804957,-1,0.341165851755898,0.934078543722213,0.468196696304587,-0.292535453248665,-0.702843852344223,1,0.389546749444986,0.387351408756037,-0.310549044016766,0.176466016935285,0.725458430486709,0.189679706114577,-0.677390527248899,0.194247609883817,0.778983540926576,0.693117934201099,0.0851975014549928,-0.131475843575597,0.890193491652173,-0.103111777979146,0.0652744837204511,-0.178633322637684,0.457215910821518,0.19452349028514,0.0331355153874433,0.617561090956347,0.442515251359146,-0.0120396961300708,0.725377816869146,0.212947900331218,0.0416912363473561,0.281347820972349,0.217978457607774,0.597627354721052,0.491345594984437,0.191348259863538,0.614157362934929,-0.909118545274743,0.250005249322783],"label":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"]},"edges":{"from":["Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Drogo","Drogo","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Grenn","Grenn","Grenn","Hizdahr-zo-Loraq","Hodor","Hodor","Hodor","Hodor","Hodor","Hodor","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jorah-Mormont","Jorah-Mormont","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Mance-Rayder","Mance-Rayder","Mance-Rayder","Mance-Rayder","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Meera-Reed","Meera-Reed","Melisandre","Melisandre","Melisandre","Meryn-Trant","Meryn-Trant","Meryn-Trant","Meryn-Trant","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Rodrik-Cassel","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sandor-Clegane","Sandor-Clegane","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Theon-Greyjoy","Theon-Greyjoy","Tommen-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tyrion-Lannister","Tywin-Lannister"],"to":["Grenn","Jeor-Mormont","Jon-Snow","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Stannis-Baratheon","Bran-Stark","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Mance-Rayder","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Cersei-Lannister","Daenerys-Targaryen","Eddard-Stark","Hizdahr-zo-Loraq","Jaime-Lannister","Joffrey-Baratheon","Jorah-Mormont","Meryn-Trant","Petyr-Baelish","Pycelle","Quentyn-Martell","Renly-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Hodor","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Luwin","Meera-Reed","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Catelyn-Stark","Cersei-Lannister","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Lysa-Arryn","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Catelyn-Stark","Cersei-Lannister","Gregor-Clegane","Joffrey-Baratheon","Rodrik-Cassel","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Cersei-Lannister","Eddard-Stark","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Daenerys-Targaryen","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Drogo","Eddard-Stark","Hizdahr-zo-Loraq","Jorah-Mormont","Quentyn-Martell","Robert-Baratheon","Tyrion-Lannister","Varys","Eddard-Stark","Joffrey-Baratheon","Melisandre","Renly-Baratheon","Robb-Stark","Stannis-Baratheon","Jorah-Mormont","Robert-Baratheon","Edmure-Tully","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Ilyn-Payne","Jaime-Lannister","Lysa-Arryn","Petyr-Baelish","Robb-Stark","Tommen-Baratheon","Tywin-Lannister","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Tywin-Lannister","Jeor-Mormont","Jon-Snow","Samwell-Tarly","Quentyn-Martell","Jojen-Reed","Luwin","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Jon-Snow","Jorah-Mormont","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Tyrion-Lannister","Jon-Snow","Loras-Tyrell","Mance-Rayder","Margaery-Tyrell","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Luwin","Meera-Reed","Rickon-Stark","Samwell-Tarly","Luwin","Mance-Rayder","Melisandre","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Tyrion-Lannister","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Petyr-Baelish","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Melisandre","Samwell-Tarly","Stannis-Baratheon","Theon-Greyjoy","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Varys","Rickon-Stark","Samwell-Tarly","Renly-Baratheon","Samwell-Tarly","Stannis-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Rodrik-Cassel","Sansa-Stark","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tyrion-Lannister","Stannis-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Tyrion-Lannister","Tywin-Lannister","Tyrion-Lannister","Tywin-Lannister","Tywin-Lannister","Varys","Varys"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false,"size":15},"manipulation":{"enabled":false},"layout":{"randomSeed":12},"groups":{"1":{"color":"red"},"2":{"color":"blue"},"3":{"color":"green"},"4":{"color":"purple"},"useDefaultGroups":true,"5":{"color":"orange"}},"edges":{"smooth":false,"arrows":"to","arrowStrikethrough":false},"physics":{"stabilization":false}},"groups":["3","1","4","2","5"],"width":"100%","height":"1000px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)"},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
-<script type="application/htmlwidget-sizing" data-for="htmlwidget-87e20d2e7a138b9035fc">{"viewer":{"width":"100%","height":"1000px","padding":15,"fill":false},"browser":{"width":"100%","height":"1000px","padding":40,"fill":false}}</script>
+<script type="application/json" data-for="htmlwidget-9652d33d9c12063b16ce">{"x":{"nodes":{"id":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"],"group":[3,1,4,2,1,1,1,1,4,5,4,1,1,1,3,4,2,1,1,3,1,2,3,4,1,2,1,3,1,2,5,1,1,1,1,1,2,2,1,2,3,1,1,5,2,1,1,1,4,1],"x":[-0.630456075903372,0.0123861768037521,0.474292661300266,-0.27532751322907,0.21748744441891,0.141308417129282,0.020518480584629,0.251353779743353,0.478016171568692,-0.131003026571395,0.312113471838387,0.107508428795739,0.40300270150381,0.447565681144055,-1,1,-0.629980956565027,0.557305271201238,0.253797846699749,-0.509206276849835,0.121193343153538,-0.889251982947677,-0.291629171885622,0.072792207786331,0.328415406749615,-0.3705677313323,0.34717575415775,-0.475975178534423,0.500630204403788,-0.854254577654392,-0.354770427623965,0.592195177530847,0.0803566712069936,0.28304418415533,0.307270593518756,0.0930014068195963,-0.406108904982864,-0.0973898603046581,0.148072991716304,-0.124197782347408,-0.687520610646464,0.453991693760105,0.178447471782394,-0.075484433837927,-0.186995318151176,0.153527885345963,0.0986112017308109,0.332784975671807,0.862547352408379,0.356619169075263],"y":[-0.306606115287165,-0.413103311428813,0.192941924526062,-0.165172730063541,-0.726434494292185,0.157006429222946,-0.289325141323802,-0.181426970232064,0.512268796360458,-1,0.992829062249738,-0.215145819923071,-0.825588816672809,-0.139023858882192,-0.383035953215155,0.813415199476013,0.225765563370404,-0.352146514299419,-0.378453868927491,0.0428765244375462,-0.403813634853951,-0.0111605097532166,-0.349416880608263,0.62911608662906,-0.526018617711535,0.0541654251965746,-0.675741736734874,-0.571140512199568,-0.563231132517666,0.169468648226113,-0.86357270014504,-0.129116091378149,-0.787797796071848,-0.252500086201863,0.0757084676985729,-0.526011582642678,-0.103489762764875,-0.335896783223465,-0.0586588682349574,-0.0686834106741976,-0.438305425380601,-0.417657097435274,-0.31108728638069,-0.483048039454038,-0.0122951952839391,-0.561429083913691,-0.115379541125832,-0.345162417105844,1,-0.0507954803945071],"label":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"]},"edges":{"from":["Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Drogo","Drogo","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Grenn","Grenn","Grenn","Hizdahr-zo-Loraq","Hodor","Hodor","Hodor","Hodor","Hodor","Hodor","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jorah-Mormont","Jorah-Mormont","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Mance-Rayder","Mance-Rayder","Mance-Rayder","Mance-Rayder","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Meera-Reed","Meera-Reed","Melisandre","Melisandre","Melisandre","Meryn-Trant","Meryn-Trant","Meryn-Trant","Meryn-Trant","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Rodrik-Cassel","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sandor-Clegane","Sandor-Clegane","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Theon-Greyjoy","Theon-Greyjoy","Tommen-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tyrion-Lannister","Tywin-Lannister"],"to":["Grenn","Jeor-Mormont","Jon-Snow","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Stannis-Baratheon","Bran-Stark","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Mance-Rayder","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Cersei-Lannister","Daenerys-Targaryen","Eddard-Stark","Hizdahr-zo-Loraq","Jaime-Lannister","Joffrey-Baratheon","Jorah-Mormont","Meryn-Trant","Petyr-Baelish","Pycelle","Quentyn-Martell","Renly-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Hodor","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Luwin","Meera-Reed","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Catelyn-Stark","Cersei-Lannister","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Lysa-Arryn","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Catelyn-Stark","Cersei-Lannister","Gregor-Clegane","Joffrey-Baratheon","Rodrik-Cassel","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Cersei-Lannister","Eddard-Stark","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Daenerys-Targaryen","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Drogo","Eddard-Stark","Hizdahr-zo-Loraq","Jorah-Mormont","Quentyn-Martell","Robert-Baratheon","Tyrion-Lannister","Varys","Eddard-Stark","Joffrey-Baratheon","Melisandre","Renly-Baratheon","Robb-Stark","Stannis-Baratheon","Jorah-Mormont","Robert-Baratheon","Edmure-Tully","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Ilyn-Payne","Jaime-Lannister","Lysa-Arryn","Petyr-Baelish","Robb-Stark","Tommen-Baratheon","Tywin-Lannister","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Tywin-Lannister","Jeor-Mormont","Jon-Snow","Samwell-Tarly","Quentyn-Martell","Jojen-Reed","Luwin","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Jon-Snow","Jorah-Mormont","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Tyrion-Lannister","Jon-Snow","Loras-Tyrell","Mance-Rayder","Margaery-Tyrell","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Luwin","Meera-Reed","Rickon-Stark","Samwell-Tarly","Luwin","Mance-Rayder","Melisandre","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Tyrion-Lannister","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Petyr-Baelish","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Melisandre","Samwell-Tarly","Stannis-Baratheon","Theon-Greyjoy","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Varys","Rickon-Stark","Samwell-Tarly","Renly-Baratheon","Samwell-Tarly","Stannis-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Rodrik-Cassel","Sansa-Stark","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tyrion-Lannister","Stannis-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Tyrion-Lannister","Tywin-Lannister","Tyrion-Lannister","Tywin-Lannister","Tywin-Lannister","Varys","Varys"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false,"size":15},"manipulation":{"enabled":false},"layout":{"randomSeed":12},"groups":{"1":{"color":"red"},"2":{"color":"blue"},"3":{"color":"green"},"4":{"color":"purple"},"useDefaultGroups":true,"5":{"color":"orange"}},"edges":{"smooth":false,"arrows":"to","arrowStrikethrough":false},"physics":{"stabilization":false}},"groups":["3","1","4","2","5"],"width":"100%","height":"1000px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/htmlwidget-sizing" data-for="htmlwidget-9652d33d9c12063b16ce">{"viewer":{"width":"100%","height":"1000px","padding":15,"fill":false},"browser":{"width":"100%","height":"1000px","padding":40,"fill":false}}</script>
 </body>
 </html>

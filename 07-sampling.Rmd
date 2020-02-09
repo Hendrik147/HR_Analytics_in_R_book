@@ -1,5 +1,3 @@
-# (PART) Statistical inference with 'infer' {-}
-
 (ref:inferpart) Statistical Inference with `infer`
 
 ```{r echo=FALSE, results="asis"}

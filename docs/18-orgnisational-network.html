@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 18 Organisational network analysis | HR Analytics in R</title>
+  <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 18 Organisational network analysis | HR Analytics in R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 18 Organisational network analysis | HR Analytics in R" />
+  
+  <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+
+<meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
+
+
+<meta name="date" content="2020-02-09" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
+  <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="17-commuting-time.html"/>
+<link rel="next" href="19-job-classification.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/vis-4.20.1/vis.css" rel="stylesheet" />
+<script src="libs/vis-4.20.1/vis.min.js"></script>
+<script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script>
+<link href="libs/dygraphs-1.1.1/dygraph.css" rel="stylesheet" />
+<script src="libs/dygraphs-1.1.1/dygraph-combined.js"></script>
+<script src="libs/dygraphs-1.1.1/shapes.js"></script>
+<script src="libs/moment-2.8.4/moment.js"></script>
+<script src="libs/moment-timezone-0.2.5/moment-timezone-with-data.js"></script>
+<script src="libs/moment-fquarter-1.0.0/moment-fquarter.min.js"></script>
+<script src="libs/dygraphs-binding-1.1.1.6/dygraphs.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141658902-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141658902-1');
+</script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./"></a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i>Conventions</a></li>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#subsec:learning-goals"><i class="fa fa-check"></i><b>1.1.1</b> What you will learn from this book</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#subsec:pipeline"><i class="fa fa-check"></i><b>1.1.2</b> Data/science pipeline</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#subsec:reproducible"><i class="fa fa-check"></i><b>1.1.3</b> Reproducible research</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#final-note-for-students"><i class="fa fa-check"></i><b>1.1.4</b> Final note for students</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#sec:intro-instructors"><i class="fa fa-check"></i><b>1.2</b> Introduction for instructors</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#who-is-this-book-for"><i class="fa fa-check"></i><b>1.2.1</b> Who is this book for?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#sec:connect-contribute"><i class="fa fa-check"></i><b>1.3</b> Connect and contribute</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#sec:about-book"><i class="fa fa-check"></i><b>1.4</b> About this book</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#sec:about-authors"><i class="fa fa-check"></i><b>1.5</b> About the author</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-getting-started.html"><a href="2-getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting Started with Data in R</a><ul>
+<li class="chapter" data-level="2.1" data-path="2-getting-started.html"><a href="2-getting-started.html#r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What are R and RStudio?</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="2-getting-started.html"><a href="2-getting-started.html#installing"><i class="fa fa-check"></i><b>2.1.1</b> Installing R and RStudio</a></li>
+<li class="chapter" data-level="2.1.2" data-path="2-getting-started.html"><a href="2-getting-started.html#using-r-via-rstudio"><i class="fa fa-check"></i><b>2.1.2</b> Using R via RStudio</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="2-getting-started.html"><a href="2-getting-started.html#code"><i class="fa fa-check"></i><b>2.2</b> How do I code in R?</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="2-getting-started.html"><a href="2-getting-started.html#programming-concepts"><i class="fa fa-check"></i><b>2.2.1</b> Basic programming concepts and terminology</a></li>
+<li class="chapter" data-level="2.2.2" data-path="2-getting-started.html"><a href="2-getting-started.html#messages"><i class="fa fa-check"></i><b>2.2.2</b> Errors, warnings, and messages</a></li>
+<li class="chapter" data-level="2.2.3" data-path="2-getting-started.html"><a href="2-getting-started.html#tips-code"><i class="fa fa-check"></i><b>2.2.3</b> Tips on learning to code</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="2-getting-started.html"><a href="2-getting-started.html#packages"><i class="fa fa-check"></i><b>2.3</b> What are R packages?</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="2-getting-started.html"><a href="2-getting-started.html#package-installation"><i class="fa fa-check"></i><b>2.3.1</b> Package installation</a></li>
+<li class="chapter" data-level="2.3.2" data-path="2-getting-started.html"><a href="2-getting-started.html#package-loading"><i class="fa fa-check"></i><b>2.3.2</b> Package loading</a></li>
+<li class="chapter" data-level="2.3.3" data-path="2-getting-started.html"><a href="2-getting-started.html#package-use"><i class="fa fa-check"></i><b>2.3.3</b> Package use</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="2-getting-started.html"><a href="2-getting-started.html#nycflights13"><i class="fa fa-check"></i><b>2.4</b> Explore your first datasets</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="2-getting-started.html"><a href="2-getting-started.html#nycflights13-package"><i class="fa fa-check"></i><b>2.4.1</b> <code>nycflights13</code> package</a></li>
+<li class="chapter" data-level="2.4.2" data-path="2-getting-started.html"><a href="2-getting-started.html#flights-data-frame"><i class="fa fa-check"></i><b>2.4.2</b> <code>flights</code> data frame</a></li>
+<li class="chapter" data-level="2.4.3" data-path="2-getting-started.html"><a href="2-getting-started.html#exploredataframes"><i class="fa fa-check"></i><b>2.4.3</b> Exploring data frames</a></li>
+<li class="chapter" data-level="2.4.4" data-path="2-getting-started.html"><a href="2-getting-started.html#identification-vs-measurement-variables"><i class="fa fa-check"></i><b>2.4.4</b> Identification and measurement variables</a></li>
+<li class="chapter" data-level="2.4.5" data-path="2-getting-started.html"><a href="2-getting-started.html#help-files"><i class="fa fa-check"></i><b>2.4.5</b> Help files</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="2-getting-started.html"><a href="2-getting-started.html#conclusion"><i class="fa fa-check"></i><b>2.5</b> Conclusion</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="2-getting-started.html"><a href="2-getting-started.html#additional-resources"><i class="fa fa-check"></i><b>2.5.1</b> Additional resources</a></li>
+<li class="chapter" data-level="2.5.2" data-path="2-getting-started.html"><a href="2-getting-started.html#whats-to-come"><i class="fa fa-check"></i><b>2.5.2</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Data Science with tidyverse</b></span></li>
+<li class="chapter" data-level="3" data-path="3-viz.html"><a href="3-viz.html"><i class="fa fa-check"></i><b>3</b> Data Visualization</a><ul>
+<li class="chapter" data-level="" data-path="3-viz.html"><a href="3-viz.html#needed-packages"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="3.1" data-path="3-viz.html"><a href="3-viz.html#grammarofgraphics"><i class="fa fa-check"></i><b>3.1</b> The grammar of graphics</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="3-viz.html"><a href="3-viz.html#components-of-the-grammar"><i class="fa fa-check"></i><b>3.1.1</b> Components of the grammar</a></li>
+<li class="chapter" data-level="3.1.2" data-path="3-viz.html"><a href="3-viz.html#gapminder"><i class="fa fa-check"></i><b>3.1.2</b> Gapminder data</a></li>
+<li class="chapter" data-level="3.1.3" data-path="3-viz.html"><a href="3-viz.html#other-components"><i class="fa fa-check"></i><b>3.1.3</b> Other components</a></li>
+<li class="chapter" data-level="3.1.4" data-path="3-viz.html"><a href="3-viz.html#ggplot2-package"><i class="fa fa-check"></i><b>3.1.4</b> ggplot2 package</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="3-viz.html"><a href="3-viz.html#FiveNG"><i class="fa fa-check"></i><b>3.2</b> Five named graphs - the 5NG</a></li>
+<li class="chapter" data-level="3.3" data-path="3-viz.html"><a href="3-viz.html#scatterplots"><i class="fa fa-check"></i><b>3.3</b> 5NG#1: Scatterplots</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="3-viz.html"><a href="3-viz.html#geompoint"><i class="fa fa-check"></i><b>3.3.1</b> Scatterplots via <code>geom_point</code></a></li>
+<li class="chapter" data-level="3.3.2" data-path="3-viz.html"><a href="3-viz.html#overplotting"><i class="fa fa-check"></i><b>3.3.2</b> Overplotting</a></li>
+<li class="chapter" data-level="3.3.3" data-path="3-viz.html"><a href="3-viz.html#summary"><i class="fa fa-check"></i><b>3.3.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="3-viz.html"><a href="3-viz.html#linegraphs"><i class="fa fa-check"></i><b>3.4</b> 5NG#2: Linegraphs</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="3-viz.html"><a href="3-viz.html#geomline"><i class="fa fa-check"></i><b>3.4.1</b> Linegraphs via <code>geom_line</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="3-viz.html"><a href="3-viz.html#summary-1"><i class="fa fa-check"></i><b>3.4.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="3-viz.html"><a href="3-viz.html#histograms"><i class="fa fa-check"></i><b>3.5</b> 5NG#3: Histograms</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="3-viz.html"><a href="3-viz.html#geomhistogram"><i class="fa fa-check"></i><b>3.5.1</b> Histograms via <code>geom_histogram</code></a></li>
+<li class="chapter" data-level="3.5.2" data-path="3-viz.html"><a href="3-viz.html#adjustbins"><i class="fa fa-check"></i><b>3.5.2</b> Adjusting the bins</a></li>
+<li class="chapter" data-level="3.5.3" data-path="3-viz.html"><a href="3-viz.html#summary-2"><i class="fa fa-check"></i><b>3.5.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="3-viz.html"><a href="3-viz.html#facets"><i class="fa fa-check"></i><b>3.6</b> Facets</a></li>
+<li class="chapter" data-level="3.7" data-path="3-viz.html"><a href="3-viz.html#boxplots"><i class="fa fa-check"></i><b>3.7</b> 5NG#4: Boxplots</a><ul>
+<li class="chapter" data-level="3.7.1" data-path="3-viz.html"><a href="3-viz.html#geomboxplot"><i class="fa fa-check"></i><b>3.7.1</b> Boxplots via <code>geom_boxplot</code></a></li>
+<li class="chapter" data-level="3.7.2" data-path="3-viz.html"><a href="3-viz.html#summary-3"><i class="fa fa-check"></i><b>3.7.2</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="3-viz.html"><a href="3-viz.html#geombar"><i class="fa fa-check"></i><b>3.8</b> 5NG#5: Barplots</a><ul>
+<li class="chapter" data-level="3.8.1" data-path="3-viz.html"><a href="3-viz.html#barplots-via-geom_bar-or-geom_col"><i class="fa fa-check"></i><b>3.8.1</b> Barplots via <code>geom_bar</code> or <code>geom_col</code></a></li>
+<li class="chapter" data-level="3.8.2" data-path="3-viz.html"><a href="3-viz.html#must-avoid-pie-charts"><i class="fa fa-check"></i><b>3.8.2</b> Must avoid pie charts!</a></li>
+<li class="chapter" data-level="3.8.3" data-path="3-viz.html"><a href="3-viz.html#two-categ-barplot"><i class="fa fa-check"></i><b>3.8.3</b> Two categorical variables</a></li>
+<li class="chapter" data-level="3.8.4" data-path="3-viz.html"><a href="3-viz.html#summary-4"><i class="fa fa-check"></i><b>3.8.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="3-viz.html"><a href="3-viz.html#conclusion-1"><i class="fa fa-check"></i><b>3.9</b> Conclusion</a><ul>
+<li class="chapter" data-level="3.9.1" data-path="3-viz.html"><a href="3-viz.html#summary-table"><i class="fa fa-check"></i><b>3.9.1</b> Summary table</a></li>
+<li class="chapter" data-level="3.9.2" data-path="3-viz.html"><a href="3-viz.html#function-argument-specification"><i class="fa fa-check"></i><b>3.9.2</b> Function argument specification</a></li>
+<li class="chapter" data-level="3.9.3" data-path="3-viz.html"><a href="3-viz.html#additional-resources-1"><i class="fa fa-check"></i><b>3.9.3</b> Additional resources</a></li>
+<li class="chapter" data-level="3.9.4" data-path="3-viz.html"><a href="3-viz.html#whats-to-come-3"><i class="fa fa-check"></i><b>3.9.4</b> What’s to come</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-wrangling.html"><a href="4-wrangling.html"><i class="fa fa-check"></i><b>4</b> Data Wrangling</a><ul>
+<li class="chapter" data-level="" data-path="4-wrangling.html"><a href="4-wrangling.html#needed-packages-1"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="4.1" data-path="4-wrangling.html"><a href="4-wrangling.html#piping"><i class="fa fa-check"></i><b>4.1</b> The pipe operator: <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="4.2" data-path="4-wrangling.html"><a href="4-wrangling.html#filter"><i class="fa fa-check"></i><b>4.2</b> <code>filter</code> rows</a></li>
+<li class="chapter" data-level="4.3" data-path="4-wrangling.html"><a href="4-wrangling.html#summarize"><i class="fa fa-check"></i><b>4.3</b> <code>summarize</code> variables</a></li>
+<li class="chapter" data-level="4.4" data-path="4-wrangling.html"><a href="4-wrangling.html#groupby"><i class="fa fa-check"></i><b>4.4</b> <code>group_by</code> rows</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="4-wrangling.html"><a href="4-wrangling.html#grouping-by-more-than-one-variable"><i class="fa fa-check"></i><b>4.4.1</b> Grouping by more than one variable</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="4-wrangling.html"><a href="4-wrangling.html#mutate"><i class="fa fa-check"></i><b>4.5</b> <code>mutate</code> existing variables</a></li>
+<li class="chapter" data-level="4.6" data-path="4-wrangling.html"><a href="4-wrangling.html#arrange"><i class="fa fa-check"></i><b>4.6</b> <code>arrange</code> and sort rows</a></li>
+<li class="chapter" data-level="4.7" data-path="4-wrangling.html"><a href="4-wrangling.html#joins"><i class="fa fa-check"></i><b>4.7</b> <code>join</code> data frames</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="4-wrangling.html"><a href="4-wrangling.html#matching-key-variable-names"><i class="fa fa-check"></i><b>4.7.1</b> Matching “key” variable names</a></li>
+<li class="chapter" data-level="4.7.2" data-path="4-wrangling.html"><a href="4-wrangling.html#diff-key"><i class="fa fa-check"></i><b>4.7.2</b> Different “key” variable names</a></li>
+<li class="chapter" data-level="4.7.3" data-path="4-wrangling.html"><a href="4-wrangling.html#multiple-key-variables"><i class="fa fa-check"></i><b>4.7.3</b> Multiple “key” variables</a></li>
+<li class="chapter" data-level="4.7.4" data-path="4-wrangling.html"><a href="4-wrangling.html#normal-forms"><i class="fa fa-check"></i><b>4.7.4</b> Normal forms</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="4-wrangling.html"><a href="4-wrangling.html#other-verbs"><i class="fa fa-check"></i><b>4.8</b> Other verbs</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="4-wrangling.html"><a href="4-wrangling.html#select"><i class="fa fa-check"></i><b>4.8.1</b> <code>select</code> variables</a></li>
+<li class="chapter" data-level="4.8.2" data-path="4-wrangling.html"><a href="4-wrangling.html#rename"><i class="fa fa-check"></i><b>4.8.2</b> <code>rename</code> variables</a></li>
+<li class="chapter" data-level="4.8.3" data-path="4-wrangling.html"><a href="4-wrangling.html#top_n-values-of-a-variable"><i class="fa fa-check"></i><b>4.8.3</b> <code>top_n</code> values of a variable</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="4-wrangling.html"><a href="4-wrangling.html#conclusion-2"><i class="fa fa-check"></i><b>4.9</b> Conclusion</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="4-wrangling.html"><a href="4-wrangling.html#summary-table-1"><i class="fa fa-check"></i><b>4.9.1</b> Summary table</a></li>
+<li class="chapter" data-level="4.9.2" data-path="4-wrangling.html"><a href="4-wrangling.html#additional-resources-2"><i class="fa fa-check"></i><b>4.9.2</b> Additional resources</a></li>
+<li class="chapter" data-level="4.9.3" data-path="4-wrangling.html"><a href="4-wrangling.html#whats-to-come-1"><i class="fa fa-check"></i><b>4.9.3</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-tidy.html"><a href="5-tidy.html"><i class="fa fa-check"></i><b>5</b> Data Importing and “Tidy” Data</a><ul>
+<li class="chapter" data-level="" data-path="5-tidy.html"><a href="5-tidy.html#needed-packages-2"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="5.1" data-path="5-tidy.html"><a href="5-tidy.html#csv"><i class="fa fa-check"></i><b>5.1</b> Importing data</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="5-tidy.html"><a href="5-tidy.html#using-the-console"><i class="fa fa-check"></i><b>5.1.1</b> Using the console</a></li>
+<li class="chapter" data-level="5.1.2" data-path="5-tidy.html"><a href="5-tidy.html#using-rstudios-interface"><i class="fa fa-check"></i><b>5.1.2</b> Using RStudio’s interface</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="5-tidy.html"><a href="5-tidy.html#tidy-data-ex"><i class="fa fa-check"></i><b>5.2</b> “Tidy” data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="5-tidy.html"><a href="5-tidy.html#tidy-definition"><i class="fa fa-check"></i><b>5.2.1</b> Definition of “tidy” data</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-tidy.html"><a href="5-tidy.html#converting-to-tidy-data"><i class="fa fa-check"></i><b>5.2.2</b> Converting to “tidy” data</a></li>
+<li class="chapter" data-level="5.2.3" data-path="5-tidy.html"><a href="5-tidy.html#nycflights13-package-1"><i class="fa fa-check"></i><b>5.2.3</b> <code>nycflights13</code> package</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="5-tidy.html"><a href="5-tidy.html#case-study-tidy"><i class="fa fa-check"></i><b>5.3</b> Case study: Democracy in Guatemala</a></li>
+<li class="chapter" data-level="5.4" data-path="5-tidy.html"><a href="5-tidy.html#tidyverse-package"><i class="fa fa-check"></i><b>5.4</b> <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="5.5" data-path="5-tidy.html"><a href="5-tidy.html#conclusion-3"><i class="fa fa-check"></i><b>5.5</b> Conclusion</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-tidy.html"><a href="5-tidy.html#additional-resources-3"><i class="fa fa-check"></i><b>5.5.1</b> Additional resources</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-tidy.html"><a href="5-tidy.html#whats-to-come-2"><i class="fa fa-check"></i><b>5.5.2</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>II Data Modeling with moderndive</b></span></li>
+<li class="chapter" data-level="6" data-path="6-regression.html"><a href="6-regression.html"><i class="fa fa-check"></i><b>6</b> Basic Regression</a><ul>
+<li class="chapter" data-level="" data-path="6-regression.html"><a href="6-regression.html#needed-packages-3"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="6.1" data-path="6-regression.html"><a href="6-regression.html#model1"><i class="fa fa-check"></i><b>6.1</b> One numerical explanatory variable</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="6-regression.html"><a href="6-regression.html#model1EDA"><i class="fa fa-check"></i><b>6.1.1</b> Exploratory data analysis</a></li>
+<li class="chapter" data-level="6.1.2" data-path="6-regression.html"><a href="6-regression.html#model1table"><i class="fa fa-check"></i><b>6.1.2</b> Simple linear regression</a></li>
+<li class="chapter" data-level="6.1.3" data-path="6-regression.html"><a href="6-regression.html#model1points"><i class="fa fa-check"></i><b>6.1.3</b> Observed/fitted values and residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="6-regression.html"><a href="6-regression.html#model2"><i class="fa fa-check"></i><b>6.2</b> One categorical explanatory variable</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="6-regression.html"><a href="6-regression.html#model2EDA"><i class="fa fa-check"></i><b>6.2.1</b> Exploratory data analysis</a></li>
+<li class="chapter" data-level="6.2.2" data-path="6-regression.html"><a href="6-regression.html#model2table"><i class="fa fa-check"></i><b>6.2.2</b> Linear regression</a></li>
+<li class="chapter" data-level="6.2.3" data-path="6-regression.html"><a href="6-regression.html#model2points"><i class="fa fa-check"></i><b>6.2.3</b> Observed/fitted values and residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="6-regression.html"><a href="6-regression.html#related-topics"><i class="fa fa-check"></i><b>6.3</b> Related topics</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="6-regression.html"><a href="6-regression.html#correlation-is-not-causation"><i class="fa fa-check"></i><b>6.3.1</b> Correlation is not necessarily causation</a></li>
+<li class="chapter" data-level="6.3.2" data-path="6-regression.html"><a href="6-regression.html#leastsquares"><i class="fa fa-check"></i><b>6.3.2</b> Best-fitting line</a></li>
+<li class="chapter" data-level="6.3.3" data-path="6-regression.html"><a href="6-regression.html#underthehood"><i class="fa fa-check"></i><b>6.3.3</b> <code>get_regression_x()</code> functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="6-regression.html"><a href="6-regression.html#conclusion-4"><i class="fa fa-check"></i><b>6.4</b> Conclusion</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="6-regression.html"><a href="6-regression.html#additional-resources-basic-regression"><i class="fa fa-check"></i><b>6.4.1</b> Additional resources</a></li>
+<li class="chapter" data-level="6.4.2" data-path="6-regression.html"><a href="6-regression.html#whats-to-come-4"><i class="fa fa-check"></i><b>6.4.2</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html"><i class="fa fa-check"></i><b>7</b> Multiple Regression</a><ul>
+<li class="chapter" data-level="" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#needed-packages-4"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="7.1" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model4"><i class="fa fa-check"></i><b>7.1</b> One numerical and one categorical explanatory variable</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model4EDA"><i class="fa fa-check"></i><b>7.1.1</b> Exploratory data analysis</a></li>
+<li class="chapter" data-level="7.1.2" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model4interactiontable"><i class="fa fa-check"></i><b>7.1.2</b> Interaction model</a></li>
+<li class="chapter" data-level="7.1.3" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model4table"><i class="fa fa-check"></i><b>7.1.3</b> Parallel slopes model</a></li>
+<li class="chapter" data-level="7.1.4" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model4points"><i class="fa fa-check"></i><b>7.1.4</b> Observed/fitted values and residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model3"><i class="fa fa-check"></i><b>7.2</b> Two numerical explanatory variables</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model3EDA"><i class="fa fa-check"></i><b>7.2.1</b> Exploratory data analysis</a></li>
+<li class="chapter" data-level="7.2.2" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model3table"><i class="fa fa-check"></i><b>7.2.2</b> Regression plane</a></li>
+<li class="chapter" data-level="7.2.3" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model3points"><i class="fa fa-check"></i><b>7.2.3</b> Observed/fitted values and residuals</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#related-topics-1"><i class="fa fa-check"></i><b>7.3</b> Related topics</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#model-selection"><i class="fa fa-check"></i><b>7.3.1</b> Model selection</a></li>
+<li class="chapter" data-level="7.3.2" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#correlationcoefficient2"><i class="fa fa-check"></i><b>7.3.2</b> Correlation coefficient</a></li>
+<li class="chapter" data-level="7.3.3" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#simpsonsparadox"><i class="fa fa-check"></i><b>7.3.3</b> Simpson’s Paradox</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#conclusion-5"><i class="fa fa-check"></i><b>7.4</b> Conclusion</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#additional-resources-4"><i class="fa fa-check"></i><b>7.4.1</b> Additional resources</a></li>
+<li class="chapter" data-level="7.4.2" data-path="7-multiple-regression.html"><a href="7-multiple-regression.html#whats-to-come-5"><i class="fa fa-check"></i><b>7.4.2</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>III Statistical Inference with infer</b></span></li>
+<li class="chapter" data-level="8" data-path="8-sampling.html"><a href="8-sampling.html"><i class="fa fa-check"></i><b>8</b> Sampling</a><ul>
+<li class="chapter" data-level="" data-path="8-sampling.html"><a href="8-sampling.html#needed-packages-5"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="8.1" data-path="8-sampling.html"><a href="8-sampling.html#sampling-activity"><i class="fa fa-check"></i><b>8.1</b> Sampling bowl activity</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="8-sampling.html"><a href="8-sampling.html#what-proportion-of-this-bowls-balls-are-red"><i class="fa fa-check"></i><b>8.1.1</b> What proportion of this bowl’s balls are red?</a></li>
+<li class="chapter" data-level="8.1.2" data-path="8-sampling.html"><a href="8-sampling.html#using-the-shovel-once"><i class="fa fa-check"></i><b>8.1.2</b> Using the shovel once</a></li>
+<li class="chapter" data-level="8.1.3" data-path="8-sampling.html"><a href="8-sampling.html#student-shovels"><i class="fa fa-check"></i><b>8.1.3</b> Using the shovel 33 times</a></li>
+<li class="chapter" data-level="8.1.4" data-path="8-sampling.html"><a href="8-sampling.html#what-did-we-just-do"><i class="fa fa-check"></i><b>8.1.4</b> What did we just do?</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="8-sampling.html"><a href="8-sampling.html#sampling-simulation"><i class="fa fa-check"></i><b>8.2</b> Virtual sampling</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="8-sampling.html"><a href="8-sampling.html#using-the-virtual-shovel-once"><i class="fa fa-check"></i><b>8.2.1</b> Using the virtual shovel once</a></li>
+<li class="chapter" data-level="8.2.2" data-path="8-sampling.html"><a href="8-sampling.html#using-the-virtual-shovel-33-times"><i class="fa fa-check"></i><b>8.2.2</b> Using the virtual shovel 33 times</a></li>
+<li class="chapter" data-level="8.2.3" data-path="8-sampling.html"><a href="8-sampling.html#shovel-1000-times"><i class="fa fa-check"></i><b>8.2.3</b> Using the virtual shovel 1000 times</a></li>
+<li class="chapter" data-level="8.2.4" data-path="8-sampling.html"><a href="8-sampling.html#different-shovels"><i class="fa fa-check"></i><b>8.2.4</b> Using different shovels</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="8-sampling.html"><a href="8-sampling.html#sampling-framework"><i class="fa fa-check"></i><b>8.3</b> Sampling framework</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="8-sampling.html"><a href="8-sampling.html#terminology-and-notation"><i class="fa fa-check"></i><b>8.3.1</b> Terminology and notation</a></li>
+<li class="chapter" data-level="8.3.2" data-path="8-sampling.html"><a href="8-sampling.html#sampling-definitions"><i class="fa fa-check"></i><b>8.3.2</b> Statistical definitions</a></li>
+<li class="chapter" data-level="8.3.3" data-path="8-sampling.html"><a href="8-sampling.html#moral-of-the-story"><i class="fa fa-check"></i><b>8.3.3</b> The moral of the story</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="8-sampling.html"><a href="8-sampling.html#sampling-case-study"><i class="fa fa-check"></i><b>8.4</b> Case study: Polls</a></li>
+<li class="chapter" data-level="8.5" data-path="8-sampling.html"><a href="8-sampling.html#sampling-conclusion"><i class="fa fa-check"></i><b>8.5</b> Conclusion</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="8-sampling.html"><a href="8-sampling.html#sampling-conclusion-table"><i class="fa fa-check"></i><b>8.5.1</b> Sampling scenarios</a></li>
+<li class="chapter" data-level="8.5.2" data-path="8-sampling.html"><a href="8-sampling.html#sampling-conclusion-central-limit-theorem"><i class="fa fa-check"></i><b>8.5.2</b> Central Limit Theorem</a></li>
+<li class="chapter" data-level="8.5.3" data-path="8-sampling.html"><a href="8-sampling.html#additional-resources-5"><i class="fa fa-check"></i><b>8.5.3</b> Additional resources</a></li>
+<li class="chapter" data-level="8.5.4" data-path="8-sampling.html"><a href="8-sampling.html#whats-to-come-6"><i class="fa fa-check"></i><b>8.5.4</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html"><i class="fa fa-check"></i><b>9</b> Bootstrapping and Confidence Intervals</a><ul>
+<li class="chapter" data-level="" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#needed-packages-6"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="9.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#resampling-tactile"><i class="fa fa-check"></i><b>9.1</b> Pennies activity</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#what-is-the-average-year-on-us-pennies-in-2019"><i class="fa fa-check"></i><b>9.1.1</b> What is the average year on US pennies in 2019?</a></li>
+<li class="chapter" data-level="9.1.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#resampling-once"><i class="fa fa-check"></i><b>9.1.2</b> Resampling once</a></li>
+<li class="chapter" data-level="9.1.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#student-resamples"><i class="fa fa-check"></i><b>9.1.3</b> Resampling 35 times</a></li>
+<li class="chapter" data-level="9.1.4" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#what-did-we-just-do-1"><i class="fa fa-check"></i><b>9.1.4</b> What did we just do?</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#resampling-simulation"><i class="fa fa-check"></i><b>9.2</b> Computer simulation of resampling</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#virtually-resampling-once"><i class="fa fa-check"></i><b>9.2.1</b> Virtually resampling once</a></li>
+<li class="chapter" data-level="9.2.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#bootstrap-35-replicates"><i class="fa fa-check"></i><b>9.2.2</b> Virtually resampling 35 times</a></li>
+<li class="chapter" data-level="9.2.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#bootstrap-1000-replicates"><i class="fa fa-check"></i><b>9.2.3</b> Virtually resampling 1000 times</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#ci-build-up"><i class="fa fa-check"></i><b>9.3</b> Understanding confidence intervals</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#percentile-method"><i class="fa fa-check"></i><b>9.3.1</b> Percentile method</a></li>
+<li class="chapter" data-level="9.3.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#se-method"><i class="fa fa-check"></i><b>9.3.2</b> Standard error method</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#bootstrap-process"><i class="fa fa-check"></i><b>9.4</b> Constructing confidence intervals</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#original-workflow"><i class="fa fa-check"></i><b>9.4.1</b> Original workflow</a></li>
+<li class="chapter" data-level="9.4.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#infer-workflow"><i class="fa fa-check"></i><b>9.4.2</b> <code>infer</code> package workflow</a></li>
+<li class="chapter" data-level="9.4.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#percentile-method-infer"><i class="fa fa-check"></i><b>9.4.3</b> Percentile method with <code>infer</code></a></li>
+<li class="chapter" data-level="9.4.4" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#infer-se"><i class="fa fa-check"></i><b>9.4.4</b> Standard error method with <code>infer</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#one-prop-ci"><i class="fa fa-check"></i><b>9.5</b> Interpreting confidence intervals</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#ilyas-yohan"><i class="fa fa-check"></i><b>9.5.1</b> Did the net capture the fish?</a></li>
+<li class="chapter" data-level="9.5.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#shorthand"><i class="fa fa-check"></i><b>9.5.2</b> Precise and shorthand interpretation</a></li>
+<li class="chapter" data-level="9.5.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#ci-width"><i class="fa fa-check"></i><b>9.5.3</b> Width of confidence intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#case-study-two-prop-ci"><i class="fa fa-check"></i><b>9.6</b> Case study: Is yawning contagious?</a><ul>
+<li class="chapter" data-level="9.6.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#mythbusters-study-data"><i class="fa fa-check"></i><b>9.6.1</b> <em>Mythbusters</em> study data</a></li>
+<li class="chapter" data-level="9.6.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#sampling-scenario"><i class="fa fa-check"></i><b>9.6.2</b> Sampling scenario</a></li>
+<li class="chapter" data-level="9.6.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#ci-build"><i class="fa fa-check"></i><b>9.6.3</b> Constructing the confidence interval</a></li>
+<li class="chapter" data-level="9.6.4" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#interpreting-the-confidence-interval"><i class="fa fa-check"></i><b>9.6.4</b> Interpreting the confidence interval</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#ci-conclusion"><i class="fa fa-check"></i><b>9.7</b> Conclusion</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#bootstrap-vs-sampling"><i class="fa fa-check"></i><b>9.7.1</b> Comparing bootstrap and sampling distributions</a></li>
+<li class="chapter" data-level="9.7.2" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#theory-ci"><i class="fa fa-check"></i><b>9.7.2</b> Theory-based confidence intervals</a></li>
+<li class="chapter" data-level="9.7.3" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#additional-resources-6"><i class="fa fa-check"></i><b>9.7.3</b> Additional resources</a></li>
+<li class="chapter" data-level="9.7.4" data-path="9-confidence-intervals.html"><a href="9-confidence-intervals.html#whats-to-come-7"><i class="fa fa-check"></i><b>9.7.4</b> What’s to come?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html"><i class="fa fa-check"></i><b>10</b> Hypothesis Testing</a><ul>
+<li class="chapter" data-level="" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#needed-packages-7"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="10.1" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#ht-activity"><i class="fa fa-check"></i><b>10.1</b> Promotions activity</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#does-gender-affect-promotions-at-a-bank"><i class="fa fa-check"></i><b>10.1.1</b> Does gender affect promotions at a bank?</a></li>
+<li class="chapter" data-level="10.1.2" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#shuffling-once"><i class="fa fa-check"></i><b>10.1.2</b> Shuffling once</a></li>
+<li class="chapter" data-level="10.1.3" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#shuffling-16-times"><i class="fa fa-check"></i><b>10.1.3</b> Shuffling 16 times</a></li>
+<li class="chapter" data-level="10.1.4" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#what-did-we-just-do-2"><i class="fa fa-check"></i><b>10.1.4</b> What did we just do?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#understanding-ht"><i class="fa fa-check"></i><b>10.2</b> Understanding hypothesis tests</a></li>
+<li class="chapter" data-level="10.3" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#ht-infer"><i class="fa fa-check"></i><b>10.3</b> Conducting hypothesis tests</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#infer-workflow-ht"><i class="fa fa-check"></i><b>10.3.1</b> <code>infer</code> package workflow</a></li>
+<li class="chapter" data-level="10.3.2" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#comparing-infer-workflows"><i class="fa fa-check"></i><b>10.3.2</b> Comparison with confidence intervals</a></li>
+<li class="chapter" data-level="10.3.3" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#only-one-test"><i class="fa fa-check"></i><b>10.3.3</b> “There is only one test”</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#ht-interpretation"><i class="fa fa-check"></i><b>10.4</b> Interpreting hypothesis tests</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#trial"><i class="fa fa-check"></i><b>10.4.1</b> Two possible outcomes</a></li>
+<li class="chapter" data-level="10.4.2" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#types-of-errors"><i class="fa fa-check"></i><b>10.4.2</b> Types of errors</a></li>
+<li class="chapter" data-level="10.4.3" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#choosing-alpha"><i class="fa fa-check"></i><b>10.4.3</b> How do we choose alpha?</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#ht-case-study"><i class="fa fa-check"></i><b>10.5</b> Case study: Are action or romance movies rated higher?</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#imdb-data"><i class="fa fa-check"></i><b>10.5.1</b> IMDb ratings data</a></li>
+<li class="chapter" data-level="10.5.2" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#sampling-scenario-1"><i class="fa fa-check"></i><b>10.5.2</b> Sampling scenario</a></li>
+<li class="chapter" data-level="10.5.3" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#conducting-the-hypothesis-test"><i class="fa fa-check"></i><b>10.5.3</b> Conducting the hypothesis test</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#conclusion-6"><i class="fa fa-check"></i><b>10.6</b> Conclusion</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#theory-hypo"><i class="fa fa-check"></i><b>10.6.1</b> Theory-based hypothesis tests</a></li>
+<li class="chapter" data-level="10.6.2" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#when-inference-is-not-needed"><i class="fa fa-check"></i><b>10.6.2</b> When inference is not needed</a></li>
+<li class="chapter" data-level="10.6.3" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#problems-with-p-values"><i class="fa fa-check"></i><b>10.6.3</b> Problems with p-values</a></li>
+<li class="chapter" data-level="10.6.4" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#additional-resources-7"><i class="fa fa-check"></i><b>10.6.4</b> Additional resources</a></li>
+<li class="chapter" data-level="10.6.5" data-path="10-hypothesis-testing.html"><a href="10-hypothesis-testing.html#whats-to-come-8"><i class="fa fa-check"></i><b>10.6.5</b> What’s to come</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html"><i class="fa fa-check"></i><b>11</b> Inference for Regression</a><ul>
+<li class="chapter" data-level="" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#needed-packages-8"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="11.1" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#regression-refresher"><i class="fa fa-check"></i><b>11.1</b> Regression refresher</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#teaching-evaluations-analysis"><i class="fa fa-check"></i><b>11.1.1</b> Teaching evaluations analysis</a></li>
+<li class="chapter" data-level="11.1.2" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#sampling-scenario-2"><i class="fa fa-check"></i><b>11.1.2</b> Sampling scenario</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#regression-interp"><i class="fa fa-check"></i><b>11.2</b> Interpreting regression tables</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#regression-se"><i class="fa fa-check"></i><b>11.2.1</b> Standard error</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#regression-test-statistic"><i class="fa fa-check"></i><b>11.2.2</b> Test statistic</a></li>
+<li class="chapter" data-level="11.2.3" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#p-value"><i class="fa fa-check"></i><b>11.2.3</b> p-value</a></li>
+<li class="chapter" data-level="11.2.4" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#confidence-interval"><i class="fa fa-check"></i><b>11.2.4</b> Confidence interval</a></li>
+<li class="chapter" data-level="11.2.5" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#regression-table-computation"><i class="fa fa-check"></i><b>11.2.5</b> How does R compute the table?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#regression-conditions"><i class="fa fa-check"></i><b>11.3</b> Conditions for inference for regression</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#residuals-refresher"><i class="fa fa-check"></i><b>11.3.1</b> Residuals refresher</a></li>
+<li class="chapter" data-level="11.3.2" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#linearity-of-relationship"><i class="fa fa-check"></i><b>11.3.2</b> Linearity of relationship</a></li>
+<li class="chapter" data-level="11.3.3" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#independence-of-residuals"><i class="fa fa-check"></i><b>11.3.3</b> Independence of residuals</a></li>
+<li class="chapter" data-level="11.3.4" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#normality-of-residuals"><i class="fa fa-check"></i><b>11.3.4</b> Normality of residuals</a></li>
+<li class="chapter" data-level="11.3.5" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#equality-of-variance"><i class="fa fa-check"></i><b>11.3.5</b> Equality of variance</a></li>
+<li class="chapter" data-level="11.3.6" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#what-is-the-conclusion"><i class="fa fa-check"></i><b>11.3.6</b> What’s the conclusion?</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#infer-regression"><i class="fa fa-check"></i><b>11.4</b> Simulation-based inference for regression</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#confidence-interval-for-slope"><i class="fa fa-check"></i><b>11.4.1</b> Confidence interval for slope</a></li>
+<li class="chapter" data-level="11.4.2" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#hypothesis-test-for-slope"><i class="fa fa-check"></i><b>11.4.2</b> Hypothesis test for slope</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#conclusion-7"><i class="fa fa-check"></i><b>11.5</b> Conclusion</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#theory-regression"><i class="fa fa-check"></i><b>11.5.1</b> Theory-based inference for regression</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#summary-of-statistical-inference"><i class="fa fa-check"></i><b>11.5.2</b> Summary of statistical inference</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#additional-resources-8"><i class="fa fa-check"></i><b>11.5.3</b> Additional resources</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-inference-for-regression.html"><a href="11-inference-for-regression.html#whats-to-come-9"><i class="fa fa-check"></i><b>11.5.4</b> What’s to come</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>IV Learnings so far</b></span></li>
+<li class="chapter" data-level="12" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html"><i class="fa fa-check"></i><b>12</b> Tell Your Story with Data</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#review"><i class="fa fa-check"></i><b>12.1</b> Review</a><ul>
+<li class="chapter" data-level="" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#needed-packages-9"><i class="fa fa-check"></i>Needed packages</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#seattle-house-prices"><i class="fa fa-check"></i><b>12.2</b> Case study: Seattle house prices</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#house-prices-EDA-I"><i class="fa fa-check"></i><b>12.2.1</b> Exploratory data analysis: Part I</a></li>
+<li class="chapter" data-level="12.2.2" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#house-prices-EDA-II"><i class="fa fa-check"></i><b>12.2.2</b> Exploratory data analysis: Part II</a></li>
+<li class="chapter" data-level="12.2.3" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#house-prices-regression"><i class="fa fa-check"></i><b>12.2.3</b> Regression modeling</a></li>
+<li class="chapter" data-level="12.2.4" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#house-prices-making-predictions"><i class="fa fa-check"></i><b>12.2.4</b> Making predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#data-journalism"><i class="fa fa-check"></i><b>12.3</b> Case study: Effective data storytelling</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#bechdel-test-for-hollywood-gender-representation"><i class="fa fa-check"></i><b>12.3.1</b> Bechdel test for Hollywood gender representation</a></li>
+<li class="chapter" data-level="12.3.2" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#us-births-in-1999"><i class="fa fa-check"></i><b>12.3.2</b> US Births in 1999</a></li>
+<li class="chapter" data-level="12.3.3" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#scripts-of-r-code"><i class="fa fa-check"></i><b>12.3.3</b> Scripts of R code</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="12-thinking-with-data.html"><a href="12-thinking-with-data.html#concluding-remarks"><i class="fa fa-check"></i>Concluding remarks</a></li>
+</ul></li>
+<li class="part"><span><b>V HR Analytics practical examples</b></span></li>
+<li class="chapter" data-level="13" data-path="13-pay-gap.html"><a href="13-pay-gap.html"><i class="fa fa-check"></i><b>13</b> Gender Pay Gap</a><ul>
+<li class="chapter" data-level="13.1" data-path="13-pay-gap.html"><a href="13-pay-gap.html#data-cleaning-and-prep."><i class="fa fa-check"></i><b>13.1</b> Data Cleaning and Prep.</a></li>
+<li class="chapter" data-level="13.2" data-path="13-pay-gap.html"><a href="13-pay-gap.html#summary-statistics-by-gender"><i class="fa fa-check"></i><b>13.2</b> Summary Statistics by gender</a></li>
+<li class="chapter" data-level="13.3" data-path="13-pay-gap.html"><a href="13-pay-gap.html#avoiding-simpsons-paradox"><i class="fa fa-check"></i><b>13.3</b> Avoiding Simpson’s Paradox</a></li>
+<li class="chapter" data-level="13.4" data-path="13-pay-gap.html"><a href="13-pay-gap.html#model-estimation-ols-with-controls."><i class="fa fa-check"></i><b>13.4</b> Model Estimation: OLS with controls.</a><ul>
+<li class="chapter" data-level="13.4.1" data-path="13-pay-gap.html"><a href="13-pay-gap.html#logarithm-of-base-pay"><i class="fa fa-check"></i><b>13.4.1</b> Logarithm of Base Pay</a></li>
+<li class="chapter" data-level="13.4.2" data-path="13-pay-gap.html"><a href="13-pay-gap.html#results-by-department"><i class="fa fa-check"></i><b>13.4.2</b> Results by Department</a></li>
+<li class="chapter" data-level="13.4.3" data-path="13-pay-gap.html"><a href="13-pay-gap.html#results-by-job-title"><i class="fa fa-check"></i><b>13.4.3</b> Results by Job Title</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="14-stop-appraisals.html"><a href="14-stop-appraisals.html"><i class="fa fa-check"></i><b>14</b> Stop appraisals</a></li>
+<li class="chapter" data-level="15" data-path="15-service-desk.html"><a href="15-service-desk.html"><i class="fa fa-check"></i><b>15</b> HR Service Desk</a></li>
+<li class="chapter" data-level="16" data-path="16-personality.html"><a href="16-personality.html"><i class="fa fa-check"></i><b>16</b> Personality insights</a></li>
+<li class="chapter" data-level="17" data-path="17-commuting-time.html"><a href="17-commuting-time.html"><i class="fa fa-check"></i><b>17</b> Commuting time</a></li>
+<li class="chapter" data-level="18" data-path="18-orgnisational-network.html"><a href="18-orgnisational-network.html"><i class="fa fa-check"></i><b>18</b> Organisational network analysis</a></li>
+<li class="chapter" data-level="19" data-path="19-job-classification.html"><a href="19-job-classification.html"><i class="fa fa-check"></i><b>19</b> Job classification analysis</a><ul>
+<li class="chapter" data-level="19.0.1" data-path="19-job-classification.html"><a href="19-job-classification.html#final-evaluation-of-the-various-models"><i class="fa fa-check"></i><b>19.0.1</b> Final evaluation of the various models</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="20-masking-data.html"><a href="20-masking-data.html"><i class="fa fa-check"></i><b>20</b> Masking HR data</a><ul>
+<li class="chapter" data-level="20.0.1" data-path="20-masking-data.html"><a href="20-masking-data.html#whitehouse-dataset"><i class="fa fa-check"></i><b>20.0.1</b> Whitehouse dataset</a></li>
+<li class="chapter" data-level="20.0.2" data-path="20-masking-data.html"><a href="20-masking-data.html#fertility-dataset"><i class="fa fa-check"></i><b>20.0.2</b> Fertility dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="21-absenteeism-MFG.html"><a href="21-absenteeism-MFG.html"><i class="fa fa-check"></i><b>21</b> Absenteeism in manufacturing</a><ul>
+<li class="chapter" data-level="21.0.1" data-path="21-absenteeism-MFG.html"><a href="21-absenteeism-MFG.html#for-expediency-we-will-delete-the-problem-records-in-the-dataset."><i class="fa fa-check"></i><b>21.0.1</b> For expediency we will delete the problem records in the dataset.</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html"><i class="fa fa-check"></i><b>22</b> Absenteeism at work</a><ul>
+<li class="chapter" data-level="22.1" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html#data-reading"><i class="fa fa-check"></i><b>22.1</b> Data reading</a></li>
+<li class="chapter" data-level="22.2" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html#basic-statistics-and-data-preparation"><i class="fa fa-check"></i><b>22.2</b> Basic statistics and data preparation</a></li>
+<li class="chapter" data-level="22.3" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html#data-exploration"><i class="fa fa-check"></i><b>22.3</b> Data exploration</a></li>
+<li class="chapter" data-level="22.4" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html#some-more-digging-into-the-data"><i class="fa fa-check"></i><b>22.4</b> Some more digging into the data</a></li>
+<li class="chapter" data-level="22.5" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html#here-the-various-types-of-reasons-for-absence-attribute-is-analysed"><i class="fa fa-check"></i><b>22.5</b> Here the various types of reasons for absence attribute is analysed</a></li>
+<li class="chapter" data-level="22.6" data-path="22-absenteeism-work.html"><a href="22-absenteeism-work.html#principal-component-analysis-pca"><i class="fa fa-check"></i><b>22.6</b> Principal component analysis (PCA)</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="23-accidents-work.html"><a href="23-accidents-work.html"><i class="fa fa-check"></i><b>23</b> Accidents at work</a></li>
+<li class="chapter" data-level="24" data-path="24-attrition.html"><a href="24-attrition.html"><i class="fa fa-check"></i><b>24</b> Attrition</a></li>
+<li class="chapter" data-level="25" data-path="25-interview-attendance.html"><a href="25-interview-attendance.html"><i class="fa fa-check"></i><b>25</b> Interview attendance problem</a><ul>
+<li class="chapter" data-level="25.1" data-path="25-interview-attendance.html"><a href="25-interview-attendance.html#data-reading-1"><i class="fa fa-check"></i><b>25.1</b> Data reading</a></li>
+<li class="chapter" data-level="25.2" data-path="25-interview-attendance.html"><a href="25-interview-attendance.html#data-cleaning"><i class="fa fa-check"></i><b>25.2</b> Data cleaning</a></li>
+<li class="chapter" data-level="25.3" data-path="25-interview-attendance.html"><a href="25-interview-attendance.html#choosing-a-model"><i class="fa fa-check"></i><b>25.3</b> Choosing a model</a></li>
+<li class="chapter" data-level="25.4" data-path="25-interview-attendance.html"><a href="25-interview-attendance.html#training"><i class="fa fa-check"></i><b>25.4</b> Training</a></li>
+</ul></li>
+<li class="chapter" data-level="26" data-path="26-ranking-medical-school.html"><a href="26-ranking-medical-school.html"><i class="fa fa-check"></i><b>26</b> Ranking Medical Schools</a></li>
+<li class="chapter" data-level="27" data-path="27-webscraping-linkedin.html"><a href="27-webscraping-linkedin.html"><i class="fa fa-check"></i><b>27</b> Webscraping LinkedIn</a></li>
+<li class="chapter" data-level="28" data-path="28-flexdashboards.html"><a href="28-flexdashboards.html"><i class="fa fa-check"></i><b>28</b> HR dashboards</a></li>
+<li class="chapter" data-level="29" data-path="29-data-science-product.html"><a href="29-data-science-product.html"><i class="fa fa-check"></i><b>29</b> HR Analytics product with Shiny</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="A-appendixA.html"><a href="A-appendixA.html"><i class="fa fa-check"></i><b>A</b> Statistical Background</a><ul>
+<li class="chapter" data-level="A.1" data-path="A-appendixA.html"><a href="A-appendixA.html#appendix-stat-terms"><i class="fa fa-check"></i><b>A.1</b> Basic statistical terms</a><ul>
+<li class="chapter" data-level="A.1.1" data-path="A-appendixA.html"><a href="A-appendixA.html#mean"><i class="fa fa-check"></i><b>A.1.1</b> Mean</a></li>
+<li class="chapter" data-level="A.1.2" data-path="A-appendixA.html"><a href="A-appendixA.html#median"><i class="fa fa-check"></i><b>A.1.2</b> Median</a></li>
+<li class="chapter" data-level="A.1.3" data-path="A-appendixA.html"><a href="A-appendixA.html#standard-deviation"><i class="fa fa-check"></i><b>A.1.3</b> Standard deviation</a></li>
+<li class="chapter" data-level="A.1.4" data-path="A-appendixA.html"><a href="A-appendixA.html#five-number-summary"><i class="fa fa-check"></i><b>A.1.4</b> Five-number summary</a></li>
+<li class="chapter" data-level="A.1.5" data-path="A-appendixA.html"><a href="A-appendixA.html#distribution"><i class="fa fa-check"></i><b>A.1.5</b> Distribution</a></li>
+<li class="chapter" data-level="A.1.6" data-path="A-appendixA.html"><a href="A-appendixA.html#outliers"><i class="fa fa-check"></i><b>A.1.6</b> Outliers</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="A-appendixA.html"><a href="A-appendixA.html#appendix-normal-curve"><i class="fa fa-check"></i><b>A.2</b> Normal distribution</a></li>
+<li class="chapter" data-level="A.3" data-path="A-appendixA.html"><a href="A-appendixA.html#appendix-log10-transformations"><i class="fa fa-check"></i><b>A.3</b> log10 transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="B-appendixB.html"><a href="B-appendixB.html"><i class="fa fa-check"></i><b>B</b> Inference Examples</a><ul>
+<li class="chapter" data-level="" data-path="B-appendixB.html"><a href="B-appendixB.html#needed-packages-10"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="B.1" data-path="B-appendixB.html"><a href="B-appendixB.html#inference-mind-map"><i class="fa fa-check"></i><b>B.1</b> Inference mind map</a></li>
+<li class="chapter" data-level="B.2" data-path="B-appendixB.html"><a href="B-appendixB.html#one-mean"><i class="fa fa-check"></i><b>B.2</b> One mean</a><ul>
+<li class="chapter" data-level="B.2.1" data-path="B-appendixB.html"><a href="B-appendixB.html#problem-statement"><i class="fa fa-check"></i><b>B.2.1</b> Problem statement</a></li>
+<li class="chapter" data-level="B.2.2" data-path="B-appendixB.html"><a href="B-appendixB.html#competing-hypotheses"><i class="fa fa-check"></i><b>B.2.2</b> Competing hypotheses</a></li>
+<li class="chapter" data-level="B.2.3" data-path="B-appendixB.html"><a href="B-appendixB.html#exploring-the-sample-data"><i class="fa fa-check"></i><b>B.2.3</b> Exploring the sample data</a></li>
+<li class="chapter" data-level="B.2.4" data-path="B-appendixB.html"><a href="B-appendixB.html#non-traditional-methods"><i class="fa fa-check"></i><b>B.2.4</b> Non-traditional methods</a></li>
+<li class="chapter" data-level="B.2.5" data-path="B-appendixB.html"><a href="B-appendixB.html#traditional-methods"><i class="fa fa-check"></i><b>B.2.5</b> Traditional methods</a></li>
+<li class="chapter" data-level="B.2.6" data-path="B-appendixB.html"><a href="B-appendixB.html#comparing-results"><i class="fa fa-check"></i><b>B.2.6</b> Comparing results</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="B-appendixB.html"><a href="B-appendixB.html#one-proportion"><i class="fa fa-check"></i><b>B.3</b> One proportion</a><ul>
+<li class="chapter" data-level="B.3.1" data-path="B-appendixB.html"><a href="B-appendixB.html#problem-statement-1"><i class="fa fa-check"></i><b>B.3.1</b> Problem statement</a></li>
+<li class="chapter" data-level="B.3.2" data-path="B-appendixB.html"><a href="B-appendixB.html#competing-hypotheses-1"><i class="fa fa-check"></i><b>B.3.2</b> Competing hypotheses</a></li>
+<li class="chapter" data-level="B.3.3" data-path="B-appendixB.html"><a href="B-appendixB.html#exploring-the-sample-data-1"><i class="fa fa-check"></i><b>B.3.3</b> Exploring the sample data</a></li>
+<li class="chapter" data-level="B.3.4" data-path="B-appendixB.html"><a href="B-appendixB.html#non-traditional-methods-1"><i class="fa fa-check"></i><b>B.3.4</b> Non-traditional methods</a></li>
+<li class="chapter" data-level="B.3.5" data-path="B-appendixB.html"><a href="B-appendixB.html#traditional-methods-1"><i class="fa fa-check"></i><b>B.3.5</b> Traditional methods</a></li>
+<li class="chapter" data-level="B.3.6" data-path="B-appendixB.html"><a href="B-appendixB.html#comparing-results-1"><i class="fa fa-check"></i><b>B.3.6</b> Comparing results</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="B-appendixB.html"><a href="B-appendixB.html#two-proportions"><i class="fa fa-check"></i><b>B.4</b> Two proportions</a><ul>
+<li class="chapter" data-level="B.4.1" data-path="B-appendixB.html"><a href="B-appendixB.html#problem-statement-2"><i class="fa fa-check"></i><b>B.4.1</b> Problem statement</a></li>
+<li class="chapter" data-level="B.4.2" data-path="B-appendixB.html"><a href="B-appendixB.html#competing-hypotheses-2"><i class="fa fa-check"></i><b>B.4.2</b> Competing hypotheses</a></li>
+<li class="chapter" data-level="B.4.3" data-path="B-appendixB.html"><a href="B-appendixB.html#exploring-the-sample-data-2"><i class="fa fa-check"></i><b>B.4.3</b> Exploring the sample data</a></li>
+<li class="chapter" data-level="B.4.4" data-path="B-appendixB.html"><a href="B-appendixB.html#non-traditional-methods-2"><i class="fa fa-check"></i><b>B.4.4</b> Non-traditional methods</a></li>
+<li class="chapter" data-level="B.4.5" data-path="B-appendixB.html"><a href="B-appendixB.html#traditional-methods-2"><i class="fa fa-check"></i><b>B.4.5</b> Traditional methods</a></li>
+<li class="chapter" data-level="B.4.6" data-path="B-appendixB.html"><a href="B-appendixB.html#check-conditions-2"><i class="fa fa-check"></i><b>B.4.6</b> Check conditions</a></li>
+<li class="chapter" data-level="B.4.7" data-path="B-appendixB.html"><a href="B-appendixB.html#test-statistic-2"><i class="fa fa-check"></i><b>B.4.7</b> Test statistic</a></li>
+<li class="chapter" data-level="B.4.8" data-path="B-appendixB.html"><a href="B-appendixB.html#state-conclusion-2"><i class="fa fa-check"></i><b>B.4.8</b> State conclusion</a></li>
+<li class="chapter" data-level="B.4.9" data-path="B-appendixB.html"><a href="B-appendixB.html#comparing-results-2"><i class="fa fa-check"></i><b>B.4.9</b> Comparing results</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="B-appendixB.html"><a href="B-appendixB.html#two-means-independent-samples"><i class="fa fa-check"></i><b>B.5</b> Two means (independent samples)</a><ul>
+<li class="chapter" data-level="B.5.1" data-path="B-appendixB.html"><a href="B-appendixB.html#problem-statement-3"><i class="fa fa-check"></i><b>B.5.1</b> Problem statement</a></li>
+<li class="chapter" data-level="B.5.2" data-path="B-appendixB.html"><a href="B-appendixB.html#competing-hypotheses-3"><i class="fa fa-check"></i><b>B.5.2</b> Competing hypotheses</a></li>
+<li class="chapter" data-level="B.5.3" data-path="B-appendixB.html"><a href="B-appendixB.html#exploring-the-sample-data-3"><i class="fa fa-check"></i><b>B.5.3</b> Exploring the sample data</a></li>
+<li class="chapter" data-level="B.5.4" data-path="B-appendixB.html"><a href="B-appendixB.html#non-traditional-methods-3"><i class="fa fa-check"></i><b>B.5.4</b> Non-traditional methods</a></li>
+<li class="chapter" data-level="B.5.5" data-path="B-appendixB.html"><a href="B-appendixB.html#traditional-methods-3"><i class="fa fa-check"></i><b>B.5.5</b> Traditional methods</a></li>
+<li class="chapter" data-level="B.5.6" data-path="B-appendixB.html"><a href="B-appendixB.html#test-statistic-3"><i class="fa fa-check"></i><b>B.5.6</b> Test statistic</a></li>
+<li class="chapter" data-level="B.5.7" data-path="B-appendixB.html"><a href="B-appendixB.html#compute-p-value-1"><i class="fa fa-check"></i><b>B.5.7</b> Compute <span class="math inline">\(p\)</span>-value</a></li>
+<li class="chapter" data-level="B.5.8" data-path="B-appendixB.html"><a href="B-appendixB.html#state-conclusion-3"><i class="fa fa-check"></i><b>B.5.8</b> State conclusion</a></li>
+<li class="chapter" data-level="B.5.9" data-path="B-appendixB.html"><a href="B-appendixB.html#comparing-results-3"><i class="fa fa-check"></i><b>B.5.9</b> Comparing results</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="B-appendixB.html"><a href="B-appendixB.html#two-means-paired-samples"><i class="fa fa-check"></i><b>B.6</b> Two means (paired samples)</a><ul>
+<li class="chapter" data-level="B.6.1" data-path="B-appendixB.html"><a href="B-appendixB.html#competing-hypotheses-4"><i class="fa fa-check"></i><b>B.6.1</b> Competing hypotheses</a></li>
+<li class="chapter" data-level="B.6.2" data-path="B-appendixB.html"><a href="B-appendixB.html#exploring-the-sample-data-4"><i class="fa fa-check"></i><b>B.6.2</b> Exploring the sample data</a></li>
+<li class="chapter" data-level="B.6.3" data-path="B-appendixB.html"><a href="B-appendixB.html#non-traditional-methods-4"><i class="fa fa-check"></i><b>B.6.3</b> Non-traditional methods</a></li>
+<li class="chapter" data-level="B.6.4" data-path="B-appendixB.html"><a href="B-appendixB.html#traditional-methods-4"><i class="fa fa-check"></i><b>B.6.4</b> Traditional methods</a></li>
+<li class="chapter" data-level="B.6.5" data-path="B-appendixB.html"><a href="B-appendixB.html#comparing-results-4"><i class="fa fa-check"></i><b>B.6.5</b> Comparing results</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="C-appendixC.html"><a href="C-appendixC.html"><i class="fa fa-check"></i><b>C</b> Reach for the Stars</a><ul>
+<li class="chapter" data-level="" data-path="C-appendixC.html"><a href="C-appendixC.html#needed-packages-11"><i class="fa fa-check"></i>Needed packages</a></li>
+<li class="chapter" data-level="C.1" data-path="C-appendixC.html"><a href="C-appendixC.html#sorted-barplots"><i class="fa fa-check"></i><b>C.1</b> Sorted barplots</a></li>
+<li class="chapter" data-level="C.2" data-path="C-appendixC.html"><a href="C-appendixC.html#interactive-graphics"><i class="fa fa-check"></i><b>C.2</b> Interactive graphics</a><ul>
+<li class="chapter" data-level="C.2.1" data-path="C-appendixC.html"><a href="C-appendixC.html#interactive-linegraphs"><i class="fa fa-check"></i><b>C.2.1</b> Interactive linegraphs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="D" data-path="D-appendixD.html"><a href="D-appendixD.html"><i class="fa fa-check"></i><b>D</b> Learning Check Solutions</a><ul>
+<li class="chapter" data-level="D.1" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-1-solutions"><i class="fa fa-check"></i><b>D.1</b> Chapter 1 Solutions</a></li>
+<li class="chapter" data-level="D.2" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-2-solutions"><i class="fa fa-check"></i><b>D.2</b> Chapter 2 Solutions</a></li>
+<li class="chapter" data-level="D.3" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-3-solutions"><i class="fa fa-check"></i><b>D.3</b> Chapter 3 Solutions</a></li>
+<li class="chapter" data-level="D.4" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-4-solutions"><i class="fa fa-check"></i><b>D.4</b> Chapter 4 Solutions</a></li>
+<li class="chapter" data-level="D.5" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-5-solutions"><i class="fa fa-check"></i><b>D.5</b> Chapter 5 Solutions</a></li>
+<li class="chapter" data-level="D.6" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-6-solutions"><i class="fa fa-check"></i><b>D.6</b> Chapter 6 Solutions</a></li>
+<li class="chapter" data-level="D.7" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-7-solutions"><i class="fa fa-check"></i><b>D.7</b> Chapter 7 Solutions</a></li>
+<li class="chapter" data-level="D.8" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-8-solutions"><i class="fa fa-check"></i><b>D.8</b> Chapter 8 Solutions</a></li>
+<li class="chapter" data-level="D.9" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-9-solutions"><i class="fa fa-check"></i><b>D.9</b> Chapter 9 Solutions</a></li>
+<li class="chapter" data-level="D.10" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-10-solutions"><i class="fa fa-check"></i><b>D.10</b> Chapter 10 Solutions</a></li>
+<li class="chapter" data-level="D.11" data-path="D-appendixD.html"><a href="D-appendixD.html#chapter-11-solutions"><i class="fa fa-check"></i><b>D.11</b> Chapter 11 Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="E-appendixE.html"><a href="E-appendixE.html"><i class="fa fa-check"></i><b>E</b> Versions of R Packages Used</a></li>
+<li class="chapter" data-level="F" data-path="F-appendixF.html"><a href="F-appendixF.html"><i class="fa fa-check"></i><b>F</b> Archive HR datasets</a><ul>
+<li class="chapter" data-level="F.1" data-path="F-appendixF.html"><a href="F-appendixF.html#gender_pay_gap"><i class="fa fa-check"></i><b>F.1</b> Gender Pay Gap</a></li>
+<li class="chapter" data-level="F.2" data-path="F-appendixF.html"><a href="F-appendixF.html#overhead"><i class="fa fa-check"></i><b>F.2</b> Overhead value analysis</a></li>
+<li class="chapter" data-level="F.3" data-path="F-appendixF.html"><a href="F-appendixF.html#service_desk_data"><i class="fa fa-check"></i><b>F.3</b> HR Service Desk</a></li>
+<li class="chapter" data-level="F.4" data-path="F-appendixF.html"><a href="F-appendixF.html#HRrecruitment"><i class="fa fa-check"></i><b>F.4</b> HR recruitment, selection and performance data</a></li>
+<li class="chapter" data-level="F.5" data-path="F-appendixF.html"><a href="F-appendixF.html#job-classification-1"><i class="fa fa-check"></i><b>F.5</b> Job classification</a></li>
+<li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">HR Analytics in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<html>
+<img src='https://hranalyticslive.netlify.com/images/hranalytics.jpg' alt="HRAnalytics">
+</html>
+<div id="orgnisational-network" class="section level1">
+<h1><span class="header-section-number">Chapter 18</span> Organisational network analysis</h1>
+<p>Visualizing and analysing formal and informal relationships in your organization can help you shape business strategy that maximizes organic exchange of information, thereby helping your business become more sustainable and effective.</p>
+<p>For example in Organisational network analysis (ONA), we can ask employees three simple questions: 1) who is important to your ability to accomplish work priorities? 2) who is important for you to have greater access to, and 3) who provides you with career-related advice?</p>
+<p>Nowadays, HR professionals use Organizational Network Analysis (ONA) use to their advantage. A whole new skill set is develping. HR professionals need to develop a structured way to visualise how communications, information, and decisions flow through an organization.</p>
+<p>Organizational networks consist of nodes and edges.</p>
+<p>In the following example, we will use the character interaction network for George R. R. Martin’s “A Song of Ice and Fire” saga.</p>
+<p>These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in “A Song of Ice and Fire.” The edge weight corresponds to the number of interactions. A Song of Ice and Fire is an ongoing a series of epic fantasy novels.</p>
+<p>You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.</p>
+<p>This is the data for the work presented here: <a href="https://networkofthrones.wordpress.com" class="uri">https://networkofthrones.wordpress.com</a> by Andrew Beveridge.</p>
+<p>Source: <a href="https://github.com/mathbeveridge/asoiaf" class="uri">https://github.com/mathbeveridge/asoiaf</a>
+Source code: <a href="https://shirinsplayground.netlify.com/2018/03/got_network/" class="uri">https://shirinsplayground.netlify.com/2018/03/got_network/</a>
+Source code: <a href="https://shiring.github.io/networks/2017/05/15/got_final" class="uri">https://shiring.github.io/networks/2017/05/15/got_final</a></p>
+<p>With the following we ensure that all needed libraries are installed.</p>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb566-1" title="1"><span class="kw">library</span>(tidyverse) <span class="co"># tidy data analysis</span></a>
+<a class="sourceLine" id="cb566-2" title="2"><span class="kw">library</span>(tidygraph) <span class="co"># tidy graph analysis</span></a>
+<a class="sourceLine" id="cb566-3" title="3"><span class="kw">library</span>(ggraph)    <span class="co"># for plotting</span></a>
+<a class="sourceLine" id="cb566-4" title="4"><span class="kw">library</span>(igraph)    <span class="co"># for plotting</span></a>
+<a class="sourceLine" id="cb566-5" title="5"><span class="kw">library</span>(visNetwork) <span class="co"># for visualising graph</span></a></code></pre></div>
+<p>First, let’s get the data from the characters from the “Song of Ice and Fire” novels.</p>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb567-1" title="1">cooc_all_edges &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/asoiaf-all-edges.csv&quot;</span>)</a></code></pre></div>
+<p>Let us identify first the main characters contained either as Source or as a target and later the 50 most important charcters:</p>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb568-1" title="1">main_ch &lt;-<span class="st"> </span>cooc_all_edges <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-3" title="3"><span class="st">  </span><span class="kw">gather</span>(x, name, Source<span class="op">:</span>Target) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-5" title="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sum_weight =</span> <span class="kw">sum</span>(weight)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-6" title="6"><span class="st">  </span><span class="kw">ungroup</span>()</a>
+<a class="sourceLine" id="cb568-7" title="7"></a>
+<a class="sourceLine" id="cb568-8" title="8">main_ch_l &lt;-<span class="st"> </span>main_ch <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-9" title="9"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(sum_weight)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb568-10" title="10"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">50</span>, sum_weight)</a>
+<a class="sourceLine" id="cb568-11" title="11">main_ch_l</a></code></pre></div>
+<pre><code># A tibble: 50 x 2
+   name               sum_weight
+   &lt;chr&gt;                   &lt;dbl&gt;
+ 1 Tyrion-Lannister         2873
+ 2 Jon-Snow                 2757
+ 3 Cersei-Lannister         2232
+ 4 Joffrey-Baratheon        1762
+ 5 Eddard-Stark             1649
+ 6 Daenerys-Targaryen       1608
+ 7 Jaime-Lannister          1569
+ 8 Sansa-Stark              1547
+ 9 Bran-Stark               1508
+10 Robert-Baratheon         1488
+# ... with 40 more rows</code></pre>
+<p>In the following we select the relationships of the top 50 characters. The edges are undirected, therefore there are no redundant Source-Target combinations; because of this, Source and Target data have been gathered before summing up the weights.</p>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb570-1" title="1">cooc_all_f &lt;-<span class="st"> </span>cooc_all_edges <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb570-2" title="2"><span class="st">  </span><span class="kw">filter</span>(Source <span class="op">%in%</span><span class="st"> </span>main_ch_l<span class="op">$</span>name <span class="op">&amp;</span><span class="st"> </span>Target <span class="op">%in%</span><span class="st"> </span>main_ch_l<span class="op">$</span>name)</a></code></pre></div>
+<p>The first step is to convert our edge table into a tbl_graph object structure. Here, we use the as_tbl_graph() function from tidygraph; it can take many different types of input data, like data.frame, matrix, dendrogram, igraph, etc.</p>
+<p>A central aspect of tidygraph is that you can directly manipulate node and edge data from this tbl_graph object by activating nodes or edges. When we first create a tbl_graph object, the nodes will be activated. We can then directly calculate node or edge metrics, like centrality, using tidyverse functions.</p>
+<p>We can change that with the activate() function. We can now, for example, remove multiple edges.</p>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb571-1" title="1"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 1 (active)
+  name                           
+  &lt;chr&gt;                          
+1 Aemon-Targaryen-(Maester-Aemon)
+2 Arya-Stark                     
+3 Barristan-Selmy                
+4 Bran-Stark                     
+5 Brienne-of-Tarth               
+6 Bronn                          
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb573-1" title="1"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb573-2" title="2"><span class="st">  </span><span class="kw">activate</span>(edges) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb573-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">edge_is_multiple</span>())</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Edge Data: 402 x 5 (active)
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+4     1    28 Undirected    60      5
+5     1    39 Undirected    63      5
+6     1    41 Undirected    64     99
+# ... with 396 more rows
+#
+# Node Data: 50 x 1
+  name                           
+  &lt;chr&gt;                          
+1 Aemon-Targaryen-(Maester-Aemon)
+2 Arya-Stark                     
+3 Barristan-Selmy                
+# ... with 47 more rows</code></pre>
+<p>Node ranking</p>
+<p>There are many options for node ranking (go to ?node_rank for a full list); let’s try out Minimize hamiltonian path length using a travelling salesperson solver.</p>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb575-1" title="1"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb575-2" title="2"><span class="st">  </span><span class="kw">activate</span>(nodes) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb575-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n_rank_trv =</span> <span class="kw">node_rank_traveller</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb575-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(n_rank_trv)</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name               n_rank_trv
+  &lt;chr&gt;                   &lt;int&gt;
+1 Myrcella-Baratheon          1
+2 Cersei-Lannister            2
+3 Tommen-Baratheon            3
+4 Brienne-of-Tarth            4
+5 Catelyn-Stark               5
+6 Robb-Stark                  6
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1    26    27 Undirected    54      5
+2    25    27 Undirected    57     25
+3    24    27 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Centrality</p>
+<p>Centrality describes the number of edges that are in- or outgoing to/from nodes. High centrality networks have few nodes with many connections, low centrality networks have many nodes with similar numbers of edges. The centrality of a node measures the importance of it in the network.</p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb577-1" title="1"><span class="co">#Centrality</span></a>
+<a class="sourceLine" id="cb577-2" title="2"></a>
+<a class="sourceLine" id="cb577-3" title="3"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb577-4" title="4"><span class="st">  </span><span class="kw">activate</span>(nodes) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb577-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">neighbors =</span> <span class="kw">centrality_degree</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb577-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>neighbors)</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name              neighbors
+  &lt;chr&gt;                 &lt;dbl&gt;
+1 Tyrion-Lannister         36
+2 Robert-Baratheon         33
+3 Joffrey-Baratheon        32
+4 Cersei-Lannister         30
+5 Eddard-Stark             30
+6 Jaime-Lannister          29
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1    41    47 Undirected    54      5
+2    38    41 Undirected    57     25
+3    14    41 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Grouping and clustering</p>
+<p>Another common operation is to group nodes based on the graph topology, sometimes referred to as community detection based on its commonality in social network analysis. All clustering algorithms from igraph is available in tidygraph using the group_* prefix. All of these functions return an integer vector with nodes (or edges) sharing the same integer being grouped together. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+<p>We can use ?group_graph for an overview about all possible ways to cluster and group nodes. Here I am using group_infomap(): Group nodes by minimizing description length using.</p>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb579-1" title="1"><span class="co">#Grouping and clustering</span></a>
+<a class="sourceLine" id="cb579-2" title="2"></a>
+<a class="sourceLine" id="cb579-3" title="3"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb579-4" title="4"><span class="st">  </span><span class="kw">activate</span>(nodes) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb579-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="kw">group_infomap</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb579-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>group)</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name               group
+  &lt;chr&gt;              &lt;int&gt;
+1 Davos-Seaworth         5
+2 Melisandre             5
+3 Stannis-Baratheon      5
+4 Barristan-Selmy        4
+5 Daenerys-Targaryen     4
+6 Drogo                  4
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1    10    11 Undirected    54      5
+2    10    12 Undirected    57     25
+3    10    13 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Querying node types</p>
+<p>We can also query different node types (?node_types gives us a list of options):</p>
+<p>These functions all lets the user query whether each node is of a certain type. All of the functions returns a logical vector indicating whether the node is of the type in question. Do note that the types are not mutually exclusive and that nodes can thus be of multiple types.</p>
+<p>Here, I am trying out node_is_center() (does the node have the minimal eccentricity in the graph) and node_is_keyplayer() to identify the top 10 key-players in the network.</p>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb581-1" title="1"><span class="co">#Querying node types</span></a>
+<a class="sourceLine" id="cb581-2" title="2"></a>
+<a class="sourceLine" id="cb581-3" title="3"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb581-4" title="4"><span class="st">  </span><span class="kw">activate</span>(nodes) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb581-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">center =</span> <span class="kw">node_is_center</span>(),</a>
+<a class="sourceLine" id="cb581-6" title="6">         <span class="dt">keyplayer =</span> <span class="kw">node_is_keyplayer</span>(<span class="dt">k =</span> <span class="dv">10</span>))</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 3 (active)
+  name                            center keyplayer
+  &lt;chr&gt;                           &lt;lgl&gt;  &lt;lgl&gt;    
+1 Aemon-Targaryen-(Maester-Aemon) FALSE  TRUE     
+2 Arya-Stark                      FALSE  FALSE    
+3 Barristan-Selmy                 FALSE  FALSE    
+4 Bran-Stark                      FALSE  TRUE     
+5 Brienne-of-Tarth                FALSE  TRUE     
+6 Bronn                           FALSE  FALSE    
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Node pairs</p>
+<p>Some statistics are a measure between two nodes, such as distance or similarity between nodes. In a tidy context one of the ends must always be the node defined by the row, while the other can be any other node. All of the node pair functions are prefixed with node_* and ends with _from/_to if the measure is not symmetric and _with if it is; e.g. there’s both a node_max_flow_to() and node_max_flow_from() function while only a single node_cocitation_with() function. The other part of the node pair can be specified as an integer vector that will get recycled if needed, or a logical vector which will get recycled and converted to indexes with which(). This means that output from node type functions can be used directly in the calls. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb583-1" title="1"><span class="co">#Node pairs</span></a>
+<a class="sourceLine" id="cb583-2" title="2"></a>
+<a class="sourceLine" id="cb583-3" title="3"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb583-4" title="4"><span class="st">  </span><span class="kw">activate</span>(nodes) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb583-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dist_to_center =</span> <span class="kw">node_distance_to</span>(<span class="kw">node_is_center</span>()))</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name                            dist_to_center
+  &lt;chr&gt;                                    &lt;dbl&gt;
+1 Aemon-Targaryen-(Maester-Aemon)              2
+2 Arya-Stark                                   1
+3 Barristan-Selmy                              1
+4 Bran-Stark                                   1
+5 Brienne-of-Tarth                             1
+6 Bronn                                        1
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Edge betweenness</p>
+<p>Similarly to node metrics, we can calculate all kinds of edge metrics. Betweenness, for example, describes the shortest paths between nodes.</p>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb585-1" title="1"><span class="co">#Edge betweenness</span></a>
+<a class="sourceLine" id="cb585-2" title="2"></a>
+<a class="sourceLine" id="cb585-3" title="3"><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb585-4" title="4"><span class="st">  </span><span class="kw">activate</span>(edges) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb585-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">centrality_e =</span> <span class="kw">centrality_edge_betweenness</span>())</a></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Edge Data: 402 x 6 (active)
+   from    to Type          id weight centrality_e
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;
+1     1    15 Undirected    54      5         46  
+2     1    20 Undirected    57     25          0  
+3     1    23 Undirected    58    110          0  
+4     1    28 Undirected    60      5         25.5
+5     1    39 Undirected    63      5         67.5
+6     1    41 Undirected    64     99          0  
+# ... with 396 more rows
+#
+# Node Data: 50 x 1
+  name                           
+  &lt;chr&gt;                          
+1 Aemon-Targaryen-(Maester-Aemon)
+2 Arya-Stark                     
+3 Barristan-Selmy                
+# ... with 47 more rows</code></pre>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb587-1" title="1"><span class="co">#The complete code</span></a>
+<a class="sourceLine" id="cb587-2" title="2"></a>
+<a class="sourceLine" id="cb587-3" title="3">cooc_all_f_graph &lt;-<span class="st"> </span><span class="kw">as_tbl_graph</span>(cooc_all_f, <span class="dt">directed =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb587-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">n_rank_trv =</span> <span class="kw">node_rank_traveller</span>(),</a>
+<a class="sourceLine" id="cb587-5" title="5">         <span class="dt">neighbors =</span> <span class="kw">centrality_degree</span>(),</a>
+<a class="sourceLine" id="cb587-6" title="6">         <span class="dt">group =</span> <span class="kw">group_infomap</span>(),</a>
+<a class="sourceLine" id="cb587-7" title="7">         <span class="dt">center =</span> <span class="kw">node_is_center</span>(),</a>
+<a class="sourceLine" id="cb587-8" title="8">         <span class="dt">dist_to_center =</span> <span class="kw">node_distance_to</span>(<span class="kw">node_is_center</span>()),</a>
+<a class="sourceLine" id="cb587-9" title="9">         <span class="dt">keyplayer =</span> <span class="kw">node_is_keyplayer</span>(<span class="dt">k =</span> <span class="dv">10</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb587-10" title="10"><span class="st">  </span><span class="kw">activate</span>(edges) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb587-11" title="11"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">edge_is_multiple</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb587-12" title="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">centrality_e =</span> <span class="kw">centrality_edge_betweenness</span>())</a>
+<a class="sourceLine" id="cb587-13" title="13"></a>
+<a class="sourceLine" id="cb587-14" title="14">cooc_all_f_graph <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb587-15" title="15"><span class="st">  </span><span class="kw">activate</span>(nodes) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># %N&gt;%</span></a>
+<a class="sourceLine" id="cb587-16" title="16"><span class="st">  </span><span class="kw">as_tibble</span>()</a></code></pre></div>
+<pre><code># A tibble: 50 x 7
+   name               n_rank_trv neighbors group center dist_to_center keyplayer
+   &lt;chr&gt;                   &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
+ 1 Aemon-Targaryen-(~         13         7     3 FALSE               2 TRUE     
+ 2 Arya-Stark                 25        24     1 FALSE               1 TRUE     
+ 3 Barristan-Selmy            41        17     4 FALSE               1 FALSE    
+ 4 Bran-Stark                 20        22     2 FALSE               1 FALSE    
+ 5 Brienne-of-Tarth            5        16     1 FALSE               1 FALSE    
+ 6 Bronn                      34        10     1 FALSE               1 FALSE    
+ 7 Catelyn-Stark              38        26     1 FALSE               1 FALSE    
+ 8 Cersei-Lannister            8        30     1 TRUE                1 FALSE    
+ 9 Daenerys-Targaryen         44        10     4 FALSE               2 FALSE    
+10 Davos-Seaworth             31         6     5 FALSE               2 TRUE     
+# ... with 40 more rows</code></pre>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb589-1" title="1">cooc_all_f_graph <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb589-2" title="2"><span class="st">  </span><span class="kw">activate</span>(edges) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># %E&gt;%</span></a>
+<a class="sourceLine" id="cb589-3" title="3"><span class="st">  </span><span class="kw">as_tibble</span>()</a></code></pre></div>
+<pre><code># A tibble: 402 x 6
+    from    to Type          id weight centrality_e
+   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;
+ 1     1    15 Undirected    54      5         46  
+ 2     1    20 Undirected    57     25          0  
+ 3     1    23 Undirected    58    110          0  
+ 4     1    28 Undirected    60      5         25.5
+ 5     1    39 Undirected    63      5         67.5
+ 6     1    41 Undirected    64     99          0  
+ 7     1    44 Undirected    65     12          0  
+ 8     2     4 Undirected   299     40          0  
+ 9     2     7 Undirected   303      8          6.5
+10     2     8 Undirected   304     25          0  
+# ... with 392 more rows</code></pre>
+<p>Plotting with the package “ggraph”</p>
+<p>First, I am going to define a layout. There are lots of options for layouts, here I am using a Fruchterman-Reingold algorithm.</p>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb591-1" title="1"><span class="co">#Plotting</span></a>
+<a class="sourceLine" id="cb591-2" title="2"></a>
+<a class="sourceLine" id="cb591-3" title="3">layout &lt;-<span class="st"> </span><span class="kw">create_layout</span>(cooc_all_f_graph, </a>
+<a class="sourceLine" id="cb591-4" title="4">                        <span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>)</a></code></pre></div>
+<p>The rest works like any ggplot2 function call, just that we use special geoms for our network, like geom_edge_density() to draw a shadow where the edge density is higher, geom_edge_link() to connect edges with a straight line, geom_node_point() to draw node points and geom_node_text() to draw the labels.</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb592-1" title="1"><span class="kw">ggraph</span>(layout) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb592-2" title="2"><span class="st">  </span><span class="kw">geom_edge_density</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> weight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb592-3" title="3"><span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">width =</span> weight), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb592-4" title="4"><span class="st">  </span><span class="kw">geom_node_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(group)), <span class="dt">size =</span> <span class="dv">5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb592-5" title="5"><span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb592-6" title="6"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb592-7" title="7"><span class="st">  </span><span class="kw">theme_graph</span>(<span class="dt">base_family=</span><span class="st">&quot;sans&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb592-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;A Song of Ice and Fire character network&quot;</span>,</a>
+<a class="sourceLine" id="cb592-9" title="9">       <span class="dt">subtitle =</span> <span class="st">&quot;Nodes are colored by group&quot;</span>)</a></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-538-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb593-1" title="1"><span class="kw">ggsave</span>(<span class="st">&quot;plotshiringroup.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">21</span>, <span class="dt">height =</span> <span class="fl">29.7</span>, <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>)</a>
+<a class="sourceLine" id="cb593-2" title="2"></a>
+<a class="sourceLine" id="cb593-3" title="3">cols &lt;-<span class="st"> </span>RColorBrewer<span class="op">::</span><span class="kw">brewer.pal</span>(<span class="dv">3</span>, <span class="st">&quot;Set1&quot;</span>)</a>
+<a class="sourceLine" id="cb593-4" title="4"></a>
+<a class="sourceLine" id="cb593-5" title="5"><span class="kw">ggraph</span>(layout) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb593-6" title="6"><span class="st">  </span><span class="kw">geom_edge_density</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> weight)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb593-7" title="7"><span class="st">  </span><span class="kw">geom_edge_link</span>(<span class="kw">aes</span>(<span class="dt">width =</span> weight), <span class="dt">alpha =</span> <span class="fl">0.2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb593-8" title="8"><span class="st">  </span><span class="kw">geom_node_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> <span class="kw">factor</span>(center), <span class="dt">size =</span> dist_to_center)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb593-9" title="9"><span class="st">  </span><span class="kw">geom_node_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> name), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb593-10" title="10"><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(cols[<span class="dv">2</span>], cols[<span class="dv">1</span>])) <span class="op">+</span></a>
+<a class="sourceLine" id="cb593-11" title="11"><span class="st">  </span><span class="kw">theme_graph</span>(<span class="dt">base_family=</span><span class="st">&quot;sans&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb593-12" title="12"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;A Song of Ice and Fire character network&quot;</span>,</a>
+<a class="sourceLine" id="cb593-13" title="13">       <span class="dt">subtitle =</span> <span class="st">&quot;Nodes are colored by centeredness&quot;</span>)</a></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-538-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb594-1" title="1"><span class="kw">ggsave</span>(<span class="st">&quot;plotshirin.pdf&quot;</span>, <span class="dt">width =</span> <span class="dv">21</span>, <span class="dt">height =</span> <span class="fl">29.7</span>, <span class="dt">units =</span> <span class="st">&quot;cm&quot;</span>)</a></code></pre></div>
+<p>Another visualisation, this time with the package “visNetwork”</p>
+<p>Graph-based analyses are many and diverse: whenever you can describe your data in terms of “outgoing” and “receiving” entities, a graph-based analysis and/or visualisation is possible. Let us try visualising previous results with another package called “visNetwork”.</p>
+<p>visNetwork is an R package for network visualization, using vis.js javascript library. Being based on htmlwidgets, it is compatible with shiny, R Markdown documents, and RStudio viewer. It is particularly easy to use, one can customise shapes, styles, colors, size. It works smoothly on any modern browser for up to a few thousand nodes and edges.</p>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb595-1" title="1">nodes2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">id =</span> (<span class="kw">unique</span>(<span class="kw">c</span>(cooc_all_f<span class="op">$</span>Source, cooc_all_f<span class="op">$</span>Target))), <span class="dt">group =</span> layout<span class="op">$</span>group)</a>
+<a class="sourceLine" id="cb595-2" title="2">                               </a>
+<a class="sourceLine" id="cb595-3" title="3">edges2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">from =</span> cooc_all_f<span class="op">$</span>Source,</a>
+<a class="sourceLine" id="cb595-4" title="4">                    <span class="dt">to =</span> (cooc_all_f<span class="op">$</span>Target))</a>
+<a class="sourceLine" id="cb595-5" title="5"></a>
+<a class="sourceLine" id="cb595-6" title="6"><span class="kw">visNetwork</span>(nodes2, edges2, <span class="dt">height =</span> <span class="st">&quot;1000px&quot;</span>, <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb595-7" title="7"><span class="st">  </span><span class="kw">visLayout</span>(<span class="dt">randomSeed =</span> <span class="dv">12</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># to have always the same network </span></a>
+<a class="sourceLine" id="cb595-8" title="8"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;1&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb595-9" title="9"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;2&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb595-10" title="10"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;3&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb595-11" title="11"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;4&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;purple&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb595-12" title="12"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;5&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb595-13" title="13"><span class="st">  </span><span class="kw">visIgraphLayout</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb595-14" title="14"><span class="st">  </span><span class="kw">visOptions</span>(<span class="dt">highlightNearest =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb595-15" title="15"><span class="st">  </span><span class="kw">visNodes</span>(<span class="dt">size =</span> <span class="dv">15</span>)</a></code></pre></div>
+<div id="htmlwidget-f8cf3cac81871f0bf69b" style="width:100%;height:1000px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f8cf3cac81871f0bf69b">{"x":{"nodes":{"id":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"],"group":[3,1,4,2,1,1,1,1,4,5,4,1,1,1,3,4,2,1,1,3,1,2,3,4,1,2,1,3,1,2,5,1,1,1,1,1,2,2,1,2,3,1,1,5,2,1,1,1,4,1],"x":[0.604290507309936,-0.149062941846605,-0.615958376288884,0.0253083326207943,-0.69547728460968,-0.0518427010196667,-0.420874156148361,-0.454234551383965,-0.512723755084584,-0.352953992769315,-0.138940256982048,-0.411958099987933,-0.904924941426168,-0.456965705465014,1,-1,0.150354865682435,-0.81977301532523,-0.550600060284797,0.431598147320103,-0.308776912798359,0.575716402847149,0.129294733245227,-0.0259070344883761,-0.752620892178453,0.00998605500182936,-0.868489868503044,0.425256121017973,-0.896820955040636,0.458894529973735,0.229538613020777,-0.423556180377382,-0.0746268011918381,-0.62148410141847,-0.716591698364243,-0.51337304173042,0.0715824520600625,-0.226163069801627,-0.29376502694661,-0.250360755138331,0.553108611041574,-0.662652220712984,-0.430432875002827,-0.168955033677732,-0.0856892709903619,-0.40358590102789,-0.294733408968017,-0.613884799869248,-0.776661141217866,-0.554899365056819],"y":[0.113516520977293,0.201219236428485,-0.284328314136325,0.459279003472485,0.444691945063552,0.0892017655588577,0.454625024898177,0.0644558155345363,-0.494034264384667,0.78267630585129,-0.819919025069996,0.264910053716333,0.531750310265485,-0.0845889234217291,0.191513900221734,-0.914651449058784,0.985312998373704,0.0174299614829281,0.178064752145535,-0.0037477210429232,0.212356963491328,0.901366344224149,0.289550561047735,-0.489748562305763,0.244780432292772,0.743821808268881,0.340059617636721,0.291465842737292,0.16010562926181,1,0.533238578686153,-0.245908072443294,-0.0720761907998123,0.22629444021637,-0.0774455141581778,0.335930519721395,0.64030244054987,0.42352970514437,-0.0111980269548737,0.575053146108866,0.485125089013844,0.021776722650156,0.157858444024539,0.299471909827441,0.536767658322428,0.372947009828666,0.120055806825441,0.327728122891591,-1,-0.0199971002084054],"label":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"]},"edges":{"from":["Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Drogo","Drogo","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Grenn","Grenn","Grenn","Hizdahr-zo-Loraq","Hodor","Hodor","Hodor","Hodor","Hodor","Hodor","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jorah-Mormont","Jorah-Mormont","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Mance-Rayder","Mance-Rayder","Mance-Rayder","Mance-Rayder","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Meera-Reed","Meera-Reed","Melisandre","Melisandre","Melisandre","Meryn-Trant","Meryn-Trant","Meryn-Trant","Meryn-Trant","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Rodrik-Cassel","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sandor-Clegane","Sandor-Clegane","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Theon-Greyjoy","Theon-Greyjoy","Tommen-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tyrion-Lannister","Tywin-Lannister"],"to":["Grenn","Jeor-Mormont","Jon-Snow","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Stannis-Baratheon","Bran-Stark","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Mance-Rayder","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Cersei-Lannister","Daenerys-Targaryen","Eddard-Stark","Hizdahr-zo-Loraq","Jaime-Lannister","Joffrey-Baratheon","Jorah-Mormont","Meryn-Trant","Petyr-Baelish","Pycelle","Quentyn-Martell","Renly-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Hodor","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Luwin","Meera-Reed","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Catelyn-Stark","Cersei-Lannister","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Lysa-Arryn","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Catelyn-Stark","Cersei-Lannister","Gregor-Clegane","Joffrey-Baratheon","Rodrik-Cassel","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Cersei-Lannister","Eddard-Stark","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Daenerys-Targaryen","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Drogo","Eddard-Stark","Hizdahr-zo-Loraq","Jorah-Mormont","Quentyn-Martell","Robert-Baratheon","Tyrion-Lannister","Varys","Eddard-Stark","Joffrey-Baratheon","Melisandre","Renly-Baratheon","Robb-Stark","Stannis-Baratheon","Jorah-Mormont","Robert-Baratheon","Edmure-Tully","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Ilyn-Payne","Jaime-Lannister","Lysa-Arryn","Petyr-Baelish","Robb-Stark","Tommen-Baratheon","Tywin-Lannister","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Tywin-Lannister","Jeor-Mormont","Jon-Snow","Samwell-Tarly","Quentyn-Martell","Jojen-Reed","Luwin","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Jon-Snow","Jorah-Mormont","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Tyrion-Lannister","Jon-Snow","Loras-Tyrell","Mance-Rayder","Margaery-Tyrell","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Luwin","Meera-Reed","Rickon-Stark","Samwell-Tarly","Luwin","Mance-Rayder","Melisandre","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Tyrion-Lannister","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Petyr-Baelish","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Melisandre","Samwell-Tarly","Stannis-Baratheon","Theon-Greyjoy","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Varys","Rickon-Stark","Samwell-Tarly","Renly-Baratheon","Samwell-Tarly","Stannis-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Rodrik-Cassel","Sansa-Stark","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tyrion-Lannister","Stannis-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Tyrion-Lannister","Tywin-Lannister","Tyrion-Lannister","Tywin-Lannister","Tywin-Lannister","Varys","Varys"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false,"size":15},"manipulation":{"enabled":false},"layout":{"randomSeed":12},"groups":{"1":{"color":"red"},"2":{"color":"blue"},"3":{"color":"green"},"4":{"color":"purple"},"useDefaultGroups":true,"5":{"color":"orange"}},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["3","1","4","2","5"],"width":"100%","height":"1000px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb596-1" title="1"><span class="kw">visNetwork</span>(nodes2, edges2, <span class="dt">height =</span> <span class="st">&quot;1000px&quot;</span>, <span class="dt">width =</span> <span class="st">&quot;100%&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-2" title="2"><span class="st">  </span><span class="kw">visLayout</span>(<span class="dt">randomSeed =</span> <span class="dv">12</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># to have always the same network </span></a>
+<a class="sourceLine" id="cb596-3" title="3"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;1&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb596-4" title="4"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;2&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-5" title="5"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;3&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb596-6" title="6"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;4&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;purple&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-7" title="7"><span class="st">  </span><span class="kw">visGroups</span>(<span class="dt">groupname =</span> <span class="st">&quot;5&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb596-8" title="8"><span class="st">  </span><span class="kw">visIgraphLayout</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-9" title="9"><span class="st">  </span><span class="kw">visOptions</span>(<span class="dt">highlightNearest =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-10" title="10"><span class="st">  </span><span class="kw">visNodes</span>(<span class="dt">size =</span> <span class="dv">15</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-11" title="11"><span class="st">  </span><span class="kw">visEdges</span>(<span class="dt">arrows =</span> <span class="st">&quot;to&quot;</span>, <span class="dt">arrowStrikethrough =</span> F) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb596-12" title="12"><span class="kw">visSave</span>(<span class="dt">file =</span> <span class="st">&quot;transfers2.html&quot;</span>, <span class="dt">selfcontained =</span> T)</a></code></pre></div>
+
+</div>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = https://hranalyticslive.netlify.com;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier =  '<? php echo $my_identifier; ?>'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://hranalytics-live.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="17-commuting-time.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="19-job-classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/17-organisational-network.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

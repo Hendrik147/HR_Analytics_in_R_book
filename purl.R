@@ -9,7 +9,7 @@ show_solutions <- function(section){
   return(solutions_shown == "ALL" | section %in% solutions_shown)
 }
 
-# Note order matters here:
+# Note order and title matters here:
 chapter_titles <- c("getting-started",
                     "visualization",
                     "wrangling",
@@ -20,7 +20,7 @@ chapter_titles <- c("getting-started",
                     "confidence-intervals",
                     "hypothesis-testing",
                     "inference-for-regression",
-                    "thinking-with-data",
+                    "tell-your-story-with-data",
                     "pay-gap",
                     "stop-appraisals",
                     "service-desk",
@@ -39,11 +39,11 @@ chapter_titles <- c("getting-started",
                     "flexdashboards",
                     "data-science-product")
 chapter_numbers <- stringr::str_pad(
-  string = 2:(length(chapter_titles) + 1),
+  string = 1:(length(chapter_titles) + 1),
   width = 2,
   side = "left",
   pad = "0"
-  )
+)
 for(i in seq_len(length(chapter_numbers))){
   Rmd_file <- stringr::str_c(chapter_numbers[i], "-",
                              chapter_titles[i], ".Rmd")
@@ -51,3 +51,4 @@ for(i in seq_len(length(chapter_numbers))){
                            "-", chapter_titles[i], ".R")
   knitr::purl(Rmd_file, R_file)
 }
+

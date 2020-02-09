@@ -2,7 +2,7 @@
 title: "HR Analytics in R"
 author: "Chester Ismay, Albert Y. Kim and Hendrik Feddersen"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-biblio-style: apalike
+output: pdf_document
 bibliography:
 - bib/books.bib
 - bib/packages.bib
@@ -22,6 +22,7 @@ lof: yes
 lot: yes
 monofont: Source Code Pro
 monofontoptions: Scale=0.7
+biblio-style: apalike
 site: bookdown::bookdown_site
 subtitle: Common tasks achieved with the power of R
 always_allow_html: yes
@@ -62,16 +63,16 @@ needed_CRAN_pkgs <- c(
   
   # Internally used packages:
   "webshot", "mvtnorm", "remotes", "devtools", "dygraphs", "gridExtra",
-  "kableExtra", "googledrive",
+  "kableExtra", "googledrive","scales", "viridis", "ggrepel", "patchwork",
   
   # Other packages used in HR Analytics section:
   "bigstatsr",
   "bookdown","choroplethr","choroplethrMaps","data.table","datasets",
   "dlnm","dplyr","faraway","forcats","GGally","ggthemes","GISTools","gsubfn",
-  "httr","ibmsunburst","leaflet","lubridate","magrittr","microbenchmark",
+  "httr","ibmsunburst","influenceR","leaflet","lubridate","magrittr","microbenchmark",
   "pander","pdftools","plotly","poppler-cpp",
-  "profvis","pryr","purrr","rappdirs","raster","RColorBrewer","readr","rebus",
-  "rmarkdown","rvest","scales","sp","stats","stringr","testthat","tidyr",
+  "profvis","pryr","purrr","rappdirs","raster","rattle","RColorBrewer","readr","rebus",
+  "rmarkdown","rvest","scales","seriation","sp","stats","stringr","testthat","tidyr",
   "tidymodels","tigris","titanic","viridis") 
 
 
@@ -104,7 +105,7 @@ knitr::write_bib(
     "bookdown","choroplethr","choroplethrMaps","data.table","datasets",
     "dlnm","dplyr","faraway","forcats","GGally","ggthemes","GISTools",
     "httr","ibmsunburst","leaflet","lubridate","magrittr","microbenchmark",
-    "pander","profvis","plyr","purrr","rappdirs","raster","RColorBrewer",
+    "pander","profvis","plyr","purrr","rappdirs","raster","rattle","RColorBrewer",
     "readr","rmarkdown","scales","sp","stats","stringr","testthat","tidyr",
     "tigris","titanic","viridis"),
   "bib/packages.bib"
@@ -128,8 +129,9 @@ if(knitr::is_html_output()){
   system("rm -rf docs/scripts/")
   if(!dir.exists("docs/scripts"))
     dir.create("docs/scripts")
-  system("R CMD batch purl.R")
-  system("rm purl.Rout")
+    system('"C:/Program Files (x86)/R-3.6.0/bin/x64/R.exe" CMD BATCH --vanilla --slave
+            "C:/Users/hfedd/AppData/Local/gitkraken/pp-6.5.1/HR_Analytics_in_R_book_local_clone/HR_Analytics_in_R_book/purl.R"')
+    system('rm "C:/Users/hfedd/AppData/Local/gitkraken/pp-6.5.1/HR_Analytics_in_R_book_local_clone/HR_Analytics_in_R_book/purl.Rout"')
   
   # Copy all needed csv and txt files to docs/
   # Should switch to use purrr here at some point
@@ -175,7 +177,7 @@ if(knitr::is_latex_output()){
 # For generating the R script files at the end of relevant chapters
 generate_r_file_link <- function(file){
   if(knitr::is_latex_output()){
-    cat(glue::glue("An R script file of all R code used in this chapter is available at <https://www.moderndive.com/scripts/{file}>."))
+    cat(glue::glue("An R script file of all R code used in this chapter is available at <https://https://hranalyticslive.netlify.com//scripts/{file}>."))
   } else {
     cat(glue::glue("An R script file of all R code used in this chapter is available [here](scripts/{file})."))
   }
@@ -248,26 +250,42 @@ if(knitr::is_html_output()){
 ***
 
 ```{block, type='learncheck', purl=FALSE}
-**Please note that you are currently looking at the latest version of "HR Analytics in R". However, since work is still in progress it is subject to frequent change.**
+**Please note that you are currently looking at the latest version of "HR Analytics in R". However, since work is still in progress it is subject to change.**
 ```
 
 The intention of this book is to encourage more 'data driven' decisions in HR. HR Analytics is not anymore a nice-to-have addon but rather the way HR practitioners should conduct HR decision making in the future. Where applicable, human judgement is 'added' onto a rigorous analysis of the data done in the first place.
 
 To achieve this ideal world, I need to equip you with some fundamental knowledge of R and RStudio, which are open-source tools for data scientists. I am well aware that on one side you want to do something for your career in HR, however you are most likely completely new to coding.
 
-**Help! I’m new to R and RStudio. I’m completely new to coding! What shall I do?** 
 
-<!-- https://cran.r-project.org/Rlogo.svg -->
-<!-- https://www.rstudio.com/wp-content/uploads/2014/07/RStudio-Logo-Blue-Gradient.png -->
+\vspace{0.1in}
+
+
 
 <center>
-`r include_image("images/Rlogo.png", html_opts = "height=100px", latex_opts = "height=20%")`        \hfill &emsp; &emsp; &emsp; &emsp; `r include_image("images/RStudio-Logo-Blue-Gradient.png", html_opts = "height=100px", latex_opts = "height=20%")`
+
+`r include_image("images/logos/Rlogo.png", html_opts = "height=100px", latex_opts = "height=10%")`        \hfill &emsp; &emsp; &emsp; `r include_image("images/logos/RStudio-Logo-Blue-Gradient.png", html_opts = "height=100px", latex_opts = "height=10%")`
+
 </center>
 
+
+
+**Help! I'm new to R and RStudio and I need to learn about them! However, I'm completely new to coding! What do I do?** 
+
+
+
+\vspace{0.1in}
+
+
+
 <!--
-<img src="images/Rlogo.svg" style="height: 150px;"/>
+
+<img src="images/logos/Rlogo.svg" style="height: 150px;"/>
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="images/RStudio-Logo-Blue-Gradient.png" style="height: 150px;"/>
+
+<img src="images/logos/RStudio-Logo-Blue-Gradient.png" style="height: 150px;"/>
+
 -->
 
 If you're asking yourself this question, then you have come to the right place! There is no better moment to ride the wave of disruptions taking place now in HR.
@@ -536,19 +554,5 @@ Who am I? I am Hendrik Feddersen, a long-standing HR practitioner passionate abo
 * GitHub: <https://github.com/Hendrik147>
 
 
-<!--
-### Colophon 
-
-* "HR Analytics in R" is written using the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0); more information on this license is available [here](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-* "HR Analytics in R" uses the following versions of R packages (and their dependent packages):
--->
-
-
-```{r colophon, echo=FALSE, eval=FALSE}
-library(kableExtra)
-knitr::kable(devtools::session_info(needed_pkgs)$packages, 
-             booktabs = TRUE,
-             longtable = TRUE) %>% 
-  kable_styling(font_size = ifelse(knitr:::is_latex_output(), 10, 16),
-                latex_options = c("HOLD_position"))
-```
+<!-- For use only in PDF, is skipped in HTML -->
+\mainmatter

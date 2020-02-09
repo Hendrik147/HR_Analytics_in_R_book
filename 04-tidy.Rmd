@@ -121,7 +121,7 @@ Let's now switch gears and learn about the concept of "tidy" data format with a 
 Let's focus our attention on the `drinks` data frame and look at its first 5 rows:
 
 ```{r, echo=FALSE}
-drinks %>% 
+fivethirtyeight::drinks %>% 
   head(5)
 ```
 
@@ -136,7 +136,7 @@ Let's apply some of the data wrangling verbs we learned in Chapter \@ref(wrangli
 and save the resulting data frame in `drinks_smaller`:
 
 ```{r}
-drinks_smaller <- drinks %>% 
+drinks_smaller <- fivethirtyeight::drinks %>% 
   filter(country %in% c("USA", "China", "Italy", "Saudi Arabia")) %>% 
   select(-total_litres_of_pure_alcohol) %>% 
   rename(beer = beer_servings, spirit = spirit_servings, wine = wine_servings)
