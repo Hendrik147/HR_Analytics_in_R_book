@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 23 Accidents at work | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 23 Accidents at work | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -657,8 +657,8 @@ TOTAL_HOURS - The total amount of absent hours for the given type of absence, de
 TOTAL EMPLOYEE - The total number of employees that worked in the given department and pay period
 TOTAL AVAL HOURS - The total number of hours scheduled for work for all employees in the given department and pay period
 LOST WORKTIME RATE - The total amount of absent hours for the given type of absence, department, and pay period divided by The total number of hours scheduled for work for all employees in the given department and pay period (metric defined by the Bureau of Labor Statistics)</p>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb827-1" title="1"><span class="kw">library</span>(readr)</a></code></pre></div>
-<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb828-1" title="1">LTI_Analysis &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="dt">na =</span> <span class="st">&quot;NA&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">col =</span> <span class="kw">col_character</span>()), <span class="st">&quot;https://hranalytics.netlify.com/data/LTI Analysis Data.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb825-1" title="1"><span class="kw">library</span>(readr)</a></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb826-1" title="1">LTI_Analysis &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="dt">na =</span> <span class="st">&quot;NA&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">col_types =</span> <span class="kw">cols</span>(<span class="dt">col =</span> <span class="kw">col_character</span>()), <span class="st">&quot;https://hranalytics.netlify.com/data/LTI Analysis Data.csv&quot;</span>)</a></code></pre></div>
 <p>Your incident and DART (Days Away, Restrictions and Transfers) rates are OSHA safety metrics that help you understand the effectiveness of your safety and risk management programs:
 * Your incident rate shows the total number of OSHA-recordable injuries and illness per 200,000 hours. The rate is viewed as a percentage of injuries per 100 employees per year.
 * Your DART rate calculates the rate of days away, restrictions and transfers per 200,000 worked.</p>
@@ -735,7 +735,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/22-accidents-work.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/22-accidents-work.Rmd",
 "text": "Edit"
 },
 "history": {

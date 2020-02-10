@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 15 HR Service Desk | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 15 HR Service Desk | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -671,36 +671,36 @@ stakeholders.</li>
 </ul>
 <p>Source: <a href="https://www.kaggle.com/lyndonsundmark/service-request-analysis/data" class="uri">https://www.kaggle.com/lyndonsundmark/service-request-analysis/data</a></p>
 <p>Ensure all needed libraries are installed</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb522-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb522-2" title="2"><span class="kw">library</span>(lubridate)</a></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb520-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb520-2" title="2"><span class="kw">library</span>(lubridate)</a></code></pre></div>
 <p>First, let’s get some data from our service desk by exporting a CSV. We can then read this CSV (or excel spreadsheet) into R for us to perform analysis.</p>
-<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb523-1" title="1">service_requests &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https:///hranalytics.netlify.com/data/ServiceRequestExtract2.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb521-1" title="1">service_requests &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https:///hranalytics.netlify.com/data/ServiceRequestExtract2.csv&quot;</span>)</a></code></pre></div>
 <p>Note that we can solve some things as we load the data using <code>read_csv()</code> like the column data types and handling different ways people can represent missing or unknown data.</p>
 <p>We then need to get this data analysis-ready. First of all, we need to make sure dates are filled in and/or reasonable.</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb524-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb524-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateStarted =</span> <span class="kw">coalesce</span>(DateStarted, DateSubmitted),</a>
-<a class="sourceLine" id="cb524-3" title="3">         <span class="dt">DateCompleted=</span><span class="kw">coalesce</span>(DateCompleted, DateStarted <span class="op">+</span><span class="st"> </span><span class="kw">hours</span>(<span class="dv">2</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb524-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateCompleted =</span> </a>
-<a class="sourceLine" id="cb524-5" title="5">           <span class="kw">pmin</span>(DateCompleted,</a>
-<a class="sourceLine" id="cb524-6" title="6">              DateStarted <span class="op">+</span><span class="st"> </span><span class="kw">hours</span>(<span class="kw">floor</span>(<span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">71</span>, <span class="dt">sd=</span><span class="dv">20</span>))))) -&gt;</a>
-<a class="sourceLine" id="cb524-7" title="7"><span class="st">  </span>service_requests</a></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb522-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb522-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateStarted =</span> <span class="kw">coalesce</span>(DateStarted, DateSubmitted),</a>
+<a class="sourceLine" id="cb522-3" title="3">         <span class="dt">DateCompleted=</span><span class="kw">coalesce</span>(DateCompleted, DateStarted <span class="op">+</span><span class="st"> </span><span class="kw">hours</span>(<span class="dv">2</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb522-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DateCompleted =</span> </a>
+<a class="sourceLine" id="cb522-5" title="5">           <span class="kw">pmin</span>(DateCompleted,</a>
+<a class="sourceLine" id="cb522-6" title="6">              DateStarted <span class="op">+</span><span class="st"> </span><span class="kw">hours</span>(<span class="kw">floor</span>(<span class="kw">rnorm</span>(<span class="kw">n</span>(), <span class="dt">mean =</span> <span class="dv">71</span>, <span class="dt">sd=</span><span class="dv">20</span>))))) -&gt;</a>
+<a class="sourceLine" id="cb522-7" title="7"><span class="st">  </span>service_requests</a></code></pre></div>
 <p>Then we can work out how long it took to complete different stages of a request.</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb525-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb525-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RequestID =</span> <span class="kw">as.character</span>(RequestID)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb525-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb525-4" title="4">    <span class="dt">WaitTime =</span> <span class="kw">difftime</span>(DateStarted, </a>
-<a class="sourceLine" id="cb525-5" title="5">                        DateSubmitted, </a>
-<a class="sourceLine" id="cb525-6" title="6">                        <span class="dt">units =</span> <span class="st">&quot;hours&quot;</span>)</a>
-<a class="sourceLine" id="cb525-7" title="7">    ,<span class="dt">TaskTime =</span> <span class="kw">difftime</span>(DateCompleted, </a>
-<a class="sourceLine" id="cb525-8" title="8">                        DateStarted, </a>
-<a class="sourceLine" id="cb525-9" title="9">                        <span class="dt">units =</span> <span class="st">&quot;hours&quot;</span>)</a>
-<a class="sourceLine" id="cb525-10" title="10">    ,<span class="dt">TotalTime =</span> <span class="kw">difftime</span>(DateCompleted, </a>
-<a class="sourceLine" id="cb525-11" title="11">                        DateSubmitted, </a>
-<a class="sourceLine" id="cb525-12" title="12">                        <span class="dt">units =</span> <span class="st">&quot;hours&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb525-13" title="13"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">ends_with</span>(<span class="st">&quot;Time&quot;</span>)), as.numeric)-&gt;</a>
-<a class="sourceLine" id="cb525-14" title="14"><span class="st">  </span>service_requests</a>
-<a class="sourceLine" id="cb525-15" title="15"></a>
-<a class="sourceLine" id="cb525-16" title="16">service_requests</a></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb523-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb523-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">RequestID =</span> <span class="kw">as.character</span>(RequestID)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb523-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb523-4" title="4">    <span class="dt">WaitTime =</span> <span class="kw">difftime</span>(DateStarted, </a>
+<a class="sourceLine" id="cb523-5" title="5">                        DateSubmitted, </a>
+<a class="sourceLine" id="cb523-6" title="6">                        <span class="dt">units =</span> <span class="st">&quot;hours&quot;</span>)</a>
+<a class="sourceLine" id="cb523-7" title="7">    ,<span class="dt">TaskTime =</span> <span class="kw">difftime</span>(DateCompleted, </a>
+<a class="sourceLine" id="cb523-8" title="8">                        DateStarted, </a>
+<a class="sourceLine" id="cb523-9" title="9">                        <span class="dt">units =</span> <span class="st">&quot;hours&quot;</span>)</a>
+<a class="sourceLine" id="cb523-10" title="10">    ,<span class="dt">TotalTime =</span> <span class="kw">difftime</span>(DateCompleted, </a>
+<a class="sourceLine" id="cb523-11" title="11">                        DateSubmitted, </a>
+<a class="sourceLine" id="cb523-12" title="12">                        <span class="dt">units =</span> <span class="st">&quot;hours&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb523-13" title="13"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">vars</span>(<span class="kw">ends_with</span>(<span class="st">&quot;Time&quot;</span>)), as.numeric)-&gt;</a>
+<a class="sourceLine" id="cb523-14" title="14"><span class="st">  </span>service_requests</a>
+<a class="sourceLine" id="cb523-15" title="15"></a>
+<a class="sourceLine" id="cb523-16" title="16">service_requests</a></code></pre></div>
 <pre><code># A tibble: 1,152 x 8
    RequestID DateSubmitted       DateStarted         DateCompleted      
    &lt;chr&gt;     &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             
@@ -717,25 +717,25 @@ stakeholders.</li>
 # ... with 1,142 more rows, and 4 more variables: Category &lt;chr&gt;,
 #   WaitTime &lt;dbl&gt;, TaskTime &lt;dbl&gt;, TotalTime &lt;dbl&gt;</code></pre>
 <p>We should now be able to get a view as to the distribution of the times taken to start, complete, and the overall turnaround time for requests.</p>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb527-1" title="1"><span class="kw">library</span>(DataExplorer)</a>
-<a class="sourceLine" id="cb527-2" title="2"><span class="kw">plot_density</span>(service_requests, </a>
-<a class="sourceLine" id="cb527-3" title="3">             <span class="dt">title =</span> <span class="st">&quot;Distribution of task times&quot;</span>,</a>
-<a class="sourceLine" id="cb527-4" title="4">             <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb525-1" title="1"><span class="kw">library</span>(DataExplorer)</a>
+<a class="sourceLine" id="cb525-2" title="2"><span class="kw">plot_density</span>(service_requests, </a>
+<a class="sourceLine" id="cb525-3" title="3">             <span class="dt">title =</span> <span class="st">&quot;Distribution of task times&quot;</span>,</a>
+<a class="sourceLine" id="cb525-4" title="4">             <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-496-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb528-1" title="1"><span class="kw">plot_bar</span>(service_requests,</a>
-<a class="sourceLine" id="cb528-2" title="2">         <span class="dt">title=</span><span class="st">&quot;Distributions&quot;</span>,</a>
-<a class="sourceLine" id="cb528-3" title="3">         <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb526-1" title="1"><span class="kw">plot_bar</span>(service_requests,</a>
+<a class="sourceLine" id="cb526-2" title="2">         <span class="dt">title=</span><span class="st">&quot;Distributions&quot;</span>,</a>
+<a class="sourceLine" id="cb526-3" title="3">         <span class="dt">ggtheme =</span> <span class="kw">theme_minimal</span>())</a></code></pre></div>
 <pre><code>4 columns ignored with more than 50 categories.
 RequestID: 1152 categories
 DateSubmitted: 1135 categories
 DateStarted: 1132 categories
 DateCompleted: 1146 categories</code></pre>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-497-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb530-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb530-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(Category) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb530-3" title="3"><span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="kw">ends_with</span>(<span class="st">&quot;Time&quot;</span>)),</a>
-<a class="sourceLine" id="cb530-4" title="4">              <span class="dt">.funs =</span> <span class="kw">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb530-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(WaitTime_mean)</a></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb528-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb528-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(Category) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb528-3" title="3"><span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="kw">ends_with</span>(<span class="st">&quot;Time&quot;</span>)),</a>
+<a class="sourceLine" id="cb528-4" title="4">              <span class="dt">.funs =</span> <span class="kw">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb528-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(WaitTime_mean)</a></code></pre></div>
 <pre><code># A tibble: 5 x 10
   Category WaitTime_mean TaskTime_mean TotalTime_mean WaitTime_min TaskTime_min
   &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -748,17 +748,17 @@ DateCompleted: 1146 categories</code></pre>
 #   TaskTime_max &lt;dbl&gt;, TotalTime_max &lt;dbl&gt;</code></pre>
 <p>Now that we’ve checked our data for issues and tidied it up, we can start understanding what’s happening in-depth.</p>
 <p>For instance, are the differences in category mean times significant or could it be due to the different volumes of requests? We can use the ANOVA test to check to see if each category does indeed seem to have differing response times. If the resulting P-value is small then we have more certainty that there is likely to be a difference by request category.</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb532-1" title="1"><span class="kw">library</span>(RcmdrMisc)</a>
-<a class="sourceLine" id="cb532-2" title="2"><span class="kw">lm</span>(WaitTime <span class="op">~</span><span class="st"> </span>Category, <span class="dt">data=</span>service_requests) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb532-3" title="3"><span class="st">  </span><span class="kw">Anova</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb530-1" title="1"><span class="kw">library</span>(RcmdrMisc)</a>
+<a class="sourceLine" id="cb530-2" title="2"><span class="kw">lm</span>(WaitTime <span class="op">~</span><span class="st"> </span>Category, <span class="dt">data=</span>service_requests) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb530-3" title="3"><span class="st">  </span><span class="kw">Anova</span>()</a></code></pre></div>
 <pre><code>Anova Table (Type II tests)
 
 Response: WaitTime
             Sum Sq   Df F value Pr(&gt;F)
 Category     29404    4    0.42   0.79
 Residuals 19942945 1147               </code></pre>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" title="1"><span class="kw">lm</span>(TaskTime <span class="op">~</span><span class="st"> </span>Category, <span class="dt">data=</span>service_requests) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb534-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb532-1" title="1"><span class="kw">lm</span>(TaskTime <span class="op">~</span><span class="st"> </span>Category, <span class="dt">data=</span>service_requests) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb532-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a></code></pre></div>
 <pre><code>Anova Table (Type II tests)
 
 Response: TaskTime
@@ -767,8 +767,8 @@ Category  673366    4    1690 &lt;0.0000000000000002 ***
 Residuals 114250 1147                                
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" title="1"><span class="kw">lm</span>(TotalTime <span class="op">~</span><span class="st"> </span>Category, <span class="dt">data=</span>service_requests) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb536-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" title="1"><span class="kw">lm</span>(TotalTime <span class="op">~</span><span class="st"> </span>Category, <span class="dt">data=</span>service_requests) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb534-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a></code></pre></div>
 <pre><code>Anova Table (Type II tests)
 
 Response: TotalTime
@@ -780,12 +780,12 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>As well as statistical tests, we can apply quality control principles too. The <code>qcc</code> package allows us to use a number of relevant models and charts to understand what is happening.</p>
 <!-- This is outside my day to day knowledge so this is likely to be a terrible explanation! -->
 <p>Here we use the package to take a number of samples from the data and prepare a <code>qcc</code> base transformation containing information needed to make common charts. We use the <code>xbar.one</code> transformation to get the mean using one-at-time data of a continuous process variable.</p>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" title="1"><span class="kw">library</span>(qcc)</a>
-<a class="sourceLine" id="cb538-2" title="2"></a>
-<a class="sourceLine" id="cb538-3" title="3">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb538-4" title="4"><span class="st">  </span>{<span class="kw">qcc.groups</span>(.<span class="op">$</span>WaitTime, .<span class="op">$</span>RequestID)} <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb538-5" title="5"><span class="st">  </span><span class="kw">qcc</span>(<span class="dt">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb538-6" title="6"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" title="1"><span class="kw">library</span>(qcc)</a>
+<a class="sourceLine" id="cb536-2" title="2"></a>
+<a class="sourceLine" id="cb536-3" title="3">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb536-4" title="4"><span class="st">  </span>{<span class="kw">qcc.groups</span>(.<span class="op">$</span>WaitTime, .<span class="op">$</span>RequestID)} <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb536-5" title="5"><span class="st">  </span><span class="kw">qcc</span>(<span class="dt">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb536-6" title="6"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-502-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <pre><code>
 Call:
@@ -805,10 +805,10 @@ Standard deviation:  42.9
 Control limits:
   LCL UCL
  -102 156</code></pre>
-<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb540-2" title="2"><span class="st">  </span>{<span class="kw">qcc.groups</span>(.<span class="op">$</span>TaskTime, .<span class="op">$</span>RequestID)} <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb540-3" title="3"><span class="st">  </span><span class="kw">qcc</span>(<span class="dt">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb540-4" title="4"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb538-2" title="2"><span class="st">  </span>{<span class="kw">qcc.groups</span>(.<span class="op">$</span>TaskTime, .<span class="op">$</span>RequestID)} <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb538-3" title="3"><span class="st">  </span><span class="kw">qcc</span>(<span class="dt">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb538-4" title="4"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-503-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <pre><code>
 Call:
@@ -828,10 +828,10 @@ Standard deviation:  25.6
 Control limits:
    LCL UCL
  -44.6 109</code></pre>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb542-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb542-2" title="2"><span class="st">  </span>{<span class="kw">qcc.groups</span>(.<span class="op">$</span>TotalTime, .<span class="op">$</span>RequestID)} <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb542-3" title="3"><span class="st">  </span><span class="kw">qcc</span>(<span class="dt">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb542-4" title="4"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" title="1">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb540-2" title="2"><span class="st">  </span>{<span class="kw">qcc.groups</span>(.<span class="op">$</span>TotalTime, .<span class="op">$</span>RequestID)} <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb540-3" title="3"><span class="st">  </span><span class="kw">qcc</span>(<span class="dt">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb540-4" title="4"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-504-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <pre><code>
 Call:
@@ -852,11 +852,11 @@ Control limits:
   LCL UCL
  -132 251</code></pre>
 <p>These show overall patterns. What if we wanted one per category?</p>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb544-1" title="1"><span class="co"># Need to get categories being added as titles</span></a>
-<a class="sourceLine" id="cb544-2" title="2">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb544-3" title="3"><span class="st">  </span>{<span class="kw">split</span>(., .<span class="op">$</span>Category)} <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb544-4" title="4"><span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">qcc.groups</span>(.<span class="op">$</span>TotalTime, .<span class="op">$</span>RequestID)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb544-5" title="5"><span class="st">  </span><span class="kw">map</span>(qcc, <span class="dt">type =</span><span class="st">&quot;xbar.one&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb542-1" title="1"><span class="co"># Need to get categories being added as titles</span></a>
+<a class="sourceLine" id="cb542-2" title="2">service_requests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb542-3" title="3"><span class="st">  </span>{<span class="kw">split</span>(., .<span class="op">$</span>Category)} <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb542-4" title="4"><span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">qcc.groups</span>(.<span class="op">$</span>TotalTime, .<span class="op">$</span>RequestID)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb542-5" title="5"><span class="st">  </span><span class="kw">map</span>(qcc, <span class="dt">type =</span><span class="st">&quot;xbar.one&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-505-1.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-505-2.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-505-3.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-505-4.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-505-5.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <pre><code>$`Grievance Resolution`
 List of 11
@@ -954,34 +954,34 @@ List of 11
 <p>Transfer analysis (tickets solved on first-touch versus multi-touch tickets) – Number of tickets that are solved by the first agent to handle the ticket (first-touch) versus the number of tickets that are assigned to one or more groups through the ticket’s lifespan. Great for determining which tickets need special attention, particularly those tickets where automation might reduce the amount of ticket passing between technical groups.</p>
 <p>Ticket growth over time and backlog – Trending data showing the increase (or decrease) in the number of Service Desk tickets over time. It can help spot unexpected changes in user requests that may indicate a need for more Service Desk staff or more automation. Or, it may identify that a specific change resulted in increased Service Desk resources. You also want to check the trends for your backlog of tickets in progress and the number of unresolved tickets. A growth in backlogged tickets can indicate a change in service desk demand or problems with service deployment.</p>
 <p>Top IT services with the most incidents – Spotlights which services are failing, causing the most Service Desk support. Helpful for spotting problem IT services that need modification.</p>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb546-1" title="1">it_helpdesk &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/WA_Fn-UseC_-IT-Help-Desk.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb547-1" title="1">it_helpdesk <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb547-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb547-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>ITOwner) <span class="op">+</span></a>
-<a class="sourceLine" id="cb547-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb547-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;IT Owner&quot;</span>, </a>
-<a class="sourceLine" id="cb547-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Number of tickets&quot;</span>, </a>
-<a class="sourceLine" id="cb547-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Tickets by IT Owner&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb547-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb544-1" title="1">it_helpdesk &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/WA_Fn-UseC_-IT-Help-Desk.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb545-1" title="1">it_helpdesk <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb545-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb545-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>ITOwner) <span class="op">+</span></a>
+<a class="sourceLine" id="cb545-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb545-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;IT Owner&quot;</span>, </a>
+<a class="sourceLine" id="cb545-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Number of tickets&quot;</span>, </a>
+<a class="sourceLine" id="cb545-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Tickets by IT Owner&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb545-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-507-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" title="1">it_helpdesk <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb548-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb548-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>daysOpen) <span class="op">+</span></a>
-<a class="sourceLine" id="cb548-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb548-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Number of days ticket was open for&quot;</span>, </a>
-<a class="sourceLine" id="cb548-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Number of tickets&quot;</span>, </a>
-<a class="sourceLine" id="cb548-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Time to resolve/close tickets&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb548-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb546-1" title="1">it_helpdesk <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb546-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb546-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>daysOpen) <span class="op">+</span></a>
+<a class="sourceLine" id="cb546-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb546-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Number of days ticket was open for&quot;</span>, </a>
+<a class="sourceLine" id="cb546-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Number of tickets&quot;</span>, </a>
+<a class="sourceLine" id="cb546-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Time to resolve/close tickets&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb546-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-508-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb549-1" title="1">it_helpdesk <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb549-2" title="2"><span class="st">  </span><span class="kw">count</span>(Requestor) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb549-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb549-4" title="4"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>n) <span class="op">+</span></a>
-<a class="sourceLine" id="cb549-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb549-6" title="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Number of tickets raised per person&quot;</span>, </a>
-<a class="sourceLine" id="cb549-7" title="7">       <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>, </a>
-<a class="sourceLine" id="cb549-8" title="8">       <span class="dt">title=</span><span class="st">&quot;Distribution of tickets per person&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb549-9" title="9"><span class="st">  </span><span class="kw">theme_minimal</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb547-1" title="1">it_helpdesk <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb547-2" title="2"><span class="st">  </span><span class="kw">count</span>(Requestor) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb547-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb547-4" title="4"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>n) <span class="op">+</span></a>
+<a class="sourceLine" id="cb547-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb547-6" title="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Number of tickets raised per person&quot;</span>, </a>
+<a class="sourceLine" id="cb547-7" title="7">       <span class="dt">y=</span><span class="st">&quot;Density&quot;</span>, </a>
+<a class="sourceLine" id="cb547-8" title="8">       <span class="dt">title=</span><span class="st">&quot;Distribution of tickets per person&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb547-9" title="9"><span class="st">  </span><span class="kw">theme_minimal</span>() </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-509-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 
 </div>
@@ -1042,7 +1042,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/14-service-desk.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/14-service-desk.Rmd",
 "text": "Edit"
 },
 "history": {

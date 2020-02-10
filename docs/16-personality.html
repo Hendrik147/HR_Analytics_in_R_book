@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 16 Personality insights | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 16 Personality insights | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -651,23 +651,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>We can use communications from a person to analyse their personality.</p>
 <p>We first need to be able to talk to Personality Insights. We get most of this information off the IBM site once we’ve made an account.</p>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" title="1">key =<span class="st"> &quot;aOWMNztQ_VVlz9fINhc3v67rtnJqcN6JuubQorAvhq&quot;</span></a>
-<a class="sourceLine" id="cb550-2" title="2">url =<span class="st"> &quot;https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13&quot;</span></a>
-<a class="sourceLine" id="cb550-3" title="3">uname=<span class="st">&quot;a4a4ea65-e8e7-492c-a95e-128f10fc5f&quot;</span></a>
-<a class="sourceLine" id="cb550-4" title="4">pword=<span class="st">&quot;LuFm4BELs&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" title="1">key =<span class="st"> &quot;aOWMNztQ_VVlz9fINhc3v67rtnJqcN6JuubQorAvhq&quot;</span></a>
+<a class="sourceLine" id="cb548-2" title="2">url =<span class="st"> &quot;https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13&quot;</span></a>
+<a class="sourceLine" id="cb548-3" title="3">uname=<span class="st">&quot;a4a4ea65-e8e7-492c-a95e-128f10fc5f&quot;</span></a>
+<a class="sourceLine" id="cb548-4" title="4">pword=<span class="st">&quot;LuFm4BELs&quot;</span></a></code></pre></div>
 <p>We can then talk to the API using the <code>httr</code> package. We can send a body of text to be analysed. The guidance for the API says you should send it more than 600 words to get a robust results.</p>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb551-1" title="1"><span class="kw">library</span>(httr)</a>
-<a class="sourceLine" id="cb551-2" title="2"><span class="kw">library</span>(janeaustenr)</a>
-<a class="sourceLine" id="cb551-3" title="3">cr=<span class="kw">POST</span>(url,</a>
-<a class="sourceLine" id="cb551-4" title="4">    <span class="kw">authenticate</span>(uname, pword),</a>
-<a class="sourceLine" id="cb551-5" title="5">    <span class="kw">content_type</span>(<span class="st">&quot;text/plain;charset=utf-8&quot;</span>),</a>
-<a class="sourceLine" id="cb551-6" title="6">    <span class="kw">accept_json</span>(),</a>
-<a class="sourceLine" id="cb551-7" title="7">    <span class="dt">body=</span><span class="kw">paste</span>(janeaustenr<span class="op">::</span>emma, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</a>
-<a class="sourceLine" id="cb551-8" title="8">)</a>
-<a class="sourceLine" id="cb551-9" title="9"><span class="kw">status_code</span>(cr)</a></code></pre></div>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb549-1" title="1"><span class="kw">library</span>(httr)</a>
+<a class="sourceLine" id="cb549-2" title="2"><span class="kw">library</span>(janeaustenr)</a>
+<a class="sourceLine" id="cb549-3" title="3">cr=<span class="kw">POST</span>(url,</a>
+<a class="sourceLine" id="cb549-4" title="4">    <span class="kw">authenticate</span>(uname, pword),</a>
+<a class="sourceLine" id="cb549-5" title="5">    <span class="kw">content_type</span>(<span class="st">&quot;text/plain;charset=utf-8&quot;</span>),</a>
+<a class="sourceLine" id="cb549-6" title="6">    <span class="kw">accept_json</span>(),</a>
+<a class="sourceLine" id="cb549-7" title="7">    <span class="dt">body=</span><span class="kw">paste</span>(janeaustenr<span class="op">::</span>emma, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</a>
+<a class="sourceLine" id="cb549-8" title="8">)</a>
+<a class="sourceLine" id="cb549-9" title="9"><span class="kw">status_code</span>(cr)</a></code></pre></div>
 <p>We can then visualise the results using the <code>ibmsunburst</code> package.</p>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb552-1" title="1"><span class="kw">library</span>(ibmsunburst)</a>
-<a class="sourceLine" id="cb552-2" title="2"><span class="kw">ibmsunburst</span>(<span class="kw">content</span>(cr), <span class="dt">version =</span> <span class="st">&quot;v3&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" title="1"><span class="kw">library</span>(ibmsunburst)</a>
+<a class="sourceLine" id="cb550-2" title="2"><span class="kw">ibmsunburst</span>(<span class="kw">content</span>(cr), <span class="dt">version =</span> <span class="st">&quot;v3&quot;</span>)</a></code></pre></div>
 
 </div>
 <div id="disqus_thread"></div>
@@ -727,7 +727,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/15-personality.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/15-personality.Rmd",
 "text": "Edit"
 },
 "history": {

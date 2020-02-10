@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 14 Stop appraisals | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 14 Stop appraisals | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -664,19 +664,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>In the following we will analyse the cost in appraising employees (step 2 of the OVA technique). Let us have a look at an organisation which utilises an activity based costing framework. An organisation in which staff working time is allocated to the different projects and activities, among others time spent on staff apparaisals.</p>
 <p>We will use only the tidyverse library.</p>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb506-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb504-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
 <p>First, let’s import some data on self declared time spent on appraisals,</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb507-1" title="1">Time.spent.on.appraisals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" title="1"><span class="kw">plot</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee,        <span class="co"># plot the variables y ~ x</span></a>
-<a class="sourceLine" id="cb508-2" title="2">     <span class="dt">xlab=</span><span class="st">&quot;Number of appraisee&quot;</span>,        <span class="co"># x−axis label </span></a>
-<a class="sourceLine" id="cb508-3" title="3">     <span class="dt">ylab=</span><span class="st">&quot;Hours&quot;</span>,                      <span class="co"># y−axis label</span></a>
-<a class="sourceLine" id="cb508-4" title="4">     <span class="dt">data=</span>Time.spent.on.appraisals)     <span class="co"># data set</span></a>
-<a class="sourceLine" id="cb508-5" title="5"></a>
-<a class="sourceLine" id="cb508-6" title="6">model &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals)</a>
-<a class="sourceLine" id="cb508-7" title="7"><span class="kw">abline</span>(model, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb505-1" title="1">Time.spent.on.appraisals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb506-1" title="1"><span class="kw">plot</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee,        <span class="co"># plot the variables y ~ x</span></a>
+<a class="sourceLine" id="cb506-2" title="2">     <span class="dt">xlab=</span><span class="st">&quot;Number of appraisee&quot;</span>,        <span class="co"># x−axis label </span></a>
+<a class="sourceLine" id="cb506-3" title="3">     <span class="dt">ylab=</span><span class="st">&quot;Hours&quot;</span>,                      <span class="co"># y−axis label</span></a>
+<a class="sourceLine" id="cb506-4" title="4">     <span class="dt">data=</span>Time.spent.on.appraisals)     <span class="co"># data set</span></a>
+<a class="sourceLine" id="cb506-5" title="5"></a>
+<a class="sourceLine" id="cb506-6" title="6">model &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals)</a>
+<a class="sourceLine" id="cb506-7" title="7"><span class="kw">abline</span>(model, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-486-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb509-1" title="1"><span class="co">#The following produces the formula of the linear regression</span></a>
-<a class="sourceLine" id="cb509-2" title="2"><span class="kw">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model)[[<span class="dv">2</span>]], <span class="dt">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model)[[<span class="dv">1</span>]], <span class="dt">digits =</span> <span class="dv">3</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb507-1" title="1"><span class="co">#The following produces the formula of the linear regression</span></a>
+<a class="sourceLine" id="cb507-2" title="2"><span class="kw">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model)[[<span class="dv">2</span>]], <span class="dt">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model)[[<span class="dv">1</span>]], <span class="dt">digits =</span> <span class="dv">3</span>)) </a></code></pre></div>
 <pre><code>[1] &quot;y = 3.362 * x + 49.134&quot;</code></pre>
 <p>Is is now an interpolation or a linear regression?</p>
 <p>Interpolation is a method of constructing new data points within the range of a discrete set of known data points. Regression analysis is a statistical process for estimating the relationships among variables.</p>
@@ -684,14 +684,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>From these numbers it would appear, that every manager spends on average 49 hours independently from the number of staff to appraise (for their own self-assessment and for the appraisal process in general, i.e. reading material, management meetings, refreshing how to appraise staff and re-training with the IT tools). In addition every manager spends on average 3 hours and 20 minutes to appraise each indivual subordinate, initial meeting with staff member and then writing up the appraisal itself.</p>
 <p>From looking at the chart, it would appear that there are a couple of outliers. In statistics, an outlier is defined as an observation which stands far away from the most of other observations. Often an outlier is present due to the measurements error. Therefore, one of the most important tasks in data analysis is to identify and only if it is necessary to remove the outlier. Recording time to the closest 15 minutes requires a lot of attention from the manager.</p>
 <p>Let us identify the outliers and remove them. A script from Klodian Dhana, Creator of DataScience+, comes in handy: <a href="https://datascienceplus.com/identify-describe-plot-and-removing-the-outliers-from-the-dataset/" class="uri">https://datascienceplus.com/identify-describe-plot-and-removing-the-outliers-from-the-dataset/</a></p>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb511-1" title="1"><span class="co"># First let us identify the outliers and plot the initial plot with the names of the appraiser</span></a>
-<a class="sourceLine" id="cb511-2" title="2"></a>
-<a class="sourceLine" id="cb511-3" title="3"><span class="co"># Calculate Mahalanobis Distance with height and weight distributions</span></a>
-<a class="sourceLine" id="cb511-4" title="4">m_dist &lt;-<span class="st"> </span><span class="kw">mahalanobis</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="kw">colMeans</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">cov</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">use=</span><span class="st">&quot;complete.obs&quot;</span>))</a>
-<a class="sourceLine" id="cb511-5" title="5">Time.spent.on.appraisals<span class="op">$</span>m_dist &lt;-<span class="st"> </span><span class="kw">round</span>(m_dist, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb511-6" title="6"></a>
-<a class="sourceLine" id="cb511-7" title="7"><span class="co"># A quick check by sorting the value will indicate the threshold you may want to use:</span></a>
-<a class="sourceLine" id="cb511-8" title="8"><span class="kw">sort</span>(Time.spent.on.appraisals<span class="op">$</span>m_dist)</a></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb509-1" title="1"><span class="co"># First let us identify the outliers and plot the initial plot with the names of the appraiser</span></a>
+<a class="sourceLine" id="cb509-2" title="2"></a>
+<a class="sourceLine" id="cb509-3" title="3"><span class="co"># Calculate Mahalanobis Distance with height and weight distributions</span></a>
+<a class="sourceLine" id="cb509-4" title="4">m_dist &lt;-<span class="st"> </span><span class="kw">mahalanobis</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="kw">colMeans</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="kw">cov</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">use=</span><span class="st">&quot;complete.obs&quot;</span>))</a>
+<a class="sourceLine" id="cb509-5" title="5">Time.spent.on.appraisals<span class="op">$</span>m_dist &lt;-<span class="st"> </span><span class="kw">round</span>(m_dist, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb509-6" title="6"></a>
+<a class="sourceLine" id="cb509-7" title="7"><span class="co"># A quick check by sorting the value will indicate the threshold you may want to use:</span></a>
+<a class="sourceLine" id="cb509-8" title="8"><span class="kw">sort</span>(Time.spent.on.appraisals<span class="op">$</span>m_dist)</a></code></pre></div>
 <pre><code> [1]  0.10  0.15  0.15  0.16  0.16  0.18  0.18  0.18  0.22  0.23  0.23  0.27
 [13]  0.29  0.31  0.34  0.36  0.41  0.43  0.43  0.43  0.44  0.50  0.50  0.54
 [25]  0.54  0.55  0.57  0.62  0.64  0.65  0.68  0.70  0.74  0.76  0.82  0.84
@@ -701,73 +701,73 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The <a href="https://www.statisticshowto.datasciencecentral.com/mahalanobis-distance/">Mahalanobis distance (MD)</a> is the distance between two points in multivariate space. In a regular Euclidean space, variables (e.g. x, y, z) are represented by axes drawn at right angles to each other; The distance between any two points can be measured with a ruler. For uncorrelated variables, the Euclidean distance equals the MD. However, if two or more variables are correlated, the axes are no longer at right angles, and the measurements become impossible with a ruler. In addition, if you have more than three variables, you can’t plot them in regular 3D space at all. The MD solves this measurement problem, as it measures distances between points, even correlated points for multiple variables.</p>
 <p>The Mahalanobis function returns the squared Mahalanobis distance of all rows in x and the vector mu = center with respect to Sigma = cov. This is (for vector x) defined as</p>
 <p>D^2 = (x - μ)’ Σ^-1 (x - μ)</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb513-1" title="1"><span class="co"># We chose to set the threshold at 4, as this would result in five outliers. There is no &quot;rule of thumb&quot; on where to set the threshold and the decision is up to the analyst.</span></a>
-<a class="sourceLine" id="cb513-2" title="2"></a>
-<a class="sourceLine" id="cb513-3" title="3"><span class="co"># Mahalanobis Outliers - Threshold set to 4</span></a>
-<a class="sourceLine" id="cb513-4" title="4">Time.spent.on.appraisals<span class="op">$</span>outlier_maha &lt;-<span class="st"> &quot;No&quot;</span></a>
-<a class="sourceLine" id="cb513-5" title="5">Time.spent.on.appraisals<span class="op">$</span>outlier_maha[Time.spent.on.appraisals<span class="op">$</span>m_dist <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>] &lt;-<span class="st"> &quot;Yes&quot;</span></a>
-<a class="sourceLine" id="cb513-6" title="6"></a>
-<a class="sourceLine" id="cb513-7" title="7"><span class="co"># Scatterplot with Mahalanobis&#39; Outliers</span></a>
-<a class="sourceLine" id="cb513-8" title="8"><span class="kw">ggplot</span>(Time.spent.on.appraisals, <span class="kw">aes</span>(<span class="dt">x =</span> Count.of.Appraisee, <span class="dt">y =</span> Hours, <span class="dt">color =</span> outlier_maha)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb513-9" title="9"><span class="st">      </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st">    </span><span class="co"># na.rm=TRUE removes missing values error message silently</span></a>
-<a class="sourceLine" id="cb513-10" title="10"><span class="st">      </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb513-11" title="11"><span class="st">      </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Number of appraisees vs Hours&quot;</span>,</a>
-<a class="sourceLine" id="cb513-12" title="12">           <span class="dt">subtitle =</span> <span class="st">&quot;Outlier Detection in time spent on appraisals data - Using Mahalanobis Distances&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb513-13" title="13"><span class="st">      </span><span class="kw">ylab</span>(<span class="st">&quot;Hours&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Number of appraisees&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb511-1" title="1"><span class="co"># We chose to set the threshold at 4, as this would result in five outliers. There is no &quot;rule of thumb&quot; on where to set the threshold and the decision is up to the analyst.</span></a>
+<a class="sourceLine" id="cb511-2" title="2"></a>
+<a class="sourceLine" id="cb511-3" title="3"><span class="co"># Mahalanobis Outliers - Threshold set to 4</span></a>
+<a class="sourceLine" id="cb511-4" title="4">Time.spent.on.appraisals<span class="op">$</span>outlier_maha &lt;-<span class="st"> &quot;No&quot;</span></a>
+<a class="sourceLine" id="cb511-5" title="5">Time.spent.on.appraisals<span class="op">$</span>outlier_maha[Time.spent.on.appraisals<span class="op">$</span>m_dist <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span>] &lt;-<span class="st"> &quot;Yes&quot;</span></a>
+<a class="sourceLine" id="cb511-6" title="6"></a>
+<a class="sourceLine" id="cb511-7" title="7"><span class="co"># Scatterplot with Mahalanobis&#39; Outliers</span></a>
+<a class="sourceLine" id="cb511-8" title="8"><span class="kw">ggplot</span>(Time.spent.on.appraisals, <span class="kw">aes</span>(<span class="dt">x =</span> Count.of.Appraisee, <span class="dt">y =</span> Hours, <span class="dt">color =</span> outlier_maha)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb511-9" title="9"><span class="st">      </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st">    </span><span class="co"># na.rm=TRUE removes missing values error message silently</span></a>
+<a class="sourceLine" id="cb511-10" title="10"><span class="st">      </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb511-11" title="11"><span class="st">      </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Number of appraisees vs Hours&quot;</span>,</a>
+<a class="sourceLine" id="cb511-12" title="12">           <span class="dt">subtitle =</span> <span class="st">&quot;Outlier Detection in time spent on appraisals data - Using Mahalanobis Distances&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb511-13" title="13"><span class="st">      </span><span class="kw">ylab</span>(<span class="st">&quot;Hours&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Number of appraisees&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-488-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb514-1" title="1">model_without_mahaoutliers &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals[<span class="kw">which</span>(Time.spent.on.appraisals<span class="op">$</span>outlier_maha<span class="op">==</span><span class="st"> &quot;No&quot;</span>),])</a>
-<a class="sourceLine" id="cb514-2" title="2"></a>
-<a class="sourceLine" id="cb514-3" title="3"></a>
-<a class="sourceLine" id="cb514-4" title="4"><span class="co">#The following produces the formula of the new linear regression without the Mahalanobis outliers</span></a>
-<a class="sourceLine" id="cb514-5" title="5"></a>
-<a class="sourceLine" id="cb514-6" title="6"><span class="kw">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_without_mahaoutliers)[[<span class="dv">2</span>]], <span class="dt">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_without_mahaoutliers)[[<span class="dv">1</span>]], <span class="dt">digits =</span> <span class="dv">3</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb512-1" title="1">model_without_mahaoutliers &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals[<span class="kw">which</span>(Time.spent.on.appraisals<span class="op">$</span>outlier_maha<span class="op">==</span><span class="st"> &quot;No&quot;</span>),])</a>
+<a class="sourceLine" id="cb512-2" title="2"></a>
+<a class="sourceLine" id="cb512-3" title="3"></a>
+<a class="sourceLine" id="cb512-4" title="4"><span class="co">#The following produces the formula of the new linear regression without the Mahalanobis outliers</span></a>
+<a class="sourceLine" id="cb512-5" title="5"></a>
+<a class="sourceLine" id="cb512-6" title="6"><span class="kw">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_without_mahaoutliers)[[<span class="dv">2</span>]], <span class="dt">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_without_mahaoutliers)[[<span class="dv">1</span>]], <span class="dt">digits =</span> <span class="dv">3</span>)) </a></code></pre></div>
 <pre><code>[1] &quot;y = 3.741 * x + 30.099&quot;</code></pre>
 <p>y = 3.741 * x + 30.099</p>
 <p>Now it would appear, that every manager spends on average 26 hours independently from the number of staff to appraise and an additional 3 hours and 47 minutes to appraise each indivual subordinate.</p>
 <p>Let us start all over again with another method for excluding outliers, using the Cook distance.</p>
-<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb516-1" title="1">Time.spent.on.appraisals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb517-1" title="1"><span class="kw">plot</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee,        <span class="co"># plot the variables y ~ x</span></a>
-<a class="sourceLine" id="cb517-2" title="2">     <span class="dt">xlab=</span><span class="st">&quot;Number of appraisee&quot;</span>,        <span class="co"># x−axis label </span></a>
-<a class="sourceLine" id="cb517-3" title="3">     <span class="dt">ylab=</span><span class="st">&quot;Hours&quot;</span>,                      <span class="co"># y−axis label</span></a>
-<a class="sourceLine" id="cb517-4" title="4">     <span class="dt">data=</span>Time.spent.on.appraisals)     <span class="co"># data set</span></a>
-<a class="sourceLine" id="cb517-5" title="5"></a>
-<a class="sourceLine" id="cb517-6" title="6">model &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals)</a>
-<a class="sourceLine" id="cb517-7" title="7"><span class="kw">abline</span>(model, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb514-1" title="1">Time.spent.on.appraisals &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb515-1" title="1"><span class="kw">plot</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee,        <span class="co"># plot the variables y ~ x</span></a>
+<a class="sourceLine" id="cb515-2" title="2">     <span class="dt">xlab=</span><span class="st">&quot;Number of appraisee&quot;</span>,        <span class="co"># x−axis label </span></a>
+<a class="sourceLine" id="cb515-3" title="3">     <span class="dt">ylab=</span><span class="st">&quot;Hours&quot;</span>,                      <span class="co"># y−axis label</span></a>
+<a class="sourceLine" id="cb515-4" title="4">     <span class="dt">data=</span>Time.spent.on.appraisals)     <span class="co"># data set</span></a>
+<a class="sourceLine" id="cb515-5" title="5"></a>
+<a class="sourceLine" id="cb515-6" title="6">model &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals)</a>
+<a class="sourceLine" id="cb515-7" title="7"><span class="kw">abline</span>(model, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-490-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb518-1" title="1">cooksd &lt;-<span class="st"> </span><span class="kw">cooks.distance</span>(model)</a>
-<a class="sourceLine" id="cb518-2" title="2"></a>
-<a class="sourceLine" id="cb518-3" title="3"><span class="co"># Plot the Cook&#39;s Distance using the traditional 4/n criterion</span></a>
-<a class="sourceLine" id="cb518-4" title="4">sample_size &lt;-<span class="st"> </span><span class="kw">nrow</span>(Time.spent.on.appraisals)</a>
-<a class="sourceLine" id="cb518-5" title="5"><span class="kw">plot</span>(cooksd, <span class="dt">pch=</span><span class="st">&quot;*&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>, <span class="dt">main=</span><span class="st">&quot;Influential Obs by Cooks distance&quot;</span>)         <span class="co"># plot cook&#39;s distance</span></a>
-<a class="sourceLine" id="cb518-6" title="6"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">4</span><span class="op">/</span>sample_size, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)         <span class="co"># add cutoff line</span></a>
-<a class="sourceLine" id="cb518-7" title="7"><span class="kw">text</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(cooksd)<span class="op">+</span><span class="dv">1</span>, <span class="dt">y=</span>cooksd, <span class="dt">labels=</span><span class="kw">ifelse</span>(cooksd<span class="op">&gt;</span><span class="dv">4</span><span class="op">/</span>sample_size, <span class="kw">names</span>(cooksd),<span class="st">&quot;&quot;</span>), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)  <span class="co"># add labels</span></a></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb516-1" title="1">cooksd &lt;-<span class="st"> </span><span class="kw">cooks.distance</span>(model)</a>
+<a class="sourceLine" id="cb516-2" title="2"></a>
+<a class="sourceLine" id="cb516-3" title="3"><span class="co"># Plot the Cook&#39;s Distance using the traditional 4/n criterion</span></a>
+<a class="sourceLine" id="cb516-4" title="4">sample_size &lt;-<span class="st"> </span><span class="kw">nrow</span>(Time.spent.on.appraisals)</a>
+<a class="sourceLine" id="cb516-5" title="5"><span class="kw">plot</span>(cooksd, <span class="dt">pch=</span><span class="st">&quot;*&quot;</span>, <span class="dt">cex=</span><span class="dv">2</span>, <span class="dt">main=</span><span class="st">&quot;Influential Obs by Cooks distance&quot;</span>)         <span class="co"># plot cook&#39;s distance</span></a>
+<a class="sourceLine" id="cb516-6" title="6"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">4</span><span class="op">/</span>sample_size, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)         <span class="co"># add cutoff line</span></a>
+<a class="sourceLine" id="cb516-7" title="7"><span class="kw">text</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(cooksd)<span class="op">+</span><span class="dv">1</span>, <span class="dt">y=</span>cooksd, <span class="dt">labels=</span><span class="kw">ifelse</span>(cooksd<span class="op">&gt;</span><span class="dv">4</span><span class="op">/</span>sample_size, <span class="kw">names</span>(cooksd),<span class="st">&quot;&quot;</span>), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)  <span class="co"># add labels</span></a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-490-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb519-1" title="1"><span class="co"># Removing Outliers</span></a>
-<a class="sourceLine" id="cb519-2" title="2"></a>
-<a class="sourceLine" id="cb519-3" title="3"><span class="co"># influential row numbers</span></a>
-<a class="sourceLine" id="cb519-4" title="4">influential &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">names</span>(cooksd)[(cooksd <span class="op">&gt;</span><span class="st"> </span>(<span class="dv">4</span><span class="op">/</span>sample_size))])</a>
-<a class="sourceLine" id="cb519-5" title="5"></a>
-<a class="sourceLine" id="cb519-6" title="6">Time.spent.on.appraisals_screen &lt;-<span class="st"> </span>Time.spent.on.appraisals[<span class="op">-</span>influential, ]</a>
-<a class="sourceLine" id="cb519-7" title="7"></a>
-<a class="sourceLine" id="cb519-8" title="8">plot3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> Time.spent.on.appraisals, <span class="kw">aes</span>(<span class="dt">x =</span> Count.of.Appraisee, <span class="dt">y =</span> Hours)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb519-9" title="9"><span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb519-10" title="10"><span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb519-11" title="11"><span class="st">        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st">             </span><span class="co"># geom_smooth </span></a>
-<a class="sourceLine" id="cb519-12" title="12"><span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;Before&quot;</span>)</a>
-<a class="sourceLine" id="cb519-13" title="13"></a>
-<a class="sourceLine" id="cb519-14" title="14">plot4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> Time.spent.on.appraisals_screen, <span class="kw">aes</span>(<span class="dt">x =</span> Count.of.Appraisee, <span class="dt">y =</span> Hours)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb519-15" title="15"><span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb519-16" title="16"><span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb519-17" title="17"><span class="st">        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb519-18" title="18"><span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;After&quot;</span>)</a>
-<a class="sourceLine" id="cb519-19" title="19"></a>
-<a class="sourceLine" id="cb519-20" title="20">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(plot3, plot4, <span class="dt">ncol=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb517-1" title="1"><span class="co"># Removing Outliers</span></a>
+<a class="sourceLine" id="cb517-2" title="2"></a>
+<a class="sourceLine" id="cb517-3" title="3"><span class="co"># influential row numbers</span></a>
+<a class="sourceLine" id="cb517-4" title="4">influential &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">names</span>(cooksd)[(cooksd <span class="op">&gt;</span><span class="st"> </span>(<span class="dv">4</span><span class="op">/</span>sample_size))])</a>
+<a class="sourceLine" id="cb517-5" title="5"></a>
+<a class="sourceLine" id="cb517-6" title="6">Time.spent.on.appraisals_screen &lt;-<span class="st"> </span>Time.spent.on.appraisals[<span class="op">-</span>influential, ]</a>
+<a class="sourceLine" id="cb517-7" title="7"></a>
+<a class="sourceLine" id="cb517-8" title="8">plot3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> Time.spent.on.appraisals, <span class="kw">aes</span>(<span class="dt">x =</span> Count.of.Appraisee, <span class="dt">y =</span> Hours)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb517-9" title="9"><span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb517-10" title="10"><span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb517-11" title="11"><span class="st">        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st">             </span><span class="co"># geom_smooth </span></a>
+<a class="sourceLine" id="cb517-12" title="12"><span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;Before&quot;</span>)</a>
+<a class="sourceLine" id="cb517-13" title="13"></a>
+<a class="sourceLine" id="cb517-14" title="14">plot4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> Time.spent.on.appraisals_screen, <span class="kw">aes</span>(<span class="dt">x =</span> Count.of.Appraisee, <span class="dt">y =</span> Hours)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb517-15" title="15"><span class="st">        </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb517-16" title="16"><span class="st">        </span><span class="kw">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb517-17" title="17"><span class="st">        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb517-18" title="18"><span class="st">        </span><span class="kw">ggtitle</span>(<span class="st">&quot;After&quot;</span>)</a>
+<a class="sourceLine" id="cb517-19" title="19"></a>
+<a class="sourceLine" id="cb517-20" title="20">gridExtra<span class="op">::</span><span class="kw">grid.arrange</span>(plot3, plot4, <span class="dt">ncol=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-490-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb520-1" title="1">model_screen &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals_screen)</a>
-<a class="sourceLine" id="cb520-2" title="2"></a>
-<a class="sourceLine" id="cb520-3" title="3"><span class="co">#The following produces the formula of the new linear regression without the outliers</span></a>
-<a class="sourceLine" id="cb520-4" title="4"></a>
-<a class="sourceLine" id="cb520-5" title="5"><span class="kw">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_screen)[[<span class="dv">2</span>]], <span class="dt">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_screen)[[<span class="dv">1</span>]], <span class="dt">digits =</span> <span class="dv">3</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb518-1" title="1">model_screen &lt;-<span class="st"> </span><span class="kw">lm</span>(Hours <span class="op">~</span><span class="st"> </span>Count.of.Appraisee, <span class="dt">data=</span>Time.spent.on.appraisals_screen)</a>
+<a class="sourceLine" id="cb518-2" title="2"></a>
+<a class="sourceLine" id="cb518-3" title="3"><span class="co">#The following produces the formula of the new linear regression without the outliers</span></a>
+<a class="sourceLine" id="cb518-4" title="4"></a>
+<a class="sourceLine" id="cb518-5" title="5"><span class="kw">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_screen)[[<span class="dv">2</span>]], <span class="dt">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="kw">round</span>(<span class="kw">coef</span>(model_screen)[[<span class="dv">1</span>]], <span class="dt">digits =</span> <span class="dv">3</span>)) </a></code></pre></div>
 <pre><code>[1] &quot;y = 3.741 * x + 30.099&quot;</code></pre>
 <p>y = 3.741 * x + 30.099</p>
 <p>Now it would appear, that every manager spends on average 30 hours independently from the number of staff to appraise and an additional 3 hours and 45 minutes to appraise each indivual subordinate.</p>
@@ -837,7 +837,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/13-stop-appraisals.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/13-stop-appraisals.Rmd",
 "text": "Edit"
 },
 "history": {

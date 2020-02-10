@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 17 Commuting time | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 17 Commuting time | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -642,7 +642,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </html>
 <div id="commuting-time" class="section level1">
 <h1><span class="header-section-number">Chapter 17</span> Commuting time</h1>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb553-1" title="1">do_eval=<span class="kw">file.exists</span>(<span class="st">&quot;commute_times.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb551-1" title="1">do_eval=<span class="kw">file.exists</span>(<span class="st">&quot;commute_times.csv&quot;</span>)</a></code></pre></div>
 <p>Commuting time is often mentioned as a valid reason for leaving one employer for another.</p>
 <p>You are asked to calculate the commuting time for the employee working at your company. You decide that hyphotetically they must all arrive in the office at 8.30 am. In the Google you identified that there is google api for doing this, called <a href="https://developers.google.com/maps/documentation/distance-matrix/start?csw=1">Distance Matrix API</a>, which works for a matrix of origins and destinations.</p>
 <p>The information returned is based on the recommended route between start and end points and consists of rows containing duration and distance values for each pair." To use the Distance Matrix API, you must first activate the API in the Google Cloud Platform Console and obtain the proper authentication credentials. You need to provide your own API key in each request.</p>
@@ -650,87 +650,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A file with 200 fake names and addresses has been put together for you. The task is to add the commuting time next to each staff member. Normally google will charge us one dollar for checking 200 commuting times.</p>
 <p>Please note that the departure_time specifies the desired time of departure must be in POSIXct. format and must be in the future (i.e.greater than sys.time()). If no value is specified it defaults to Sys.time().</p>
 <p>Please note you can only specify one of arrival_time or departure_time, not both. If both are supplied, departure_time will be used.</p>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb554-1" title="1"><span class="kw">library</span>(googleway)</a>
-<a class="sourceLine" id="cb554-2" title="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb554-3" title="3"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb554-4" title="4"></a>
-<a class="sourceLine" id="cb554-5" title="5"><span class="co"># Set up here your api key key=</span></a>
-<a class="sourceLine" id="cb554-6" title="6">key =<span class="st"> &#39;AIzaSyCOly69PDrlPlM42I378p2lmvNs8I2w&#39;</span></a>
-<a class="sourceLine" id="cb554-7" title="7"></a>
-<a class="sourceLine" id="cb554-8" title="8">d &lt;-<span class="st"> </span><span class="kw">dmy_hms</span>(<span class="st">&quot;10/09/2018 08:30&quot;</span>)</a>
-<a class="sourceLine" id="cb554-9" title="9"></a>
-<a class="sourceLine" id="cb554-10" title="10">arrival &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(d)</a>
-<a class="sourceLine" id="cb554-11" title="11"></a>
-<a class="sourceLine" id="cb554-12" title="12"></a>
-<a class="sourceLine" id="cb554-13" title="13">from &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SE3+8UQ,UK&quot;</span>)</a>
-<a class="sourceLine" id="cb554-14" title="14">to &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;E14+5EU,UK&quot;</span>)</a>
-<a class="sourceLine" id="cb554-15" title="15"></a>
-<a class="sourceLine" id="cb554-16" title="16">test &lt;-<span class="st"> </span><span class="kw">google_distance</span>(<span class="dt">origins =</span> from,</a>
-<a class="sourceLine" id="cb554-17" title="17">                        <span class="dt">destinations =</span> to,</a>
-<a class="sourceLine" id="cb554-18" title="18">                        <span class="dt">mode =</span> <span class="st">&quot;walking&quot;</span>,</a>
-<a class="sourceLine" id="cb554-19" title="19">                        <span class="dt">arrival_time =</span> <span class="kw">as.POSIXct</span>(arrival, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>),</a>
-<a class="sourceLine" id="cb554-20" title="20">                        <span class="dt">key=</span>key)</a>
-<a class="sourceLine" id="cb554-21" title="21"></a>
-<a class="sourceLine" id="cb554-22" title="22">test<span class="op">$</span>rows<span class="op">$</span>elements[[<span class="dv">1</span>]]<span class="op">$</span>distance</a></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb552-1" title="1"><span class="kw">library</span>(googleway)</a>
+<a class="sourceLine" id="cb552-2" title="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb552-3" title="3"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb552-4" title="4"></a>
+<a class="sourceLine" id="cb552-5" title="5"><span class="co"># Set up here your api key key=</span></a>
+<a class="sourceLine" id="cb552-6" title="6">key =<span class="st"> &#39;AIzaSyCOly69PDrlPlM42I378p2lmvNs8I2w&#39;</span></a>
+<a class="sourceLine" id="cb552-7" title="7"></a>
+<a class="sourceLine" id="cb552-8" title="8">d &lt;-<span class="st"> </span><span class="kw">dmy_hms</span>(<span class="st">&quot;10/09/2018 08:30&quot;</span>)</a>
+<a class="sourceLine" id="cb552-9" title="9"></a>
+<a class="sourceLine" id="cb552-10" title="10">arrival &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(d)</a>
+<a class="sourceLine" id="cb552-11" title="11"></a>
+<a class="sourceLine" id="cb552-12" title="12"></a>
+<a class="sourceLine" id="cb552-13" title="13">from &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SE3+8UQ,UK&quot;</span>)</a>
+<a class="sourceLine" id="cb552-14" title="14">to &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;E14+5EU,UK&quot;</span>)</a>
+<a class="sourceLine" id="cb552-15" title="15"></a>
+<a class="sourceLine" id="cb552-16" title="16">test &lt;-<span class="st"> </span><span class="kw">google_distance</span>(<span class="dt">origins =</span> from,</a>
+<a class="sourceLine" id="cb552-17" title="17">                        <span class="dt">destinations =</span> to,</a>
+<a class="sourceLine" id="cb552-18" title="18">                        <span class="dt">mode =</span> <span class="st">&quot;walking&quot;</span>,</a>
+<a class="sourceLine" id="cb552-19" title="19">                        <span class="dt">arrival_time =</span> <span class="kw">as.POSIXct</span>(arrival, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="dt">tz =</span> <span class="st">&quot;UTC&quot;</span>),</a>
+<a class="sourceLine" id="cb552-20" title="20">                        <span class="dt">key=</span>key)</a>
+<a class="sourceLine" id="cb552-21" title="21"></a>
+<a class="sourceLine" id="cb552-22" title="22">test<span class="op">$</span>rows<span class="op">$</span>elements[[<span class="dv">1</span>]]<span class="op">$</span>distance</a></code></pre></div>
 <pre><code>NULL</code></pre>
 <p>To make all this simpler, we put together an R function which can be used to analyse many results. Note this calls all modes of transport for every employee making it more costly than just running one mode per employee.</p>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" title="1"><span class="co">#&#39; Get distance data between two points based on all the travel mode options. Works for many origin points.</span></a>
-<a class="sourceLine" id="cb556-2" title="2"><span class="co">#&#39;</span></a>
-<a class="sourceLine" id="cb556-3" title="3"><span class="co">#&#39; @param x A vector of origins in address or postcode format</span></a>
-<a class="sourceLine" id="cb556-4" title="4"><span class="co">#&#39; @param dest A single destinationin address or postocde format</span></a>
-<a class="sourceLine" id="cb556-5" title="5"><span class="co">#&#39; @param arrival_time A POSIXct datetime that folks need to arrive by</span></a>
-<a class="sourceLine" id="cb556-6" title="6"><span class="co">#&#39; @param key A google distance API key</span></a>
-<a class="sourceLine" id="cb556-7" title="7"><span class="co">#&#39; @param ... Additional options to pass to `google_distance()`</span></a>
-<a class="sourceLine" id="cb556-8" title="8"><span class="co">#&#39;</span></a>
-<a class="sourceLine" id="cb556-9" title="9"><span class="co">#&#39; @return Data.frame containing (typically) 4 rows per input element</span></a>
-<a class="sourceLine" id="cb556-10" title="10"></a>
-<a class="sourceLine" id="cb556-11" title="11">google_distance_all =<span class="st">  </span><span class="cf">function</span>(x, dest, arrival_time, key, ...){</a>
-<a class="sourceLine" id="cb556-12" title="12">  </a>
-<a class="sourceLine" id="cb556-13" title="13">  <span class="co"># simple hygeine stuff</span></a>
-<a class="sourceLine" id="cb556-14" title="14">  gd =<span class="st"> </span>purrr<span class="op">::</span><span class="kw">possibly</span>(</a>
-<a class="sourceLine" id="cb556-15" title="15">    memoise<span class="op">::</span><span class="kw">memoise</span>(</a>
-<a class="sourceLine" id="cb556-16" title="16">      google_distance)</a>
-<a class="sourceLine" id="cb556-17" title="17">    , <span class="st">&quot;Fail&quot;</span></a>
-<a class="sourceLine" id="cb556-18" title="18">  )</a>
-<a class="sourceLine" id="cb556-19" title="19">  </a>
-<a class="sourceLine" id="cb556-20" title="20">  <span class="co"># Prep dataset</span></a>
-<a class="sourceLine" id="cb556-21" title="21">   interested_in =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">from=</span>x, </a>
-<a class="sourceLine" id="cb556-22" title="22">     <span class="dt">mode=</span><span class="kw">c</span>(<span class="st">&quot;driving&quot;</span>, <span class="st">&quot;walking&quot;</span>, <span class="st">&quot;bicycling&quot;</span>, <span class="st">&quot;transit&quot;</span>), </a>
-<a class="sourceLine" id="cb556-23" title="23">      <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb556-24" title="24">   <span class="co"># Perform google_distance calls for all combos</span></a>
-<a class="sourceLine" id="cb556-25" title="25">  purrr<span class="op">::</span><span class="kw">map2</span>(interested_in<span class="op">$</span>from,interested_in<span class="op">$</span>mode, </a>
-<a class="sourceLine" id="cb556-26" title="26">     <span class="op">~</span><span class="kw">gd</span>(.x, dest, <span class="dt">mode=</span>.y,</a>
-<a class="sourceLine" id="cb556-27" title="27">                        <span class="dt">arrival_time =</span> arrival_time,</a>
-<a class="sourceLine" id="cb556-28" title="28">                        <span class="dt">key=</span>key)</a>
-<a class="sourceLine" id="cb556-29" title="29">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb556-30" title="30"><span class="st">    </span><span class="co"># Extract relevant section</span></a>
-<a class="sourceLine" id="cb556-31" title="31"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map</span>(<span class="st">&quot;rows&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb556-32" title="32"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map</span>(<span class="st">&quot;elements&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb556-33" title="33"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">flatten</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb556-34" title="34"><span class="st">    </span><span class="co"># Simplify the data.frames</span></a>
-<a class="sourceLine" id="cb556-35" title="35"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map</span>(unclass) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb556-36" title="36"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map_df</span>(purrr<span class="op">::</span>flatten) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb556-37" title="37"><span class="st">    </span><span class="co"># Add original lookup values</span></a>
-<a class="sourceLine" id="cb556-38" title="38"><span class="st">    </span><span class="kw">cbind</span>(interested_in)</a>
-<a class="sourceLine" id="cb556-39" title="39">}</a></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb554-1" title="1"><span class="co">#&#39; Get distance data between two points based on all the travel mode options. Works for many origin points.</span></a>
+<a class="sourceLine" id="cb554-2" title="2"><span class="co">#&#39;</span></a>
+<a class="sourceLine" id="cb554-3" title="3"><span class="co">#&#39; @param x A vector of origins in address or postcode format</span></a>
+<a class="sourceLine" id="cb554-4" title="4"><span class="co">#&#39; @param dest A single destinationin address or postocde format</span></a>
+<a class="sourceLine" id="cb554-5" title="5"><span class="co">#&#39; @param arrival_time A POSIXct datetime that folks need to arrive by</span></a>
+<a class="sourceLine" id="cb554-6" title="6"><span class="co">#&#39; @param key A google distance API key</span></a>
+<a class="sourceLine" id="cb554-7" title="7"><span class="co">#&#39; @param ... Additional options to pass to `google_distance()`</span></a>
+<a class="sourceLine" id="cb554-8" title="8"><span class="co">#&#39;</span></a>
+<a class="sourceLine" id="cb554-9" title="9"><span class="co">#&#39; @return Data.frame containing (typically) 4 rows per input element</span></a>
+<a class="sourceLine" id="cb554-10" title="10"></a>
+<a class="sourceLine" id="cb554-11" title="11">google_distance_all =<span class="st">  </span><span class="cf">function</span>(x, dest, arrival_time, key, ...){</a>
+<a class="sourceLine" id="cb554-12" title="12">  </a>
+<a class="sourceLine" id="cb554-13" title="13">  <span class="co"># simple hygeine stuff</span></a>
+<a class="sourceLine" id="cb554-14" title="14">  gd =<span class="st"> </span>purrr<span class="op">::</span><span class="kw">possibly</span>(</a>
+<a class="sourceLine" id="cb554-15" title="15">    memoise<span class="op">::</span><span class="kw">memoise</span>(</a>
+<a class="sourceLine" id="cb554-16" title="16">      google_distance)</a>
+<a class="sourceLine" id="cb554-17" title="17">    , <span class="st">&quot;Fail&quot;</span></a>
+<a class="sourceLine" id="cb554-18" title="18">  )</a>
+<a class="sourceLine" id="cb554-19" title="19">  </a>
+<a class="sourceLine" id="cb554-20" title="20">  <span class="co"># Prep dataset</span></a>
+<a class="sourceLine" id="cb554-21" title="21">   interested_in =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">from=</span>x, </a>
+<a class="sourceLine" id="cb554-22" title="22">     <span class="dt">mode=</span><span class="kw">c</span>(<span class="st">&quot;driving&quot;</span>, <span class="st">&quot;walking&quot;</span>, <span class="st">&quot;bicycling&quot;</span>, <span class="st">&quot;transit&quot;</span>), </a>
+<a class="sourceLine" id="cb554-23" title="23">      <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb554-24" title="24">   <span class="co"># Perform google_distance calls for all combos</span></a>
+<a class="sourceLine" id="cb554-25" title="25">  purrr<span class="op">::</span><span class="kw">map2</span>(interested_in<span class="op">$</span>from,interested_in<span class="op">$</span>mode, </a>
+<a class="sourceLine" id="cb554-26" title="26">     <span class="op">~</span><span class="kw">gd</span>(.x, dest, <span class="dt">mode=</span>.y,</a>
+<a class="sourceLine" id="cb554-27" title="27">                        <span class="dt">arrival_time =</span> arrival_time,</a>
+<a class="sourceLine" id="cb554-28" title="28">                        <span class="dt">key=</span>key)</a>
+<a class="sourceLine" id="cb554-29" title="29">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-30" title="30"><span class="st">    </span><span class="co"># Extract relevant section</span></a>
+<a class="sourceLine" id="cb554-31" title="31"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map</span>(<span class="st">&quot;rows&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-32" title="32"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map</span>(<span class="st">&quot;elements&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-33" title="33"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">flatten</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-34" title="34"><span class="st">    </span><span class="co"># Simplify the data.frames</span></a>
+<a class="sourceLine" id="cb554-35" title="35"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map</span>(unclass) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-36" title="36"><span class="st">    </span>purrr<span class="op">::</span><span class="kw">map_df</span>(purrr<span class="op">::</span>flatten) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb554-37" title="37"><span class="st">    </span><span class="co"># Add original lookup values</span></a>
+<a class="sourceLine" id="cb554-38" title="38"><span class="st">    </span><span class="kw">cbind</span>(interested_in)</a>
+<a class="sourceLine" id="cb554-39" title="39">}</a></code></pre></div>
 <p>This needs some packages installed to work</p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb557-1" title="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(purrr)) <span class="kw">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</a>
-<a class="sourceLine" id="cb557-2" title="2"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(memoise)) <span class="kw">install.packages</span>(<span class="st">&quot;memoise&quot;</span>)</a>
-<a class="sourceLine" id="cb557-3" title="3"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(googleway)) <span class="kw">install.packages</span>(<span class="st">&quot;googleway&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb555-1" title="1"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(purrr)) <span class="kw">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</a>
+<a class="sourceLine" id="cb555-2" title="2"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(memoise)) <span class="kw">install.packages</span>(<span class="st">&quot;memoise&quot;</span>)</a>
+<a class="sourceLine" id="cb555-3" title="3"><span class="cf">if</span>(<span class="op">!</span><span class="kw">require</span>(googleway)) <span class="kw">install.packages</span>(<span class="st">&quot;googleway&quot;</span>)</a></code></pre></div>
 <p>We need some information about our google API account, where our office is, and when we’re testing commute times for.</p>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb558-1" title="1">office =<span class="st"> &quot;E14 5EU&quot;</span></a>
-<a class="sourceLine" id="cb558-2" title="2">monday_9am =<span class="st"> </span><span class="kw">as.POSIXct</span>(<span class="st">&quot;2018-12-03 09:00&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" title="1">office =<span class="st"> &quot;E14 5EU&quot;</span></a>
+<a class="sourceLine" id="cb556-2" title="2">monday_9am =<span class="st"> </span><span class="kw">as.POSIXct</span>(<span class="st">&quot;2018-12-03 09:00&quot;</span>)</a></code></pre></div>
 <p>Then we can use this function to get data for our 200 employees</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" title="1">the_<span class="dv">200</span> &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/200_staff_members.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb560-1" title="1">results =<span class="st"> </span><span class="kw">google_distance_all</span>(</a>
-<a class="sourceLine" id="cb560-2" title="2">  the_<span class="dv">200</span><span class="op">$</span>Postcode,</a>
-<a class="sourceLine" id="cb560-3" title="3">  office,</a>
-<a class="sourceLine" id="cb560-4" title="4">  <span class="dt">arrival_time =</span> monday_9am,</a>
-<a class="sourceLine" id="cb560-5" title="5">  <span class="dt">key =</span> key</a>
-<a class="sourceLine" id="cb560-6" title="6">)</a>
-<a class="sourceLine" id="cb560-7" title="7"></a>
-<a class="sourceLine" id="cb560-8" title="8"><span class="kw">write_csv</span>(results, <span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>), <span class="st">&quot;commute_times.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" title="1">results</a></code></pre></div>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb557-1" title="1">the_<span class="dv">200</span> &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/200_staff_members.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb558-1" title="1">results =<span class="st"> </span><span class="kw">google_distance_all</span>(</a>
+<a class="sourceLine" id="cb558-2" title="2">  the_<span class="dv">200</span><span class="op">$</span>Postcode,</a>
+<a class="sourceLine" id="cb558-3" title="3">  office,</a>
+<a class="sourceLine" id="cb558-4" title="4">  <span class="dt">arrival_time =</span> monday_9am,</a>
+<a class="sourceLine" id="cb558-5" title="5">  <span class="dt">key =</span> key</a>
+<a class="sourceLine" id="cb558-6" title="6">)</a>
+<a class="sourceLine" id="cb558-7" title="7"></a>
+<a class="sourceLine" id="cb558-8" title="8"><span class="kw">write_csv</span>(results, <span class="kw">file.path</span>(<span class="st">&quot;data&quot;</span>), <span class="st">&quot;commute_times.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" title="1">results</a></code></pre></div>
 <pre><code># A tibble: 800 x 5
    text    value status from     mode   
    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  
@@ -747,11 +747,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 # ... with 790 more rows</code></pre>
 <p>Now that we have this data we can answer questions about our employee’s commute times.</p>
 <p>Who has the longest commutes by car?</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" title="1">results <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb563-2" title="2"><span class="st">  </span><span class="kw">filter</span>(mode <span class="op">==</span><span class="st"> &quot;driving&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb563-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hours=</span>value<span class="op">/</span><span class="dv">60</span><span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb563-4" title="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>, hours) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb563-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(hours))</a></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" title="1">results <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb561-2" title="2"><span class="st">  </span><span class="kw">filter</span>(mode <span class="op">==</span><span class="st"> &quot;driving&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb561-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hours=</span>value<span class="op">/</span><span class="dv">60</span><span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb561-4" title="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>, hours) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb561-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(hours))</a></code></pre></div>
 <pre><code># A tibble: 10 x 6
    text             value status from     mode       hours
    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
@@ -766,14 +766,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  9 3 hours 26 mins  12341 OK     LS24 9QW driving  3.42806
 10 3 hours 18 mins  11882 OK     S10 3TR  driving  3.30056</code></pre>
 <p>We can look at the distributions overall too.</p>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" title="1">results <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb565-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hours=</span>value<span class="op">/</span><span class="dv">60</span><span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb565-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb565-4" title="4"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>hours) <span class="op">+</span></a>
-<a class="sourceLine" id="cb565-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb565-6" title="6"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb565-7" title="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>mode) <span class="op">+</span></a>
-<a class="sourceLine" id="cb565-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" title="1">results <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb563-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">hours=</span>value<span class="op">/</span><span class="dv">60</span><span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb563-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb563-4" title="4"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>hours) <span class="op">+</span></a>
+<a class="sourceLine" id="cb563-5" title="5"><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb563-6" title="6"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb563-7" title="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>mode) <span class="op">+</span></a>
+<a class="sourceLine" id="cb563-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-524-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 
 </div>
@@ -834,7 +834,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/16-commuting-time.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/16-commuting-time.Rmd",
 "text": "Edit"
 },
 "history": {

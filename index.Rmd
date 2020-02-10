@@ -87,6 +87,7 @@ if(!"skimr" %in% installed.packages()){
 # GitHub packages needed
 #remotes::install_github("tidymodels/infer", ref = "develop")
 #remotes::install_github("moderndive/moderndive")
+#remotes::install_github("Hendrik147/HR_Analytics_in_R_book/HRAnalytics")
 
 # GitHub packages needed
 needed_pkgs <- unique(c(needed_CRAN_pkgs, 

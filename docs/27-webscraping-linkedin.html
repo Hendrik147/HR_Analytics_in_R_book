@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 27 Webscraping LinkedIn | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 27 Webscraping LinkedIn | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -653,139 +653,139 @@ you know that Innocent has 289 employees and that brand managers are earning sal
 <p>This will be your <a href="https://www.linkedin.com/search/results/people/v2/?facetCurrentCompany=%5B%2224177%22%5D&amp;page=1">starting page</a> of your web scraping. After a few checks, you realise that according to LinkedIn the company has 543 employees for a total of 55 pages of records. From looking at the urls you also realise that %5B%2224177%22%5D is the code used to identify Innocent by LinkedIn.</p>
 <p>After lengthy googling on the internet, you find an excellent <a href="https://www.datacamp.com/community/tutorials/r-web-scraping-rvest">tutorial on DataCamp for webscraping</a> which does mostly what you plan to do, but unfortunately it is scraping Trustpilot, which on the top of things is a website that looks completely different to LinkedIn. You will need to adapt the code given in that tutorial, open each indivual LinkedIn profile for all 55 pages and scrape the required information. The final end product has to be a table which respects <a href="https://www.jstatsoft.org/article/view/v059i10/v59i10.pdf">“Hadley Wickham’s tidy data rule”</a></p>
 <p>Tidy datasets are easy to manipulate, model and visualize, and have a specific structure: each variable is a column, each observation is a row, and each type of observational unit is a table.</p>
-<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb860-1" title="1"><span class="kw">library</span>(tidyverse)     <span class="co"># General purpose data wrangling</span></a>
-<a class="sourceLine" id="cb860-2" title="2"><span class="kw">library</span>(rvest)         <span class="co"># Parsing of html/xml files</span></a>
-<a class="sourceLine" id="cb860-3" title="3"><span class="kw">library</span>(rebus)         <span class="co"># Verbose regular expressions</span></a></code></pre></div>
-<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb861-1" title="1">get_last_page &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
-<a class="sourceLine" id="cb861-2" title="2">    </a>
-<a class="sourceLine" id="cb861-3" title="3">    pages_data &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-4" title="4"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.pagination-page&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># The &#39;.&#39; indicates the class</span></a>
-<a class="sourceLine" id="cb861-5" title="5"><span class="st">        </span><span class="kw">html_text</span>()                        <span class="co"># Extracts the raw text as a list</span></a>
-<a class="sourceLine" id="cb861-6" title="6">    </a>
-<a class="sourceLine" id="cb861-7" title="7">    pages_data[(<span class="kw">length</span>(pages_data)<span class="op">-</span><span class="dv">1</span>)] <span class="op">%&gt;%</span><span class="st">             </span><span class="co"># The second to last of the buttons is the one</span></a>
-<a class="sourceLine" id="cb861-8" title="8"><span class="st">        </span><span class="kw">unname</span>() <span class="op">%&gt;%</span><span class="st">                                     </span><span class="co"># Take the raw string</span></a>
-<a class="sourceLine" id="cb861-9" title="9"><span class="st">        </span><span class="kw">as.numeric</span>()                                     <span class="co"># Convert to number</span></a>
-<a class="sourceLine" id="cb861-10" title="10">}</a>
-<a class="sourceLine" id="cb861-11" title="11"></a>
-<a class="sourceLine" id="cb861-12" title="12">get_reviews &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
-<a class="sourceLine" id="cb861-13" title="13">    html <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-14" title="14"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.review-info__body__text&#39;</span>) <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># The relevant tag</span></a>
-<a class="sourceLine" id="cb861-15" title="15"><span class="st">        </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-16" title="16"><span class="st">        </span><span class="kw">str_trim</span>() <span class="op">%&gt;%</span><span class="st">                       </span><span class="co"># Trims additional white space</span></a>
-<a class="sourceLine" id="cb861-17" title="17"><span class="st">        </span><span class="kw">unlist</span>()                             <span class="co"># Converts the list into a vector</span></a>
-<a class="sourceLine" id="cb861-18" title="18">}</a>
-<a class="sourceLine" id="cb861-19" title="19"></a>
-<a class="sourceLine" id="cb861-20" title="20">get_reviewer_names &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
-<a class="sourceLine" id="cb861-21" title="21">    html <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-22" title="22"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.consumer-info__details__name&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-23" title="23"><span class="st">        </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-24" title="24"><span class="st">        </span><span class="kw">str_trim</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-25" title="25"><span class="st">        </span><span class="kw">unlist</span>()</a>
-<a class="sourceLine" id="cb861-26" title="26">}</a>
-<a class="sourceLine" id="cb861-27" title="27"></a>
-<a class="sourceLine" id="cb861-28" title="28">get_review_dates &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
-<a class="sourceLine" id="cb861-29" title="29">    </a>
-<a class="sourceLine" id="cb861-30" title="30">    status &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-31" title="31"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;time&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-32" title="32"><span class="st">        </span><span class="kw">html_attrs</span>() <span class="op">%&gt;%</span><span class="st">              </span><span class="co"># The status information is this time a tag attribute</span></a>
-<a class="sourceLine" id="cb861-33" title="33"><span class="st">        </span><span class="kw">map</span>(<span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st">                    </span><span class="co"># Extracts the second element</span></a>
-<a class="sourceLine" id="cb861-34" title="34"><span class="st">        </span><span class="kw">unlist</span>() </a>
-<a class="sourceLine" id="cb861-35" title="35">    </a>
-<a class="sourceLine" id="cb861-36" title="36">    dates &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-37" title="37"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;time&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-38" title="38"><span class="st">        </span><span class="kw">html_attrs</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-39" title="39"><span class="st">        </span><span class="kw">map</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-40" title="40"><span class="st">        </span><span class="kw">ymd_hms</span>() <span class="op">%&gt;%</span><span class="st">                 </span><span class="co"># Using a lubridate function </span></a>
-<a class="sourceLine" id="cb861-41" title="41"><span class="st">        </span><span class="co"># to parse the string into a datetime object</span></a>
-<a class="sourceLine" id="cb861-42" title="42"><span class="st">        </span><span class="kw">unlist</span>()</a>
-<a class="sourceLine" id="cb861-43" title="43">    </a>
-<a class="sourceLine" id="cb861-44" title="44">    return_dates &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">status =</span> status, <span class="dt">dates =</span> dates) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># You combine the status and the date </span></a>
-<a class="sourceLine" id="cb861-45" title="45"><span class="st">        </span><span class="co"># information to filter one via the other</span></a>
-<a class="sourceLine" id="cb861-46" title="46"><span class="st">        </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &#39;ndate&#39;</span>) <span class="op">%&gt;%</span><span class="st">              </span><span class="co"># Only these are actual reviews</span></a>
-<a class="sourceLine" id="cb861-47" title="47"><span class="st">        </span><span class="kw">pull</span>(dates) <span class="op">%&gt;%</span><span class="st">                            </span><span class="co"># Selects and converts to vector</span></a>
-<a class="sourceLine" id="cb861-48" title="48"><span class="st">        </span><span class="kw">as.POSIXct</span>(<span class="dt">origin =</span> <span class="st">&#39;1970-01-01 00:00:00&#39;</span>) <span class="co"># Converts datetimes to POSIX objects</span></a>
-<a class="sourceLine" id="cb861-49" title="49">    </a>
-<a class="sourceLine" id="cb861-50" title="50">    <span class="co"># The lengths still occasionally do not lign up. You then arbitrarily crop the dates to fit</span></a>
-<a class="sourceLine" id="cb861-51" title="51">    <span class="co"># This can cause data imperfections, however reviews on one page are generally close in time)</span></a>
-<a class="sourceLine" id="cb861-52" title="52">    </a>
-<a class="sourceLine" id="cb861-53" title="53">    length_reviews &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">get_reviews</span>(html))</a>
-<a class="sourceLine" id="cb861-54" title="54">    </a>
-<a class="sourceLine" id="cb861-55" title="55">    return_reviews &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">length</span>(return_dates)<span class="op">&gt;</span><span class="st"> </span>length_reviews){</a>
-<a class="sourceLine" id="cb861-56" title="56">        return_dates[<span class="dv">1</span><span class="op">:</span>length_reviews]</a>
-<a class="sourceLine" id="cb861-57" title="57">    } <span class="cf">else</span>{</a>
-<a class="sourceLine" id="cb861-58" title="58">        return_dates</a>
-<a class="sourceLine" id="cb861-59" title="59">    }</a>
-<a class="sourceLine" id="cb861-60" title="60">    return_reviews</a>
-<a class="sourceLine" id="cb861-61" title="61">}</a>
-<a class="sourceLine" id="cb861-62" title="62"></a>
-<a class="sourceLine" id="cb861-63" title="63">get_star_rating &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
-<a class="sourceLine" id="cb861-64" title="64">    </a>
-<a class="sourceLine" id="cb861-65" title="65">    </a>
-<a class="sourceLine" id="cb861-66" title="66">    <span class="co"># The pattern we look for</span></a>
-<a class="sourceLine" id="cb861-67" title="67">    pattern =<span class="st"> &#39;star-rating-&#39;</span><span class="op">%R%</span><span class="st"> </span><span class="kw">capture</span>(DIGIT)  </a>
-<a class="sourceLine" id="cb861-68" title="68">    </a>
-<a class="sourceLine" id="cb861-69" title="69">    vector &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-70" title="70"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.star-rating&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-71" title="71"><span class="st">        </span><span class="kw">html_attr</span>(<span class="st">&#39;class&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-72" title="72"><span class="st">        </span><span class="kw">str_match</span>(pattern) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-73" title="73"><span class="st">        </span><span class="kw">map</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-74" title="74"><span class="st">        </span><span class="kw">as.numeric</span>()  </a>
-<a class="sourceLine" id="cb861-75" title="75">    vector &lt;-<span class="st">  </span>vector[<span class="op">!</span><span class="kw">is.na</span>(vector)]</a>
-<a class="sourceLine" id="cb861-76" title="76">    vector &lt;-<span class="st"> </span>vector[<span class="dv">3</span><span class="op">:</span><span class="kw">length</span>(vector)]</a>
-<a class="sourceLine" id="cb861-77" title="77">    vector</a>
-<a class="sourceLine" id="cb861-78" title="78">}</a>
-<a class="sourceLine" id="cb861-79" title="79"></a>
-<a class="sourceLine" id="cb861-80" title="80">get_data_table &lt;-<span class="st"> </span><span class="cf">function</span>(html, company_name){</a>
-<a class="sourceLine" id="cb861-81" title="81">    </a>
-<a class="sourceLine" id="cb861-82" title="82">    <span class="co"># Extract the Basic information from the HTML</span></a>
-<a class="sourceLine" id="cb861-83" title="83">    reviews &lt;-<span class="st"> </span><span class="kw">get_reviews</span>(html)</a>
-<a class="sourceLine" id="cb861-84" title="84">    reviewer_names &lt;-<span class="st"> </span><span class="kw">get_reviewer_names</span>(html)</a>
-<a class="sourceLine" id="cb861-85" title="85">    dates &lt;-<span class="st"> </span><span class="kw">get_review_dates</span>(html)</a>
-<a class="sourceLine" id="cb861-86" title="86">    ratings &lt;-<span class="st"> </span><span class="kw">get_star_rating</span>(html)</a>
-<a class="sourceLine" id="cb861-87" title="87">    </a>
-<a class="sourceLine" id="cb861-88" title="88">    <span class="co"># Minimum length</span></a>
-<a class="sourceLine" id="cb861-89" title="89">    min_length &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">length</span>(reviews), <span class="kw">length</span>(reviewer_names), <span class="kw">length</span>(dates), <span class="kw">length</span>(ratings))</a>
-<a class="sourceLine" id="cb861-90" title="90">    </a>
-<a class="sourceLine" id="cb861-91" title="91">    <span class="co"># Combine into a tibble</span></a>
-<a class="sourceLine" id="cb861-92" title="92">    combined_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">reviewer =</span> reviewer_names[<span class="dv">1</span><span class="op">:</span>min_length],</a>
-<a class="sourceLine" id="cb861-93" title="93">                            <span class="dt">date =</span> dates[<span class="dv">1</span><span class="op">:</span>min_length],</a>
-<a class="sourceLine" id="cb861-94" title="94">                            <span class="dt">rating =</span> ratings[<span class="dv">1</span><span class="op">:</span>min_length],</a>
-<a class="sourceLine" id="cb861-95" title="95">                            <span class="dt">review =</span> reviews[<span class="dv">1</span><span class="op">:</span>min_length]) </a>
-<a class="sourceLine" id="cb861-96" title="96">    </a>
-<a class="sourceLine" id="cb861-97" title="97">    <span class="co"># Tag the individual data with the company name</span></a>
-<a class="sourceLine" id="cb861-98" title="98">    combined_data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-99" title="99"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">company =</span> company_name) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-100" title="100"><span class="st">        </span><span class="kw">select</span>(company, reviewer, date, rating, review)</a>
-<a class="sourceLine" id="cb861-101" title="101">}</a>
-<a class="sourceLine" id="cb861-102" title="102"></a>
-<a class="sourceLine" id="cb861-103" title="103">get_data_from_url &lt;-<span class="st"> </span><span class="cf">function</span>(url, company_name){</a>
-<a class="sourceLine" id="cb861-104" title="104">    html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)</a>
-<a class="sourceLine" id="cb861-105" title="105">    <span class="kw">get_data_table</span>(html, company_name)</a>
-<a class="sourceLine" id="cb861-106" title="106">}</a>
-<a class="sourceLine" id="cb861-107" title="107"></a>
-<a class="sourceLine" id="cb861-108" title="108">scrape_write_table &lt;-<span class="st"> </span><span class="cf">function</span>(url, company_name){</a>
-<a class="sourceLine" id="cb861-109" title="109">    </a>
-<a class="sourceLine" id="cb861-110" title="110">    <span class="co"># Read first page</span></a>
-<a class="sourceLine" id="cb861-111" title="111">    first_page &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)</a>
-<a class="sourceLine" id="cb861-112" title="112">    </a>
-<a class="sourceLine" id="cb861-113" title="113">    <span class="co"># Extract the number of pages that have to be queried</span></a>
-<a class="sourceLine" id="cb861-114" title="114">    latest_page_number &lt;-<span class="st"> </span><span class="kw">get_last_page</span>(first_page)</a>
-<a class="sourceLine" id="cb861-115" title="115">    </a>
-<a class="sourceLine" id="cb861-116" title="116">    <span class="co"># Generate the target URLs</span></a>
-<a class="sourceLine" id="cb861-117" title="117">    list_of_pages &lt;-<span class="st"> </span><span class="kw">str_c</span>(url, <span class="st">&#39;?page=&#39;</span>, <span class="dv">1</span><span class="op">:</span>latest_page_number)</a>
-<a class="sourceLine" id="cb861-118" title="118">    </a>
-<a class="sourceLine" id="cb861-119" title="119">    <span class="co"># Apply the extraction and bind the individual results back into one table, </span></a>
-<a class="sourceLine" id="cb861-120" title="120">    <span class="co"># which is then written as a tsv file into the working directory</span></a>
-<a class="sourceLine" id="cb861-121" title="121">    list_of_pages <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb861-122" title="122"><span class="st">        </span><span class="kw">map</span>(get_data_from_url, company_name) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Apply to all URLs</span></a>
-<a class="sourceLine" id="cb861-123" title="123"><span class="st">        </span><span class="kw">bind_rows</span>() <span class="op">%&gt;%</span><span class="st">                           </span><span class="co"># Combines the tibbles into one tibble</span></a>
-<a class="sourceLine" id="cb861-124" title="124"><span class="st">        </span><span class="kw">write_tsv</span>(<span class="kw">str_c</span>(company_name,<span class="st">&#39;.tsv&#39;</span>))     <span class="co"># Writes a tab separated file</span></a>
-<a class="sourceLine" id="cb861-125" title="125">}</a>
-<a class="sourceLine" id="cb861-126" title="126"></a>
-<a class="sourceLine" id="cb861-127" title="127"></a>
-<a class="sourceLine" id="cb861-128" title="128"><span class="co"># url &lt;-&#39;http://www.trustpilot.com/review/www.amazon.com&#39;</span></a>
-<a class="sourceLine" id="cb861-129" title="129"><span class="co"># scrape_write_table(url, &#39;amazon&#39;)</span></a>
-<a class="sourceLine" id="cb861-130" title="130"><span class="co"># amazon_table &lt;- read_tsv(&#39;amazon.tsv&#39;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb858-1" title="1"><span class="kw">library</span>(tidyverse)     <span class="co"># General purpose data wrangling</span></a>
+<a class="sourceLine" id="cb858-2" title="2"><span class="kw">library</span>(rvest)         <span class="co"># Parsing of html/xml files</span></a>
+<a class="sourceLine" id="cb858-3" title="3"><span class="kw">library</span>(rebus)         <span class="co"># Verbose regular expressions</span></a></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb859-1" title="1">get_last_page &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
+<a class="sourceLine" id="cb859-2" title="2">    </a>
+<a class="sourceLine" id="cb859-3" title="3">    pages_data &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-4" title="4"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.pagination-page&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># The &#39;.&#39; indicates the class</span></a>
+<a class="sourceLine" id="cb859-5" title="5"><span class="st">        </span><span class="kw">html_text</span>()                        <span class="co"># Extracts the raw text as a list</span></a>
+<a class="sourceLine" id="cb859-6" title="6">    </a>
+<a class="sourceLine" id="cb859-7" title="7">    pages_data[(<span class="kw">length</span>(pages_data)<span class="op">-</span><span class="dv">1</span>)] <span class="op">%&gt;%</span><span class="st">             </span><span class="co"># The second to last of the buttons is the one</span></a>
+<a class="sourceLine" id="cb859-8" title="8"><span class="st">        </span><span class="kw">unname</span>() <span class="op">%&gt;%</span><span class="st">                                     </span><span class="co"># Take the raw string</span></a>
+<a class="sourceLine" id="cb859-9" title="9"><span class="st">        </span><span class="kw">as.numeric</span>()                                     <span class="co"># Convert to number</span></a>
+<a class="sourceLine" id="cb859-10" title="10">}</a>
+<a class="sourceLine" id="cb859-11" title="11"></a>
+<a class="sourceLine" id="cb859-12" title="12">get_reviews &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
+<a class="sourceLine" id="cb859-13" title="13">    html <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-14" title="14"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.review-info__body__text&#39;</span>) <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># The relevant tag</span></a>
+<a class="sourceLine" id="cb859-15" title="15"><span class="st">        </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-16" title="16"><span class="st">        </span><span class="kw">str_trim</span>() <span class="op">%&gt;%</span><span class="st">                       </span><span class="co"># Trims additional white space</span></a>
+<a class="sourceLine" id="cb859-17" title="17"><span class="st">        </span><span class="kw">unlist</span>()                             <span class="co"># Converts the list into a vector</span></a>
+<a class="sourceLine" id="cb859-18" title="18">}</a>
+<a class="sourceLine" id="cb859-19" title="19"></a>
+<a class="sourceLine" id="cb859-20" title="20">get_reviewer_names &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
+<a class="sourceLine" id="cb859-21" title="21">    html <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-22" title="22"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.consumer-info__details__name&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-23" title="23"><span class="st">        </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-24" title="24"><span class="st">        </span><span class="kw">str_trim</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-25" title="25"><span class="st">        </span><span class="kw">unlist</span>()</a>
+<a class="sourceLine" id="cb859-26" title="26">}</a>
+<a class="sourceLine" id="cb859-27" title="27"></a>
+<a class="sourceLine" id="cb859-28" title="28">get_review_dates &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
+<a class="sourceLine" id="cb859-29" title="29">    </a>
+<a class="sourceLine" id="cb859-30" title="30">    status &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-31" title="31"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;time&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-32" title="32"><span class="st">        </span><span class="kw">html_attrs</span>() <span class="op">%&gt;%</span><span class="st">              </span><span class="co"># The status information is this time a tag attribute</span></a>
+<a class="sourceLine" id="cb859-33" title="33"><span class="st">        </span><span class="kw">map</span>(<span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st">                    </span><span class="co"># Extracts the second element</span></a>
+<a class="sourceLine" id="cb859-34" title="34"><span class="st">        </span><span class="kw">unlist</span>() </a>
+<a class="sourceLine" id="cb859-35" title="35">    </a>
+<a class="sourceLine" id="cb859-36" title="36">    dates &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-37" title="37"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;time&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-38" title="38"><span class="st">        </span><span class="kw">html_attrs</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-39" title="39"><span class="st">        </span><span class="kw">map</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-40" title="40"><span class="st">        </span><span class="kw">ymd_hms</span>() <span class="op">%&gt;%</span><span class="st">                 </span><span class="co"># Using a lubridate function </span></a>
+<a class="sourceLine" id="cb859-41" title="41"><span class="st">        </span><span class="co"># to parse the string into a datetime object</span></a>
+<a class="sourceLine" id="cb859-42" title="42"><span class="st">        </span><span class="kw">unlist</span>()</a>
+<a class="sourceLine" id="cb859-43" title="43">    </a>
+<a class="sourceLine" id="cb859-44" title="44">    return_dates &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">status =</span> status, <span class="dt">dates =</span> dates) <span class="op">%&gt;%</span><span class="st">   </span><span class="co"># You combine the status and the date </span></a>
+<a class="sourceLine" id="cb859-45" title="45"><span class="st">        </span><span class="co"># information to filter one via the other</span></a>
+<a class="sourceLine" id="cb859-46" title="46"><span class="st">        </span><span class="kw">filter</span>(status <span class="op">==</span><span class="st"> &#39;ndate&#39;</span>) <span class="op">%&gt;%</span><span class="st">              </span><span class="co"># Only these are actual reviews</span></a>
+<a class="sourceLine" id="cb859-47" title="47"><span class="st">        </span><span class="kw">pull</span>(dates) <span class="op">%&gt;%</span><span class="st">                            </span><span class="co"># Selects and converts to vector</span></a>
+<a class="sourceLine" id="cb859-48" title="48"><span class="st">        </span><span class="kw">as.POSIXct</span>(<span class="dt">origin =</span> <span class="st">&#39;1970-01-01 00:00:00&#39;</span>) <span class="co"># Converts datetimes to POSIX objects</span></a>
+<a class="sourceLine" id="cb859-49" title="49">    </a>
+<a class="sourceLine" id="cb859-50" title="50">    <span class="co"># The lengths still occasionally do not lign up. You then arbitrarily crop the dates to fit</span></a>
+<a class="sourceLine" id="cb859-51" title="51">    <span class="co"># This can cause data imperfections, however reviews on one page are generally close in time)</span></a>
+<a class="sourceLine" id="cb859-52" title="52">    </a>
+<a class="sourceLine" id="cb859-53" title="53">    length_reviews &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">get_reviews</span>(html))</a>
+<a class="sourceLine" id="cb859-54" title="54">    </a>
+<a class="sourceLine" id="cb859-55" title="55">    return_reviews &lt;-<span class="st"> </span><span class="cf">if</span> (<span class="kw">length</span>(return_dates)<span class="op">&gt;</span><span class="st"> </span>length_reviews){</a>
+<a class="sourceLine" id="cb859-56" title="56">        return_dates[<span class="dv">1</span><span class="op">:</span>length_reviews]</a>
+<a class="sourceLine" id="cb859-57" title="57">    } <span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb859-58" title="58">        return_dates</a>
+<a class="sourceLine" id="cb859-59" title="59">    }</a>
+<a class="sourceLine" id="cb859-60" title="60">    return_reviews</a>
+<a class="sourceLine" id="cb859-61" title="61">}</a>
+<a class="sourceLine" id="cb859-62" title="62"></a>
+<a class="sourceLine" id="cb859-63" title="63">get_star_rating &lt;-<span class="st"> </span><span class="cf">function</span>(html){</a>
+<a class="sourceLine" id="cb859-64" title="64">    </a>
+<a class="sourceLine" id="cb859-65" title="65">    </a>
+<a class="sourceLine" id="cb859-66" title="66">    <span class="co"># The pattern we look for</span></a>
+<a class="sourceLine" id="cb859-67" title="67">    pattern =<span class="st"> &#39;star-rating-&#39;</span><span class="op">%R%</span><span class="st"> </span><span class="kw">capture</span>(DIGIT)  </a>
+<a class="sourceLine" id="cb859-68" title="68">    </a>
+<a class="sourceLine" id="cb859-69" title="69">    vector &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-70" title="70"><span class="st">        </span><span class="kw">html_nodes</span>(<span class="st">&#39;.star-rating&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-71" title="71"><span class="st">        </span><span class="kw">html_attr</span>(<span class="st">&#39;class&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-72" title="72"><span class="st">        </span><span class="kw">str_match</span>(pattern) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-73" title="73"><span class="st">        </span><span class="kw">map</span>(<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-74" title="74"><span class="st">        </span><span class="kw">as.numeric</span>()  </a>
+<a class="sourceLine" id="cb859-75" title="75">    vector &lt;-<span class="st">  </span>vector[<span class="op">!</span><span class="kw">is.na</span>(vector)]</a>
+<a class="sourceLine" id="cb859-76" title="76">    vector &lt;-<span class="st"> </span>vector[<span class="dv">3</span><span class="op">:</span><span class="kw">length</span>(vector)]</a>
+<a class="sourceLine" id="cb859-77" title="77">    vector</a>
+<a class="sourceLine" id="cb859-78" title="78">}</a>
+<a class="sourceLine" id="cb859-79" title="79"></a>
+<a class="sourceLine" id="cb859-80" title="80">get_data_table &lt;-<span class="st"> </span><span class="cf">function</span>(html, company_name){</a>
+<a class="sourceLine" id="cb859-81" title="81">    </a>
+<a class="sourceLine" id="cb859-82" title="82">    <span class="co"># Extract the Basic information from the HTML</span></a>
+<a class="sourceLine" id="cb859-83" title="83">    reviews &lt;-<span class="st"> </span><span class="kw">get_reviews</span>(html)</a>
+<a class="sourceLine" id="cb859-84" title="84">    reviewer_names &lt;-<span class="st"> </span><span class="kw">get_reviewer_names</span>(html)</a>
+<a class="sourceLine" id="cb859-85" title="85">    dates &lt;-<span class="st"> </span><span class="kw">get_review_dates</span>(html)</a>
+<a class="sourceLine" id="cb859-86" title="86">    ratings &lt;-<span class="st"> </span><span class="kw">get_star_rating</span>(html)</a>
+<a class="sourceLine" id="cb859-87" title="87">    </a>
+<a class="sourceLine" id="cb859-88" title="88">    <span class="co"># Minimum length</span></a>
+<a class="sourceLine" id="cb859-89" title="89">    min_length &lt;-<span class="st"> </span><span class="kw">min</span>(<span class="kw">length</span>(reviews), <span class="kw">length</span>(reviewer_names), <span class="kw">length</span>(dates), <span class="kw">length</span>(ratings))</a>
+<a class="sourceLine" id="cb859-90" title="90">    </a>
+<a class="sourceLine" id="cb859-91" title="91">    <span class="co"># Combine into a tibble</span></a>
+<a class="sourceLine" id="cb859-92" title="92">    combined_data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">reviewer =</span> reviewer_names[<span class="dv">1</span><span class="op">:</span>min_length],</a>
+<a class="sourceLine" id="cb859-93" title="93">                            <span class="dt">date =</span> dates[<span class="dv">1</span><span class="op">:</span>min_length],</a>
+<a class="sourceLine" id="cb859-94" title="94">                            <span class="dt">rating =</span> ratings[<span class="dv">1</span><span class="op">:</span>min_length],</a>
+<a class="sourceLine" id="cb859-95" title="95">                            <span class="dt">review =</span> reviews[<span class="dv">1</span><span class="op">:</span>min_length]) </a>
+<a class="sourceLine" id="cb859-96" title="96">    </a>
+<a class="sourceLine" id="cb859-97" title="97">    <span class="co"># Tag the individual data with the company name</span></a>
+<a class="sourceLine" id="cb859-98" title="98">    combined_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-99" title="99"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">company =</span> company_name) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-100" title="100"><span class="st">        </span><span class="kw">select</span>(company, reviewer, date, rating, review)</a>
+<a class="sourceLine" id="cb859-101" title="101">}</a>
+<a class="sourceLine" id="cb859-102" title="102"></a>
+<a class="sourceLine" id="cb859-103" title="103">get_data_from_url &lt;-<span class="st"> </span><span class="cf">function</span>(url, company_name){</a>
+<a class="sourceLine" id="cb859-104" title="104">    html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)</a>
+<a class="sourceLine" id="cb859-105" title="105">    <span class="kw">get_data_table</span>(html, company_name)</a>
+<a class="sourceLine" id="cb859-106" title="106">}</a>
+<a class="sourceLine" id="cb859-107" title="107"></a>
+<a class="sourceLine" id="cb859-108" title="108">scrape_write_table &lt;-<span class="st"> </span><span class="cf">function</span>(url, company_name){</a>
+<a class="sourceLine" id="cb859-109" title="109">    </a>
+<a class="sourceLine" id="cb859-110" title="110">    <span class="co"># Read first page</span></a>
+<a class="sourceLine" id="cb859-111" title="111">    first_page &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)</a>
+<a class="sourceLine" id="cb859-112" title="112">    </a>
+<a class="sourceLine" id="cb859-113" title="113">    <span class="co"># Extract the number of pages that have to be queried</span></a>
+<a class="sourceLine" id="cb859-114" title="114">    latest_page_number &lt;-<span class="st"> </span><span class="kw">get_last_page</span>(first_page)</a>
+<a class="sourceLine" id="cb859-115" title="115">    </a>
+<a class="sourceLine" id="cb859-116" title="116">    <span class="co"># Generate the target URLs</span></a>
+<a class="sourceLine" id="cb859-117" title="117">    list_of_pages &lt;-<span class="st"> </span><span class="kw">str_c</span>(url, <span class="st">&#39;?page=&#39;</span>, <span class="dv">1</span><span class="op">:</span>latest_page_number)</a>
+<a class="sourceLine" id="cb859-118" title="118">    </a>
+<a class="sourceLine" id="cb859-119" title="119">    <span class="co"># Apply the extraction and bind the individual results back into one table, </span></a>
+<a class="sourceLine" id="cb859-120" title="120">    <span class="co"># which is then written as a tsv file into the working directory</span></a>
+<a class="sourceLine" id="cb859-121" title="121">    list_of_pages <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb859-122" title="122"><span class="st">        </span><span class="kw">map</span>(get_data_from_url, company_name) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># Apply to all URLs</span></a>
+<a class="sourceLine" id="cb859-123" title="123"><span class="st">        </span><span class="kw">bind_rows</span>() <span class="op">%&gt;%</span><span class="st">                           </span><span class="co"># Combines the tibbles into one tibble</span></a>
+<a class="sourceLine" id="cb859-124" title="124"><span class="st">        </span><span class="kw">write_tsv</span>(<span class="kw">str_c</span>(company_name,<span class="st">&#39;.tsv&#39;</span>))     <span class="co"># Writes a tab separated file</span></a>
+<a class="sourceLine" id="cb859-125" title="125">}</a>
+<a class="sourceLine" id="cb859-126" title="126"></a>
+<a class="sourceLine" id="cb859-127" title="127"></a>
+<a class="sourceLine" id="cb859-128" title="128"><span class="co"># url &lt;-&#39;http://www.trustpilot.com/review/www.amazon.com&#39;</span></a>
+<a class="sourceLine" id="cb859-129" title="129"><span class="co"># scrape_write_table(url, &#39;amazon&#39;)</span></a>
+<a class="sourceLine" id="cb859-130" title="130"><span class="co"># amazon_table &lt;- read_tsv(&#39;amazon.tsv&#39;)</span></a></code></pre></div>
 
 </div>
 <div id="disqus_thread"></div>
@@ -845,7 +845,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/26-webscraping-linkedin.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/26-webscraping-linkedin.Rmd",
 "text": "Edit"
 },
 "history": {

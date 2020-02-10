@@ -11,20 +11,20 @@
   <meta property="og:title" content="D Learning Check Solutions | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="D Learning Check Solutions | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -646,15 +646,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 reordering of the book. -->
 <div id="chapter-1-solutions" class="section level2">
 <h2><span class="header-section-number">D.1</span> Chapter 1 Solutions</h2>
-<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb968-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb968-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb968-3" title="3"><span class="kw">library</span>(nycflights13)</a></code></pre></div>
+<div class="sourceCode" id="cb966"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb966-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb966-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb966-3" title="3"><span class="kw">library</span>(nycflights13)</a></code></pre></div>
 <p><strong>(LC1.1)</strong> Repeat the above installing steps, but for the <code>dplyr</code>, <code>nycflights13</code>, and <code>knitr</code> packages. This will install the earlier mentioned <code>dplyr</code> package, the <code>nycflights13</code> package containing data on all domestic flights leaving a NYC airport in 2013, and the <code>knitr</code> package for writing reports in R.</p>
 <p><strong>(LC1.2)</strong> “Load” the <code>dplyr</code>, <code>nycflights13</code>, and <code>knitr</code> packages as well by repeating the above steps.</p>
 <p><strong>Solution</strong>: If the following code runs with no errors, you’ve succeeded!</p>
-<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb969-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb969-2" title="2"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb969-3" title="3"><span class="kw">library</span>(knitr)</a></code></pre></div>
+<div class="sourceCode" id="cb967"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb967-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb967-2" title="2"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb967-3" title="3"><span class="kw">library</span>(knitr)</a></code></pre></div>
 <p><strong>(LC1.3)</strong> What does any <em>ONE</em> row in this <code>flights</code> dataset refer to?</p>
 <ul>
 <li>A. Data on an airline</li>
@@ -694,9 +694,9 @@ reordering of the book. -->
 </div>
 <div id="chapter-2-solutions" class="section level2">
 <h2><span class="header-section-number">D.2</span> Chapter 2 Solutions</h2>
-<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb970-1" title="1"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb970-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb970-3" title="3"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb968-1" title="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb968-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb968-3" title="3"><span class="kw">library</span>(dplyr)</a></code></pre></div>
 <p><strong>(LC2.1)</strong> Take a look at both the <code>flights</code> and <code>alaska_flights</code> data frames by running <code>View(flights)</code> and <code>View(alaska_flights)</code> in the console. In what respect do these data frames differ? For example, think about the number of rows in each dataset.</p>
 <p><strong>Solution</strong>: <code>flights</code> contains all flight data, while <code>alaska_flights</code> contains only data from Alaskan carrier “AS”. We can see that flights has 336776 rows while <code>alaska_flights</code> has only 714</p>
 <p><strong>(LC2.2)</strong> What are some practical reasons why <code>dep_delay</code> and <code>arr_delay</code> have a positive relationship?</p>
@@ -709,8 +709,8 @@ reordering of the book. -->
 <p><strong>Solution</strong>: Different people will answer this one differently. One answer is most flights depart and arrive less than an hour late.</p>
 <p><strong>(LC2.6)</strong> Create a new scatterplot using different variables in the <code>alaska_flights</code> data frame by modifying the example above.</p>
 <p><strong>Solution</strong>: Many possibilities for this one, see the plot below. Is there a pattern in departure delay depending on when the flight is scheduled to depart? Interestingly, there seems to be only two blocks of time where flights depart.</p>
-<div class="sourceCode" id="cb971"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb971-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> alaska_flights, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> dep_time, <span class="dt">y =</span> dep_delay)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb971-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb969-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> alaska_flights, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> dep_time, <span class="dt">y =</span> dep_delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb969-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-698-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p><strong>(LC2.7)</strong> Why is setting the <code>alpha</code> argument value useful with scatterplots? What further information does it give you that a regular scatterplot cannot?</p>
 <p><strong>Solution</strong>: It thins out the points so we address overplotting. But more importantly it hints at the (statistical) <strong>density</strong> and <strong>distribution</strong> of the points: where are the points concentrated, where do they occur.</p>
@@ -726,8 +726,8 @@ reordering of the book. -->
 <p><strong>Solution</strong>: Because time is sequential: subsequent observations are closely related to each other.</p>
 <p><strong>(LC2.13)</strong> Plot a time series of a variable other than <code>temp</code> for Newark Airport in the first 15 days of January 2013.</p>
 <p><strong>Solution</strong>: Humidity is a good one to look at, since this very closely related to the cycles of a day.</p>
-<div class="sourceCode" id="cb972"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb972-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> early_january_weather, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_hour, <span class="dt">y =</span> humid)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb972-2" title="2"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb970-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> early_january_weather, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> time_hour, <span class="dt">y =</span> humid)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb970-2" title="2"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-699-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p><strong>(LC2.14)</strong> What does changing the number of bins from 30 to 40 tell us about the distribution of temperatures?</p>
 <p><strong>Solution</strong>: The distribution doesn’t change much. But by refining the bin width, we see that the temperature data has a high degree of accuracy. What do I mean by accuracy? Looking at the <code>temp</code> variable by <code>View(weather)</code>, we see that the precision of each temperature recording is 2 decimal places.</p>
@@ -770,8 +770,8 @@ the middle 50% of values, as delineated by the interquartile range is 30°F:</p>
 <p><strong>Solution</strong>: Again, like in LC (LC2.17), this is a relative question. I would say yes, because in New York City, you have 4 clear seasons with different weather. Whereas in Seattle WA and Portland OR, you have two seasons: summer and rain!</p>
 <p><strong>(LC2.22)</strong> What does the dot at the bottom of the plot for May correspond to? Explain what might have occurred in May to produce this point.</p>
 <p><strong>Solution</strong>: It appears to be an outlier. Let’s revisit the use of the <code>filter</code> command to hone in on it. We want all data points where the <code>month</code> is 5 and <code>temp&lt;25</code></p>
-<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb973-1" title="1">weather <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb973-2" title="2"><span class="st">  </span><span class="kw">filter</span>(month <span class="op">==</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span>temp <span class="op">&lt;</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb971"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb971-1" title="1">weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb971-2" title="2"><span class="st">  </span><span class="kw">filter</span>(month <span class="op">==</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span>temp <span class="op">&lt;</span><span class="st"> </span><span class="dv">25</span>)</a></code></pre></div>
 <pre><code># A tibble: 1 x 16
   origin  year month   day  hour  temp  dewp humid wind_dir wind_speed wind_gust
   &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -796,10 +796,10 @@ the middle 50% of values, as delineated by the interquartile range is 30°F:</p>
 <li>for each <code>group</code>, i.e. <code>month</code>, <code>summarize</code> it by applying the summary statistic function <code>IQR()</code>, while making sure to skip over missing data via <code>na.rm=TRUE</code> then</li>
 <li><code>arrange</code> the table in <code>desc</code>ending order of <code>IQR</code></li>
 </ol>
-<div class="sourceCode" id="cb975"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb975-1" title="1">weather <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb975-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb975-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">IQR =</span> <span class="kw">IQR</span>(temp, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb975-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(IQR))</a></code></pre></div>
+<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb973-1" title="1">weather <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb973-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb973-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">IQR =</span> <span class="kw">IQR</span>(temp, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb973-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(IQR))</a></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -942,22 +942,22 @@ IQR
 </div>
 <div id="chapter-3-solutions" class="section level2">
 <h2><span class="header-section-number">D.3</span> Chapter 3 Solutions</h2>
-<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb976-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb976-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb976-3" title="3"><span class="kw">library</span>(nycflights13)</a></code></pre></div>
+<div class="sourceCode" id="cb974"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb974-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb974-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb974-3" title="3"><span class="kw">library</span>(nycflights13)</a></code></pre></div>
 <p><strong>(LC3.1)</strong> What’s another way using the “not” operator <code>!</code> to filter only the rows that are not going to Burlington, VT nor Seattle, WA in the <code>flights</code> data frame? Test this out using the code above.</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb977"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb977-1" title="1"><span class="co"># Original in book</span></a>
-<a class="sourceLine" id="cb977-2" title="2">not_BTV_SEA &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb977-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>(dest <span class="op">==</span><span class="st"> &quot;BTV&quot;</span> <span class="op">|</span><span class="st"> </span>dest <span class="op">==</span><span class="st"> &quot;SEA&quot;</span>))</a>
-<a class="sourceLine" id="cb977-4" title="4"></a>
-<a class="sourceLine" id="cb977-5" title="5"><span class="co"># Alternative way</span></a>
-<a class="sourceLine" id="cb977-6" title="6">not_BTV_SEA &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb977-7" title="7"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>dest <span class="op">==</span><span class="st"> &quot;BTV&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span>dest <span class="op">==</span><span class="st"> &quot;SEA&quot;</span>)</a>
-<a class="sourceLine" id="cb977-8" title="8"></a>
-<a class="sourceLine" id="cb977-9" title="9"><span class="co"># Yet another way</span></a>
-<a class="sourceLine" id="cb977-10" title="10">not_BTV_SEA &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb977-11" title="11"><span class="st">  </span><span class="kw">filter</span>(dest <span class="op">!=</span><span class="st"> &quot;BTV&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dest <span class="op">!=</span><span class="st"> &quot;SEA&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb975"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb975-1" title="1"><span class="co"># Original in book</span></a>
+<a class="sourceLine" id="cb975-2" title="2">not_BTV_SEA &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb975-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>(dest <span class="op">==</span><span class="st"> &quot;BTV&quot;</span> <span class="op">|</span><span class="st"> </span>dest <span class="op">==</span><span class="st"> &quot;SEA&quot;</span>))</a>
+<a class="sourceLine" id="cb975-4" title="4"></a>
+<a class="sourceLine" id="cb975-5" title="5"><span class="co"># Alternative way</span></a>
+<a class="sourceLine" id="cb975-6" title="6">not_BTV_SEA &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb975-7" title="7"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>dest <span class="op">==</span><span class="st"> &quot;BTV&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span>dest <span class="op">==</span><span class="st"> &quot;SEA&quot;</span>)</a>
+<a class="sourceLine" id="cb975-8" title="8"></a>
+<a class="sourceLine" id="cb975-9" title="9"><span class="co"># Yet another way</span></a>
+<a class="sourceLine" id="cb975-10" title="10">not_BTV_SEA &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb975-11" title="11"><span class="st">  </span><span class="kw">filter</span>(dest <span class="op">!=</span><span class="st"> &quot;BTV&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dest <span class="op">!=</span><span class="st"> &quot;SEA&quot;</span>)</a></code></pre></div>
 <p><strong>(LC3.2)</strong> Say a doctor is studying the effect of smoking on lung cancer for a large number of patients who have records measured at five year intervals. She notices that a large number of patients have missing data points because the patient has died, so she chooses to ignore these patients in her analysis. What is wrong with this doctor’s approach?</p>
 <p><strong>Solution</strong>: The missing patients may have died of lung cancer! So to ignore them might seriously <strong>bias</strong> your results! It is very important to think of what the consequences on your analysis are of ignoring missing data! Ask yourself:</p>
 <ul>
@@ -966,19 +966,19 @@ IQR
 </ul>
 <p><strong>(LC3.3)</strong> Modify the above <code>summarize</code> function to create <code>summary_temp</code> to also use the <code>n()</code> summary function: <code>summarize(count = n())</code>. What does the returned value correspond to?</p>
 <p><strong>Solution</strong>: It corresponds to a count of the number of observations/rows:</p>
-<div class="sourceCode" id="cb978"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb978-1" title="1">weather <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb978-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb976-1" title="1">weather <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb976-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
 <pre><code># A tibble: 1 x 1
   count
   &lt;int&gt;
 1 26115</code></pre>
 <p><strong>(LC3.4)</strong> Why doesn’t the following code work? Run the code line by line instead of all at once, and then look at the data. In other words, run <code>summary_temp &lt;- weather %&gt;% summarize(mean = mean(temp, na.rm = TRUE))</code> first.</p>
-<div class="sourceCode" id="cb980"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb980-1" title="1">summary_temp &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span><span class="st">   </span></a>
-<a class="sourceLine" id="cb980-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb980-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb978"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb978-1" title="1">summary_temp &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span><span class="st">   </span></a>
+<a class="sourceLine" id="cb978-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb978-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <p><strong>Solution</strong>: Consider the output of only running the first two lines:</p>
-<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb981-1" title="1">weather <span class="op">%&gt;%</span><span class="st">   </span></a>
-<a class="sourceLine" id="cb981-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb979-1" title="1">weather <span class="op">%&gt;%</span><span class="st">   </span></a>
+<a class="sourceLine" id="cb979-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code># A tibble: 1 x 1
      mean
     &lt;dbl&gt;
@@ -1140,13 +1140,13 @@ see that the period in November, December, and January has the most variation in
 weather, so you can expect very different temperatures on different days.</p>
 <p><strong>(LC3.6)</strong> What code would be required to get the mean and standard deviation temperature for each day in 2013 for NYC?</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb983-1" title="1">summary_temp_by_day &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb983-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb983-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(</a>
-<a class="sourceLine" id="cb983-4" title="4">          <span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb983-5" title="5">          <span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb983-6" title="6">          )</a>
-<a class="sourceLine" id="cb983-7" title="7">summary_temp_by_day</a></code></pre></div>
+<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb981-1" title="1">summary_temp_by_day &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb981-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb981-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(</a>
+<a class="sourceLine" id="cb981-4" title="4">          <span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb981-5" title="5">          <span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb981-6" title="6">          )</a>
+<a class="sourceLine" id="cb981-7" title="7">summary_temp_by_day</a></code></pre></div>
 <pre><code># A tibble: 364 x 5
 # Groups:   year, month [12]
     year month   day    mean std_dev
@@ -1163,21 +1163,21 @@ weather, so you can expect very different temperatures on different days.</p>
 10  2013     1    10 43.85   2.95214
 # ... with 354 more rows</code></pre>
 <p>Note: <code>group_by(day)</code> is not enough, because <code>day</code> is a value between 1-31. We need to <code>group_by(year, month, day)</code></p>
-<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb985-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb985-2" title="2"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb985-3" title="3"></a>
-<a class="sourceLine" id="cb985-4" title="4">summary_temp_by_month &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb985-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb985-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(</a>
-<a class="sourceLine" id="cb985-7" title="7">          <span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb985-8" title="8">          <span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb985-9" title="9">          )</a></code></pre></div>
+<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb983-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb983-2" title="2"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb983-3" title="3"></a>
+<a class="sourceLine" id="cb983-4" title="4">summary_temp_by_month &lt;-<span class="st"> </span>weather <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb983-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb983-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(</a>
+<a class="sourceLine" id="cb983-7" title="7">          <span class="dt">mean =</span> <span class="kw">mean</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb983-8" title="8">          <span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb983-9" title="9">          )</a></code></pre></div>
 <p><strong>(LC3.7)</strong> Recreate <code>by_monthly_origin</code>, but instead of grouping via <code>group_by(origin, month)</code>, group variables in a different order <code>group_by(month, origin)</code>. What differs in the resulting dataset?</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb986"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb986-1" title="1">by_monthly_origin &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb986-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(month, origin) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb986-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
-<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb987-1" title="1">by_monthly_origin</a></code></pre></div>
+<div class="sourceCode" id="cb984"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb984-1" title="1">by_monthly_origin &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb984-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(month, origin) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb984-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb985-1" title="1">by_monthly_origin</a></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1594,10 +1594,10 @@ LGA
 <p>In <code>by_monthly_origin</code> the <code>month</code> column is now first and the rows are sorted by <code>month</code> instead of origin. If you compare the values of <code>count</code> in <code>by_origin_monthly</code> and <code>by_monthly_origin</code> using the <code>View()</code> function, you’ll see that the values are actually the same, just presented in a different order.</p>
 <p><strong>(LC3.8)</strong> How could we identify how many flights left each of the three airports for each <code>carrier</code>?</p>
 <p><strong>Solution</strong>: We could summarize the count from each airport using the <code>n()</code> function, which <em>counts rows</em>.</p>
-<div class="sourceCode" id="cb988"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb988-1" title="1">count_flights_by_airport &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb988-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(origin, carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb988-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count=</span><span class="kw">n</span>())</a></code></pre></div>
-<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb989-1" title="1">count_flights_by_airport</a></code></pre></div>
+<div class="sourceCode" id="cb986"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb986-1" title="1">count_flights_by_airport &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb986-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(origin, carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb986-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count=</span><span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb987-1" title="1">count_flights_by_airport</a></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -2031,9 +2031,26 @@ with?</li>
 <p><strong>Solution</strong>: When datasets are in normal form, we can easily <code>_join</code> them with other datasets! For example, we can join the <code>flights</code> data with the <code>planes</code> data.</p>
 <p><strong>(LC3.16)</strong> What are some ways to select all three of the <code>dest</code>, <code>air_time</code>, and <code>distance</code> variables from <code>flights</code>? Give the code showing how to do this in at least three different ways.</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb990-1" title="1"><span class="co"># The regular way:</span></a>
+<div class="sourceCode" id="cb988"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb988-1" title="1"><span class="co"># The regular way:</span></a>
+<a class="sourceLine" id="cb988-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb988-3" title="3"><span class="st">  </span><span class="kw">select</span>(dest, air_time, distance)</a></code></pre></div>
+<pre><code># A tibble: 336,776 x 3
+   dest  air_time distance
+   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 IAH        227     1400
+ 2 IAH        227     1416
+ 3 MIA        160     1089
+ 4 BQN        183     1576
+ 5 ATL        116      762
+ 6 ORD        150      719
+ 7 FLL        158     1065
+ 8 IAD         53      229
+ 9 MCO        140      944
+10 ORD        138      733
+# ... with 336,766 more rows</code></pre>
+<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb990-1" title="1"><span class="co"># Since they are sequential columns in the dataset</span></a>
 <a class="sourceLine" id="cb990-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb990-3" title="3"><span class="st">  </span><span class="kw">select</span>(dest, air_time, distance)</a></code></pre></div>
+<a class="sourceLine" id="cb990-3" title="3"><span class="st">  </span><span class="kw">select</span>(dest<span class="op">:</span>distance)</a></code></pre></div>
 <pre><code># A tibble: 336,776 x 3
    dest  air_time distance
    &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -2048,28 +2065,11 @@ with?</li>
  9 MCO        140      944
 10 ORD        138      733
 # ... with 336,766 more rows</code></pre>
-<div class="sourceCode" id="cb992"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb992-1" title="1"><span class="co"># Since they are sequential columns in the dataset</span></a>
+<div class="sourceCode" id="cb992"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb992-1" title="1"><span class="co"># Not as effective, by removing everything else</span></a>
 <a class="sourceLine" id="cb992-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb992-3" title="3"><span class="st">  </span><span class="kw">select</span>(dest<span class="op">:</span>distance)</a></code></pre></div>
-<pre><code># A tibble: 336,776 x 3
-   dest  air_time distance
-   &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt;
- 1 IAH        227     1400
- 2 IAH        227     1416
- 3 MIA        160     1089
- 4 BQN        183     1576
- 5 ATL        116      762
- 6 ORD        150      719
- 7 FLL        158     1065
- 8 IAD         53      229
- 9 MCO        140      944
-10 ORD        138      733
-# ... with 336,766 more rows</code></pre>
-<div class="sourceCode" id="cb994"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb994-1" title="1"><span class="co"># Not as effective, by removing everything else</span></a>
-<a class="sourceLine" id="cb994-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb994-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>year, <span class="op">-</span>month, <span class="op">-</span>day, <span class="op">-</span>dep_time, <span class="op">-</span>sched_dep_time, <span class="op">-</span>dep_delay, <span class="op">-</span>arr_time,</a>
-<a class="sourceLine" id="cb994-4" title="4">         <span class="op">-</span>sched_arr_time, <span class="op">-</span>arr_delay, <span class="op">-</span>carrier, <span class="op">-</span>flight, <span class="op">-</span>tailnum, <span class="op">-</span>origin, </a>
-<a class="sourceLine" id="cb994-5" title="5">         <span class="op">-</span>hour, <span class="op">-</span>minute, <span class="op">-</span>time_hour)</a></code></pre></div>
+<a class="sourceLine" id="cb992-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>year, <span class="op">-</span>month, <span class="op">-</span>day, <span class="op">-</span>dep_time, <span class="op">-</span>sched_dep_time, <span class="op">-</span>dep_delay, <span class="op">-</span>arr_time,</a>
+<a class="sourceLine" id="cb992-4" title="4">         <span class="op">-</span>sched_arr_time, <span class="op">-</span>arr_delay, <span class="op">-</span>carrier, <span class="op">-</span>flight, <span class="op">-</span>tailnum, <span class="op">-</span>origin, </a>
+<a class="sourceLine" id="cb992-5" title="5">         <span class="op">-</span>hour, <span class="op">-</span>minute, <span class="op">-</span>time_hour)</a></code></pre></div>
 <pre><code># A tibble: 336,776 x 6
    dest  air_time distance  gain    hours gain_per_hour
    &lt;chr&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;         &lt;dbl&gt;
@@ -2086,9 +2086,9 @@ with?</li>
 # ... with 336,766 more rows</code></pre>
 <p><strong>(LC3.17)</strong> How could one use <code>starts_with</code>, <code>ends_with</code>, and <code>contains</code> to select columns from the <code>flights</code> data frame? Provide three different examples in total: one for <code>starts_with</code>, one for <code>ends_with</code>, and one for <code>contains</code>.</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb996-1" title="1"><span class="co"># Anything that starts with &quot;d&quot;</span></a>
-<a class="sourceLine" id="cb996-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb996-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;d&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb994"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb994-1" title="1"><span class="co"># Anything that starts with &quot;d&quot;</span></a>
+<a class="sourceLine" id="cb994-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb994-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;d&quot;</span>))</a></code></pre></div>
 <pre><code># A tibble: 336,776 x 5
      day dep_time dep_delay dest  distance
    &lt;int&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
@@ -2103,9 +2103,9 @@ with?</li>
  9     1      557        -3 MCO        944
 10     1      558        -2 ORD        733
 # ... with 336,766 more rows</code></pre>
-<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb998-1" title="1"><span class="co"># Anything related to delays:</span></a>
-<a class="sourceLine" id="cb998-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb998-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&quot;delay&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb996-1" title="1"><span class="co"># Anything related to delays:</span></a>
+<a class="sourceLine" id="cb996-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb996-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&quot;delay&quot;</span>))</a></code></pre></div>
 <pre><code># A tibble: 336,776 x 2
    dep_delay arr_delay
        &lt;dbl&gt;     &lt;dbl&gt;
@@ -2120,9 +2120,9 @@ with?</li>
  9        -3        -8
 10        -2         8
 # ... with 336,766 more rows</code></pre>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1000-1" title="1"><span class="co"># Anything related to departures:</span></a>
-<a class="sourceLine" id="cb1000-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1000-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;dep&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb998-1" title="1"><span class="co"># Anything related to departures:</span></a>
+<a class="sourceLine" id="cb998-2" title="2">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb998-3" title="3"><span class="st">  </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;dep&quot;</span>))</a></code></pre></div>
 <pre><code># A tibble: 336,776 x 3
    dep_time sched_dep_time dep_delay
       &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
@@ -2141,12 +2141,12 @@ with?</li>
 <p><strong>Solution</strong>: To narrow down the data frame, to make it easier to look at. Using <code>View()</code> for example.</p>
 <p><strong>(LC3.19)</strong> Create a new data frame that shows the top 5 airports with the largest arrival delays from NYC in 2013.</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1002-1" title="1">top_five &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1002-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1002-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg_delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1002-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(avg_delay)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1002-5" title="5"><span class="st">  </span><span class="kw">top_n</span>(<span class="dt">n =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb1002-6" title="6">top_five</a></code></pre></div>
+<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1000-1" title="1">top_five &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1000-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1000-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg_delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1000-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(avg_delay)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1000-5" title="5"><span class="st">  </span><span class="kw">top_n</span>(<span class="dt">n =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb1000-6" title="6">top_five</a></code></pre></div>
 <pre><code># A tibble: 5 x 2
   dest  avg_delay
   &lt;chr&gt;     &lt;dbl&gt;
@@ -2163,13 +2163,13 @@ with?</li>
 <li>Consider the data wrangling verbs in Table <a href="#tab:wrangle-summary-table"><strong>??</strong></a> as your toolbox!</li>
 </ol>
 <p><strong>Solution</strong>: Here are some examples of student-written <a href="https://twitter.com/rudeboybert/status/964181298691629056">pseudocode</a>. Based on our own pseudocode, let’s first display the entire solution.</p>
-<div class="sourceCode" id="cb1004"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1004-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1004-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1004-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1004-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1004-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1004-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1004-7" title="7"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ASM))</a></code></pre></div>
+<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1002-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1002-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1002-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1002-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1002-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1002-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1002-7" title="7"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ASM))</a></code></pre></div>
 <pre><code># A tibble: 16 x 2
    carrier         ASM
    &lt;chr&gt;         &lt;dbl&gt;
@@ -2190,9 +2190,9 @@ with?</li>
 15 MQ          7162420
 16 OO          1299835</code></pre>
 <p>Let’s now break this down step-by-step. To compute the available seat miles for a given flight, we need the <code>distance</code> variable from the <code>flights</code> data frame and the <code>seats</code> variable from the <code>planes</code> data frame, necessitating a join by the key variable <code>tailnum</code> as illustrated in Figure <a href="4-wrangling.html#fig:reldiagram">4.7</a>. To keep the resulting data frame easy to view, we’ll <code>select()</code> only these two variables and <code>carrier</code>:</p>
-<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1006-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1006-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1006-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance)</a></code></pre></div>
+<div class="sourceCode" id="cb1004"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1004-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1004-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1004-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance)</a></code></pre></div>
 <pre><code># A tibble: 284,170 x 3
    carrier seats distance
    &lt;chr&gt;   &lt;int&gt;    &lt;dbl&gt;
@@ -2208,11 +2208,11 @@ with?</li>
 10 B6        200     1028
 # ... with 284,160 more rows</code></pre>
 <p>Now for each flight we can compute the available seat miles <code>ASM</code> by multiplying the number of seats by the distance via a <code>mutate()</code>:</p>
-<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1008-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1008-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1008-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1008-4" title="4"><span class="st">  </span><span class="co"># Added:</span></a>
-<a class="sourceLine" id="cb1008-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance)</a></code></pre></div>
+<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1006-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1006-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1006-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1006-4" title="4"><span class="st">  </span><span class="co"># Added:</span></a>
+<a class="sourceLine" id="cb1006-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance)</a></code></pre></div>
 <pre><code># A tibble: 284,170 x 4
    carrier seats distance    ASM
    &lt;chr&gt;   &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;
@@ -2228,13 +2228,13 @@ with?</li>
 10 B6        200     1028 205600
 # ... with 284,160 more rows</code></pre>
 <p>Next we want to sum the <code>ASM</code> for each carrier. We achieve this by first grouping by <code>carrier</code> and then summarizing using the <code>sum()</code> function:</p>
-<div class="sourceCode" id="cb1010"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1010-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1010-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1010-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1010-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1010-5" title="5"><span class="st">  </span><span class="co"># Added:</span></a>
-<a class="sourceLine" id="cb1010-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1010-7" title="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM))</a></code></pre></div>
+<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1008-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1008-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1008-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1008-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1008-5" title="5"><span class="st">  </span><span class="co"># Added:</span></a>
+<a class="sourceLine" id="cb1008-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1008-7" title="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM))</a></code></pre></div>
 <pre><code># A tibble: 16 x 2
    carrier         ASM
    &lt;chr&gt;         &lt;dbl&gt;
@@ -2255,13 +2255,13 @@ with?</li>
 15 WN       1718116857
 16 YV         20163632</code></pre>
 <p>However, because for certain carriers certain flights have missing <code>NA</code> values, the resulting table also returns <code>NA</code>’s. We can eliminate these by adding a <code>na.rm = TRUE</code> argument to <code>sum()</code>, telling R that we want to remove the <code>NA</code>’s in the sum. We saw this in Section <a href="4-wrangling.html#summarize">4.3</a>:</p>
-<div class="sourceCode" id="cb1012"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1012-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1012-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1012-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1012-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1012-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1012-6" title="6"><span class="st">  </span><span class="co"># Modified:</span></a>
-<a class="sourceLine" id="cb1012-7" title="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1010"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1010-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1010-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1010-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1010-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1010-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1010-6" title="6"><span class="st">  </span><span class="co"># Modified:</span></a>
+<a class="sourceLine" id="cb1010-7" title="7"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code># A tibble: 16 x 2
    carrier         ASM
    &lt;chr&gt;         &lt;dbl&gt;
@@ -2282,14 +2282,14 @@ with?</li>
 15 WN       1718116857
 16 YV         20163632</code></pre>
 <p>Finally, we <code>arrange()</code> the data in <code>desc()</code>ending order of <code>ASM</code>.</p>
-<div class="sourceCode" id="cb1014"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1014-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1014-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1014-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1014-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1014-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1014-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1014-7" title="7"><span class="st">  </span><span class="co"># Added:</span></a>
-<a class="sourceLine" id="cb1014-8" title="8"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ASM))</a></code></pre></div>
+<div class="sourceCode" id="cb1012"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1012-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1012-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1012-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1012-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1012-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1012-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1012-7" title="7"><span class="st">  </span><span class="co"># Added:</span></a>
+<a class="sourceLine" id="cb1012-8" title="8"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ASM))</a></code></pre></div>
 <pre><code># A tibble: 16 x 2
    carrier         ASM
    &lt;chr&gt;         &lt;dbl&gt;
@@ -2310,15 +2310,15 @@ with?</li>
 15 MQ          7162420
 16 OO          1299835</code></pre>
 <p>While the above data frame is correct, the IATA <code>carrier</code> code is not always useful. For example, what carrier is <code>WN</code>? We can address this by joining with the <code>airlines</code> dataset using <code>carrier</code> is the key variable. While this step is not absolutely required, it goes a long way to making the table easier to make sense of. It is important to be empathetic with the ultimate consumers of your presented data!</p>
-<div class="sourceCode" id="cb1016"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1016-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-7" title="7"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ASM)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1016-8" title="8"><span class="st">  </span><span class="co"># Added:</span></a>
-<a class="sourceLine" id="cb1016-9" title="9"><span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by =</span> <span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1014"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1014-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-2" title="2"><span class="st">  </span><span class="kw">inner_join</span>(planes, <span class="dt">by =</span> <span class="st">&quot;tailnum&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-3" title="3"><span class="st">  </span><span class="kw">select</span>(carrier, seats, distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ASM =</span> seats <span class="op">*</span><span class="st"> </span>distance) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(carrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-6" title="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ASM =</span> <span class="kw">sum</span>(ASM, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-7" title="7"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ASM)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1014-8" title="8"><span class="st">  </span><span class="co"># Added:</span></a>
+<a class="sourceLine" id="cb1014-9" title="9"><span class="st">  </span><span class="kw">inner_join</span>(airlines, <span class="dt">by =</span> <span class="st">&quot;carrier&quot;</span>)</a></code></pre></div>
 <pre><code># A tibble: 16 x 3
    carrier         ASM name                       
    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;                      
@@ -2342,22 +2342,22 @@ with?</li>
 </div>
 <div id="chapter-4-solutions" class="section level2">
 <h2><span class="header-section-number">D.4</span> Chapter 4 Solutions</h2>
-<div class="sourceCode" id="cb1018"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1018-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1018-2" title="2"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1018-3" title="3"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb1018-4" title="4"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb1018-5" title="5"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb1018-6" title="6"><span class="kw">library</span>(fivethirtyeight)</a></code></pre></div>
+<div class="sourceCode" id="cb1016"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1016-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1016-2" title="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1016-3" title="3"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb1016-4" title="4"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb1016-5" title="5"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb1016-6" title="6"><span class="kw">library</span>(fivethirtyeight)</a></code></pre></div>
 <p><strong>(LC4.1)</strong> What are common characteristics of “tidy” datasets?</p>
 <p><strong>Solution</strong>: Rows correspond to observations, while columns correspond to variables.</p>
 <p><strong>(LC4.2)</strong> What makes “tidy” datasets useful for organizing data?</p>
 <p><strong>Solution</strong>: Tidy datasets are an organized way of viewing data. This format is required for the <code>ggplot2</code> and <code>dplyr</code> packages for data visualization and wrangling.</p>
 <p><strong>(LC4.3)</strong> Take a look the <code>airline_safety</code> data frame included in the <code>fivethirtyeight</code> data. Run the following:</p>
-<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1019-1" title="1">airline_safety</a></code></pre></div>
+<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1017-1" title="1">airline_safety</a></code></pre></div>
 <p>After reading the help file by running <code>?airline_safety</code>, we see that <code>airline_safety</code> is a data frame containing information on different airlines companies’ safety records. This data was originally reported on the data journalism website FiveThirtyEight.com in Nate Silver’s article <a href="https://fivethirtyeight.com/features/should-travelers-avoid-flying-airlines-that-have-had-crashes-in-the-past/">“Should Travelers Avoid Flying Airlines That Have Had Crashes in the Past?”</a>. Let’s ignore the <code>incl_reg_subsidiaries</code> and <code>avail_seat_km_per_week</code> variables for simplicity:</p>
-<div class="sourceCode" id="cb1020"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1020-1" title="1">airline_safety_smaller &lt;-<span class="st"> </span>airline_safety <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1020-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(incl_reg_subsidiaries, avail_seat_km_per_week))</a>
-<a class="sourceLine" id="cb1020-3" title="3">airline_safety_smaller</a></code></pre></div>
+<div class="sourceCode" id="cb1018"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1018-1" title="1">airline_safety_smaller &lt;-<span class="st"> </span>airline_safety <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1018-2" title="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(incl_reg_subsidiaries, avail_seat_km_per_week))</a>
+<a class="sourceLine" id="cb1018-3" title="3">airline_safety_smaller</a></code></pre></div>
 <pre><code># A tibble: 56 x 7
    airline incidents_85_99 fatal_accidents~ fatalities_85_99 incidents_00_14
    &lt;chr&gt;             &lt;int&gt;            &lt;int&gt;            &lt;int&gt;           &lt;int&gt;
@@ -2376,11 +2376,11 @@ with?</li>
 <p>This data frame is not in “tidy” format. How would you convert this data frame to be in “tidy” format, in particular so that it has a variable <code>incident_type_years</code> indicating the incident type/year and a variable <code>count</code> of the counts?</p>
 <p><strong>Solution</strong>:</p>
 <p>This can been done using the <code>pivot_longer()</code> function from the <code>tidyr</code> package:</p>
-<div class="sourceCode" id="cb1022"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1022-1" title="1">airline_safety_smaller_tidy &lt;-<span class="st"> </span>airline_safety_smaller <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1022-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;incident_type_years&quot;</span>, </a>
-<a class="sourceLine" id="cb1022-3" title="3">               <span class="dt">values_to =</span> <span class="st">&quot;count&quot;</span>, </a>
-<a class="sourceLine" id="cb1022-4" title="4">               <span class="dt">cols =</span> <span class="op">-</span>airline)</a>
-<a class="sourceLine" id="cb1022-5" title="5">airline_safety_smaller_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb1020"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1020-1" title="1">airline_safety_smaller_tidy &lt;-<span class="st"> </span>airline_safety_smaller <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1020-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;incident_type_years&quot;</span>, </a>
+<a class="sourceLine" id="cb1020-3" title="3">               <span class="dt">values_to =</span> <span class="st">&quot;count&quot;</span>, </a>
+<a class="sourceLine" id="cb1020-4" title="4">               <span class="dt">cols =</span> <span class="op">-</span>airline)</a>
+<a class="sourceLine" id="cb1020-5" title="5">airline_safety_smaller_tidy</a></code></pre></div>
 <pre><code># A tibble: 336 x 3
    airline    incident_type_years   count
    &lt;chr&gt;      &lt;chr&gt;                 &lt;int&gt;
@@ -2397,9 +2397,9 @@ with?</li>
 # ... with 326 more rows</code></pre>
 <p>If you look at the resulting <code>airline_safety_smaller_tidy</code> data frame in the spreadsheet viewer, you’ll see that the variable <code>incident_type_years</code> has 6 possible values: <code>"incidents_85_99", "fatal_accidents_85_99", "fatalities_85_99",  "incidents_00_14", "fatal_accidents_00_14", "fatalities_00_14"</code> corresponding to the 6 columns of <code>airline_safety_smaller</code> we tidied.</p>
 <p>Note that prior to <code>tidyr</code> version 1.0.0 released to CRAN in September 2019, this could also have been done using the <code>gather()</code> function from the <code>tidyr</code> package:</p>
-<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1024-1" title="1">airline_safety_smaller_tidy &lt;-<span class="st"> </span>airline_safety_smaller <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1024-2" title="2"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> incident_type_years, <span class="dt">value =</span> count, <span class="op">-</span>airline)</a>
-<a class="sourceLine" id="cb1024-3" title="3">airline_safety_smaller_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb1022"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1022-1" title="1">airline_safety_smaller_tidy &lt;-<span class="st"> </span>airline_safety_smaller <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1022-2" title="2"><span class="st">  </span><span class="kw">gather</span>(<span class="dt">key =</span> incident_type_years, <span class="dt">value =</span> count, <span class="op">-</span>airline)</a>
+<a class="sourceLine" id="cb1022-3" title="3">airline_safety_smaller_tidy</a></code></pre></div>
 <pre><code># A tibble: 336 x 3
    airline               incident_type_years count
    &lt;chr&gt;                 &lt;chr&gt;               &lt;int&gt;
@@ -2417,12 +2417,12 @@ with?</li>
 <p><strong>(LC4.4)</strong> Convert the <code>dem_score</code> data frame into
 a tidy data frame and assign the name of <code>dem_score_tidy</code> to the resulting long-formatted data frame.</p>
 <p><strong>Solution</strong>: Running the following in the console:</p>
-<div class="sourceCode" id="cb1026"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1026-1" title="1">dem_score_tidy &lt;-<span class="st"> </span>dem_score <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1026-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;democracy_score&quot;</span>, </a>
-<a class="sourceLine" id="cb1026-3" title="3">               <span class="dt">cols =</span> <span class="op">-</span>country)</a>
-<a class="sourceLine" id="cb1026-4" title="4"><span class="co">#  gather(key = year, value = democracy_score, - country)</span></a></code></pre></div>
+<div class="sourceCode" id="cb1024"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1024-1" title="1">dem_score_tidy &lt;-<span class="st"> </span>dem_score <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1024-2" title="2"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;year&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;democracy_score&quot;</span>, </a>
+<a class="sourceLine" id="cb1024-3" title="3">               <span class="dt">cols =</span> <span class="op">-</span>country)</a>
+<a class="sourceLine" id="cb1024-4" title="4"><span class="co">#  gather(key = year, value = democracy_score, - country)</span></a></code></pre></div>
 <p>Let’s now compare the <code>dem_score</code> and <code>dem_score_tidy</code>. <code>dem_score</code> has democracy score information for each year in columns, whereas in <code>dem_score_tidy</code> there are explicit variables <code>year</code> and <code>democracy_score</code>. While both representations of the data contain the same information, we can only use <code>ggplot()</code> to create plots using the <code>dem_score_tidy</code> data frame.</p>
-<div class="sourceCode" id="cb1027"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1027-1" title="1">dem_score</a></code></pre></div>
+<div class="sourceCode" id="cb1025"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1025-1" title="1">dem_score</a></code></pre></div>
 <pre><code># A tibble: 96 x 10
    country    `1952` `1957` `1962` `1967` `1972` `1977` `1982` `1987` `1992`
    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -2437,7 +2437,7 @@ a tidy data frame and assign the name of <code>dem_score_tidy</code> to the resu
  9 Bhutan        -10    -10    -10    -10    -10    -10    -10    -10    -10
 10 Bolivia        -4     -3     -3     -4     -7     -7      8      9      9
 # ... with 86 more rows</code></pre>
-<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1029-1" title="1">dem_score_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb1027"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1027-1" title="1">dem_score_tidy</a></code></pre></div>
 <pre><code># A tibble: 864 x 3
    country   year  democracy_score
    &lt;chr&gt;     &lt;chr&gt;           &lt;dbl&gt;
@@ -2454,14 +2454,14 @@ a tidy data frame and assign the name of <code>dem_score_tidy</code> to the resu
 # ... with 854 more rows</code></pre>
 <p><strong>(LC4.5)</strong> Read in the life expectancy data stored at <a href="https://moderndive.com/data/le_mess.csv" class="uri">https://moderndive.com/data/le_mess.csv</a> and convert it to a tidy data frame.</p>
 <p><strong>Solution</strong>: The code is similar</p>
-<div class="sourceCode" id="cb1031"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1031-1" title="1">life_expectancy &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/le_mess.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb1031-2" title="2">life_expectancy_tidy &lt;-<span class="st"> </span>life_expectancy <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1031-3" title="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;year&quot;</span>, </a>
-<a class="sourceLine" id="cb1031-4" title="4">               <span class="dt">values_to =</span> <span class="st">&quot;life_expectancy&quot;</span>,</a>
-<a class="sourceLine" id="cb1031-5" title="5">               <span class="dt">cols =</span> <span class="op">-</span>country)</a>
-<a class="sourceLine" id="cb1031-6" title="6"><span class="co">#  gather(key = year, value = life_expectancy, -country)</span></a></code></pre></div>
+<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1029-1" title="1">life_expectancy &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/le_mess.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb1029-2" title="2">life_expectancy_tidy &lt;-<span class="st"> </span>life_expectancy <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1029-3" title="3"><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">&quot;year&quot;</span>, </a>
+<a class="sourceLine" id="cb1029-4" title="4">               <span class="dt">values_to =</span> <span class="st">&quot;life_expectancy&quot;</span>,</a>
+<a class="sourceLine" id="cb1029-5" title="5">               <span class="dt">cols =</span> <span class="op">-</span>country)</a>
+<a class="sourceLine" id="cb1029-6" title="6"><span class="co">#  gather(key = year, value = life_expectancy, -country)</span></a></code></pre></div>
 <p>We observe the same construct structure with respect to <code>year</code> in <code>life_expectancy</code> vs <code>life_expectancy_tidy</code> as we did in <code>dem_score</code> vs <code>dem_score_tidy</code>:</p>
-<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1032-1" title="1">life_expectancy</a></code></pre></div>
+<div class="sourceCode" id="cb1030"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1030-1" title="1">life_expectancy</a></code></pre></div>
 <pre><code># A tibble: 202 x 67
    country  `1951` `1952` `1953`  `1954` `1955` `1956` `1957` `1958` `1959`
    &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -2487,7 +2487,7 @@ a tidy data frame and assign the name of <code>dem_score_tidy</code> to the resu
 #   `2002` &lt;dbl&gt;, `2003` &lt;dbl&gt;, `2004` &lt;dbl&gt;, `2005` &lt;dbl&gt;, `2006` &lt;dbl&gt;,
 #   `2007` &lt;dbl&gt;, `2008` &lt;dbl&gt;, `2009` &lt;dbl&gt;, `2010` &lt;dbl&gt;, `2011` &lt;dbl&gt;,
 #   `2012` &lt;dbl&gt;, `2013` &lt;dbl&gt;, `2014` &lt;dbl&gt;, `2015` &lt;dbl&gt;, `2016` &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb1034"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1034-1" title="1">life_expectancy_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1032-1" title="1">life_expectancy_tidy</a></code></pre></div>
 <pre><code># A tibble: 13,332 x 3
    country     year  life_expectancy
    &lt;chr&gt;       &lt;chr&gt;           &lt;dbl&gt;
@@ -2506,10 +2506,10 @@ a tidy data frame and assign the name of <code>dem_score_tidy</code> to the resu
 </div>
 <div id="chapter-5-solutions" class="section level2">
 <h2><span class="header-section-number">D.5</span> Chapter 5 Solutions</h2>
-<div class="sourceCode" id="cb1036"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1036-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1036-2" title="2"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1036-3" title="3"><span class="kw">library</span>(skimr)</a>
-<a class="sourceLine" id="cb1036-4" title="4"><span class="kw">library</span>(gapminder)</a></code></pre></div>
+<div class="sourceCode" id="cb1034"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1034-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1034-2" title="2"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1034-3" title="3"><span class="kw">library</span>(skimr)</a>
+<a class="sourceLine" id="cb1034-4" title="4"><span class="kw">library</span>(gapminder)</a></code></pre></div>
 <p><strong>(LC5.1)</strong> Conduct a new exploratory data analysis with the same outcome variable <span class="math inline">\(y\)</span> being <code>score</code> but with <code>age</code> as the new explanatory variable <span class="math inline">\(x\)</span>. Remember, this involves three things:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Looking at the raw data values.</li>
@@ -2521,7 +2521,7 @@ a tidy data frame and assign the name of <code>dem_score_tidy</code> to the resu
 <ul>
 <li>Looking at the raw data values:</li>
 </ul>
-<div class="sourceCode" id="cb1037"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1037-1" title="1"><span class="kw">glimpse</span>(evals_ch5)</a></code></pre></div>
+<div class="sourceCode" id="cb1035"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1035-1" title="1"><span class="kw">glimpse</span>(evals_ch5)</a></code></pre></div>
 <pre><code>Observations: 463
 Variables: 4
 $ ID      &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ...
@@ -2531,10 +2531,10 @@ $ age     &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40
 <ul>
 <li>Computing summary statistics:</li>
 </ul>
-<div class="sourceCode" id="cb1039"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1039-1" title="1"><span class="kw">skim_with</span>(<span class="dt">numeric =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>), <span class="dt">integer =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb1040"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1040-1" title="1">evals_ch5 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1040-2" title="2"><span class="st">  </span><span class="kw">select</span>(score, age) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1040-3" title="3"><span class="st">  </span><span class="kw">skim</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1037"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1037-1" title="1"><span class="kw">skim_with</span>(<span class="dt">numeric =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>), <span class="dt">integer =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1038"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1038-1" title="1">evals_ch5 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1038-2" title="2"><span class="st">  </span><span class="kw">select</span>(score, age) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1038-3" title="3"><span class="st">  </span><span class="kw">skim</span>()</a></code></pre></div>
 <pre><code>Skim summary statistics
  n obs: 463 
  n variables: 2 
@@ -2550,10 +2550,10 @@ $ age     &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40
 <ul>
 <li>Creating data visualizations:</li>
 </ul>
-<div class="sourceCode" id="cb1042"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1042-1" title="1"><span class="kw">ggplot</span>(evals_ch5, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> score)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1042-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1042-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Teaching Score&quot;</span>,</a>
-<a class="sourceLine" id="cb1042-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;Scatterplot of relationship of teaching score and age&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1040"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1040-1" title="1"><span class="kw">ggplot</span>(evals_ch5, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> score)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1040-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb1040-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Teaching Score&quot;</span>,</a>
+<a class="sourceLine" id="cb1040-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;Scatterplot of relationship of teaching score and age&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-745-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <!--
 TODO: Albert needs to double check interpretation:
@@ -2561,10 +2561,10 @@ TODO: Albert needs to double check interpretation:
 <p>Based on the scatterplot visualization, there seem to have a weak negative relationship between age and teaching score. As age increases, the teaching score see, to decrease slightly.</p>
 <p><strong>(LC5.2)</strong> Fit a new simple linear regression using <code>lm(score ~ age, data = evals_ch5)</code> where <code>age</code> is the new explanatory variable <span class="math inline">\(x\)</span>. Get information about the “best-fitting” line from the regression table by applying the <code>get_regression_table()</code> function. How do the regression results match up with the results from your earlier exploratory data analysis?</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb1043"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1043-1" title="1"><span class="co"># Fit regression model:</span></a>
-<a class="sourceLine" id="cb1043-2" title="2">score_age_model &lt;-<span class="st"> </span><span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> evals_ch5)</a>
-<a class="sourceLine" id="cb1043-3" title="3"><span class="co"># Get regression table:</span></a>
-<a class="sourceLine" id="cb1043-4" title="4"><span class="kw">get_regression_table</span>(score_age_model)</a></code></pre></div>
+<div class="sourceCode" id="cb1041"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1041-1" title="1"><span class="co"># Fit regression model:</span></a>
+<a class="sourceLine" id="cb1041-2" title="2">score_age_model &lt;-<span class="st"> </span><span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> evals_ch5)</a>
+<a class="sourceLine" id="cb1041-3" title="3"><span class="co"># Get regression table:</span></a>
+<a class="sourceLine" id="cb1041-4" title="4"><span class="kw">get_regression_table</span>(score_age_model)</a></code></pre></div>
 <pre><code># A tibble: 2 x 7
   term      estimate std_error statistic p_value lower_ci upper_ci
   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -2583,8 +2583,8 @@ TODO: Albert will verify Starry's interpretation:
 <p>For every increase of 1 unit in <code>age</code>, there is an <em>associated</em> decrease of, <em>on average</em>, 0.006 units of <code>score</code>. It matches with the results from our earlier exploratory data analysis.</p>
 <p><strong>(LC5.3)</strong> Generate a data frame of the residuals of the model where you used <code>age</code> as the explanatory <span class="math inline">\(x\)</span> variable.</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb1045"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1045-1" title="1">score_age_regression_points &lt;-<span class="st"> </span><span class="kw">get_regression_points</span>(score_age_model)</a>
-<a class="sourceLine" id="cb1045-2" title="2">score_age_regression_points</a></code></pre></div>
+<div class="sourceCode" id="cb1043"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1043-1" title="1">score_age_regression_points &lt;-<span class="st"> </span><span class="kw">get_regression_points</span>(score_age_model)</a>
+<a class="sourceLine" id="cb1043-2" title="2">score_age_regression_points</a></code></pre></div>
 <pre><code># A tibble: 463 x 5
       ID score   age score_hat residual
    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -2610,7 +2610,7 @@ TODO: Albert will verify Starry's interpretation:
 <ul>
 <li>Looking at the raw data values:</li>
 </ul>
-<div class="sourceCode" id="cb1047"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1047-1" title="1"><span class="kw">glimpse</span>(gapminder2007)</a></code></pre></div>
+<div class="sourceCode" id="cb1045"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1045-1" title="1"><span class="kw">glimpse</span>(gapminder2007)</a></code></pre></div>
 <pre><code>Observations: 142
 Variables: 4
 $ country   &lt;fct&gt; Afghanistan, Albania, Algeria, Angola, Argentina, Austral...
@@ -2620,9 +2620,9 @@ $ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391,
 <ul>
 <li>Computing summary statistics, such as means, medians, and interquartile ranges:</li>
 </ul>
-<div class="sourceCode" id="cb1049"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1049-1" title="1">gapminder2007 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1049-2" title="2"><span class="st">  </span><span class="kw">select</span>(gdpPercap, continent) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1049-3" title="3"><span class="st">  </span><span class="kw">skim</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1047"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1047-1" title="1">gapminder2007 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1047-2" title="2"><span class="st">  </span><span class="kw">select</span>(gdpPercap, continent) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1047-3" title="3"><span class="st">  </span><span class="kw">skim</span>()</a></code></pre></div>
 <pre><code>Skim summary statistics
  n obs: 142 
  n variables: 2 
@@ -2641,10 +2641,10 @@ $ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391,
 <ul>
 <li>Creating data visualizations:</li>
 </ul>
-<div class="sourceCode" id="cb1051"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1051-1" title="1"><span class="kw">ggplot</span>(gapminder2007, <span class="kw">aes</span>(<span class="dt">x =</span> continent, <span class="dt">y =</span> gdpPercap)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1051-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1051-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Continent&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;GPD per capita&quot;</span>,</a>
-<a class="sourceLine" id="cb1051-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;GDP by continent&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1049"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1049-1" title="1"><span class="kw">ggplot</span>(gapminder2007, <span class="kw">aes</span>(<span class="dt">x =</span> continent, <span class="dt">y =</span> gdpPercap)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1049-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb1049-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Continent&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;GPD per capita&quot;</span>,</a>
+<a class="sourceLine" id="cb1049-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;GDP by continent&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-750-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <!--
 TODO: Albert needs to double check interpretation:
@@ -2652,10 +2652,10 @@ TODO: Albert needs to double check interpretation:
 <p>Based on this exploration, it seems that GDP’s are very different among different continents, which means that continent might be a statistically significant predictor for an area’s GDP.</p>
 <p><strong>(LC5.5)</strong> Fit a new linear regression using <code>lm(gdpPercap ~ continent, data = gapminder2007)</code> where <code>gdpPercap</code> is the new outcome variable <span class="math inline">\(y\)</span>. Get information about the “best-fitting” line from the regression table by applying the <code>get_regression_table()</code> function. How do the regression results match up with the results from your previous exploratory data analysis?</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb1052"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1052-1" title="1"><span class="co"># Fit regression model:</span></a>
-<a class="sourceLine" id="cb1052-2" title="2">gdp_model &lt;-<span class="st"> </span><span class="kw">lm</span>(gdpPercap <span class="op">~</span><span class="st"> </span>continent, <span class="dt">data =</span> gapminder2007)</a>
-<a class="sourceLine" id="cb1052-3" title="3"><span class="co"># Get regression table:</span></a>
-<a class="sourceLine" id="cb1052-4" title="4"><span class="kw">get_regression_table</span>(gdp_model)</a></code></pre></div>
+<div class="sourceCode" id="cb1050"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1050-1" title="1"><span class="co"># Fit regression model:</span></a>
+<a class="sourceLine" id="cb1050-2" title="2">gdp_model &lt;-<span class="st"> </span><span class="kw">lm</span>(gdpPercap <span class="op">~</span><span class="st"> </span>continent, <span class="dt">data =</span> gapminder2007)</a>
+<a class="sourceLine" id="cb1050-3" title="3"><span class="co"># Get regression table:</span></a>
+<a class="sourceLine" id="cb1050-4" title="4"><span class="kw">get_regression_table</span>(gdp_model)</a></code></pre></div>
 <pre><code># A tibble: 5 x 7
   term              estimate std_error statistic p_value  lower_ci upper_ci
   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -2721,14 +2721,14 @@ FIGURE D.2: Regression line and two others.
 </div>
 <div id="chapter-6-solutions" class="section level2">
 <h2><span class="header-section-number">D.6</span> Chapter 6 Solutions</h2>
-<div class="sourceCode" id="cb1054"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1054-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1054-2" title="2"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1054-3" title="3"><span class="kw">library</span>(skimr)</a>
-<a class="sourceLine" id="cb1054-4" title="4"><span class="kw">library</span>(ISLR)</a></code></pre></div>
+<div class="sourceCode" id="cb1052"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1052-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1052-2" title="2"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1052-3" title="3"><span class="kw">library</span>(skimr)</a>
+<a class="sourceLine" id="cb1052-4" title="4"><span class="kw">library</span>(ISLR)</a></code></pre></div>
 <p><strong>(LC6.1)</strong> Compute the observed values, fitted values, and residuals not for the interaction model as we just did, but rather for the parallel slopes model we saved in <code>score_model_interaction</code>.</p>
 <p><strong>Solution</strong>:</p>
-<div class="sourceCode" id="cb1055"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1055-1" title="1">regression_points_parallel &lt;-<span class="st"> </span><span class="kw">get_regression_points</span>(score_model_parallel_slopes)</a>
-<a class="sourceLine" id="cb1055-2" title="2">regression_points_parallel</a></code></pre></div>
+<div class="sourceCode" id="cb1053"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1053-1" title="1">regression_points_parallel &lt;-<span class="st"> </span><span class="kw">get_regression_points</span>(score_model_parallel_slopes)</a>
+<a class="sourceLine" id="cb1053-2" title="2">regression_points_parallel</a></code></pre></div>
 <pre><code># A tibble: 463 x 6
       ID score   age gender score_hat  residual
    &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;fct&gt;      &lt;dbl&gt;     &lt;dbl&gt;
@@ -2754,9 +2754,9 @@ FIGURE D.2: Regression line and two others.
 <ul>
 <li>Most crucially: Looking at the raw data values.</li>
 </ul>
-<div class="sourceCode" id="cb1057"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1057-1" title="1">credit_ch6 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1057-2" title="2"><span class="st">  </span><span class="kw">select</span>(debt, credit_rating, age) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1057-3" title="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1055"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1055-1" title="1">credit_ch6 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1055-2" title="2"><span class="st">  </span><span class="kw">select</span>(debt, credit_rating, age) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1055-3" title="3"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
 <pre><code># A tibble: 6 x 3
    debt credit_rating   age
   &lt;int&gt;         &lt;int&gt; &lt;int&gt;
@@ -2769,10 +2769,10 @@ FIGURE D.2: Regression line and two others.
 <ul>
 <li>Computing summary statistics, such as means, medians, and interquartile ranges.</li>
 </ul>
-<div class="sourceCode" id="cb1059"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1059-1" title="1"><span class="kw">skim_with</span>(<span class="dt">numeric =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>), <span class="dt">integer =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1060-1" title="1">credit_ch6 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1060-2" title="2"><span class="st">  </span><span class="kw">select</span>(debt, credit_rating, age) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1060-3" title="3"><span class="st">  </span><span class="kw">skim</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1057"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1057-1" title="1"><span class="kw">skim_with</span>(<span class="dt">numeric =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>), <span class="dt">integer =</span> <span class="kw">list</span>(<span class="dt">hist =</span> <span class="ot">NULL</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1058"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1058-1" title="1">credit_ch6 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1058-2" title="2"><span class="st">  </span><span class="kw">select</span>(debt, credit_rating, age) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1058-3" title="3"><span class="st">  </span><span class="kw">skim</span>()</a></code></pre></div>
 <pre><code>Skim summary statistics
  n obs: 400 
  n variables: 3 
@@ -2785,24 +2785,24 @@ FIGURE D.2: Regression line and two others.
 <ul>
 <li>Creating data visualizations.</li>
 </ul>
-<div class="sourceCode" id="cb1062"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1062-1" title="1"><span class="kw">ggplot</span>(credit_ch6, <span class="kw">aes</span>(<span class="dt">x =</span> credit_rating, <span class="dt">y =</span> debt)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1062-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1062-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Credit rating&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Credit card debt (in $)&quot;</span>, </a>
-<a class="sourceLine" id="cb1062-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;Debt and credit rating&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1062-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1060-1" title="1"><span class="kw">ggplot</span>(credit_ch6, <span class="kw">aes</span>(<span class="dt">x =</span> credit_rating, <span class="dt">y =</span> debt)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1060-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb1060-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Credit rating&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Credit card debt (in $)&quot;</span>, </a>
+<a class="sourceLine" id="cb1060-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;Debt and credit rating&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1060-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-760-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb1063"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1063-1" title="1"><span class="kw">ggplot</span>(credit_ch6, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> debt)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1063-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1063-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age (in year)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Credit card debt (in $)&quot;</span>, </a>
-<a class="sourceLine" id="cb1063-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;Debt and age&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1063-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1061"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1061-1" title="1"><span class="kw">ggplot</span>(credit_ch6, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> debt)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1061-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb1061-3" title="3"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Age (in year)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Credit card debt (in $)&quot;</span>, </a>
+<a class="sourceLine" id="cb1061-4" title="4">       <span class="dt">title =</span> <span class="st">&quot;Debt and age&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1061-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-760-2.png" width="\textwidth" style="display: block; margin: auto;" />
 It seems that there is a positive relationship between one’s credit rating and their debt, and a slight negative between one’s age and their debt.</p>
 <p><strong>(LC6.3)</strong> Fit a new simple linear regression using <code>lm(debt ~ credit_rating + age, data = credit_ch6)</code> where <code>credit_rating</code> and <code>age</code> are the new numerical explanatory variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. Get information about the “best-fitting” regression plane from the regression table by applying the <code>get_regression_table()</code> function. How do the regression results match up with the results from your previous exploratory data analysis?</p>
-<div class="sourceCode" id="cb1064"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1064-1" title="1"><span class="co"># Fit regression model:</span></a>
-<a class="sourceLine" id="cb1064-2" title="2">debt_model_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(debt <span class="op">~</span><span class="st"> </span>credit_rating <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> credit_ch6)</a>
-<a class="sourceLine" id="cb1064-3" title="3"><span class="co"># Get regression table:</span></a>
-<a class="sourceLine" id="cb1064-4" title="4"><span class="kw">get_regression_table</span>(debt_model_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1062"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1062-1" title="1"><span class="co"># Fit regression model:</span></a>
+<a class="sourceLine" id="cb1062-2" title="2">debt_model_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(debt <span class="op">~</span><span class="st"> </span>credit_rating <span class="op">+</span><span class="st"> </span>age, <span class="dt">data =</span> credit_ch6)</a>
+<a class="sourceLine" id="cb1062-3" title="3"><span class="co"># Get regression table:</span></a>
+<a class="sourceLine" id="cb1062-4" title="4"><span class="kw">get_regression_table</span>(debt_model_<span class="dv">2</span>)</a></code></pre></div>
 <pre><code># A tibble: 3 x 7
   term          estimate std_error statistic p_value lower_ci upper_ci
   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
@@ -2814,11 +2814,11 @@ It seems that there is a positive relationship between one’s credit rating and
 </div>
 <div id="chapter-7-solutions" class="section level2">
 <h2><span class="header-section-number">D.7</span> Chapter 7 Solutions</h2>
-<div class="sourceCode" id="cb1066"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1066-1" title="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1066-2" title="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1066-3" title="3"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1066-4" title="4"><span class="kw">library</span>(gapminder)</a>
-<a class="sourceLine" id="cb1066-5" title="5"><span class="kw">library</span>(skimr)</a></code></pre></div>
+<div class="sourceCode" id="cb1064"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1064-1" title="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1064-2" title="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1064-3" title="3"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1064-4" title="4"><span class="kw">library</span>(gapminder)</a>
+<a class="sourceLine" id="cb1064-5" title="5"><span class="kw">library</span>(skimr)</a></code></pre></div>
 <p><strong>(LC7.1)</strong> Why was it important to mix the bowl before we sampled the balls?</p>
 <p><strong>Solution</strong>:</p>
 <p>So that we make sure the sampled balls are randomized.</p>
@@ -2947,9 +2947,9 @@ n =
 </div>
 <div id="chapter-8-solutions" class="section level2">
 <h2><span class="header-section-number">D.8</span> Chapter 8 Solutions</h2>
-<div class="sourceCode" id="cb1067"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1067-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1067-2" title="2"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1067-3" title="3"><span class="kw">library</span>(infer)</a></code></pre></div>
+<div class="sourceCode" id="cb1065"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1065-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1065-2" title="2"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1065-3" title="3"><span class="kw">library</span>(infer)</a></code></pre></div>
 <p><strong>(LC8.1)</strong> What is the chief difference between a bootstrap distribution and a sampling distribution?</p>
 <p><strong>Solution</strong>:</p>
 <p>A bootstrap sample is a smaller sample that is “bootstrapped” from a larger sample. Bootstrapping is a type of resampling where large numbers of smaller samples of the same size are repeatedly drawn, with replacement, from a single original sample.</p>
@@ -2966,13 +2966,13 @@ n =
 <p><strong>(LC8.5)</strong> Construct a 95% confidence interval for the <em>median</em> year of minting of <em>all</em> US pennies? Use the percentile method and, if appropriate, then use the standard-error method.</p>
 <p><strong>Solution</strong>:</p>
 <p>Using the percentile method:</p>
-<div class="sourceCode" id="cb1068"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1068-1" title="1">bootstrap_distribution &lt;-<span class="st"> </span>pennies_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1068-2" title="2"><span class="st">  </span><span class="kw">specify</span>(<span class="dt">response =</span> year) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1068-3" title="3"><span class="st">  </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1068-4" title="4"><span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;median&quot;</span>)</a>
-<a class="sourceLine" id="cb1068-5" title="5">percentile_ci &lt;-<span class="st"> </span>bootstrap_distribution <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1068-6" title="6"><span class="st">  </span><span class="kw">get_confidence_interval</span>(<span class="dt">level =</span> <span class="fl">0.95</span>, <span class="dt">type =</span> <span class="st">&quot;percentile&quot;</span>)</a>
-<a class="sourceLine" id="cb1068-7" title="7">percentile_ci</a></code></pre></div>
+<div class="sourceCode" id="cb1066"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1066-1" title="1">bootstrap_distribution &lt;-<span class="st"> </span>pennies_sample <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1066-2" title="2"><span class="st">  </span><span class="kw">specify</span>(<span class="dt">response =</span> year) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1066-3" title="3"><span class="st">  </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1066-4" title="4"><span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;median&quot;</span>)</a>
+<a class="sourceLine" id="cb1066-5" title="5">percentile_ci &lt;-<span class="st"> </span>bootstrap_distribution <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1066-6" title="6"><span class="st">  </span><span class="kw">get_confidence_interval</span>(<span class="dt">level =</span> <span class="fl">0.95</span>, <span class="dt">type =</span> <span class="st">&quot;percentile&quot;</span>)</a>
+<a class="sourceLine" id="cb1066-7" title="7">percentile_ci</a></code></pre></div>
 <pre><code># A tibble: 1 x 2
   `2.5%` `97.5%`
    &lt;dbl&gt;   &lt;dbl&gt;
@@ -2981,11 +2981,11 @@ n =
 </div>
 <div id="chapter-9-solutions" class="section level2">
 <h2><span class="header-section-number">D.9</span> Chapter 9 Solutions</h2>
-<div class="sourceCode" id="cb1070"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1070-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1070-2" title="2"><span class="kw">library</span>(infer)</a>
-<a class="sourceLine" id="cb1070-3" title="3"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1070-4" title="4"><span class="kw">library</span>(nycflights13)</a>
-<a class="sourceLine" id="cb1070-5" title="5"><span class="kw">library</span>(ggplot2movies)</a></code></pre></div>
+<div class="sourceCode" id="cb1068"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1068-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1068-2" title="2"><span class="kw">library</span>(infer)</a>
+<a class="sourceLine" id="cb1068-3" title="3"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1068-4" title="4"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb1068-5" title="5"><span class="kw">library</span>(ggplot2movies)</a></code></pre></div>
 <p><strong>(LC9.1)</strong> Conduct the same hypothesis test and confidence interval analysis comparing male and female promotion rates using the median rating instead of the mean rating. What was different and what was the same?</p>
 <p><strong>Solution</strong>:</p>
 <!--
@@ -3042,8 +3042,8 @@ TODO: starry sos
 <ul>
 <li>Use <code>dplyr</code> and <code>tidyr</code> to create the necessary data frame focused on only action and romance movies (but not both) from the <code>movies</code> data frame in the <code>ggplot2movies</code> package.</li>
 </ul>
-<div class="sourceCode" id="cb1071"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1071-1" title="1">action_romance &lt;-<span class="st"> </span>movies <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1071-2" title="2"><span class="st">  </span><span class="kw">filter</span>(Action <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>Romance <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1069"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1069-1" title="1">action_romance &lt;-<span class="st"> </span>movies <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1069-2" title="2"><span class="st">  </span><span class="kw">filter</span>(Action <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>Romance <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
 <ul>
 <li>Make a boxplot and a faceted histogram of this population data comparing ratings of action and romance movies from IMDb.
 <!--
@@ -3051,29 +3051,29 @@ TODO:need a tidy dataset with genre
 -->
 # need a tidy dataset with genre</li>
 </ul>
-<div class="sourceCode" id="cb1072"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1072-1" title="1"><span class="kw">ggplot</span>(action_romance, <span class="kw">aes</span>(rating))<span class="op">+</span></a>
-<a class="sourceLine" id="cb1072-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb1072-3" title="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Action)</a></code></pre></div>
+<div class="sourceCode" id="cb1070"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1070-1" title="1"><span class="kw">ggplot</span>(action_romance, <span class="kw">aes</span>(rating))<span class="op">+</span></a>
+<a class="sourceLine" id="cb1070-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb1070-3" title="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Action)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-771-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <hr />
 </div>
 <div id="chapter-10-solutions" class="section level2">
 <h2><span class="header-section-number">D.10</span> Chapter 10 Solutions</h2>
-<div class="sourceCode" id="cb1073"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1073-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1073-2" title="2"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1073-3" title="3"><span class="kw">library</span>(infer)</a></code></pre></div>
+<div class="sourceCode" id="cb1071"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1071-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1071-2" title="2"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1071-3" title="3"><span class="kw">library</span>(infer)</a></code></pre></div>
 <p><strong>(LC10.1)</strong> Continuing with our regression using <code>age</code> as the explanatory variable and teaching <code>score</code> as the outcome variable.</p>
 <ul>
 <li>Use the <code>get_regression_points()</code> function to get the observed values, fitted values, and residuals for all 463 instructors.</li>
 </ul>
-<div class="sourceCode" id="cb1074"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1074-1" title="1">evals_ch5 &lt;-<span class="st"> </span>evals <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1074-2" title="2"><span class="st">  </span><span class="kw">select</span>(ID, score, bty_avg, age)</a>
-<a class="sourceLine" id="cb1074-3" title="3"></a>
-<a class="sourceLine" id="cb1074-4" title="4"><span class="co"># Fit regression model:</span></a>
-<a class="sourceLine" id="cb1074-5" title="5">score_age_model &lt;-<span class="st"> </span><span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> evals_ch5)</a>
-<a class="sourceLine" id="cb1074-6" title="6"><span class="co"># Get regression points:</span></a>
-<a class="sourceLine" id="cb1074-7" title="7">regression_points &lt;-<span class="st"> </span><span class="kw">get_regression_points</span>(score_age_model)</a>
-<a class="sourceLine" id="cb1074-8" title="8">regression_points</a></code></pre></div>
+<div class="sourceCode" id="cb1072"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1072-1" title="1">evals_ch5 &lt;-<span class="st"> </span>evals <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1072-2" title="2"><span class="st">  </span><span class="kw">select</span>(ID, score, bty_avg, age)</a>
+<a class="sourceLine" id="cb1072-3" title="3"></a>
+<a class="sourceLine" id="cb1072-4" title="4"><span class="co"># Fit regression model:</span></a>
+<a class="sourceLine" id="cb1072-5" title="5">score_age_model &lt;-<span class="st"> </span><span class="kw">lm</span>(score <span class="op">~</span><span class="st"> </span>age, <span class="dt">data =</span> evals_ch5)</a>
+<a class="sourceLine" id="cb1072-6" title="6"><span class="co"># Get regression points:</span></a>
+<a class="sourceLine" id="cb1072-7" title="7">regression_points &lt;-<span class="st"> </span><span class="kw">get_regression_points</span>(score_age_model)</a>
+<a class="sourceLine" id="cb1072-8" title="8">regression_points</a></code></pre></div>
 <pre><code># A tibble: 463 x 5
       ID score   age score_hat residual
    &lt;int&gt; &lt;dbl&gt; &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -3120,52 +3120,52 @@ FIGURE D.5: Plot of residuals over beauty score.
 <!--
 TODO: Clarify what the deliverable for this LC should be.
 --></p>
-<div class="sourceCode" id="cb1076"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1076-1" title="1">bootstrap_distn_slope &lt;-<span class="st"> </span>evals_ch5 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1076-2" title="2"><span class="st">  </span><span class="kw">specify</span>(<span class="dt">formula =</span> score <span class="op">~</span><span class="st"> </span>bty_avg) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1076-3" title="3"><span class="st">  </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">&quot;bootstrap&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1076-4" title="4"><span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;correlation&quot;</span>)</a>
-<a class="sourceLine" id="cb1076-5" title="5"></a>
-<a class="sourceLine" id="cb1076-6" title="6"><span class="cf">if</span>(<span class="op">!</span><span class="kw">file.exists</span>(<span class="st">&quot;rds/bootstrap_distn_slope.rds&quot;</span>)){</a>
-<a class="sourceLine" id="cb1076-7" title="7">  <span class="kw">set.seed</span>(<span class="dv">76</span>)</a>
-<a class="sourceLine" id="cb1076-8" title="8">  bootstrap_distn_slope &lt;-<span class="st"> </span>evals <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1076-9" title="9"><span class="st">    </span><span class="kw">specify</span>(score <span class="op">~</span><span class="st"> </span>bty_avg) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1076-10" title="10"><span class="st">    </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">&quot;bootstrap&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1076-11" title="11"><span class="st">    </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;slope&quot;</span>)</a>
-<a class="sourceLine" id="cb1076-12" title="12">  <span class="kw">saveRDS</span>(<span class="dt">object =</span> bootstrap_distn_slope, </a>
-<a class="sourceLine" id="cb1076-13" title="13">           <span class="st">&quot;rds/bootstrap_distn_slope.rds&quot;</span>)</a>
-<a class="sourceLine" id="cb1076-14" title="14">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb1076-15" title="15">  bootstrap_distn_slope &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;rds/bootstrap_distn_slope.rds&quot;</span>)</a>
-<a class="sourceLine" id="cb1076-16" title="16">}</a>
-<a class="sourceLine" id="cb1076-17" title="17"></a>
-<a class="sourceLine" id="cb1076-18" title="18">observed_slope &lt;-<span class="st"> </span>evals <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1076-19" title="19"><span class="st">  </span><span class="kw">specify</span>(score <span class="op">~</span><span class="st"> </span>bty_avg) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1076-20" title="20"><span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;correlation&quot;</span>)</a>
-<a class="sourceLine" id="cb1076-21" title="21">observed_slope</a></code></pre></div>
+<div class="sourceCode" id="cb1074"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1074-1" title="1">bootstrap_distn_slope &lt;-<span class="st"> </span>evals_ch5 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1074-2" title="2"><span class="st">  </span><span class="kw">specify</span>(<span class="dt">formula =</span> score <span class="op">~</span><span class="st"> </span>bty_avg) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1074-3" title="3"><span class="st">  </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">&quot;bootstrap&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1074-4" title="4"><span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;correlation&quot;</span>)</a>
+<a class="sourceLine" id="cb1074-5" title="5"></a>
+<a class="sourceLine" id="cb1074-6" title="6"><span class="cf">if</span>(<span class="op">!</span><span class="kw">file.exists</span>(<span class="st">&quot;rds/bootstrap_distn_slope.rds&quot;</span>)){</a>
+<a class="sourceLine" id="cb1074-7" title="7">  <span class="kw">set.seed</span>(<span class="dv">76</span>)</a>
+<a class="sourceLine" id="cb1074-8" title="8">  bootstrap_distn_slope &lt;-<span class="st"> </span>evals <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1074-9" title="9"><span class="st">    </span><span class="kw">specify</span>(score <span class="op">~</span><span class="st"> </span>bty_avg) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1074-10" title="10"><span class="st">    </span><span class="kw">generate</span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">&quot;bootstrap&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1074-11" title="11"><span class="st">    </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;slope&quot;</span>)</a>
+<a class="sourceLine" id="cb1074-12" title="12">  <span class="kw">saveRDS</span>(<span class="dt">object =</span> bootstrap_distn_slope, </a>
+<a class="sourceLine" id="cb1074-13" title="13">           <span class="st">&quot;rds/bootstrap_distn_slope.rds&quot;</span>)</a>
+<a class="sourceLine" id="cb1074-14" title="14">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb1074-15" title="15">  bootstrap_distn_slope &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;rds/bootstrap_distn_slope.rds&quot;</span>)</a>
+<a class="sourceLine" id="cb1074-16" title="16">}</a>
+<a class="sourceLine" id="cb1074-17" title="17"></a>
+<a class="sourceLine" id="cb1074-18" title="18">observed_slope &lt;-<span class="st"> </span>evals <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1074-19" title="19"><span class="st">  </span><span class="kw">specify</span>(score <span class="op">~</span><span class="st"> </span>bty_avg) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1074-20" title="20"><span class="st">  </span><span class="kw">calculate</span>(<span class="dt">stat =</span> <span class="st">&quot;correlation&quot;</span>)</a>
+<a class="sourceLine" id="cb1074-21" title="21">observed_slope</a></code></pre></div>
 <hr />
 </div>
 <div id="chapter-11-solutions" class="section level2">
 <h2><span class="header-section-number">D.11</span> Chapter 11 Solutions</h2>
-<div class="sourceCode" id="cb1077"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1077-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1077-2" title="2"><span class="kw">library</span>(moderndive)</a>
-<a class="sourceLine" id="cb1077-3" title="3"><span class="kw">library</span>(skimr)</a>
-<a class="sourceLine" id="cb1077-4" title="4"><span class="kw">library</span>(fivethirtyeight)</a></code></pre></div>
+<div class="sourceCode" id="cb1075"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1075-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1075-2" title="2"><span class="kw">library</span>(moderndive)</a>
+<a class="sourceLine" id="cb1075-3" title="3"><span class="kw">library</span>(skimr)</a>
+<a class="sourceLine" id="cb1075-4" title="4"><span class="kw">library</span>(fivethirtyeight)</a></code></pre></div>
 <p><strong>(LC11.1)</strong> Repeat the regression modeling in Subsection <a href="12-thinking-with-data.html#house-prices-regression">12.2.3</a> and the prediction making you just did on the house of condition 5 and size 1900 square feet in Subsection <a href="12-thinking-with-data.html#house-prices-making-predictions">12.2.4</a>, but using the parallel slopes model you visualized in Figure <a href="12-thinking-with-data.html#fig:house-price-parallel-slopes">12.6</a>. Show that it’s $525,191!</p>
-<div class="sourceCode" id="cb1078"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1078-1" title="1">house_prices &lt;-<span class="st"> </span>house_prices <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1078-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb1078-3" title="3">    <span class="dt">log10_price =</span> <span class="kw">log10</span>(price),</a>
-<a class="sourceLine" id="cb1078-4" title="4">    <span class="dt">log10_size =</span> <span class="kw">log10</span>(sqft_living)</a>
-<a class="sourceLine" id="cb1078-5" title="5">    )</a>
-<a class="sourceLine" id="cb1078-6" title="6"><span class="co"># Fit regression model:</span></a>
-<a class="sourceLine" id="cb1078-7" title="7">price_interaction &lt;-<span class="st"> </span><span class="kw">lm</span>(log10_price <span class="op">~</span><span class="st"> </span>log10_size <span class="op">+</span><span class="st"> </span>condition, </a>
-<a class="sourceLine" id="cb1078-8" title="8">                        <span class="dt">data =</span> house_prices)</a>
-<a class="sourceLine" id="cb1078-9" title="9"></a>
-<a class="sourceLine" id="cb1078-10" title="10"><span class="co"># Get regression table:</span></a>
-<a class="sourceLine" id="cb1078-11" title="11"><span class="kw">get_regression_table</span>(price_interaction)</a>
-<a class="sourceLine" id="cb1078-12" title="12"></a>
-<a class="sourceLine" id="cb1078-13" title="13"><span class="dv">10</span><span class="op">^</span>(<span class="fl">2.88</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.096</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.837</span><span class="op">*</span><span class="kw">log10</span>(<span class="dv">1900</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1076"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1076-1" title="1">house_prices &lt;-<span class="st"> </span>house_prices <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1076-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb1076-3" title="3">    <span class="dt">log10_price =</span> <span class="kw">log10</span>(price),</a>
+<a class="sourceLine" id="cb1076-4" title="4">    <span class="dt">log10_size =</span> <span class="kw">log10</span>(sqft_living)</a>
+<a class="sourceLine" id="cb1076-5" title="5">    )</a>
+<a class="sourceLine" id="cb1076-6" title="6"><span class="co"># Fit regression model:</span></a>
+<a class="sourceLine" id="cb1076-7" title="7">price_interaction &lt;-<span class="st"> </span><span class="kw">lm</span>(log10_price <span class="op">~</span><span class="st"> </span>log10_size <span class="op">+</span><span class="st"> </span>condition, </a>
+<a class="sourceLine" id="cb1076-8" title="8">                        <span class="dt">data =</span> house_prices)</a>
+<a class="sourceLine" id="cb1076-9" title="9"></a>
+<a class="sourceLine" id="cb1076-10" title="10"><span class="co"># Get regression table:</span></a>
+<a class="sourceLine" id="cb1076-11" title="11"><span class="kw">get_regression_table</span>(price_interaction)</a>
+<a class="sourceLine" id="cb1076-12" title="12"></a>
+<a class="sourceLine" id="cb1076-13" title="13"><span class="dv">10</span><span class="op">^</span>(<span class="fl">2.88</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.096</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.837</span><span class="op">*</span><span class="kw">log10</span>(<span class="dv">1900</span>))</a></code></pre></div>
 <p><strong>(LC11.2)</strong> What date between 1994 and 2003 has the fewest number of births in the US? What story could you tell about why this is the case?</p>
-<div class="sourceCode" id="cb1079"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1079-1" title="1">US_births_<span class="dv">1994</span>_<span class="dv">2003</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1079-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(births)</a></code></pre></div>
+<div class="sourceCode" id="cb1077"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1077-1" title="1">US_births_<span class="dv">1994</span>_<span class="dv">2003</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1077-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(births)</a></code></pre></div>
 <pre><code># A tibble: 3,652 x 6
     year month date_of_month date       day_of_week births
    &lt;int&gt; &lt;int&gt;         &lt;int&gt; &lt;date&gt;     &lt;ord&gt;        &lt;int&gt;
@@ -3241,7 +3241,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/94-appendixD.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/94-appendixD.Rmd",
 "text": "Edit"
 },
 "history": {

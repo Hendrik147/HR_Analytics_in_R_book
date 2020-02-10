@@ -11,20 +11,20 @@
   <meta property="og:title" content="Chapter 21 Absenteeism in manufacturing | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 21 Absenteeism in manufacturing | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -693,9 +693,9 @@ It was able to generate the following information as a CSV file (comma separated
 </ul>
 <p>Ensure all needed libraries are installed</p>
 <p>###Let’s read in the data provided</p>
-<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb741-1" title="1">MFGEmployees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/MFGEmployees4.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb739-1" title="1">MFGEmployees &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/MFGEmployees4.csv&quot;</span>)</a></code></pre></div>
 <p>The first thing we should do is check on quality of data. Data will rarely be clean or perfect when we receive it. Either questionnable data should be corrected (preferrred) or deleted.</p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb742-1" title="1"><span class="kw">summary</span>(MFGEmployees)</a></code></pre></div>
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb740-1" title="1"><span class="kw">summary</span>(MFGEmployees)</a></code></pre></div>
 <pre><code> EmployeeNumber   Surname           GivenName            Gender         
  Min.   :   1   Length:8336        Length:8336        Length:8336       
  1st Qu.:2085   Class :character   Class :character   Class :character  
@@ -727,11 +727,11 @@ It was able to generate the following information as a CSV file (comma separated
 <p>The only thing that stands out initially is that age has some questionable data- some one who is 3 and someone who is 77. The range for purposes of this example should be 18 to 65. Normally you would want to clean the data by getting the correct information and then changing it.</p>
 <div id="for-expediency-we-will-delete-the-problem-records-in-the-dataset." class="section level3">
 <h3><span class="header-section-number">21.0.1</span> For expediency we will delete the problem records in the dataset.</h3>
-<div class="sourceCode" id="cb744"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb744-1" title="1">MFGEmployees&lt;-</a>
-<a class="sourceLine" id="cb744-2" title="2"><span class="st">  </span>MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb744-3" title="3"><span class="st">  </span><span class="kw">filter</span>(Age<span class="op">&gt;=</span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Age<span class="op">&lt;=</span><span class="dv">65</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb742-1" title="1">MFGEmployees&lt;-</a>
+<a class="sourceLine" id="cb742-2" title="2"><span class="st">  </span>MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb742-3" title="3"><span class="st">  </span><span class="kw">filter</span>(Age<span class="op">&gt;=</span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Age<span class="op">&lt;=</span><span class="dv">65</span>)</a></code></pre></div>
 <p>Now let’s summarize again with cleaned up data</p>
-<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb745-1" title="1"><span class="kw">summary</span>(MFGEmployees)</a></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb743-1" title="1"><span class="kw">summary</span>(MFGEmployees)</a></code></pre></div>
 <pre><code> EmployeeNumber   Surname           GivenName            Gender         
  Min.   :   1   Length:8165        Length:8165        Length:8165       
  1st Qu.:2081   Class :character   Class :character   Class :character  
@@ -762,11 +762,11 @@ It was able to generate the following information as a CSV file (comma separated
                    </code></pre>
 <p>###Transform the data</p>
 <p>Now calculate absenteeism rate by dividing the absent hours by total standard hours for the year (52 weeks/year * 40 hours/week = 2080 hours/year)</p>
-<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb747-1" title="1">MFGEmployees &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb747-2" title="2"><span class="st">  </span>MFGEmployees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb747-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AbsenceRate =</span> AbsentHours <span class="op">/</span><span class="dv">2080</span><span class="op">*</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb747-4" title="4"></a>
-<a class="sourceLine" id="cb747-5" title="5"><span class="kw">str</span>(MFGEmployees)</a></code></pre></div>
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb745-1" title="1">MFGEmployees &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb745-2" title="2"><span class="st">  </span>MFGEmployees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb745-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">AbsenceRate =</span> AbsentHours <span class="op">/</span><span class="dv">2080</span><span class="op">*</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb745-4" title="4"></a>
+<a class="sourceLine" id="cb745-5" title="5"><span class="kw">str</span>(MFGEmployees)</a></code></pre></div>
 <pre><code>Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    8165 obs. of  14 variables:
  $ EmployeeNumber: num  1 2 3 4 5 6 7 8 9 10 ...
  $ Surname       : chr  &quot;Gutierrez&quot; &quot;Hardwick&quot; &quot;Delgado&quot; &quot;Simon&quot; ...
@@ -786,51 +786,51 @@ It was able to generate the following information as a CSV file (comma separated
 <p>###Explore The Data</p>
 <p>Part of collecting and managing data is the Exploratory Data Analysis.</p>
 <p>Let’s start with bar graphs of some of the categorical data</p>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb747-1" title="1">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb747-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb747-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>BusinessUnit) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb747-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb747-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Business Units&quot;</span>,</a>
+<a class="sourceLine" id="cb747-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>,</a>
+<a class="sourceLine" id="cb747-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Employee Count By Business Units&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb747-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb747-9" title="9"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-581-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb748-1" title="1">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb748-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb748-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Gender) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb748-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb748-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Business Units&quot;</span>,</a>
+<a class="sourceLine" id="cb748-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>,</a>
+<a class="sourceLine" id="cb748-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Employee Count By Gender&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb748-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb748-9" title="9"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-581-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb749-1" title="1">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb749-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb749-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>BusinessUnit) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb749-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Division) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb749-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb749-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Business Units&quot;</span>,</a>
+<a class="sourceLine" id="cb749-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Division&quot;</span>,</a>
 <a class="sourceLine" id="cb749-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>,</a>
-<a class="sourceLine" id="cb749-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Employee Count By Business Units&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb749-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Employee Count By Division&quot;</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb749-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb749-9" title="9"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
-<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-581-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb750-1" title="1">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb750-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb750-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Gender) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb750-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb750-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Business Units&quot;</span>,</a>
-<a class="sourceLine" id="cb750-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>,</a>
-<a class="sourceLine" id="cb750-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Employee Count By Gender&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb750-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb750-9" title="9"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
-<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-581-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb751-1" title="1">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb751-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb751-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Division) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb751-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb751-5" title="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Division&quot;</span>,</a>
-<a class="sourceLine" id="cb751-6" title="6">       <span class="dt">y=</span><span class="st">&quot;Count&quot;</span>,</a>
-<a class="sourceLine" id="cb751-7" title="7">       <span class="dt">title=</span><span class="st">&quot;Employee Count By Division&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb751-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb751-9" title="9"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-581-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Let’s ask some of our questions answered through this exploratory analysis.</p>
 <p><strong>First of all, what is our absenteeism rate?</strong></p>
-<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb752-1" title="1">MFGEmployees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb752-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">median =</span> <span class="kw">median</span>(AbsenceRate), <span class="dt">mean =</span> <span class="kw">mean</span>(AbsenceRate)) <span class="co">#Average absence rate and number of observations</span></a></code></pre></div>
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb750-1" title="1">MFGEmployees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb750-2" title="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">median =</span> <span class="kw">median</span>(AbsenceRate), <span class="dt">mean =</span> <span class="kw">mean</span>(AbsenceRate)) <span class="co">#Average absence rate and number of observations</span></a></code></pre></div>
 <pre><code># A tibble: 1 x 2
    median    mean
     &lt;dbl&gt;   &lt;dbl&gt;
 1 2.68572 2.90726</code></pre>
-<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb754-1" title="1">means &lt;-<span class="st"> </span><span class="kw">aggregate</span>(AbsenceRate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, MFGEmployees, mean)</a>
-<a class="sourceLine" id="cb754-2" title="2"></a>
-<a class="sourceLine" id="cb754-3" title="3"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb754-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span><span class="dv">1</span>), <span class="dt">data =</span> MFGEmployees) <span class="op">+</span></a>
-<a class="sourceLine" id="cb754-5" title="5"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb754-6" title="6"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">round</span>(means, <span class="dt">digits =</span> <span class="dv">3</span>), <span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span><span class="dv">1</span>, <span class="dt">label =</span> AbsenceRate),  <span class="dt">check_overlap=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="co">#Add average absence rate as a text</span></a>
-<a class="sourceLine" id="cb754-7" title="7"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb752-1" title="1">means &lt;-<span class="st"> </span><span class="kw">aggregate</span>(AbsenceRate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, MFGEmployees, mean)</a>
+<a class="sourceLine" id="cb752-2" title="2"></a>
+<a class="sourceLine" id="cb752-3" title="3"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb752-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span><span class="dv">1</span>), <span class="dt">data =</span> MFGEmployees) <span class="op">+</span></a>
+<a class="sourceLine" id="cb752-5" title="5"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb752-6" title="6"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">round</span>(means, <span class="dt">digits =</span> <span class="dv">3</span>), <span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span><span class="dv">1</span>, <span class="dt">label =</span> AbsenceRate),  <span class="dt">check_overlap=</span><span class="ot">TRUE</span>) <span class="op">+</span><span class="st"> </span><span class="co">#Add average absence rate as a text</span></a>
+<a class="sourceLine" id="cb752-7" title="7"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-582-1.png" width="\textwidth" style="display: block; margin: auto;" />
 The average absence rate is ‘r scales::percent(mean(MFGEmployees$AbsenceRate)’.</p>
 <p><strong>Does anyone have excessive absenteeism?</strong></p>
@@ -839,15 +839,15 @@ The average absence rate is ‘r scales::percent(mean(MFGEmployees$AbsenceRate)�
 <p>When you conduct a piece of quantitative research, you are inevitably attempting to answer a research question or hypothesis that you have set. One method of evaluating this research question is via a process called hypothesis testing, which is sometimes also referred to as significance testing.</p>
 <p>In order to undertake hypothesis testing you need to express your research hypothesis as a null and alternative hypothesis. The null hypothesis and alternative hypothesis are statements regarding the differences or effects that occur in the population. You will use your sample to test which statement (i.e., the null hypothesis or alternative hypothesis) is most likely (although technically, you test the evidence against the null hypothesis). So, with respect to our example, the null and alternative hypothesis will reflect statements about absences among the organization.</p>
 <p>In the following we will use ANOVA, as statistical test.</p>
-<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb755-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb755-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span> Gender), <span class="dt">data =</span> MFGEmployees) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb755-3" title="3"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb755-4" title="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb753-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb753-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span> Gender), <span class="dt">data =</span> MFGEmployees) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb753-3" title="3"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb753-4" title="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-583-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb756-1" title="1">AnovaModel<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Gender, <span class="dt">data=</span>MFGEmployees) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb756-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a>
-<a class="sourceLine" id="cb756-3" title="3"></a>
-<a class="sourceLine" id="cb756-4" title="4">AnovaModel<span class="fl">.1</span> </a></code></pre></div>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb754-1" title="1">AnovaModel<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Gender, <span class="dt">data=</span>MFGEmployees) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb754-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a>
+<a class="sourceLine" id="cb754-3" title="3"></a>
+<a class="sourceLine" id="cb754-4" title="4">AnovaModel<span class="fl">.1</span> </a></code></pre></div>
 <pre><code>Anova Table (Type II tests)
 
 Response: AbsenceRate
@@ -856,8 +856,8 @@ Gender       496    1    97.8 &lt;0.0000000000000002 ***
 Residuals  41379 8163                                
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb758-1" title="1"><span class="co">#means</span></a>
-<a class="sourceLine" id="cb758-2" title="2">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg=</span><span class="kw">mean</span>(AbsenceRate))</a></code></pre></div>
+<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb756-1" title="1"><span class="co">#means</span></a>
+<a class="sourceLine" id="cb756-2" title="2">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg=</span><span class="kw">mean</span>(AbsenceRate))</a></code></pre></div>
 <pre><code># A tibble: 2 x 2
   Gender     avg
   &lt;chr&gt;    &lt;dbl&gt;
@@ -871,15 +871,15 @@ F value = the value of the Fisher statistic test, so computed (variance within g
 Pr(&gt;F) = p-value</p>
 <p>Please note that the value 2.2e-16 actually means 2.2 X 10 ^ -16. It is just a way R prints numbers that are either too big or too small.</p>
 <p>Since the p-Value is much less than 0.05, we reject the null hypothesis and accept the alternative hypothesis, i.e. the absence levels among are significantly different among genders.</p>
-<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb760-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb760-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span> Division), <span class="dt">data =</span> MFGEmployees) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb760-3" title="3"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb760-4" title="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb758-1" title="1"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb758-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> AbsenceRate, <span class="dt">x =</span> Division), <span class="dt">data =</span> MFGEmployees) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb758-3" title="3"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb758-4" title="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-584-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb761-1" title="1">AnovaModel<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Division, <span class="dt">data=</span>MFGEmployees) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb761-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a>
-<a class="sourceLine" id="cb761-3" title="3"></a>
-<a class="sourceLine" id="cb761-4" title="4">AnovaModel<span class="fl">.2</span></a></code></pre></div>
+<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb759-1" title="1">AnovaModel<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Division, <span class="dt">data=</span>MFGEmployees) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb759-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a>
+<a class="sourceLine" id="cb759-3" title="3"></a>
+<a class="sourceLine" id="cb759-4" title="4">AnovaModel<span class="fl">.2</span></a></code></pre></div>
 <pre><code>Anova Table (Type II tests)
 
 Response: AbsenceRate
@@ -888,8 +888,8 @@ Division      91    5    3.56 0.0032 **
 Residuals  41783 8159                  
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb763-1" title="1"><span class="co"># means</span></a>
-<a class="sourceLine" id="cb763-2" title="2">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Division) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg=</span><span class="kw">mean</span>(AbsenceRate))</a></code></pre></div>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb761-1" title="1"><span class="co"># means</span></a>
+<a class="sourceLine" id="cb761-2" title="2">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Division) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg=</span><span class="kw">mean</span>(AbsenceRate))</a></code></pre></div>
 <pre><code># A tibble: 6 x 2
   Division                 avg
   &lt;chr&gt;                  &lt;dbl&gt;
@@ -900,10 +900,10 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 5 Legal                2.47172
 6 Stores               2.92086</code></pre>
 <p>The absence levels among are significantly different among Division.</p>
-<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb765-1" title="1">AnovaModel<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Division<span class="op">*</span>Gender, <span class="dt">data=</span>MFGEmployees) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb765-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a>
-<a class="sourceLine" id="cb765-3" title="3"></a>
-<a class="sourceLine" id="cb765-4" title="4">AnovaModel<span class="fl">.3</span></a></code></pre></div>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb763-1" title="1">AnovaModel<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Division<span class="op">*</span>Gender, <span class="dt">data=</span>MFGEmployees) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb763-2" title="2"><span class="st">  </span><span class="kw">Anova</span>()</a>
+<a class="sourceLine" id="cb763-3" title="3"></a>
+<a class="sourceLine" id="cb763-4" title="4">AnovaModel<span class="fl">.3</span></a></code></pre></div>
 <pre><code>Anova Table (Type II tests)
 
 Response: AbsenceRate
@@ -914,8 +914,8 @@ Division:Gender      5    5    0.18              0.9708
 Residuals        41283 8153                                
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb767-1" title="1"><span class="co">#means</span></a>
-<a class="sourceLine" id="cb767-2" title="2">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Division, Gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg=</span><span class="kw">mean</span>(AbsenceRate))</a></code></pre></div>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb765-1" title="1"><span class="co">#means</span></a>
+<a class="sourceLine" id="cb765-2" title="2">MFGEmployees <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Division, Gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">avg=</span><span class="kw">mean</span>(AbsenceRate))</a></code></pre></div>
 <pre><code># A tibble: 12 x 3
 # Groups:   Division [6]
    Division             Gender     avg
@@ -936,34 +936,34 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <p>These are just a handful of the categorical summaries we could do.</p>
 <p><strong>Does AbsenceRate vary by length of service and age?</strong></p>
 <p>Scatterplots and correlations help answer this.</p>
-<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb769-1" title="1"><span class="co"># basic scatterplot</span></a>
-<a class="sourceLine" id="cb769-2" title="2">MFGEmployees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb769-3" title="3"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb769-4" title="4"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>AbsenceRate) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb769-5" title="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb769-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb767"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb767-1" title="1"><span class="co"># basic scatterplot</span></a>
+<a class="sourceLine" id="cb767-2" title="2">MFGEmployees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb767-3" title="3"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb767-4" title="4"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>AbsenceRate) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb767-5" title="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb767-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-586-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb770-1" title="1"><span class="kw">cor</span>(MFGEmployees<span class="op">$</span>Age, MFGEmployees<span class="op">$</span>AbsenceRate)</a></code></pre></div>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb768-1" title="1"><span class="kw">cor</span>(MFGEmployees<span class="op">$</span>Age, MFGEmployees<span class="op">$</span>AbsenceRate)</a></code></pre></div>
 <pre><code>[1] 0.825</code></pre>
 <p>There is a strong correlation of Age and Absence Rate</p>
-<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb772-1" title="1">MFGEmployees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb772-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb772-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>LengthService, <span class="dt">y=</span>AbsenceRate) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb772-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb772-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&#39;red&#39;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb772-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb770-1" title="1">MFGEmployees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb770-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb770-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>LengthService, <span class="dt">y=</span>AbsenceRate) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb770-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb770-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&#39;red&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb770-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-587-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb773-1" title="1"><span class="kw">cor</span>(MFGEmployees<span class="op">$</span>LengthService, MFGEmployees<span class="op">$</span>AbsenceRate)</a></code></pre></div>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb771-1" title="1"><span class="kw">cor</span>(MFGEmployees<span class="op">$</span>LengthService, MFGEmployees<span class="op">$</span>AbsenceRate)</a></code></pre></div>
 <pre><code>[1] -0.0467</code></pre>
 <p>There is not a strong correlation between length of service and Absence Rate.</p>
-<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb775-1" title="1">MFGEmployees <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb775-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb775-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>LengthService) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb775-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb775-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&#39;red&#39;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb775-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb773-1" title="1">MFGEmployees <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb773-2" title="2"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb773-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>Age, <span class="dt">y=</span>LengthService) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb773-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb773-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&#39;red&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb773-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-588-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb776-1" title="1"><span class="kw">cor</span>(MFGEmployees<span class="op">$</span>Age, MFGEmployees<span class="op">$</span>LengthService)</a></code></pre></div>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb774-1" title="1"><span class="kw">cor</span>(MFGEmployees<span class="op">$</span>Age, MFGEmployees<span class="op">$</span>LengthService)</a></code></pre></div>
 <pre><code>[1] 0.0562</code></pre>
 <p>There is not much correlation between age and length of service either.</p>
 <p>So far, we have done data exploration, now we are going to start building a model and starting to answer more difficult questions.</p>
@@ -982,23 +982,23 @@ Regression Trees will allow for use of both categorical and numeric values as pr
 <li>Business Unit</li>
 </ul>
 <p><strong>Absence Rate</strong> will be the the ‘target’ or thing to be predicted.</p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb778-1" title="1">MYinput &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;DepartmentName&quot;</span>, <span class="st">&quot;StoreLocation&quot;</span>, <span class="st">&quot;Division&quot;</span>,</a>
-<a class="sourceLine" id="cb778-2" title="2">             <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;LengthService&quot;</span>, <span class="st">&quot;BusinessUnit&quot;</span>)</a>
-<a class="sourceLine" id="cb778-3" title="3">MYtarget  &lt;-<span class="st"> &quot;AbsenceRate&quot;</span></a>
-<a class="sourceLine" id="cb778-4" title="4"></a>
-<a class="sourceLine" id="cb778-5" title="5"><span class="kw">library</span>(rpart, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb778-6" title="6"></a>
-<a class="sourceLine" id="cb778-7" title="7"><span class="kw">set.seed</span>(crv<span class="op">$</span>seed)</a>
-<a class="sourceLine" id="cb778-8" title="8">MYrpart &lt;-<span class="st"> </span><span class="kw">rpart</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>.,</a>
-<a class="sourceLine" id="cb778-9" title="9">                 <span class="dt">data=</span>MFGEmployees[, <span class="kw">c</span>(MYinput, MYtarget)],</a>
-<a class="sourceLine" id="cb778-10" title="10">                 <span class="dt">method=</span><span class="st">&quot;anova&quot;</span>,</a>
-<a class="sourceLine" id="cb778-11" title="11">                 <span class="dt">parms=</span><span class="kw">list</span>(<span class="dt">split=</span><span class="st">&quot;information&quot;</span>),</a>
-<a class="sourceLine" id="cb778-12" title="12">                 <span class="dt">control=</span><span class="kw">rpart.control</span>(<span class="dt">minsplit=</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb778-13" title="13">                                       <span class="dt">maxdepth=</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb778-14" title="14">                                       <span class="dt">usesurrogate=</span><span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb778-15" title="15">                                       <span class="dt">maxsurrogate=</span><span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb778-16" title="16"></a>
-<a class="sourceLine" id="cb778-17" title="17"><span class="kw">fancyRpartPlot</span>(MYrpart, <span class="dt">main=</span><span class="st">&quot;Decision Tree MFGEmployees and AbsenceRate&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb776-1" title="1">MYinput &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;DepartmentName&quot;</span>, <span class="st">&quot;StoreLocation&quot;</span>, <span class="st">&quot;Division&quot;</span>,</a>
+<a class="sourceLine" id="cb776-2" title="2">             <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;LengthService&quot;</span>, <span class="st">&quot;BusinessUnit&quot;</span>)</a>
+<a class="sourceLine" id="cb776-3" title="3">MYtarget  &lt;-<span class="st"> &quot;AbsenceRate&quot;</span></a>
+<a class="sourceLine" id="cb776-4" title="4"></a>
+<a class="sourceLine" id="cb776-5" title="5"><span class="kw">library</span>(rpart, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb776-6" title="6"></a>
+<a class="sourceLine" id="cb776-7" title="7"><span class="kw">set.seed</span>(crv<span class="op">$</span>seed)</a>
+<a class="sourceLine" id="cb776-8" title="8">MYrpart &lt;-<span class="st"> </span><span class="kw">rpart</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb776-9" title="9">                 <span class="dt">data=</span>MFGEmployees[, <span class="kw">c</span>(MYinput, MYtarget)],</a>
+<a class="sourceLine" id="cb776-10" title="10">                 <span class="dt">method=</span><span class="st">&quot;anova&quot;</span>,</a>
+<a class="sourceLine" id="cb776-11" title="11">                 <span class="dt">parms=</span><span class="kw">list</span>(<span class="dt">split=</span><span class="st">&quot;information&quot;</span>),</a>
+<a class="sourceLine" id="cb776-12" title="12">                 <span class="dt">control=</span><span class="kw">rpart.control</span>(<span class="dt">minsplit=</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb776-13" title="13">                                       <span class="dt">maxdepth=</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb776-14" title="14">                                       <span class="dt">usesurrogate=</span><span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb776-15" title="15">                                       <span class="dt">maxsurrogate=</span><span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb776-16" title="16"></a>
+<a class="sourceLine" id="cb776-17" title="17"><span class="kw">fancyRpartPlot</span>(MYrpart, <span class="dt">main=</span><span class="st">&quot;Decision Tree MFGEmployees and AbsenceRate&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-589-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>The regression decision tree shows that age is a big factor in determining absence rate with gender playing a small part in one of the age ranges: &gt;43 and &lt;52 with males having a lower absence rate in this group. Almost all categorical information other than gender doesn’t look like to help in the prediction.</p>
 <p>Now let’s look at linear regression as another model. The restriction in linear regression is that it can only accept non-categorical variables. Categorical variables can sometimes be made numeric through transformation, but that is beyond the scope of this article.</p>
@@ -1009,10 +1009,10 @@ Regression Trees will allow for use of both categorical and numeric values as pr
 <li>Length of Service</li>
 </ul>
 <p>being used to predict absence rate.</p>
-<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb779-1" title="1"><span class="co">#Linear Regression Model</span></a>
-<a class="sourceLine" id="cb779-2" title="2">RegressionCurrentData &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate<span class="op">~</span>Age<span class="op">+</span>LengthService, <span class="dt">data=</span>MFGEmployees)</a>
-<a class="sourceLine" id="cb779-3" title="3"></a>
-<a class="sourceLine" id="cb779-4" title="4"><span class="kw">summary</span>(RegressionCurrentData)</a></code></pre></div>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb777-1" title="1"><span class="co">#Linear Regression Model</span></a>
+<a class="sourceLine" id="cb777-2" title="2">RegressionCurrentData &lt;-<span class="st"> </span><span class="kw">lm</span>(AbsenceRate<span class="op">~</span>Age<span class="op">+</span>LengthService, <span class="dt">data=</span>MFGEmployees)</a>
+<a class="sourceLine" id="cb777-3" title="3"></a>
+<a class="sourceLine" id="cb777-4" title="4"><span class="kw">summary</span>(RegressionCurrentData)</a></code></pre></div>
 <pre><code>
 Call:
 lm(formula = AbsenceRate ~ Age + LengthService, data = MFGEmployees)
@@ -1035,48 +1035,48 @@ F-statistic: 9.03e+03 on 2 and 8162 DF,  p-value: &lt;0.0000000000000002</code><
 <p>The summary shows an adjusted R-squared of 0.689 which means approximately 69% of the variance is accounted by age and length of service.
 The variables are both significant at Pr(&gt;|t|) of ’r summary(RegressionCurrentData)$coefficients[3,4]`. These results are using the entirety of the existing data to predict itself.</p>
 <p>Graphically it look like this:</p>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb781-1" title="1"><span class="co">#2D plot of Age and AbsenceRate</span></a>
-<a class="sourceLine" id="cb781-2" title="2"></a>
-<a class="sourceLine" id="cb781-3" title="3"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb781-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age,<span class="dt">y =</span> AbsenceRate),<span class="dt">data=</span>MFGEmployees) <span class="op">+</span></a>
-<a class="sourceLine" id="cb781-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age,<span class="dt">y =</span> AbsenceRate),<span class="dt">data=</span>MFGEmployees,<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb781-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb779-1" title="1"><span class="co">#2D plot of Age and AbsenceRate</span></a>
+<a class="sourceLine" id="cb779-2" title="2"></a>
+<a class="sourceLine" id="cb779-3" title="3"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb779-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age,<span class="dt">y =</span> AbsenceRate),<span class="dt">data=</span>MFGEmployees) <span class="op">+</span></a>
+<a class="sourceLine" id="cb779-5" title="5"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Age,<span class="dt">y =</span> AbsenceRate),<span class="dt">data=</span>MFGEmployees,<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb779-6" title="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-591-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb782-1" title="1"><span class="co">#3D Scatterplot  of Age and Length of Service with Absence Rate - with Coloring and Vertical Lines</span></a>
-<a class="sourceLine" id="cb782-2" title="2"><span class="co"># and Regression Plane </span></a>
-<a class="sourceLine" id="cb782-3" title="3"><span class="kw">library</span>(scatterplot3d) </a>
-<a class="sourceLine" id="cb782-4" title="4"></a>
-<a class="sourceLine" id="cb782-5" title="5">s3d &lt;-<span class="kw">scatterplot3d</span>(MFGEmployees<span class="op">$</span>Age,MFGEmployees<span class="op">$</span>LengthService,MFGEmployees<span class="op">$</span>AbsenceRate, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">highlight.3d=</span><span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb782-6" title="6">                    <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Absence Rate By Age And Length of Service&quot;</span>)</a>
-<a class="sourceLine" id="cb782-7" title="7">fit &lt;-<span class="st"> </span><span class="kw">lm</span>(MFGEmployees<span class="op">$</span>AbsenceRate <span class="op">~</span><span class="st"> </span>MFGEmployees<span class="op">$</span>Age<span class="op">+</span>MFGEmployees<span class="op">$</span>LengthService) </a>
-<a class="sourceLine" id="cb782-8" title="8"></a>
-<a class="sourceLine" id="cb782-9" title="9">s3d<span class="op">$</span><span class="kw">plane3d</span>(fit)</a></code></pre></div>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb780-1" title="1"><span class="co">#3D Scatterplot  of Age and Length of Service with Absence Rate - with Coloring and Vertical Lines</span></a>
+<a class="sourceLine" id="cb780-2" title="2"><span class="co"># and Regression Plane </span></a>
+<a class="sourceLine" id="cb780-3" title="3"><span class="kw">library</span>(scatterplot3d) </a>
+<a class="sourceLine" id="cb780-4" title="4"></a>
+<a class="sourceLine" id="cb780-5" title="5">s3d &lt;-<span class="kw">scatterplot3d</span>(MFGEmployees<span class="op">$</span>Age,MFGEmployees<span class="op">$</span>LengthService,MFGEmployees<span class="op">$</span>AbsenceRate, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">highlight.3d=</span><span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb780-6" title="6">                    <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Absence Rate By Age And Length of Service&quot;</span>)</a>
+<a class="sourceLine" id="cb780-7" title="7">fit &lt;-<span class="st"> </span><span class="kw">lm</span>(MFGEmployees<span class="op">$</span>AbsenceRate <span class="op">~</span><span class="st"> </span>MFGEmployees<span class="op">$</span>Age<span class="op">+</span>MFGEmployees<span class="op">$</span>LengthService) </a>
+<a class="sourceLine" id="cb780-8" title="8"></a>
+<a class="sourceLine" id="cb780-9" title="9">s3d<span class="op">$</span><span class="kw">plane3d</span>(fit)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-591-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>##4.Evaluate and evaluate the model</p>
 <p>Up till now we have concentrated on producing a couple of models. The effort so far has had one weakness. <strong>We have used all of our data for 2015 to generate the models.</strong> They can both predict, but the prediction are based on existing data - that are already known. We don’t know how well it will predict on data it hasn’t seen yet.</p>
 <p>To evaluate and critique the models, we need to train the model using part of the data and hold out a portion to test on. We will divide the data into 10 parts- using 9 parts as training data and 1 part as testing data, and alternate which are the 9 and the 1, so that each of the 10 parts gets to be training data 9 times and testing data once.</p>
 <p>The R “caret” library helps us do that. We will run both a regression tree and linear regression and compare how they do against each other.</p>
 <p>First the Linear Regression</p>
-<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb783-1" title="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb783-2" title="2"></a>
-<a class="sourceLine" id="cb783-3" title="3"><span class="kw">set.seed</span>(<span class="dv">998</span>)</a>
-<a class="sourceLine" id="cb783-4" title="4"></a>
-<a class="sourceLine" id="cb783-5" title="5">inTraining &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(MFGEmployees<span class="op">$</span>BusinessUnit, <span class="dt">p =</span> <span class="fl">.75</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb783-6" title="6"></a>
-<a class="sourceLine" id="cb783-7" title="7">training &lt;-<span class="st"> </span>MFGEmployees[inTraining,]</a>
-<a class="sourceLine" id="cb783-8" title="8">testing &lt;-<span class="st"> </span>MFGEmployees[ <span class="op">-</span><span class="st"> </span>inTraining,]</a>
-<a class="sourceLine" id="cb783-9" title="9"></a>
-<a class="sourceLine" id="cb783-10" title="10">fitControl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="co">## 10-fold CV</span></a>
-<a class="sourceLine" id="cb783-11" title="11"><span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>, </a>
-<a class="sourceLine" id="cb783-12" title="12"><span class="dt">repeats =</span> <span class="dv">10</span> <span class="co">## repeated ten times</span></a>
-<a class="sourceLine" id="cb783-13" title="13">)</a>
-<a class="sourceLine" id="cb783-14" title="14"></a>
-<a class="sourceLine" id="cb783-15" title="15"><span class="kw">set.seed</span>(<span class="dv">825</span>)</a>
-<a class="sourceLine" id="cb783-16" title="16"></a>
-<a class="sourceLine" id="cb783-17" title="17">lmFit1 &lt;-<span class="st"> </span><span class="kw">train</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>LengthService, <span class="dt">data =</span> training,</a>
-<a class="sourceLine" id="cb783-18" title="18">                 <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
-<a class="sourceLine" id="cb783-19" title="19">                 <span class="dt">trControl =</span> fitControl)</a>
-<a class="sourceLine" id="cb783-20" title="20">lmFit1</a></code></pre></div>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb781-1" title="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb781-2" title="2"></a>
+<a class="sourceLine" id="cb781-3" title="3"><span class="kw">set.seed</span>(<span class="dv">998</span>)</a>
+<a class="sourceLine" id="cb781-4" title="4"></a>
+<a class="sourceLine" id="cb781-5" title="5">inTraining &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(MFGEmployees<span class="op">$</span>BusinessUnit, <span class="dt">p =</span> <span class="fl">.75</span>, <span class="dt">list =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb781-6" title="6"></a>
+<a class="sourceLine" id="cb781-7" title="7">training &lt;-<span class="st"> </span>MFGEmployees[inTraining,]</a>
+<a class="sourceLine" id="cb781-8" title="8">testing &lt;-<span class="st"> </span>MFGEmployees[ <span class="op">-</span><span class="st"> </span>inTraining,]</a>
+<a class="sourceLine" id="cb781-9" title="9"></a>
+<a class="sourceLine" id="cb781-10" title="10">fitControl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="co">## 10-fold CV</span></a>
+<a class="sourceLine" id="cb781-11" title="11"><span class="dt">method =</span> <span class="st">&quot;repeatedcv&quot;</span>, <span class="dt">number =</span> <span class="dv">10</span>, </a>
+<a class="sourceLine" id="cb781-12" title="12"><span class="dt">repeats =</span> <span class="dv">10</span> <span class="co">## repeated ten times</span></a>
+<a class="sourceLine" id="cb781-13" title="13">)</a>
+<a class="sourceLine" id="cb781-14" title="14"></a>
+<a class="sourceLine" id="cb781-15" title="15"><span class="kw">set.seed</span>(<span class="dv">825</span>)</a>
+<a class="sourceLine" id="cb781-16" title="16"></a>
+<a class="sourceLine" id="cb781-17" title="17">lmFit1 &lt;-<span class="st"> </span><span class="kw">train</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>LengthService, <span class="dt">data =</span> training,</a>
+<a class="sourceLine" id="cb781-18" title="18">                 <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb781-19" title="19">                 <span class="dt">trControl =</span> fitControl)</a>
+<a class="sourceLine" id="cb781-20" title="20">lmFit1</a></code></pre></div>
 <pre><code>Linear Regression 
 
 6124 samples
@@ -1091,18 +1091,18 @@ Resampling results:
   1.27  0.691     1.01
 
 Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb785-1" title="1">Testingdatasetandpredictions &lt;-<span class="st"> </span>testing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_predictions</span>(lmFit1, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</a>
-<a class="sourceLine" id="cb785-2" title="2"></a>
-<a class="sourceLine" id="cb785-3" title="3">Testingdatasetandpredictions<span class="op">$</span>pred[Testingdatasetandpredictions<span class="op">$</span>pred<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co">#Put a zero to all negative predictions</span></a></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb783-1" title="1">Testingdatasetandpredictions &lt;-<span class="st"> </span>testing <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_predictions</span>(lmFit1, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</a>
+<a class="sourceLine" id="cb783-2" title="2"></a>
+<a class="sourceLine" id="cb783-3" title="3">Testingdatasetandpredictions<span class="op">$</span>pred[Testingdatasetandpredictions<span class="op">$</span>pred<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co">#Put a zero to all negative predictions</span></a></code></pre></div>
 <p>The Rsquared shows a value of 0.688 which means even with sampling different parts of the data on 10 fold cross validation the use of age and length of service seems to be pretty robust so far.</p>
 <p>Next the decision tree. The first time with just the numeric variables.</p>
-<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb786-1" title="1"><span class="kw">set.seed</span>(<span class="dv">825</span>)</a>
-<a class="sourceLine" id="cb786-2" title="2"></a>
-<a class="sourceLine" id="cb786-3" title="3">rpartFit1 &lt;-<span class="st"> </span><span class="kw">train</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>LengthService, <span class="dt">data =</span> training,</a>
-<a class="sourceLine" id="cb786-4" title="4">                 <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</a>
-<a class="sourceLine" id="cb786-5" title="5">                 <span class="dt">trControl =</span> fitControl,</a>
-<a class="sourceLine" id="cb786-6" title="6">                 <span class="dt">maxdepth =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb786-7" title="7">rpartFit1</a></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb784-1" title="1"><span class="kw">set.seed</span>(<span class="dv">825</span>)</a>
+<a class="sourceLine" id="cb784-2" title="2"></a>
+<a class="sourceLine" id="cb784-3" title="3">rpartFit1 &lt;-<span class="st"> </span><span class="kw">train</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>LengthService, <span class="dt">data =</span> training,</a>
+<a class="sourceLine" id="cb784-4" title="4">                 <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</a>
+<a class="sourceLine" id="cb784-5" title="5">                 <span class="dt">trControl =</span> fitControl,</a>
+<a class="sourceLine" id="cb784-6" title="6">                 <span class="dt">maxdepth =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb784-7" title="7">rpartFit1</a></code></pre></div>
 <pre><code>CART 
 
 6124 samples
@@ -1122,14 +1122,14 @@ RMSE was used to select the optimal model using the smallest value.
 The final value used for the model was cp = 0.0633.</code></pre>
 <p>You will notice that the decision tree with 10 fold cross validation didn’t perform as well with an RSquared of approximately 0.60</p>
 <p>The second time with the original categorical and numeric varibles used.</p>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb788-1" title="1"><span class="kw">set.seed</span>(<span class="dv">825</span>)</a>
-<a class="sourceLine" id="cb788-2" title="2"></a>
-<a class="sourceLine" id="cb788-3" title="3">rpartFit2 &lt;-<span class="st"> </span><span class="kw">train</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>DepartmentName <span class="op">+</span><span class="st"> </span>StoreLocation <span class="op">+</span><span class="st"> </span>Division <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>LengthService <span class="op">+</span><span class="st"> </span>BusinessUnit, <span class="dt">data =</span> training,</a>
-<a class="sourceLine" id="cb788-4" title="4">                 <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</a>
-<a class="sourceLine" id="cb788-5" title="5">                 <span class="dt">trControl =</span> fitControl,</a>
-<a class="sourceLine" id="cb788-6" title="6">                 <span class="dt">maxdepth =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb788-7" title="7"></a>
-<a class="sourceLine" id="cb788-8" title="8">rpartFit2</a></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb786-1" title="1"><span class="kw">set.seed</span>(<span class="dv">825</span>)</a>
+<a class="sourceLine" id="cb786-2" title="2"></a>
+<a class="sourceLine" id="cb786-3" title="3">rpartFit2 &lt;-<span class="st"> </span><span class="kw">train</span>(AbsenceRate <span class="op">~</span><span class="st"> </span>Gender <span class="op">+</span><span class="st"> </span>DepartmentName <span class="op">+</span><span class="st"> </span>StoreLocation <span class="op">+</span><span class="st"> </span>Division <span class="op">+</span><span class="st"> </span>Age <span class="op">+</span><span class="st"> </span>LengthService <span class="op">+</span><span class="st"> </span>BusinessUnit, <span class="dt">data =</span> training,</a>
+<a class="sourceLine" id="cb786-4" title="4">                 <span class="dt">method =</span> <span class="st">&quot;rpart&quot;</span>,</a>
+<a class="sourceLine" id="cb786-5" title="5">                 <span class="dt">trControl =</span> fitControl,</a>
+<a class="sourceLine" id="cb786-6" title="6">                 <span class="dt">maxdepth =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb786-7" title="7"></a>
+<a class="sourceLine" id="cb786-8" title="8">rpartFit2</a></code></pre></div>
 <pre><code>CART 
 
 6124 samples
@@ -1157,18 +1157,18 @@ The final value used for the model was cp = 0.0633.</code></pre>
 <p><strong>Can it predict next year absenteeism?</strong></p>
 <p>Let’s predict the 2016 Absenteeism from the 2015 model.</p>
 <p>If we make the simplifying assumption that nobody quits and nobody new comes in, we can take the 2015 data and add 1 to age and 1 to years of service for an approximation of new 2016 data before we get to 2016.</p>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb790-1" title="1"><span class="co">#Apply model</span></a>
-<a class="sourceLine" id="cb790-2" title="2"><span class="co">#Generate 2016 data</span></a>
-<a class="sourceLine" id="cb790-3" title="3">Absence2016Data&lt;-MFGEmployees</a>
-<a class="sourceLine" id="cb790-4" title="4">Absence2016Data<span class="op">$</span>Age&lt;-Absence2016Data<span class="op">$</span>Age<span class="op">+</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb790-5" title="5">Absence2016Data<span class="op">$</span>LengthService&lt;-Absence2016Data<span class="op">$</span>LengthService<span class="op">+</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb790-6" title="6"></a>
-<a class="sourceLine" id="cb790-7" title="7">Absence2016Data &lt;-<span class="st"> </span>Absence2016Data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_predictions</span>(lmFit1, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</a>
-<a class="sourceLine" id="cb790-8" title="8">Absence2016Data<span class="op">$</span>pred[Absence2016Data<span class="op">$</span>pred<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co">#Put a zero to all negative predictions</span></a></code></pre></div>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb788-1" title="1"><span class="co">#Apply model</span></a>
+<a class="sourceLine" id="cb788-2" title="2"><span class="co">#Generate 2016 data</span></a>
+<a class="sourceLine" id="cb788-3" title="3">Absence2016Data&lt;-MFGEmployees</a>
+<a class="sourceLine" id="cb788-4" title="4">Absence2016Data<span class="op">$</span>Age&lt;-Absence2016Data<span class="op">$</span>Age<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb788-5" title="5">Absence2016Data<span class="op">$</span>LengthService&lt;-Absence2016Data<span class="op">$</span>LengthService<span class="op">+</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb788-6" title="6"></a>
+<a class="sourceLine" id="cb788-7" title="7">Absence2016Data &lt;-<span class="st"> </span>Absence2016Data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_predictions</span>(lmFit1, <span class="dt">type =</span> <span class="st">&quot;raw&quot;</span>)</a>
+<a class="sourceLine" id="cb788-8" title="8">Absence2016Data<span class="op">$</span>pred[Absence2016Data<span class="op">$</span>pred<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="dv">0</span> <span class="co">#Put a zero to all negative predictions</span></a></code></pre></div>
 <p>To get single estimate for 2016 we ask for mean of absence rate.</p>
-<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb791-1" title="1"><span class="kw">mean</span>(Absence2016Data<span class="op">$</span>pred)</a></code></pre></div>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb789-1" title="1"><span class="kw">mean</span>(Absence2016Data<span class="op">$</span>pred)</a></code></pre></div>
 <pre><code>[1] 3.08</code></pre>
-<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb793-1" title="1"><span class="kw">mean</span>(MFGEmployees<span class="op">$</span>AbsenceRate)</a></code></pre></div>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb791-1" title="1"><span class="kw">mean</span>(MFGEmployees<span class="op">$</span>AbsenceRate)</a></code></pre></div>
 <pre><code>[1] 2.91</code></pre>
 <p>The first figure above is the 2016 prediction, the second is the 2015 actual for comparison.</p>
 <p><strong>If so, how well can it predict?</strong></p>
@@ -1236,7 +1236,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/20-absenteeism-MFG.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/20-absenteeism-MFG.Rmd",
 "text": "Edit"
 },
 "history": {
