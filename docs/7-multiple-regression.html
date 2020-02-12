@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 7 Multiple Regression | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
@@ -19,12 +19,12 @@
   <meta name="twitter:title" content="Chapter 7 Multiple Regression | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-10" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -689,10 +683,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" title="1"><span class="kw">glimpse</span>(evals_ch6)</a></code></pre></div>
 <pre><code>Observations: 463
 Variables: 4
-$ ID     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1...
-$ score  &lt;dbl&gt; 4.7, 4.1, 3.9, 4.8, 4.6, 4.3, 2.8, 4.1, 3.4, 4.5, 3.8, 4.5, ...
-$ age    &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40, ...
-$ gender &lt;fct&gt; female, female, female, female, male, male, male, male, male...</code></pre>
+$ ID     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,...
+$ score  &lt;dbl&gt; 4.7, 4.1, 3.9, 4.8, 4.6, 4.3, 2.8, 4.1, 3.4, 4.5, 3.8, 4.5, 4.6, 3.9, 3.9, 4.3, 4.5, 4.8, 4.6, 4.6, 4.9, 4.6, 4.5,...
+$ age    &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40, 40, 40, 31, 31, 31, 31, 31, 31, 62, 62, 62, 62, 62, 62...
+$ gender &lt;fct&gt; female, female, female, female, male, male, male, male, male, female, female, female, female, female, female, fema...</code></pre>
 <p>Let’s also display a random sample of 5 rows of the 463 rows corresponding to different courses in Table <a href="7-multiple-regression.html#tab:model4-data-preview">7.1</a>. Remember due to the random nature of the sampling, you will likely end up with a different subset of 5 rows.</p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" title="1">evals_ch6 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="dv">5</span>)</a></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
@@ -810,9 +804,9 @@ male
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" title="1">evals_ch6 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb188-2" title="2"><span class="st">  </span><span class="kw">get_correlation</span>(<span class="dt">formula =</span> score <span class="op">~</span><span class="st"> </span>age)</a></code></pre></div>
 <pre><code># A tibble: 1 x 1
-        cor
-      &lt;dbl&gt;
-1 -0.107032</code></pre>
+     cor
+   &lt;dbl&gt;
+1 -0.107</code></pre>
 <p>Let’s now perform the last of the three common steps in an exploratory data analysis: creating data visualizations. Given that the outcome variable <code>score</code> and explanatory variable <code>age</code> are both numerical, we’ll use a scatterplot to display their relationship. How can we incorporate the categorical variable <code>gender</code>, however? By <code>mapping</code> the variable <code>gender</code> to the <code>color</code> aesthetic, thereby creating a <em>colored</em> scatterplot. The following code is similar to the code that created the scatterplot of teaching score over “beauty” score in Figure <a href="6-regression.html#fig:numxplot1">6.2</a>, but with <code>color = gender</code> added to the <code>aes()</code>thetic mapping.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" title="1"><span class="kw">ggplot</span>(evals_ch6, <span class="kw">aes</span>(<span class="dt">x =</span> age, <span class="dt">y =</span> score, <span class="dt">color =</span> gender)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb190-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
@@ -1694,12 +1688,12 @@ In the forthcoming Learning checks, we'll consider a different regression model
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" title="1"><span class="kw">glimpse</span>(credit_ch6)</a></code></pre></div>
 <pre><code>Observations: 400
 Variables: 6
-$ ID            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16...
-$ debt          &lt;int&gt; 333, 903, 580, 964, 331, 1151, 203, 872, 279, 1350, 1...
-$ credit_limit  &lt;int&gt; 3606, 6645, 7075, 9504, 4897, 8047, 3388, 7114, 3300,...
-$ income        &lt;dbl&gt; 14.9, 106.0, 104.6, 148.9, 55.9, 80.2, 21.0, 71.4, 15...
-$ credit_rating &lt;int&gt; 283, 483, 514, 681, 357, 569, 259, 512, 266, 491, 589...
-$ age           &lt;int&gt; 34, 82, 71, 36, 68, 77, 37, 87, 66, 41, 30, 64, 57, 4...</code></pre>
+$ ID            &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, ...
+$ debt          &lt;int&gt; 333, 903, 580, 964, 331, 1151, 203, 872, 279, 1350, 1407, 0, 204, 1081, 148, 0, 0, 368, 891, 1048, 89, 968,...
+$ credit_limit  &lt;int&gt; 3606, 6645, 7075, 9504, 4897, 8047, 3388, 7114, 3300, 6819, 8117, 1311, 5308, 6922, 3291, 2525, 3714, 4378,...
+$ income        &lt;dbl&gt; 14.9, 106.0, 104.6, 148.9, 55.9, 80.2, 21.0, 71.4, 15.1, 71.1, 63.1, 15.0, 80.6, 43.7, 19.1, 20.1, 53.6, 36...
+$ credit_rating &lt;int&gt; 283, 483, 514, 681, 357, 569, 259, 512, 266, 491, 589, 138, 394, 511, 269, 200, 286, 339, 448, 479, 235, 45...
+$ age           &lt;int&gt; 34, 82, 71, 36, 68, 77, 37, 87, 66, 41, 30, 64, 57, 49, 75, 57, 73, 69, 28, 44, 63, 72, 61, 48, 57, 25, 44,...</code></pre>
 <p>Furthermore, let’s look at a random sample of five out of the 400 credit card holders in Table <a href="7-multiple-regression.html#tab:model3-data-preview">7.8</a>. Once again, note that due to the random nature of the sampling, you will likely end up with a different subset of five rows.</p>
 <div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" title="1">credit_ch6 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">sample_n</span>(<span class="dt">size =</span> <span class="dv">5</span>)</a></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">

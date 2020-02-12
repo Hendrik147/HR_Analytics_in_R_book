@@ -1,4 +1,4 @@
-## ----interview-attendance, include=FALSE--------------------------------------
+## ----interview-attendance, include=FALSE--------------------------------------------------------------------------------------------
 chap <- 25
 lc <- 0
 rq <- 0
@@ -19,23 +19,23 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## interview_attendance <- read_csv("https://hranalyticslive.netlify.com/data/interview.csv")
 
 
-## ----read_interview_data, echo=FALSE, warning=FALSE, message=FALSE------------
+## ----read_interview_data, echo=FALSE, warning=FALSE, message=FALSE------------------------------------------------------------------
 interview_attendance <- read_csv("data/interview.csv")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 head(interview_attendance, 5)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 interview_attendance <- interview_attendance[-1234,] #remove the last row that contains only missing values
 
@@ -88,7 +88,7 @@ for (i in 1:length(colstoyesno)){   # Here we tell R to examine all variables in
 rm(colstoyesno, i, j) #Here we remove the three just created vectors as a claen up.
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 dir.create("codefiles_interview_attendance", showWarnings = FALSE)
 #detach("package:plyr", unload = TRUE)
 for(i in 1:length(colnames(interview_attendance))){
@@ -102,7 +102,7 @@ for(i in 1:length(colnames(interview_attendance))){
 rm(outdata, i, outfile, vvar)
 
 
-## ----eval = FALSE-------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------------------------------------------------------------
 ## colstomap <- c(2:7, 9:21, 23)
 ## library(plyr)
 ## for(i in 1:length(colstomap)){
@@ -117,14 +117,14 @@ rm(outdata, i, outfile, vvar)
 ## rm(colstomap, i, j, vfilename, vfrom, vto, dfcodes)
 
 
-## ----eval = FALSE-------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------------------------------------------------------------
 ## interview_attendanceml <- interview_attendance %>% dplyr::select(-date_of_interview, -name)
 ## interview_attendanceml <- interview_attendanceml %>% dplyr::select(client_name:expected_attendance,
 ##                                 observed_attendance)
 ## head(interview_attendanceml, 5)
 
 
-## ----eval = FALSE-------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------------------------------------------------------------
 ## 
 ## library(caret) # Calls the caret library
 ## 
@@ -138,7 +138,7 @@ rm(outdata, i, outfile, vvar)
 ## rm(index,interview_attendanceml)
 
 
-## ----eval = FALSE-------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------------------------------------------------------------
 ## myml_model <- train(interview_attendanceml_train[,1:19], interview_attendanceml_train[,20], method='gbm')
 ## 
 ## summary(myml_model)

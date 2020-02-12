@@ -1,4 +1,4 @@
-## ----stop-appraisals, include=FALSE-------------------------------------------
+## ----stop-appraisals, include=FALSE-------------------------------------------------------------------------------------------------
 chap <- 14
 lc <- 0
 rq <- 0
@@ -19,19 +19,19 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## Time.spent.on.appraisals <- read_csv("https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv")
 
 
-## ----read_appraisals_data, echo=FALSE, warning=FALSE, message=FALSE-----------
+## ----read_appraisals_data, echo=FALSE, warning=FALSE, message=FALSE-----------------------------------------------------------------
 Time.spent.on.appraisals <- read_csv("data/Time.spent.on.appraisals.csv")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 plot(Hours ~ Count.of.Appraisee,        # plot the variables y ~ x
      xlab="Number of appraisee",        # x−axis label 
      ylab="Hours",                      # y−axis label
@@ -45,7 +45,7 @@ paste('y =', round(coef(model)[[2]], digits = 3), '* x', '+', round(coef(model)[
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 # First let us identify the outliers and plot the initial plot with the names of the appraiser
 
@@ -57,7 +57,7 @@ Time.spent.on.appraisals$m_dist <- round(m_dist, 2)
 sort(Time.spent.on.appraisals$m_dist)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 # We chose to set the threshold at 4, as this would result in five outliers. There is no "rule of thumb" on where to set the threshold and the decision is up to the analyst.
 
@@ -83,15 +83,15 @@ paste('y =', round(coef(model_without_mahaoutliers)[[2]], digits = 3), '* x', '+
 
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## Time.spent.on.appraisals <- read_csv("https://https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv")
 
 
-## ----read_appraisals_data2, echo=FALSE, warning=FALSE, message=FALSE----------
+## ----read_appraisals_data2, echo=FALSE, warning=FALSE, message=FALSE----------------------------------------------------------------
 Time.spent.on.appraisals <- read_csv("data/Time.spent.on.appraisals.csv")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 plot(Hours ~ Count.of.Appraisee,        # plot the variables y ~ x
      xlab="Number of appraisee",        # x−axis label 
      ylab="Hours",                      # y−axis label

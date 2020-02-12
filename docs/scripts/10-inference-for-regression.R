@@ -1,4 +1,4 @@
-## ----setup_inference_regression, include=FALSE--------------------------------
+## ----setup_inference_regression, include=FALSE--------------------------------------------------------------------------------------
 chap <- 10
 lc <- 0
 rq <- 0
@@ -18,13 +18,13 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(moderndive)
 library(infer)
 
 
-## ----message=FALSE, warning=FALSE, echo=FALSE---------------------------------
+## ----message=FALSE, warning=FALSE, echo=FALSE---------------------------------------------------------------------------------------
 # Packages needed internally, but not in text.
 library(knitr)
 library(tidyr)
@@ -32,19 +32,19 @@ library(kableExtra)
 library(patchwork)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 evals_ch5 <- evals %>%
   select(ID, score, bty_avg, age)
 glimpse(evals_ch5)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------------------------------------------------------------
 cor_ch6 <- evals_ch5 %>%
   summarize(correlation = cor(score, bty_avg)) %>%
   pull(correlation) %>%
   round(3)
 
 
-## ----regline, fig.cap="Relationship with regression line.", fig.height=3.2----
+## ----regline, fig.cap="Relationship with regression line.", fig.height=3.2----------------------------------------------------------
 ggplot(evals_ch5, 
        aes(x = bty_avg, y = score)) +
   geom_point() +
@@ -54,13 +54,13 @@ ggplot(evals_ch5,
   geom_smooth(method = "lm", se = FALSE)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Fit regression model:
 ## score_model <- lm(score ~ bty_avg, data = evals_ch5)
 ## # Get regression table:
 ## get_regression_table(score_model)
 
-## ----regtable-11, echo=FALSE--------------------------------------------------
+## ----regtable-11, echo=FALSE--------------------------------------------------------------------------------------------------------
 # Fit regression model:
 score_model <- lm(score ~ bty_avg, data = evals_ch5)
 get_regression_table(score_model) %>%
@@ -91,7 +91,7 @@ lower0 <- intercept_row %>% pull(lower_ci)
 upper0 <- intercept_row %>% pull(upper_ci)
 
 
-## ----summarytable-ch11, echo=FALSE, message=FALSE-----------------------------
+## ----summarytable-ch11, echo=FALSE, message=FALSE-----------------------------------------------------------------------------------
 # The following Google Doc is published to CSV and loaded using read_csv():
 # https://docs.google.com/spreadsheets/d/1QkOpnBGqOXGyJjwqx1T2O5G5D72wWGfWlPyufOgtkk4/edit#gid=0
 
@@ -121,7 +121,7 @@ sampling_scenarios %>%
   column_spec(5, width = "1in")
 
 
-## ----score-model-part-deux, echo=FALSE----------------------------------------
+## ----score-model-part-deux, echo=FALSE----------------------------------------------------------------------------------------------
 get_regression_table(score_model) %>%
   knitr::kable(
     caption = "Previously seen regression table", 
@@ -133,7 +133,7 @@ get_regression_table(score_model) %>%
                 latex_options = c("hold_position"))
 
 
-## ----residual-example, echo=FALSE, warning=FALSE, fig.cap="Example of observed value, fitted value, and residual."----
+## ----residual-example, echo=FALSE, warning=FALSE, fig.cap="Example of observed value, fitted value, and residual."------------------
 # Pick out one particular point to drill down on
 index <- which(evals_ch5$bty_avg == 7.333 & evals_ch5$score == 4.9)
 target_point <- score_model %>%
@@ -157,7 +157,7 @@ best_fit_plot <- ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
 best_fit_plot
 
 
-## ---- eval=TRUE, echo=TRUE----------------------------------------------------
+## ---- eval=TRUE, echo=TRUE----------------------------------------------------------------------------------------------------------
 # Fit regression model:
 score_model <- lm(score ~ bty_avg, data = evals_ch5)
 # Get regression points:
@@ -165,7 +165,7 @@ regression_points <- get_regression_points(score_model)
 regression_points
 
 
-## ----non-linear, fig.cap="Example of a clearly non-linear relationship.", echo=FALSE, fig.height=3.3----
+## ----non-linear, fig.cap="Example of a clearly non-linear relationship.", echo=FALSE, fig.height=3.3--------------------------------
 set.seed(76)
 evals_ch5 %>% 
   mutate(
@@ -179,23 +179,23 @@ evals_ch5 %>%
   expand_limits(y = 10)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 evals %>% 
   select(ID, prof_ID, score, bty_avg)
 
 
-## ---- eval=FALSE, echo=TRUE---------------------------------------------------
+## ---- eval=FALSE, echo=TRUE---------------------------------------------------------------------------------------------------------
 ## ggplot(regression_points, aes(x = residual)) +
 ##   geom_histogram(binwidth = 0.25, color = "white") +
 ##   labs(x = "Residual")
 
-## ----model1residualshist, echo=FALSE, warning=FALSE, fig.cap="Histogram of residuals."----
+## ----model1residualshist, echo=FALSE, warning=FALSE, fig.cap="Histogram of residuals."----------------------------------------------
 ggplot(regression_points, aes(x = residual)) +
   geom_histogram(binwidth = 0.25, color = "white") +
   labs(x = "Residual")
 
 
-## ----normal-residuals, echo=FALSE, warning=FALSE, fig.cap="Example of clearly normal and clearly not normal residuals."----
+## ----normal-residuals, echo=FALSE, warning=FALSE, fig.cap="Example of clearly normal and clearly not normal residuals."-------------
 sigma <- sd(regression_points$residual)
 normal_and_not_examples <- evals_ch5 %>% 
   mutate(
@@ -220,20 +220,20 @@ if(knitr::is_latex_output()){
   
 
 
-## ---- eval=FALSE, echo=TRUE---------------------------------------------------
+## ---- eval=FALSE, echo=TRUE---------------------------------------------------------------------------------------------------------
 ## ggplot(regression_points, aes(x = bty_avg, y = residual)) +
 ##   geom_point() +
 ##   labs(x = "Beauty Score", y = "Residual") +
 ##   geom_hline(yintercept = 0, col = "blue", size = 1)
 
-## ----numxplot6, echo=FALSE, warning=FALSE, fig.cap="Plot of residuals over beauty score."----
+## ----numxplot6, echo=FALSE, warning=FALSE, fig.cap="Plot of residuals over beauty score."-------------------------------------------
 ggplot(regression_points, aes(x = bty_avg, y = residual)) +
   geom_point() +
   labs(x = "Beauty Score", y = "Residual") +
   geom_hline(yintercept = 0, col = "blue", size = 1)
 
 
-## ----equal-variance-residuals, echo=FALSE, warning=FALSE, fig.cap="Example of clearly non-equal variance."----
+## ----equal-variance-residuals, echo=FALSE, warning=FALSE, fig.cap="Example of clearly non-equal variance."--------------------------
 evals_ch5 %>% 
   mutate(eps = (rnorm(n(), 0, 0.075 * bty_avg ^ 2)) * 0.4) %>% 
   ggplot(aes(x = bty_avg, y = eps)) +
@@ -246,14 +246,14 @@ evals_ch5 %>%
 
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## bootstrap_distn_slope <- evals_ch5 %>%
 ##   specify(formula = score ~ bty_avg) %>%
 ##   generate(reps = 1000, type = "bootstrap") %>%
 ##   calculate(stat = "slope")
 ## bootstrap_distn_slope
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------------------------------------------------------------
 if(!file.exists("rds/bootstrap_distn_slope.rds")){
   set.seed(76)
   bootstrap_distn_slope <- evals %>% 
@@ -268,32 +268,32 @@ if(!file.exists("rds/bootstrap_distn_slope.rds")){
 bootstrap_distn_slope
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## visualize(bootstrap_distn_slope)
 
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 percentile_ci <- bootstrap_distn_slope %>% 
   get_confidence_interval(type = "percentile", level = 0.95)
 percentile_ci
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 observed_slope <- evals %>% 
   specify(score ~ bty_avg) %>% 
   calculate(stat = "slope")
 observed_slope
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 se_ci <- bootstrap_distn_slope %>% 
   get_ci(level = 0.95, type = "se", point_estimate = observed_slope)
 se_ci
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## visualize(bootstrap_distn_slope) +
 ##   shade_confidence_interval(endpoints = percentile_ci, fill = NULL,
 ##                             linetype = "solid", color = "grey90") +
@@ -305,14 +305,14 @@ se_ci
 
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## null_distn_slope <- evals %>%
 ##   specify(score ~ bty_avg) %>%
 ##   hypothesize(null = "independence") %>%
 ##   generate(reps = 1000, type = "permute") %>%
 ##   calculate(stat = "slope")
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------------------------------------------------------------
 if(!file.exists("rds/null_distn_slope.rds")){
   set.seed(76)
   null_distn_slope <- evals %>% 
@@ -327,16 +327,16 @@ if(!file.exists("rds/null_distn_slope.rds")){
 }
 
 
-## ----null-distribution-slope, echo=FALSE, fig.show='hold', fig.cap="Null distribution of slopes.", fig.height=2.5----
+## ----null-distribution-slope, echo=FALSE, fig.show='hold', fig.cap="Null distribution of slopes.", fig.height=2.5-------------------
 visualize(null_distn_slope)
 
 
-## ----p-value-slope, echo=FALSE, fig.show='hold', fig.cap="Null distribution and $p$-value.", fig.height=3----
+## ----p-value-slope, echo=FALSE, fig.show='hold', fig.cap="Null distribution and $p$-value.", fig.height=3---------------------------
 visualize(null_distn_slope) + 
   shade_p_value(obs_stat = observed_slope, direction = "both")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 null_distn_slope %>% 
   get_p_value(obs_stat = observed_slope, direction = "both")
 
@@ -345,7 +345,7 @@ null_distn_slope %>%
 
 
 
-## ----table-ch11, echo=FALSE, message=FALSE------------------------------------
+## ----table-ch11, echo=FALSE, message=FALSE------------------------------------------------------------------------------------------
 # The following Google Doc is published to CSV and loaded using read_csv():
 # https://docs.google.com/spreadsheets/d/1QkOpnBGqOXGyJjwqx1T2O5G5D72wWGfWlPyufOgtkk4/edit#gid=0
 
@@ -375,7 +375,7 @@ sampling_scenarios %>%
   column_spec(5, width = "0.65in")
 
 
-## ----echo=FALSE, results="asis"-----------------------------------------------
+## ----echo=FALSE, results="asis"-----------------------------------------------------------------------------------------------------
 if(knitr::is_latex_output()){
   cat("Solutions to all *Learning checks* can be found online in [Appendix D](https://moderndive.com/D-appendixD.html).")
 } 

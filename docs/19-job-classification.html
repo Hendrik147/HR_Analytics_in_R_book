@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 19 Job classification analysis | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
@@ -19,12 +19,12 @@
   <meta name="twitter:title" content="Chapter 19 Job classification analysis | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-10" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -684,22 +678,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>At the end of this effort you will have something that looks like the data found at the following link:</p>
 <p><a href="https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6435&amp;authkey=!AL37Wt0sVLrsUYA&amp;ithint=file%2ctxt" class="uri">https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6435&amp;authkey=!AL37Wt0sVLrsUYA&amp;ithint=file%2ctxt</a></p>
 <p>Ensure all needed libraries are installed</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb595-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb595-2" title="2"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb595-3" title="3"><span class="kw">library</span>(rattle)</a>
-<a class="sourceLine" id="cb595-4" title="4"><span class="kw">library</span>(rpart)</a>
-<a class="sourceLine" id="cb595-5" title="5"><span class="kw">library</span>(randomForest)</a>
-<a class="sourceLine" id="cb595-6" title="6"><span class="kw">library</span>(kernlab)</a>
-<a class="sourceLine" id="cb595-7" title="7"><span class="kw">library</span>(nnet)</a>
-<a class="sourceLine" id="cb595-8" title="8"><span class="kw">library</span>(car)</a>
-<a class="sourceLine" id="cb595-9" title="9"><span class="kw">library</span>(rpart.plot)</a>
-<a class="sourceLine" id="cb595-10" title="10"><span class="kw">library</span>(pROC)</a>
-<a class="sourceLine" id="cb595-11" title="11"><span class="kw">library</span>(ada)</a></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb613-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb613-2" title="2"><span class="kw">library</span>(caret)</a></code></pre></div>
+<pre><code>Loading required package: lattice</code></pre>
+<pre><code>
+Attaching package: &#39;caret&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:httr&#39;:
+
+    progress</code></pre>
+<pre><code>The following objects are masked from &#39;package:yardstick&#39;:
+
+    precision, recall</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    lift</code></pre>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb619-1" title="1"><span class="kw">library</span>(rattle)</a></code></pre></div>
+<pre><code>Rattle: A free graphical interface for data science with R.
+Version 5.3.0 Copyright (c) 2006-2018 Togaware Pty Ltd.
+Type &#39;rattle()&#39; to shake, rattle, and roll your data.</code></pre>
+<pre><code>
+Attaching package: &#39;rattle&#39;</code></pre>
+<pre><code>The following objects are masked _by_ &#39;.GlobalEnv&#39;:
+
+    crv, weather</code></pre>
+<pre><code>The following object is masked from &#39;package:nycflights13&#39;:
+
+    weather</code></pre>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb624-1" title="1"><span class="kw">library</span>(rpart)</a></code></pre></div>
+<pre><code>
+Attaching package: &#39;rpart&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:dials&#39;:
+
+    prune</code></pre>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb627-1" title="1"><span class="kw">library</span>(randomForest)</a></code></pre></div>
+<pre><code>randomForest 4.6-14</code></pre>
+<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>
+Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:rattle&#39;:
+
+    importance</code></pre>
+<pre><code>The following object is masked from &#39;package:dials&#39;:
+
+    margin</code></pre>
+<pre><code>The following object is masked from &#39;package:dplyr&#39;:
+
+    combine</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    margin</code></pre>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb635-1" title="1"><span class="kw">library</span>(kernlab)</a></code></pre></div>
+<pre><code>
+Attaching package: &#39;kernlab&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    cross</code></pre>
+<pre><code>The following object is masked from &#39;package:scales&#39;:
+
+    alpha</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    alpha</code></pre>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb640-1" title="1"><span class="kw">library</span>(nnet)</a>
+<a class="sourceLine" id="cb640-2" title="2"><span class="kw">library</span>(car)</a>
+<a class="sourceLine" id="cb640-3" title="3"><span class="kw">library</span>(rpart.plot)</a>
+<a class="sourceLine" id="cb640-4" title="4"><span class="kw">library</span>(pROC)</a></code></pre></div>
+<pre><code>Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
+<pre><code>
+Attaching package: &#39;pROC&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    cov, smooth, var</code></pre>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb644-1" title="1"><span class="kw">library</span>(ada)</a></code></pre></div>
 <p>###Manage The Data</p>
 <p>In this step we check the data for errors, organize the data for model building, and take an initial look at what the data is telling us.</p>
 <p>####Check the data for errors</p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb596-1" title="1">MYdataset &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/jobclassinfo2.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb597-1" title="1"><span class="kw">str</span>(MYdataset)</a></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb645-1" title="1">MYdataset &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/jobclassinfo2.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb646-1" title="1"><span class="kw">str</span>(MYdataset)</a></code></pre></div>
 <pre><code>Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    66 obs. of  14 variables:
  $ ID                  : num  1 2 3 4 5 6 7 8 9 10 ...
  $ JobFamily           : num  1 1 1 1 2 2 2 2 2 3 ...
@@ -732,129 +787,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   ..   FinancialBudget = col_double(),
   ..   PG = col_character()
   .. )</code></pre>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb599-1" title="1"><span class="kw">summary</span>(MYdataset)</a></code></pre></div>
-<pre><code>       ID         JobFamily     JobFamilyDescription    JobClass   
- Min.   : 1.0   Min.   : 1.00   Length:66            Min.   : 1.0  
- 1st Qu.:17.2   1st Qu.: 4.00   Class :character     1st Qu.:17.2  
- Median :33.5   Median : 7.00   Mode  :character     Median :33.5  
- Mean   :33.5   Mean   : 7.61                        Mean   :33.5  
- 3rd Qu.:49.8   3rd Qu.:11.00                        3rd Qu.:49.8  
- Max.   :66.0   Max.   :15.00                        Max.   :66.0  
- JobClassDescription    PayGrade    EducationLevel   Experience   
- Length:66           Min.   : 1.0   Min.   :1.00   Min.   : 0.00  
- Class :character    1st Qu.: 4.0   1st Qu.:2.00   1st Qu.: 0.00  
- Mode  :character    Median : 5.0   Median :4.00   Median : 1.00  
-                     Mean   : 5.7   Mean   :3.17   Mean   : 1.76  
-                     3rd Qu.: 8.0   3rd Qu.:4.00   3rd Qu.: 2.75  
-                     Max.   :10.0   Max.   :6.00   Max.   :10.00  
-   OrgImpact    ProblemSolving  Supervision    ContactLevel  FinancialBudget
- Min.   :1.00   Min.   :1.00   Min.   :1.00   Min.   :1.00   Min.   : 1.00  
- 1st Qu.:2.00   1st Qu.:3.00   1st Qu.:1.00   1st Qu.:3.00   1st Qu.: 2.00  
- Median :3.00   Median :4.00   Median :4.00   Median :6.00   Median : 5.00  
- Mean   :3.35   Mean   :3.61   Mean   :3.86   Mean   :4.76   Mean   : 5.30  
- 3rd Qu.:4.00   3rd Qu.:5.00   3rd Qu.:5.75   3rd Qu.:7.00   3rd Qu.: 7.75  
- Max.   :6.00   Max.   :6.00   Max.   :7.00   Max.   :8.00   Max.   :11.00  
-      PG           
- Length:66         
- Class :character  
- Mode  :character  
-                   
-                   
-                   </code></pre>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb648-1" title="1"><span class="kw">summary</span>(MYdataset)</a></code></pre></div>
+<pre><code>       ID         JobFamily     JobFamilyDescription    JobClass    JobClassDescription    PayGrade    EducationLevel   Experience   
+ Min.   : 1.0   Min.   : 1.00   Length:66            Min.   : 1.0   Length:66           Min.   : 1.0   Min.   :1.00   Min.   : 0.00  
+ 1st Qu.:17.2   1st Qu.: 4.00   Class :character     1st Qu.:17.2   Class :character    1st Qu.: 4.0   1st Qu.:2.00   1st Qu.: 0.00  
+ Median :33.5   Median : 7.00   Mode  :character     Median :33.5   Mode  :character    Median : 5.0   Median :4.00   Median : 1.00  
+ Mean   :33.5   Mean   : 7.61                        Mean   :33.5                       Mean   : 5.7   Mean   :3.17   Mean   : 1.76  
+ 3rd Qu.:49.8   3rd Qu.:11.00                        3rd Qu.:49.8                       3rd Qu.: 8.0   3rd Qu.:4.00   3rd Qu.: 2.75  
+ Max.   :66.0   Max.   :15.00                        Max.   :66.0                       Max.   :10.0   Max.   :6.00   Max.   :10.00  
+   OrgImpact    ProblemSolving  Supervision    ContactLevel  FinancialBudget      PG           
+ Min.   :1.00   Min.   :1.00   Min.   :1.00   Min.   :1.00   Min.   : 1.00   Length:66         
+ 1st Qu.:2.00   1st Qu.:3.00   1st Qu.:1.00   1st Qu.:3.00   1st Qu.: 2.00   Class :character  
+ Median :3.00   Median :4.00   Median :4.00   Median :6.00   Median : 5.00   Mode  :character  
+ Mean   :3.35   Mean   :3.61   Mean   :3.86   Mean   :4.76   Mean   : 5.30                     
+ 3rd Qu.:4.00   3rd Qu.:5.00   3rd Qu.:5.75   3rd Qu.:7.00   3rd Qu.: 7.75                     
+ Max.   :6.00   Max.   :6.00   Max.   :7.00   Max.   :8.00   Max.   :11.00                     </code></pre>
 <p>On the surface there doesn’t seem to be any issues with data. This gives a summary of the layout of the data and the likely values we can expect. PG is the category we will predict. It’s a categorical representation of the numeric paygrade. Education level through Financial Budgeting Responsibility will be the independent variables/measures we will use to predict. The other columns in file will be ignored.</p>
 <p>####Organize the data</p>
 <p>Let’s narrow down the information to just the data used in the model.</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb601-1" title="1">MYnobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(MYdataset) <span class="co"># The data set is made of 66 observations</span></a>
-<a class="sourceLine" id="cb601-2" title="2"></a>
-<a class="sourceLine" id="cb601-3" title="3">MYsample &lt;-<span class="st"> </span>MYtrain &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(MYdataset), <span class="fl">0.7</span><span class="op">*</span>MYnobs) <span class="co"># 70% of those 66 observations (i.e. 46 observations) will form our training dataset.</span></a>
-<a class="sourceLine" id="cb601-4" title="4"></a>
-<a class="sourceLine" id="cb601-5" title="5">MYvalidate &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">setdiff</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(MYdataset)), MYtrain), <span class="fl">0.14</span><span class="op">*</span>MYnobs) <span class="co"># 14% of those 66 observations (i.e. 9 observations) will form our validation dataset.</span></a>
-<a class="sourceLine" id="cb601-6" title="6"></a>
-<a class="sourceLine" id="cb601-7" title="7">MYtest &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">setdiff</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(MYdataset)), MYtrain), MYvalidate) <span class="co"># # The remaining observations (i.e. 11 observations) will form our test dataset.</span></a>
-<a class="sourceLine" id="cb601-8" title="8"></a>
-<a class="sourceLine" id="cb601-9" title="9"></a>
-<a class="sourceLine" id="cb601-10" title="10"><span class="co"># The following variable selections have been noted.</span></a>
-<a class="sourceLine" id="cb601-11" title="11">MYinput &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</a>
-<a class="sourceLine" id="cb601-12" title="12">     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</a>
-<a class="sourceLine" id="cb601-13" title="13"></a>
-<a class="sourceLine" id="cb601-14" title="14">MYnumeric &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</a>
-<a class="sourceLine" id="cb601-15" title="15">     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</a>
-<a class="sourceLine" id="cb601-16" title="16"></a>
-<a class="sourceLine" id="cb601-17" title="17">MYcategoric &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb601-18" title="18"></a>
-<a class="sourceLine" id="cb601-19" title="19">MYtarget  &lt;-<span class="st"> &quot;PG&quot;</span></a>
-<a class="sourceLine" id="cb601-20" title="20">MYrisk    &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb601-21" title="21">MYident   &lt;-<span class="st"> &quot;ID&quot;</span></a>
-<a class="sourceLine" id="cb601-22" title="22">MYignore  &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;JobFamily&quot;</span>, <span class="st">&quot;JobFamilyDescription&quot;</span>, <span class="st">&quot;JobClass&quot;</span>, <span class="st">&quot;JobClassDescription&quot;</span>, <span class="st">&quot;PayGrade&quot;</span>)</a>
-<a class="sourceLine" id="cb601-23" title="23">MYweights &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb650-1" title="1">MYnobs &lt;-<span class="st"> </span><span class="kw">nrow</span>(MYdataset) <span class="co"># The data set is made of 66 observations</span></a>
+<a class="sourceLine" id="cb650-2" title="2"></a>
+<a class="sourceLine" id="cb650-3" title="3">MYsample &lt;-<span class="st"> </span>MYtrain &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(MYdataset), <span class="fl">0.7</span><span class="op">*</span>MYnobs) <span class="co"># 70% of those 66 observations (i.e. 46 observations) will form our training dataset.</span></a>
+<a class="sourceLine" id="cb650-4" title="4"></a>
+<a class="sourceLine" id="cb650-5" title="5">MYvalidate &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">setdiff</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(MYdataset)), MYtrain), <span class="fl">0.14</span><span class="op">*</span>MYnobs) <span class="co"># 14% of those 66 observations (i.e. 9 observations) will form our validation dataset.</span></a>
+<a class="sourceLine" id="cb650-6" title="6"></a>
+<a class="sourceLine" id="cb650-7" title="7">MYtest &lt;-<span class="st"> </span><span class="kw">setdiff</span>(<span class="kw">setdiff</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(MYdataset)), MYtrain), MYvalidate) <span class="co"># # The remaining observations (i.e. 11 observations) will form our test dataset.</span></a>
+<a class="sourceLine" id="cb650-8" title="8"></a>
+<a class="sourceLine" id="cb650-9" title="9"></a>
+<a class="sourceLine" id="cb650-10" title="10"><span class="co"># The following variable selections have been noted.</span></a>
+<a class="sourceLine" id="cb650-11" title="11">MYinput &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</a>
+<a class="sourceLine" id="cb650-12" title="12">     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</a>
+<a class="sourceLine" id="cb650-13" title="13"></a>
+<a class="sourceLine" id="cb650-14" title="14">MYnumeric &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</a>
+<a class="sourceLine" id="cb650-15" title="15">     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</a>
+<a class="sourceLine" id="cb650-16" title="16"></a>
+<a class="sourceLine" id="cb650-17" title="17">MYcategoric &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb650-18" title="18"></a>
+<a class="sourceLine" id="cb650-19" title="19">MYtarget  &lt;-<span class="st"> &quot;PG&quot;</span></a>
+<a class="sourceLine" id="cb650-20" title="20">MYrisk    &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb650-21" title="21">MYident   &lt;-<span class="st"> &quot;ID&quot;</span></a>
+<a class="sourceLine" id="cb650-22" title="22">MYignore  &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;JobFamily&quot;</span>, <span class="st">&quot;JobFamilyDescription&quot;</span>, <span class="st">&quot;JobClass&quot;</span>, <span class="st">&quot;JobClassDescription&quot;</span>, <span class="st">&quot;PayGrade&quot;</span>)</a>
+<a class="sourceLine" id="cb650-23" title="23">MYweights &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 <p>We are predominantly interested in MYinput and MYtarget because they represent the predictors and what needs to be predicted respectively. You will notice for the time being that we are not partitioning the data. This will be elaborated upon in model building.</p>
 <p>###What the data is initially telling us</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb602-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb602-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb602-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(PG)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb602-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb602-5" title="5"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb602-6" title="6"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb602-7" title="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per PG category&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb651-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb651-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb651-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(PG)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb651-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb651-5" title="5"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb651-6" title="6"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb651-7" title="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per PG category&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb603-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb603-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb603-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(JobFamilyDescription)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb603-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb603-5" title="5"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb603-6" title="6"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb603-7" title="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per job family&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb652-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb652-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb652-3" title="3"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(JobFamilyDescription)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb652-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb652-5" title="5"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb652-6" title="6"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb652-7" title="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per job family&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb604-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb604-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb604-3" title="3"><span class="st">  </span><span class="kw">aes</span>(EducationLevel) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb604-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
-<a class="sourceLine" id="cb604-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per Education level&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb653-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb653-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb653-3" title="3"><span class="st">  </span><span class="kw">aes</span>(EducationLevel) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb653-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
+<a class="sourceLine" id="cb653-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per Education level&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb605-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb605-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb605-3" title="3"><span class="st">  </span><span class="kw">aes</span>(Experience) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb605-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
-<a class="sourceLine" id="cb605-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per experience&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb654-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb654-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb654-3" title="3"><span class="st">  </span><span class="kw">aes</span>(Experience) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb654-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
+<a class="sourceLine" id="cb654-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per experience&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-4.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb606-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb606-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb606-3" title="3"><span class="st">  </span><span class="kw">aes</span>(OrgImpact) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb606-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
-<a class="sourceLine" id="cb606-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per organisational impact&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb655-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb655-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb655-3" title="3"><span class="st">  </span><span class="kw">aes</span>(OrgImpact) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb655-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
+<a class="sourceLine" id="cb655-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per organisational impact&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-5.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb607-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb607-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb607-3" title="3"><span class="st">  </span><span class="kw">aes</span>(ProblemSolving) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb607-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
-<a class="sourceLine" id="cb607-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per problem solving&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb656-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb656-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb656-3" title="3"><span class="st">  </span><span class="kw">aes</span>(ProblemSolving) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb656-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
+<a class="sourceLine" id="cb656-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per problem solving&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-6.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb608-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb608-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb608-3" title="3"><span class="st">  </span><span class="kw">aes</span>(Supervision) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb608-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
-<a class="sourceLine" id="cb608-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per supervision&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb657-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb657-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb657-3" title="3"><span class="st">  </span><span class="kw">aes</span>(Supervision) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb657-4" title="4"><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
+<a class="sourceLine" id="cb657-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per supervision&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-7.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb609-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb609-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb609-3" title="3"><span class="st">  </span><span class="kw">aes</span>(ContactLevel) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb609-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
-<a class="sourceLine" id="cb609-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per contact level&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb658-1" title="1">MYdataset <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb658-2" title="2"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb658-3" title="3"><span class="st">  </span><span class="kw">aes</span>(ContactLevel) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb658-4" title="4"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="fl">0.7</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="op">+</span></a>
+<a class="sourceLine" id="cb658-5" title="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Number of job classifications per contact level&quot;</span>) </a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-545-8.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Let’s use the caret library again for some graphical representations of this data.</p>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb610-1" title="1"><span class="kw">library</span>(caret)</a>
-<a class="sourceLine" id="cb610-2" title="2"></a>
-<a class="sourceLine" id="cb610-3" title="3">MYdataset<span class="op">$</span>PG &lt;-<span class="st"> </span><span class="kw">as.factor</span>(MYdataset<span class="op">$</span>PG)</a>
-<a class="sourceLine" id="cb610-4" title="4"></a>
-<a class="sourceLine" id="cb610-5" title="5"><span class="kw">featurePlot</span>(<span class="dt">x =</span> MYdataset[,<span class="dv">7</span><span class="op">:</span><span class="dv">13</span>], </a>
-<a class="sourceLine" id="cb610-6" title="6">            <span class="dt">y =</span> MYdataset<span class="op">$</span>PG, </a>
-<a class="sourceLine" id="cb610-7" title="7">            <span class="dt">plot =</span> <span class="st">&quot;density&quot;</span>, </a>
-<a class="sourceLine" id="cb610-8" title="8">            <span class="dt">auto.key =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb659-1" title="1"><span class="kw">library</span>(caret)</a>
+<a class="sourceLine" id="cb659-2" title="2"></a>
+<a class="sourceLine" id="cb659-3" title="3">MYdataset<span class="op">$</span>PG &lt;-<span class="st"> </span><span class="kw">as.factor</span>(MYdataset<span class="op">$</span>PG)</a>
+<a class="sourceLine" id="cb659-4" title="4"></a>
+<a class="sourceLine" id="cb659-5" title="5"><span class="kw">featurePlot</span>(<span class="dt">x =</span> MYdataset[,<span class="dv">7</span><span class="op">:</span><span class="dv">13</span>], </a>
+<a class="sourceLine" id="cb659-6" title="6">            <span class="dt">y =</span> MYdataset<span class="op">$</span>PG, </a>
+<a class="sourceLine" id="cb659-7" title="7">            <span class="dt">plot =</span> <span class="st">&quot;density&quot;</span>, </a>
+<a class="sourceLine" id="cb659-8" title="8">            <span class="dt">auto.key =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="dv">2</span>))</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-546-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb611-1" title="1"><span class="kw">featurePlot</span>(<span class="dt">x =</span> MYdataset[,<span class="dv">7</span><span class="op">:</span><span class="dv">13</span>], </a>
-<a class="sourceLine" id="cb611-2" title="2">            <span class="dt">y =</span> MYdataset<span class="op">$</span>PG, </a>
-<a class="sourceLine" id="cb611-3" title="3">            <span class="dt">plot =</span> <span class="st">&quot;box&quot;</span>, </a>
-<a class="sourceLine" id="cb611-4" title="4">            <span class="dt">auto.key =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb660-1" title="1"><span class="kw">featurePlot</span>(<span class="dt">x =</span> MYdataset[,<span class="dv">7</span><span class="op">:</span><span class="dv">13</span>], </a>
+<a class="sourceLine" id="cb660-2" title="2">            <span class="dt">y =</span> MYdataset<span class="op">$</span>PG, </a>
+<a class="sourceLine" id="cb660-3" title="3">            <span class="dt">plot =</span> <span class="st">&quot;box&quot;</span>, </a>
+<a class="sourceLine" id="cb660-4" title="4">            <span class="dt">auto.key =</span> <span class="kw">list</span>(<span class="dt">columns =</span> <span class="dv">2</span>))</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-546-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>The first set of charts shows the distribution of the independent variable values (predictors) by PG.</p>
 <p>The second set of charts show the range of values of the predictors by PG. PG is ordered left to right in ascending order from PG1 to PG10. In each of the predictors we would expect increasing levels as we move up the paygrades and from left to right (or at least not dropping from previous paygrade).</p>
@@ -869,33 +910,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Please note that in our case we want to use the job description to predict the payscale grade (PG), so we make the formula (PG ~ .). In other words, we’re representing the relationship between payscale grades (PG) and the remaining variables (.).</p>
 <p>###Decision Tree</p>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb612-1" title="1"><span class="co"># The &#39;rattle&#39; package provides a graphical user interface to very many other packages that provide functionality for data mining.</span></a>
-<a class="sourceLine" id="cb612-2" title="2"></a>
-<a class="sourceLine" id="cb612-3" title="3"><span class="kw">library</span>(rattle)</a>
-<a class="sourceLine" id="cb612-4" title="4"></a>
-<a class="sourceLine" id="cb612-5" title="5"><span class="co"># The &#39;rpart&#39; package provides the &#39;rpart&#39; function.</span></a>
-<a class="sourceLine" id="cb612-6" title="6"></a>
-<a class="sourceLine" id="cb612-7" title="7"><span class="kw">library</span>(rpart, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb612-8" title="8"></a>
-<a class="sourceLine" id="cb612-9" title="9"><span class="co"># Reset the random number seed to obtain the same results each time.</span></a>
-<a class="sourceLine" id="cb612-10" title="10">crv<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="dv">42</span> </a>
-<a class="sourceLine" id="cb612-11" title="11"><span class="kw">set.seed</span>(crv<span class="op">$</span>seed)</a>
-<a class="sourceLine" id="cb612-12" title="12"></a>
-<a class="sourceLine" id="cb612-13" title="13"><span class="co"># Build the Decision Tree model.</span></a>
-<a class="sourceLine" id="cb612-14" title="14"></a>
-<a class="sourceLine" id="cb612-15" title="15">MYrpart &lt;-<span class="st"> </span><span class="kw">rpart</span>(PG <span class="op">~</span><span class="st"> </span>.,</a>
-<a class="sourceLine" id="cb612-16" title="16">    <span class="dt">data=</span>MYdataset[, <span class="kw">c</span>(MYinput, MYtarget)],</a>
-<a class="sourceLine" id="cb612-17" title="17">    <span class="dt">method=</span><span class="st">&quot;class&quot;</span>,</a>
-<a class="sourceLine" id="cb612-18" title="18">    <span class="dt">parms=</span><span class="kw">list</span>(<span class="dt">split=</span><span class="st">&quot;information&quot;</span>),</a>
-<a class="sourceLine" id="cb612-19" title="19">      <span class="dt">control=</span><span class="kw">rpart.control</span>(<span class="dt">minsplit=</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb612-20" title="20">           <span class="dt">minbucket=</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb612-21" title="21">           <span class="dt">maxdepth=</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb612-22" title="22">        <span class="dt">usesurrogate=</span><span class="dv">0</span>, </a>
-<a class="sourceLine" id="cb612-23" title="23">        <span class="dt">maxsurrogate=</span><span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb612-24" title="24"></a>
-<a class="sourceLine" id="cb612-25" title="25"><span class="co"># Generate a textual view of the Decision Tree model.</span></a>
-<a class="sourceLine" id="cb612-26" title="26"></a>
-<a class="sourceLine" id="cb612-27" title="27"><span class="kw">print</span>(MYrpart)</a></code></pre></div>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb661-1" title="1"><span class="co"># The &#39;rattle&#39; package provides a graphical user interface to very many other packages that provide functionality for data mining.</span></a>
+<a class="sourceLine" id="cb661-2" title="2"></a>
+<a class="sourceLine" id="cb661-3" title="3"><span class="kw">library</span>(rattle)</a>
+<a class="sourceLine" id="cb661-4" title="4"></a>
+<a class="sourceLine" id="cb661-5" title="5"><span class="co"># The &#39;rpart&#39; package provides the &#39;rpart&#39; function.</span></a>
+<a class="sourceLine" id="cb661-6" title="6"></a>
+<a class="sourceLine" id="cb661-7" title="7"><span class="kw">library</span>(rpart, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb661-8" title="8"></a>
+<a class="sourceLine" id="cb661-9" title="9"><span class="co"># Reset the random number seed to obtain the same results each time.</span></a>
+<a class="sourceLine" id="cb661-10" title="10">crv<span class="op">$</span>seed &lt;-<span class="st"> </span><span class="dv">42</span> </a>
+<a class="sourceLine" id="cb661-11" title="11"><span class="kw">set.seed</span>(crv<span class="op">$</span>seed)</a>
+<a class="sourceLine" id="cb661-12" title="12"></a>
+<a class="sourceLine" id="cb661-13" title="13"><span class="co"># Build the Decision Tree model.</span></a>
+<a class="sourceLine" id="cb661-14" title="14"></a>
+<a class="sourceLine" id="cb661-15" title="15">MYrpart &lt;-<span class="st"> </span><span class="kw">rpart</span>(PG <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb661-16" title="16">    <span class="dt">data=</span>MYdataset[, <span class="kw">c</span>(MYinput, MYtarget)],</a>
+<a class="sourceLine" id="cb661-17" title="17">    <span class="dt">method=</span><span class="st">&quot;class&quot;</span>,</a>
+<a class="sourceLine" id="cb661-18" title="18">    <span class="dt">parms=</span><span class="kw">list</span>(<span class="dt">split=</span><span class="st">&quot;information&quot;</span>),</a>
+<a class="sourceLine" id="cb661-19" title="19">      <span class="dt">control=</span><span class="kw">rpart.control</span>(<span class="dt">minsplit=</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb661-20" title="20">           <span class="dt">minbucket=</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb661-21" title="21">           <span class="dt">maxdepth=</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb661-22" title="22">        <span class="dt">usesurrogate=</span><span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb661-23" title="23">        <span class="dt">maxsurrogate=</span><span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb661-24" title="24"></a>
+<a class="sourceLine" id="cb661-25" title="25"><span class="co"># Generate a textual view of the Decision Tree model.</span></a>
+<a class="sourceLine" id="cb661-26" title="26"></a>
+<a class="sourceLine" id="cb661-27" title="27"><span class="kw">print</span>(MYrpart)</a></code></pre></div>
 <pre><code>n= 66 
 
 node), split, n, loss, yval, (yprob)
@@ -922,7 +963,7 @@ node), split, n, loss, yval, (yprob)
       12) ContactLevel&gt;=6.5 10  3 PG08 (0 0 0 0 0 0 0 0.7 0.3 0) *
       13) ContactLevel&lt; 6.5 3  0 PG09 (0 0 0 0 0 0 0 0 1 0) *
      7) ProblemSolving&gt;=5.5 6  0 PG10 (0 0 0 0 0 0 0 0 0 1) *</code></pre>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb614-1" title="1"><span class="kw">printcp</span>(MYrpart)</a></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb663-1" title="1"><span class="kw">printcp</span>(MYrpart)</a></code></pre></div>
 <pre><code>
 Classification tree:
 rpart(formula = PG ~ ., data = MYdataset[, c(MYinput, MYtarget)], 
@@ -944,27 +985,27 @@ n= 66
 5 0.04      7       0.4    0.7 0.08
 6 0.02      9       0.3    0.6 0.08
 7 0.01     10       0.3    0.6 0.08</code></pre>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb616-1" title="1"><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb665-1" title="1"><span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a></code></pre></div>
 <p>###Random Forest</p>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb617-1" title="1"><span class="co"># The &#39;randomForest&#39; package provides the &#39;randomForest&#39; function.</span></a>
-<a class="sourceLine" id="cb617-2" title="2"></a>
-<a class="sourceLine" id="cb617-3" title="3"><span class="kw">library</span>(randomForest, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb617-4" title="4"></a>
-<a class="sourceLine" id="cb617-5" title="5"><span class="co"># Build the Random Forest model.</span></a>
-<a class="sourceLine" id="cb617-6" title="6"></a>
-<a class="sourceLine" id="cb617-7" title="7"><span class="kw">set.seed</span>(crv<span class="op">$</span>seed)</a>
-<a class="sourceLine" id="cb617-8" title="8"></a>
-<a class="sourceLine" id="cb617-9" title="9">MYrf &lt;-<span class="st"> </span>randomForest<span class="op">::</span><span class="kw">randomForest</span>(PG <span class="op">~</span><span class="st"> </span>., <span class="co"># PG ~ .</span></a>
-<a class="sourceLine" id="cb617-10" title="10">      <span class="dt">data=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)], </a>
-<a class="sourceLine" id="cb617-11" title="11">      <span class="dt">ntree=</span><span class="dv">500</span>,</a>
-<a class="sourceLine" id="cb617-12" title="12">      <span class="dt">mtry=</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb617-13" title="13">      <span class="dt">importance=</span><span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb617-14" title="14">      <span class="dt">na.action=</span>randomForest<span class="op">::</span>na.roughfix,</a>
-<a class="sourceLine" id="cb617-15" title="15">      <span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb617-16" title="16"></a>
-<a class="sourceLine" id="cb617-17" title="17"><span class="co"># Generate textual output of &#39;Random Forest&#39; model.</span></a>
-<a class="sourceLine" id="cb617-18" title="18"></a>
-<a class="sourceLine" id="cb617-19" title="19">MYrf</a></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb666-1" title="1"><span class="co"># The &#39;randomForest&#39; package provides the &#39;randomForest&#39; function.</span></a>
+<a class="sourceLine" id="cb666-2" title="2"></a>
+<a class="sourceLine" id="cb666-3" title="3"><span class="kw">library</span>(randomForest, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb666-4" title="4"></a>
+<a class="sourceLine" id="cb666-5" title="5"><span class="co"># Build the Random Forest model.</span></a>
+<a class="sourceLine" id="cb666-6" title="6"></a>
+<a class="sourceLine" id="cb666-7" title="7"><span class="kw">set.seed</span>(crv<span class="op">$</span>seed)</a>
+<a class="sourceLine" id="cb666-8" title="8"></a>
+<a class="sourceLine" id="cb666-9" title="9">MYrf &lt;-<span class="st"> </span>randomForest<span class="op">::</span><span class="kw">randomForest</span>(PG <span class="op">~</span><span class="st"> </span>., <span class="co"># PG ~ .</span></a>
+<a class="sourceLine" id="cb666-10" title="10">      <span class="dt">data=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)], </a>
+<a class="sourceLine" id="cb666-11" title="11">      <span class="dt">ntree=</span><span class="dv">500</span>,</a>
+<a class="sourceLine" id="cb666-12" title="12">      <span class="dt">mtry=</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb666-13" title="13">      <span class="dt">importance=</span><span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb666-14" title="14">      <span class="dt">na.action=</span>randomForest<span class="op">::</span>na.roughfix,</a>
+<a class="sourceLine" id="cb666-15" title="15">      <span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb666-16" title="16"></a>
+<a class="sourceLine" id="cb666-17" title="17"><span class="co"># Generate textual output of &#39;Random Forest&#39; model.</span></a>
+<a class="sourceLine" id="cb666-18" title="18"></a>
+<a class="sourceLine" id="cb666-19" title="19">MYrf</a></code></pre></div>
 <pre><code>
 Call:
  randomForest(formula = PG ~ ., data = MYdataset[, c(MYinput,      MYtarget)], ntree = 500, mtry = 2, importance = TRUE, replace = FALSE,      na.action = randomForest::na.roughfix) 
@@ -985,42 +1026,34 @@ PG07    0    0    0    0    0    2    2    0    0    0       0.500
 PG08    0    0    0    0    0    0    0    4    2    1       0.429
 PG09    0    0    0    0    0    0    0    5    1    0       0.833
 PG10    0    0    0    0    0    0    0    0    0    6       0.000</code></pre>
-<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb619-1" title="1"><span class="co"># List the importance of the variables.</span></a>
-<a class="sourceLine" id="cb619-2" title="2"></a>
-<a class="sourceLine" id="cb619-3" title="3">rn &lt;-<span class="st"> </span><span class="kw">round</span>(randomForest<span class="op">::</span><span class="kw">importance</span>(MYrf), <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb619-4" title="4">rn[<span class="kw">order</span>(rn[,<span class="dv">3</span>], <span class="dt">decreasing=</span><span class="ot">TRUE</span>),]</a></code></pre></div>
-<pre><code>                 PG01  PG02  PG03  PG04  PG05  PG06  PG07  PG08  PG09  PG10
-EducationLevel   2.85 14.92 11.36  5.05  7.93  1.73  5.19  3.56 -5.47  8.60
-ProblemSolving   3.65  5.98  8.96  1.51  8.91 13.08  7.66 12.60 10.04 19.57
-Experience      -4.68  9.85  8.70  5.32  0.66  5.99  8.10 -5.70  4.12  3.11
-Supervision     -2.86  9.78  5.45  2.44  9.26  3.57  0.77  3.33  2.03 16.36
-ContactLevel     2.46 13.33  3.70  2.45  4.03 10.09  4.65 11.16 -0.97 12.24
-OrgImpact       -2.70 11.72  3.65  0.58 12.85  2.37  5.22  1.86  6.10 10.58
-FinancialBudget  1.74  6.18  2.05 -1.03  9.37  0.87 -0.52 -4.66 10.82 15.78
-                MeanDecreaseAccuracy MeanDecreaseGini
-EducationLevel                  18.4             4.33
-ProblemSolving                  24.2             6.26
-Experience                      13.8             4.30
-Supervision                     17.5             4.01
-ContactLevel                    19.1             4.97
-OrgImpact                       15.8             3.57
-FinancialBudget                 15.5             5.17</code></pre>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb668-1" title="1"><span class="co"># List the importance of the variables.</span></a>
+<a class="sourceLine" id="cb668-2" title="2"></a>
+<a class="sourceLine" id="cb668-3" title="3">rn &lt;-<span class="st"> </span><span class="kw">round</span>(randomForest<span class="op">::</span><span class="kw">importance</span>(MYrf), <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb668-4" title="4">rn[<span class="kw">order</span>(rn[,<span class="dv">3</span>], <span class="dt">decreasing=</span><span class="ot">TRUE</span>),]</a></code></pre></div>
+<pre><code>                 PG01  PG02  PG03  PG04  PG05  PG06  PG07  PG08  PG09  PG10 MeanDecreaseAccuracy MeanDecreaseGini
+EducationLevel   2.85 14.92 11.36  5.05  7.93  1.73  5.19  3.56 -5.47  8.60                 18.4             4.33
+ProblemSolving   3.65  5.98  8.96  1.51  8.91 13.08  7.66 12.60 10.04 19.57                 24.2             6.26
+Experience      -4.68  9.85  8.70  5.32  0.66  5.99  8.10 -5.70  4.12  3.11                 13.8             4.30
+Supervision     -2.86  9.78  5.45  2.44  9.26  3.57  0.77  3.33  2.03 16.36                 17.5             4.01
+ContactLevel     2.46 13.33  3.70  2.45  4.03 10.09  4.65 11.16 -0.97 12.24                 19.1             4.97
+OrgImpact       -2.70 11.72  3.65  0.58 12.85  2.37  5.22  1.86  6.10 10.58                 15.8             3.57
+FinancialBudget  1.74  6.18  2.05 -1.03  9.37  0.87 -0.52 -4.66 10.82 15.78                 15.5             5.17</code></pre>
 <p>###Support Vector Machine</p>
-<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb621-1" title="1"><span class="co"># The &#39;kernlab&#39; package provides the &#39;ksvm&#39; function.</span></a>
-<a class="sourceLine" id="cb621-2" title="2"></a>
-<a class="sourceLine" id="cb621-3" title="3"><span class="kw">library</span>(kernlab, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb621-4" title="4"></a>
-<a class="sourceLine" id="cb621-5" title="5"><span class="co"># Build a Support Vector Machine model.</span></a>
-<a class="sourceLine" id="cb621-6" title="6"></a>
-<a class="sourceLine" id="cb621-7" title="7"><span class="co">#set.seed(crv$seed)</span></a>
-<a class="sourceLine" id="cb621-8" title="8">MYksvm &lt;-<span class="st"> </span><span class="kw">ksvm</span>(<span class="kw">as.factor</span>(PG) <span class="op">~</span><span class="st"> </span>.,</a>
-<a class="sourceLine" id="cb621-9" title="9">      <span class="dt">data=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)],</a>
-<a class="sourceLine" id="cb621-10" title="10">      <span class="dt">kernel=</span><span class="st">&quot;rbfdot&quot;</span>,</a>
-<a class="sourceLine" id="cb621-11" title="11">      <span class="dt">prob.model=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb621-12" title="12"></a>
-<a class="sourceLine" id="cb621-13" title="13"><span class="co"># Generate a textual view of the SVM model.</span></a>
-<a class="sourceLine" id="cb621-14" title="14"></a>
-<a class="sourceLine" id="cb621-15" title="15">MYksvm</a></code></pre></div>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb670-1" title="1"><span class="co"># The &#39;kernlab&#39; package provides the &#39;ksvm&#39; function.</span></a>
+<a class="sourceLine" id="cb670-2" title="2"></a>
+<a class="sourceLine" id="cb670-3" title="3"><span class="kw">library</span>(kernlab, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb670-4" title="4"></a>
+<a class="sourceLine" id="cb670-5" title="5"><span class="co"># Build a Support Vector Machine model.</span></a>
+<a class="sourceLine" id="cb670-6" title="6"></a>
+<a class="sourceLine" id="cb670-7" title="7"><span class="co">#set.seed(crv$seed)</span></a>
+<a class="sourceLine" id="cb670-8" title="8">MYksvm &lt;-<span class="st"> </span><span class="kw">ksvm</span>(<span class="kw">as.factor</span>(PG) <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb670-9" title="9">      <span class="dt">data=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)],</a>
+<a class="sourceLine" id="cb670-10" title="10">      <span class="dt">kernel=</span><span class="st">&quot;rbfdot&quot;</span>,</a>
+<a class="sourceLine" id="cb670-11" title="11">      <span class="dt">prob.model=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb670-12" title="12"></a>
+<a class="sourceLine" id="cb670-13" title="13"><span class="co"># Generate a textual view of the SVM model.</span></a>
+<a class="sourceLine" id="cb670-14" title="14"></a>
+<a class="sourceLine" id="cb670-15" title="15">MYksvm</a></code></pre></div>
 <pre><code>Support Vector Machine object of class &quot;ksvm&quot; 
 
 SV type: C-svc  (classification) 
@@ -1035,22 +1068,22 @@ Objective Function Value : -3.87 -3.73 -3.11 -2.49 -1.6 -1.34 -1.33 -1.48 -1.33 
 Training error : 0.333333 
 Probability model included. </code></pre>
 <p>###Linear Regression Model</p>
-<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb623-1" title="1"><span class="co"># Build a multinomial model using the nnet package.</span></a>
-<a class="sourceLine" id="cb623-2" title="2"></a>
-<a class="sourceLine" id="cb623-3" title="3"><span class="kw">library</span>(nnet, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb623-4" title="4"></a>
-<a class="sourceLine" id="cb623-5" title="5"><span class="co"># Summarise multinomial model using Anova from the car package.</span></a>
-<a class="sourceLine" id="cb623-6" title="6"></a>
-<a class="sourceLine" id="cb623-7" title="7"><span class="kw">library</span>(car, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb623-8" title="8"></a>
-<a class="sourceLine" id="cb623-9" title="9"><span class="co"># Build a Regression model.</span></a>
-<a class="sourceLine" id="cb623-10" title="10"></a>
-<a class="sourceLine" id="cb623-11" title="11">MYglm &lt;-<span class="st"> </span><span class="kw">multinom</span>(PG <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)], <span class="dt">trace=</span><span class="ot">FALSE</span>, <span class="dt">maxit=</span><span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb623-12" title="12"></a>
-<a class="sourceLine" id="cb623-13" title="13"><span class="co"># Generate a textual view of the Linear model.</span></a>
-<a class="sourceLine" id="cb623-14" title="14"></a>
-<a class="sourceLine" id="cb623-15" title="15"><span class="kw">rattle.print.summary.multinom</span>(<span class="kw">summary</span>(MYglm,</a>
-<a class="sourceLine" id="cb623-16" title="16">                              <span class="dt">Wald.ratios=</span><span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb672-1" title="1"><span class="co"># Build a multinomial model using the nnet package.</span></a>
+<a class="sourceLine" id="cb672-2" title="2"></a>
+<a class="sourceLine" id="cb672-3" title="3"><span class="kw">library</span>(nnet, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb672-4" title="4"></a>
+<a class="sourceLine" id="cb672-5" title="5"><span class="co"># Summarise multinomial model using Anova from the car package.</span></a>
+<a class="sourceLine" id="cb672-6" title="6"></a>
+<a class="sourceLine" id="cb672-7" title="7"><span class="kw">library</span>(car, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb672-8" title="8"></a>
+<a class="sourceLine" id="cb672-9" title="9"><span class="co"># Build a Regression model.</span></a>
+<a class="sourceLine" id="cb672-10" title="10"></a>
+<a class="sourceLine" id="cb672-11" title="11">MYglm &lt;-<span class="st"> </span><span class="kw">multinom</span>(PG <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)], <span class="dt">trace=</span><span class="ot">FALSE</span>, <span class="dt">maxit=</span><span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb672-12" title="12"></a>
+<a class="sourceLine" id="cb672-13" title="13"><span class="co"># Generate a textual view of the Linear model.</span></a>
+<a class="sourceLine" id="cb672-14" title="14"></a>
+<a class="sourceLine" id="cb672-15" title="15"><span class="kw">rattle.print.summary.multinom</span>(<span class="kw">summary</span>(MYglm,</a>
+<a class="sourceLine" id="cb672-16" title="16">                              <span class="dt">Wald.ratios=</span><span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>Call:
 multinom(formula = PG ~ ., data = MYdataset[, c(MYinput, MYtarget)], 
     trace = FALSE, maxit = 1000)
@@ -1058,85 +1091,75 @@ multinom(formula = PG ~ ., data = MYdataset[, c(MYinput, MYtarget)],
 n=66
 
 Coefficients:
-     (Intercept) EducationLevel Experience OrgImpact ProblemSolving Supervision
-PG02       31812         -29773     -10132    -31986          23063       -3856
-PG03        5213         -14099      17747    -23614          27792       -8041
-PG04      -12736           3771      -5808    -12061          18671       -1212
-PG05      -29448           5204       1463    -12676          21706       -3161
-PG06      -65435           5423       1343    -10231          28060       -3568
-PG07      -55610           5421       1344    -10234          25601       -3567
-PG08     -125872           6245        577    -14007          42812       -1877
-PG09      -98509         -14539       8765     -8749         -22069       21230
-PG10     -203005           9258        771    -15602          55341       -2794
-     ContactLevel FinancialBudget
-PG02        -3493           14234
-PG03         4086           -2148
-PG04        -4092            6203
-PG05         -994            5801
-PG06         -752            6308
-PG07         -749            6308
-PG08        -1738            7323
-PG09       -12837           34381
-PG10         1162            6006
+     (Intercept) EducationLevel Experience OrgImpact ProblemSolving Supervision ContactLevel FinancialBudget
+PG02       31812         -29773     -10132    -31986          23063       -3856        -3493           14234
+PG03        5213         -14099      17747    -23614          27792       -8041         4086           -2148
+PG04      -12736           3771      -5808    -12061          18671       -1212        -4092            6203
+PG05      -29448           5204       1463    -12676          21706       -3161         -994            5801
+PG06      -65435           5423       1343    -10231          28060       -3568         -752            6308
+PG07      -55610           5421       1344    -10234          25601       -3567         -749            6308
+PG08     -125872           6245        577    -14007          42812       -1877        -1738            7323
+PG09      -98509         -14539       8765     -8749         -22069       21230       -12837           34381
+PG10     -203005           9258        771    -15602          55341       -2794         1162            6006
 
 Std. Errors:
-     (Intercept)      EducationLevel          Experience          OrgImpact
-PG02       0.175 0.17496351272064589 0.00000000000000000 0.1749635127206459
-PG03       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000
-PG04       0.000 0.00000000000000257                 NaN 0.0000000000000108
-PG05         NaN                 NaN 0.00000000000000156                NaN
-PG06       0.386 1.39726829398874242 0.66504625210025126 1.3664268009899736
-PG07       0.386 1.39726829398858898 0.66504625210022916 1.3664268009899854
-PG08       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000
-PG09       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000
-PG10       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000
-          ProblemSolving Supervision        ContactLevel FinancialBudget
-PG02 0.17496351272064589       0.175 0.17496351272064589           0.175
-PG03 0.00000000000000000       0.000 0.00000000000000000           0.000
-PG04 0.00000000000000756         NaN 0.00000000000000144             NaN
-PG05                 NaN         NaN                 NaN             NaN
-PG06 1.54374337492899638       0.881 1.29803445271060580           0.322
-PG07 1.54374337492892133       0.881 1.29803445271063556           0.322
-PG08 0.00000000000000000       0.000 0.00000000000000000           0.000
-PG09 0.00000000000000000       0.000 0.00000000000000000           0.000
-PG10 0.00000000000000000       0.000 0.00000000000000000           0.000
+     (Intercept)      EducationLevel          Experience          OrgImpact      ProblemSolving Supervision        ContactLevel
+PG02       0.175 0.17496351272064589 0.00000000000000000 0.1749635127206459 0.17496351272064589       0.175 0.17496351272064589
+PG03       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000 0.00000000000000000       0.000 0.00000000000000000
+PG04       0.000 0.00000000000000257                 NaN 0.0000000000000108 0.00000000000000756         NaN 0.00000000000000144
+PG05         NaN                 NaN 0.00000000000000156                NaN                 NaN         NaN                 NaN
+PG06       0.386 1.39726829398874242 0.66504625210025126 1.3664268009899736 1.54374337492899638       0.881 1.29803445271060580
+PG07       0.386 1.39726829398858898 0.66504625210022916 1.3664268009899854 1.54374337492892133       0.881 1.29803445271063556
+PG08       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000 0.00000000000000000       0.000 0.00000000000000000
+PG09       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000 0.00000000000000000       0.000 0.00000000000000000
+PG10       0.000 0.00000000000000000 0.00000000000000000 0.0000000000000000 0.00000000000000000       0.000 0.00000000000000000
+     FinancialBudget
+PG02           0.175
+PG03           0.000
+PG04             NaN
+PG05             NaN
+PG06           0.322
+PG07           0.322
+PG08           0.000
+PG09           0.000
+PG10           0.000
 
 Value/SE (Wald statistics):
-     (Intercept)      EducationLevel         Experience            OrgImpact
-PG02      181823             -170166               -Inf              -182818
-PG03         Inf                -Inf                Inf                 -Inf
-PG04        -Inf 1467533350215317248                NaN -1121500571223810048
-PG05         NaN                 NaN 935764317710622208                  NaN
-PG06     -169549                3881               2019                -7487
-PG07     -144092                3880               2022                -7489
-PG08        -Inf                 Inf                Inf                 -Inf
-PG09        -Inf                -Inf                Inf                 -Inf
-PG10        -Inf                 Inf                Inf                 -Inf
-          ProblemSolving Supervision         ContactLevel FinancialBudget
-PG02              131814      -22037               -19964           81352
-PG03                 Inf        -Inf                  Inf            -Inf
-PG04 2468598833059940864         NaN -2833778518965696000             NaN
-PG05                 NaN         NaN                  NaN             NaN
-PG06               18177       -4050                 -579           19610
-PG07               16584       -4049                 -577           19610
-PG08                 Inf        -Inf                 -Inf             Inf
-PG09                -Inf         Inf                 -Inf             Inf
-PG10                 Inf        -Inf                  Inf             Inf
+     (Intercept)      EducationLevel         Experience            OrgImpact      ProblemSolving Supervision         ContactLevel
+PG02      181823             -170166               -Inf              -182818              131814      -22037               -19964
+PG03         Inf                -Inf                Inf                 -Inf                 Inf        -Inf                  Inf
+PG04        -Inf 1467533350215317248                NaN -1121500571223810048 2468598833059940864         NaN -2833778518965696000
+PG05         NaN                 NaN 935764317710622208                  NaN                 NaN         NaN                  NaN
+PG06     -169549                3881               2019                -7487               18177       -4050                 -579
+PG07     -144092                3880               2022                -7489               16584       -4049                 -577
+PG08        -Inf                 Inf                Inf                 -Inf                 Inf        -Inf                 -Inf
+PG09        -Inf                -Inf                Inf                 -Inf                -Inf         Inf                 -Inf
+PG10        -Inf                 Inf                Inf                 -Inf                 Inf        -Inf                  Inf
+     FinancialBudget
+PG02           81352
+PG03            -Inf
+PG04             NaN
+PG05             NaN
+PG06           19610
+PG07           19610
+PG08             Inf
+PG09             Inf
+PG10             Inf
 
 Residual Deviance: 13.1 
 AIC: 157 </code></pre>
-<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb625-1" title="1"><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Log likelihood: %.3f (%d df)</span></a>
-<a class="sourceLine" id="cb625-2" title="2"><span class="st">&quot;</span>, <span class="kw">logLik</span>(MYglm)[<span class="dv">1</span>], <span class="kw">attr</span>(<span class="kw">logLik</span>(MYglm), <span class="st">&quot;df&quot;</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb674-1" title="1"><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Log likelihood: %.3f (%d df)</span></a>
+<a class="sourceLine" id="cb674-2" title="2"><span class="st">&quot;</span>, <span class="kw">logLik</span>(MYglm)[<span class="dv">1</span>], <span class="kw">attr</span>(<span class="kw">logLik</span>(MYglm), <span class="st">&quot;df&quot;</span>)))</a></code></pre></div>
 <pre><code>Log likelihood: -6.545 (72 df)</code></pre>
-<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb627-1" title="1"><span class="cf">if</span> (<span class="kw">is.null</span>(MYglm<span class="op">$</span>na.action)) omitted &lt;-<span class="st"> </span><span class="ot">TRUE</span> <span class="cf">else</span> omitted &lt;-<span class="st"> </span><span class="op">-</span>MYglm<span class="op">$</span>na.action</a>
-<a class="sourceLine" id="cb627-2" title="2"><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Pseudo R-Square: %.8f</span></a>
-<a class="sourceLine" id="cb627-3" title="3"></a>
-<a class="sourceLine" id="cb627-4" title="4"><span class="st">&quot;</span>,<span class="kw">cor</span>(<span class="kw">apply</span>(MYglm<span class="op">$</span>fitted.values, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">which</span>(x <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(x))),</a>
-<a class="sourceLine" id="cb627-5" title="5"><span class="kw">as.integer</span>(MYdataset[omitted,]<span class="op">$</span>PG))))</a></code></pre></div>
+<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb676-1" title="1"><span class="cf">if</span> (<span class="kw">is.null</span>(MYglm<span class="op">$</span>na.action)) omitted &lt;-<span class="st"> </span><span class="ot">TRUE</span> <span class="cf">else</span> omitted &lt;-<span class="st"> </span><span class="op">-</span>MYglm<span class="op">$</span>na.action</a>
+<a class="sourceLine" id="cb676-2" title="2"><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">&quot;Pseudo R-Square: %.8f</span></a>
+<a class="sourceLine" id="cb676-3" title="3"></a>
+<a class="sourceLine" id="cb676-4" title="4"><span class="st">&quot;</span>,<span class="kw">cor</span>(<span class="kw">apply</span>(MYglm<span class="op">$</span>fitted.values, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="kw">which</span>(x <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(x))),</a>
+<a class="sourceLine" id="cb676-5" title="5"><span class="kw">as.integer</span>(MYdataset[omitted,]<span class="op">$</span>PG))))</a></code></pre></div>
 <pre><code>Pseudo R-Square: 0.99516038</code></pre>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb629-1" title="1"><span class="kw">cat</span>(<span class="st">&#39;==== ANOVA ====&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb678-1" title="1"><span class="kw">cat</span>(<span class="st">&#39;==== ANOVA ====&#39;</span>)</a></code></pre></div>
 <pre><code>==== ANOVA ====</code></pre>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb631-1" title="1"><span class="kw">print</span>(<span class="kw">Anova</span>(MYglm))</a></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb680-1" title="1"><span class="kw">print</span>(<span class="kw">Anova</span>(MYglm))</a></code></pre></div>
 <pre><code>Analysis of Deviance Table (Type II tests)
 
 Response: PG
@@ -1152,11 +1175,11 @@ FinancialBudget     5.55  9      0.784
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now let’s plot the Decision Tree</p>
 <p>###Decision Tree Plot</p>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb633-1" title="1"><span class="co"># Plot the resulting Decision Tree. </span></a>
-<a class="sourceLine" id="cb633-2" title="2"></a>
-<a class="sourceLine" id="cb633-3" title="3"><span class="co"># We use the rpart.plot package.</span></a>
-<a class="sourceLine" id="cb633-4" title="4"></a>
-<a class="sourceLine" id="cb633-5" title="5"><span class="kw">fancyRpartPlot</span>(MYrpart, <span class="dt">main=</span><span class="st">&quot;Decision Tree MYdataset $ PG&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb682-1" title="1"><span class="co"># Plot the resulting Decision Tree. </span></a>
+<a class="sourceLine" id="cb682-2" title="2"></a>
+<a class="sourceLine" id="cb682-3" title="3"><span class="co"># We use the rpart.plot package.</span></a>
+<a class="sourceLine" id="cb682-4" title="4"></a>
+<a class="sourceLine" id="cb682-5" title="5"><span class="kw">fancyRpartPlot</span>(MYrpart, <span class="dt">main=</span><span class="st">&quot;Decision Tree MYdataset $ PG&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-551-1.png" width="\textwidth" style="display: block; margin: auto;" />
 A readable view of the decision tree can be found at the following pdf:</p>
 <p><a href="https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6449&amp;authkey=!ACgJAX951UZuo4s&amp;ithint=file%2cpdf" class="uri">https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6449&amp;authkey=!ACgJAX951UZuo4s&amp;ithint=file%2cpdf</a></p>
@@ -1164,14 +1187,14 @@ A readable view of the decision tree can be found at the following pdf:</p>
 <p>###Evaluate</p>
 <p>In the following we will evaluate the best fitting model creating a confusion matrix. A confusion matrix is a specific table layout that allows visualization of the performance of an algorithm. Each row of the matrix represents the instances in a predicted class while each column represents the instances in an actual class (or vice versa). The name stems from the fact that it makes it easy to see if the system is confusing two classes (i.e. commonly mislabeling one as another).</p>
 <p>####Decision Tree</p>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb634-1" title="1"><span class="co"># Predict new job classsifications utilising the Decision Tree model.</span></a>
-<a class="sourceLine" id="cb634-2" title="2"></a>
-<a class="sourceLine" id="cb634-3" title="3">MYpr &lt;-<span class="st"> </span><span class="kw">predict</span>(MYrpart, <span class="dt">newdata=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)], <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb634-4" title="4"></a>
-<a class="sourceLine" id="cb634-5" title="5"><span class="co"># Generate the confusion matrix showing counts.</span></a>
-<a class="sourceLine" id="cb634-6" title="6"></a>
-<a class="sourceLine" id="cb634-7" title="7"><span class="kw">table</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr,</a>
-<a class="sourceLine" id="cb634-8" title="8">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb683-1" title="1"><span class="co"># Predict new job classsifications utilising the Decision Tree model.</span></a>
+<a class="sourceLine" id="cb683-2" title="2"></a>
+<a class="sourceLine" id="cb683-3" title="3">MYpr &lt;-<span class="st"> </span><span class="kw">predict</span>(MYrpart, <span class="dt">newdata=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)], <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb683-4" title="4"></a>
+<a class="sourceLine" id="cb683-5" title="5"><span class="co"># Generate the confusion matrix showing counts.</span></a>
+<a class="sourceLine" id="cb683-6" title="6"></a>
+<a class="sourceLine" id="cb683-7" title="7"><span class="kw">table</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr,</a>
+<a class="sourceLine" id="cb683-8" title="8">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    0    2    0    0    0    0    0    0    0    0
@@ -1184,20 +1207,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    0    0    7    0    0
   PG09    0    0    0    0    0    0    0    3    3    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb636-1" title="1"><span class="co"># Generate the confusion matrix showing proportions and misclassification error in the last column. Misclassification error, represents how often is the prediction wrong,</span></a>
-<a class="sourceLine" id="cb636-2" title="2"></a>
-<a class="sourceLine" id="cb636-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
-<a class="sourceLine" id="cb636-4" title="4">{</a>
-<a class="sourceLine" id="cb636-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
-<a class="sourceLine" id="cb636-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
-<a class="sourceLine" id="cb636-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
-<a class="sourceLine" id="cb636-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
-<a class="sourceLine" id="cb636-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb636-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
-<a class="sourceLine" id="cb636-11" title="11">  <span class="kw">return</span>(tbl)</a>
-<a class="sourceLine" id="cb636-12" title="12">}</a>
-<a class="sourceLine" id="cb636-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr)</a>
-<a class="sourceLine" id="cb636-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb685-1" title="1"><span class="co"># Generate the confusion matrix showing proportions and misclassification error in the last column. Misclassification error, represents how often is the prediction wrong,</span></a>
+<a class="sourceLine" id="cb685-2" title="2"></a>
+<a class="sourceLine" id="cb685-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
+<a class="sourceLine" id="cb685-4" title="4">{</a>
+<a class="sourceLine" id="cb685-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
+<a class="sourceLine" id="cb685-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
+<a class="sourceLine" id="cb685-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
+<a class="sourceLine" id="cb685-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
+<a class="sourceLine" id="cb685-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb685-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
+<a class="sourceLine" id="cb685-11" title="11">  <span class="kw">return</span>(tbl)</a>
+<a class="sourceLine" id="cb685-12" title="12">}</a>
+<a class="sourceLine" id="cb685-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr)</a>
+<a class="sourceLine" id="cb685-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01    0 0.03 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  1.00
@@ -1210,27 +1233,27 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08    0 0.00 0.00 0.00 0.00 0.00 0.00 0.11 0.00 0.00  0.00
   PG09    0 0.00 0.00 0.00 0.00 0.00 0.00 0.05 0.05 0.00  0.50
   PG10    0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb638-1" title="1"><span class="co"># First we calculate the overall miscalculation rate (also known as error rate or percentage error).</span></a>
-<a class="sourceLine" id="cb638-2" title="2"><span class="co">#Please note that diag(per) extracts the diagonal of confusion matrix.</span></a>
-<a class="sourceLine" id="cb638-3" title="3"></a>
-<a class="sourceLine" id="cb638-4" title="4"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>)) <span class="co"># 23%</span></a></code></pre></div>
+<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb687-1" title="1"><span class="co"># First we calculate the overall miscalculation rate (also known as error rate or percentage error).</span></a>
+<a class="sourceLine" id="cb687-2" title="2"><span class="co">#Please note that diag(per) extracts the diagonal of confusion matrix.</span></a>
+<a class="sourceLine" id="cb687-3" title="3"></a>
+<a class="sourceLine" id="cb687-4" title="4"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>)) <span class="co"># 23%</span></a></code></pre></div>
 <pre><code>23</code></pre>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb640-1" title="1"><span class="co"># Calculate the averaged miscalculation rate for each job classification. </span></a>
-<a class="sourceLine" id="cb640-2" title="2"><span class="co"># per[,&quot;Error&quot;] extracts the last column, which represents the miscalculation rate per.</span></a>
-<a class="sourceLine" id="cb640-3" title="3"></a>
-<a class="sourceLine" id="cb640-4" title="4"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))  <span class="co"># 28%</span></a></code></pre></div>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb689-1" title="1"><span class="co"># Calculate the averaged miscalculation rate for each job classification. </span></a>
+<a class="sourceLine" id="cb689-2" title="2"><span class="co"># per[,&quot;Error&quot;] extracts the last column, which represents the miscalculation rate per.</span></a>
+<a class="sourceLine" id="cb689-3" title="3"></a>
+<a class="sourceLine" id="cb689-4" title="4"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))  <span class="co"># 28%</span></a></code></pre></div>
 <pre><code>28</code></pre>
 <p>####Random Forest</p>
-<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb642-1" title="1"><span class="co"># Generate the Confusion Matrix for the Random Forest model.</span></a>
-<a class="sourceLine" id="cb642-2" title="2"></a>
-<a class="sourceLine" id="cb642-3" title="3"><span class="co"># Obtain the response from the Random Forest model.</span></a>
-<a class="sourceLine" id="cb642-4" title="4"></a>
-<a class="sourceLine" id="cb642-5" title="5">MYpr &lt;-<span class="st"> </span><span class="kw">predict</span>(MYrf, <span class="dt">newdata=</span><span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]))</a>
-<a class="sourceLine" id="cb642-6" title="6"></a>
-<a class="sourceLine" id="cb642-7" title="7"><span class="co"># Generate the confusion matrix showing counts.</span></a>
-<a class="sourceLine" id="cb642-8" title="8"></a>
-<a class="sourceLine" id="cb642-9" title="9"><span class="kw">table</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr,</a>
-<a class="sourceLine" id="cb642-10" title="10">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb691-1" title="1"><span class="co"># Generate the Confusion Matrix for the Random Forest model.</span></a>
+<a class="sourceLine" id="cb691-2" title="2"></a>
+<a class="sourceLine" id="cb691-3" title="3"><span class="co"># Obtain the response from the Random Forest model.</span></a>
+<a class="sourceLine" id="cb691-4" title="4"></a>
+<a class="sourceLine" id="cb691-5" title="5">MYpr &lt;-<span class="st"> </span><span class="kw">predict</span>(MYrf, <span class="dt">newdata=</span><span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]))</a>
+<a class="sourceLine" id="cb691-6" title="6"></a>
+<a class="sourceLine" id="cb691-7" title="7"><span class="co"># Generate the confusion matrix showing counts.</span></a>
+<a class="sourceLine" id="cb691-8" title="8"></a>
+<a class="sourceLine" id="cb691-9" title="9"><span class="kw">table</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr,</a>
+<a class="sourceLine" id="cb691-10" title="10">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    1    1    0    0    0    0    0    0    0    0
@@ -1243,20 +1266,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    0    0    7    0    0
   PG09    0    0    0    0    0    0    0    1    5    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb644-1" title="1"><span class="co"># Generate the confusion matrix showing proportions.</span></a>
-<a class="sourceLine" id="cb644-2" title="2"></a>
-<a class="sourceLine" id="cb644-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
-<a class="sourceLine" id="cb644-4" title="4">{</a>
-<a class="sourceLine" id="cb644-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
-<a class="sourceLine" id="cb644-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
-<a class="sourceLine" id="cb644-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
-<a class="sourceLine" id="cb644-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
-<a class="sourceLine" id="cb644-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb644-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
-<a class="sourceLine" id="cb644-11" title="11">  <span class="kw">return</span>(tbl)</a>
-<a class="sourceLine" id="cb644-12" title="12">}</a>
-<a class="sourceLine" id="cb644-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr)</a>
-<a class="sourceLine" id="cb644-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb693-1" title="1"><span class="co"># Generate the confusion matrix showing proportions.</span></a>
+<a class="sourceLine" id="cb693-2" title="2"></a>
+<a class="sourceLine" id="cb693-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
+<a class="sourceLine" id="cb693-4" title="4">{</a>
+<a class="sourceLine" id="cb693-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
+<a class="sourceLine" id="cb693-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
+<a class="sourceLine" id="cb693-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
+<a class="sourceLine" id="cb693-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
+<a class="sourceLine" id="cb693-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb693-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
+<a class="sourceLine" id="cb693-11" title="11">  <span class="kw">return</span>(tbl)</a>
+<a class="sourceLine" id="cb693-12" title="12">}</a>
+<a class="sourceLine" id="cb693-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr)</a>
+<a class="sourceLine" id="cb693-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01 0.02 0.02 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.50
@@ -1269,25 +1292,25 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.11 0.00 0.00  0.00
   PG09 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.02 0.08 0.00  0.17
   PG10 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb646-1" title="1"><span class="co"># Calculate the overall error percentage.</span></a>
-<a class="sourceLine" id="cb646-2" title="2"></a>
-<a class="sourceLine" id="cb646-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb695-1" title="1"><span class="co"># Calculate the overall error percentage.</span></a>
+<a class="sourceLine" id="cb695-2" title="2"></a>
+<a class="sourceLine" id="cb695-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>5</code></pre>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb648-1" title="1"><span class="co"># Calculate the averaged class error percentage.</span></a>
-<a class="sourceLine" id="cb648-2" title="2"></a>
-<a class="sourceLine" id="cb648-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb697-1" title="1"><span class="co"># Calculate the averaged class error percentage.</span></a>
+<a class="sourceLine" id="cb697-2" title="2"></a>
+<a class="sourceLine" id="cb697-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>9</code></pre>
 <p>####Support Vector Machine</p>
-<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb650-1" title="1"><span class="co"># Generate the Confusion Matrix for the SVM model.</span></a>
-<a class="sourceLine" id="cb650-2" title="2"></a>
-<a class="sourceLine" id="cb650-3" title="3"><span class="co"># Obtain the response from the SVM model.</span></a>
-<a class="sourceLine" id="cb650-4" title="4"></a>
-<a class="sourceLine" id="cb650-5" title="5">MYpr &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">predict</span>(MYksvm, <span class="dt">newdata=</span><span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]))</a>
-<a class="sourceLine" id="cb650-6" title="6"></a>
-<a class="sourceLine" id="cb650-7" title="7"><span class="co"># Generate the confusion matrix showing counts.</span></a>
-<a class="sourceLine" id="cb650-8" title="8"></a>
-<a class="sourceLine" id="cb650-9" title="9"><span class="kw">table</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr,</a>
-<a class="sourceLine" id="cb650-10" title="10">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb699-1" title="1"><span class="co"># Generate the Confusion Matrix for the SVM model.</span></a>
+<a class="sourceLine" id="cb699-2" title="2"></a>
+<a class="sourceLine" id="cb699-3" title="3"><span class="co"># Obtain the response from the SVM model.</span></a>
+<a class="sourceLine" id="cb699-4" title="4"></a>
+<a class="sourceLine" id="cb699-5" title="5">MYpr &lt;-<span class="st"> </span>kernlab<span class="op">::</span><span class="kw">predict</span>(MYksvm, <span class="dt">newdata=</span><span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]))</a>
+<a class="sourceLine" id="cb699-6" title="6"></a>
+<a class="sourceLine" id="cb699-7" title="7"><span class="co"># Generate the confusion matrix showing counts.</span></a>
+<a class="sourceLine" id="cb699-8" title="8"></a>
+<a class="sourceLine" id="cb699-9" title="9"><span class="kw">table</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr,</a>
+<a class="sourceLine" id="cb699-10" title="10">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    0    1    1    0    0    0    0    0    0    0
@@ -1300,20 +1323,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    1    0    6    0    0
   PG09    0    0    0    0    0    0    0    4    2    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb652-1" title="1"><span class="co"># Generate the confusion matrix showing proportions.</span></a>
-<a class="sourceLine" id="cb652-2" title="2"></a>
-<a class="sourceLine" id="cb652-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
-<a class="sourceLine" id="cb652-4" title="4">{</a>
-<a class="sourceLine" id="cb652-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
-<a class="sourceLine" id="cb652-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
-<a class="sourceLine" id="cb652-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
-<a class="sourceLine" id="cb652-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
-<a class="sourceLine" id="cb652-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb652-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
-<a class="sourceLine" id="cb652-11" title="11">  <span class="kw">return</span>(tbl)</a>
-<a class="sourceLine" id="cb652-12" title="12">}</a>
-<a class="sourceLine" id="cb652-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr)</a>
-<a class="sourceLine" id="cb652-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb701-1" title="1"><span class="co"># Generate the confusion matrix showing proportions.</span></a>
+<a class="sourceLine" id="cb701-2" title="2"></a>
+<a class="sourceLine" id="cb701-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
+<a class="sourceLine" id="cb701-4" title="4">{</a>
+<a class="sourceLine" id="cb701-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
+<a class="sourceLine" id="cb701-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
+<a class="sourceLine" id="cb701-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
+<a class="sourceLine" id="cb701-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
+<a class="sourceLine" id="cb701-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb701-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
+<a class="sourceLine" id="cb701-11" title="11">  <span class="kw">return</span>(tbl)</a>
+<a class="sourceLine" id="cb701-12" title="12">}</a>
+<a class="sourceLine" id="cb701-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(<span class="kw">na.omit</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])<span class="op">$</span>PG, MYpr)</a>
+<a class="sourceLine" id="cb701-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01    0 0.02 0.02 0.00 0.00 0.00    0 0.00 0.00 0.00  1.00
@@ -1326,25 +1349,25 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08    0 0.00 0.00 0.00 0.00 0.02    0 0.09 0.00 0.00  0.14
   PG09    0 0.00 0.00 0.00 0.00 0.00    0 0.06 0.03 0.00  0.67
   PG10    0 0.00 0.00 0.00 0.00 0.00    0 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb654-1" title="1"><span class="co"># Calculate the overall error percentage.</span></a>
-<a class="sourceLine" id="cb654-2" title="2"></a>
-<a class="sourceLine" id="cb654-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb703-1" title="1"><span class="co"># Calculate the overall error percentage.</span></a>
+<a class="sourceLine" id="cb703-2" title="2"></a>
+<a class="sourceLine" id="cb703-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>33</code></pre>
-<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb656-1" title="1"><span class="co"># Calculate the averaged class error percentage.</span></a>
-<a class="sourceLine" id="cb656-2" title="2"></a>
-<a class="sourceLine" id="cb656-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb705-1" title="1"><span class="co"># Calculate the averaged class error percentage.</span></a>
+<a class="sourceLine" id="cb705-2" title="2"></a>
+<a class="sourceLine" id="cb705-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>42</code></pre>
 <p>####Linear regression model</p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb658-1" title="1"><span class="co"># Generate the confusion matrix for the linear regression model.</span></a>
-<a class="sourceLine" id="cb658-2" title="2"></a>
-<a class="sourceLine" id="cb658-3" title="3"><span class="co"># Obtain the response from the Linear model.</span></a>
-<a class="sourceLine" id="cb658-4" title="4"></a>
-<a class="sourceLine" id="cb658-5" title="5">MYpr &lt;-<span class="st"> </span><span class="kw">predict</span>(MYglm, <span class="dt">newdata=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])</a>
-<a class="sourceLine" id="cb658-6" title="6"></a>
-<a class="sourceLine" id="cb658-7" title="7"><span class="co"># Generate the confusion matrix showing counts.</span></a>
-<a class="sourceLine" id="cb658-8" title="8"></a>
-<a class="sourceLine" id="cb658-9" title="9"><span class="kw">table</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr,</a>
-<a class="sourceLine" id="cb658-10" title="10">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb707-1" title="1"><span class="co"># Generate the confusion matrix for the linear regression model.</span></a>
+<a class="sourceLine" id="cb707-2" title="2"></a>
+<a class="sourceLine" id="cb707-3" title="3"><span class="co"># Obtain the response from the Linear model.</span></a>
+<a class="sourceLine" id="cb707-4" title="4"></a>
+<a class="sourceLine" id="cb707-5" title="5">MYpr &lt;-<span class="st"> </span><span class="kw">predict</span>(MYglm, <span class="dt">newdata=</span>MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)])</a>
+<a class="sourceLine" id="cb707-6" title="6"></a>
+<a class="sourceLine" id="cb707-7" title="7"><span class="co"># Generate the confusion matrix showing counts.</span></a>
+<a class="sourceLine" id="cb707-8" title="8"></a>
+<a class="sourceLine" id="cb707-9" title="9"><span class="kw">table</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr,</a>
+<a class="sourceLine" id="cb707-10" title="10">        <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    1    1    0    0    0    0    0    0    0    0
@@ -1357,20 +1380,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    0    0    7    0    0
   PG09    0    0    0    0    0    0    0    0    6    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb660-1" title="1"><span class="co"># Generate the confusion matrix showing proportions.</span></a>
-<a class="sourceLine" id="cb660-2" title="2"></a>
-<a class="sourceLine" id="cb660-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
-<a class="sourceLine" id="cb660-4" title="4">{</a>
-<a class="sourceLine" id="cb660-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
-<a class="sourceLine" id="cb660-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
-<a class="sourceLine" id="cb660-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
-<a class="sourceLine" id="cb660-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
-<a class="sourceLine" id="cb660-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb660-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
-<a class="sourceLine" id="cb660-11" title="11">  <span class="kw">return</span>(tbl)</a>
-<a class="sourceLine" id="cb660-12" title="12">}</a>
-<a class="sourceLine" id="cb660-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr)</a>
-<a class="sourceLine" id="cb660-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb709-1" title="1"><span class="co"># Generate the confusion matrix showing proportions.</span></a>
+<a class="sourceLine" id="cb709-2" title="2"></a>
+<a class="sourceLine" id="cb709-3" title="3">pcme &lt;-<span class="st"> </span><span class="cf">function</span>(actual, cl)</a>
+<a class="sourceLine" id="cb709-4" title="4">{</a>
+<a class="sourceLine" id="cb709-5" title="5">  x &lt;-<span class="st"> </span><span class="kw">table</span>(actual, cl)</a>
+<a class="sourceLine" id="cb709-6" title="6">  nc &lt;-<span class="st"> </span><span class="kw">nrow</span>(x)</a>
+<a class="sourceLine" id="cb709-7" title="7">  tbl &lt;-<span class="st"> </span><span class="kw">cbind</span>(x<span class="op">/</span><span class="kw">length</span>(actual),</a>
+<a class="sourceLine" id="cb709-8" title="8">               <span class="dt">Error=</span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span>nc,</a>
+<a class="sourceLine" id="cb709-9" title="9">                 <span class="cf">function</span>(r) <span class="kw">round</span>(<span class="kw">sum</span>(x[r,<span class="op">-</span>r])<span class="op">/</span><span class="kw">sum</span>(x[r,]), <span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb709-10" title="10">  <span class="kw">names</span>(<span class="kw">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</a>
+<a class="sourceLine" id="cb709-11" title="11">  <span class="kw">return</span>(tbl)</a>
+<a class="sourceLine" id="cb709-12" title="12">}</a>
+<a class="sourceLine" id="cb709-13" title="13">per &lt;-<span class="st"> </span><span class="kw">pcme</span>(MYdataset[,<span class="kw">c</span>(MYinput, MYtarget)]<span class="op">$</span>PG, MYpr)</a>
+<a class="sourceLine" id="cb709-14" title="14"><span class="kw">round</span>(per, <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01 0.02 0.02 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.50
@@ -1383,13 +1406,13 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.11 0.00 0.00  0.00
   PG09 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09 0.00  0.00
   PG10 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb662-1" title="1"><span class="co"># Calculate the overall error percentage.</span></a>
-<a class="sourceLine" id="cb662-2" title="2"></a>
-<a class="sourceLine" id="cb662-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb711-1" title="1"><span class="co"># Calculate the overall error percentage.</span></a>
+<a class="sourceLine" id="cb711-2" title="2"></a>
+<a class="sourceLine" id="cb711-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">sum</span>(<span class="kw">diag</span>(per), <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>6</code></pre>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb664-1" title="1"><span class="co"># Calculate the averaged class error percentage.</span></a>
-<a class="sourceLine" id="cb664-2" title="2"></a>
-<a class="sourceLine" id="cb664-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb713-1" title="1"><span class="co"># Calculate the averaged class error percentage.</span></a>
+<a class="sourceLine" id="cb713-2" title="2"></a>
+<a class="sourceLine" id="cb713-3" title="3"><span class="kw">cat</span>(<span class="dv">100</span><span class="op">*</span><span class="kw">round</span>(<span class="kw">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dv">2</span>))</a></code></pre></div>
 <pre><code>11</code></pre>
 <div id="final-evaluation-of-the-various-models" class="section level3">
 <h3><span class="header-section-number">19.0.1</span> Final evaluation of the various models</h3>
@@ -1415,15 +1438,14 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
 <p>Here, is the unclassified dataset:</p>
 <p><a href="https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6478&amp;authkey=!ALYidIIpaCrfnf4&amp;ithint=file%2ccsv" class="uri">https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6478&amp;authkey=!ALYidIIpaCrfnf4&amp;ithint=file%2ccsv</a></p>
 <p>Put the data in a separate dataset and run the following R commands:</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb666-1" title="1">DeployDataset &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Deploydata.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb667-1" title="1">DeployDataset</a></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb715-1" title="1">DeployDataset &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Deploydata.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb716-1" title="1">DeployDataset</a></code></pre></div>
 <pre><code># A tibble: 1 x 7
-  EducationLevel Experience OrgImpact ProblemSolving Supervision ContactLevel
-           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
-1              2          0         3              4           1            5
-# ... with 1 more variable: FinancialBudget &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb669-1" title="1">PredictedJobGrade &lt;-<span class="st"> </span><span class="kw">predict</span>(MYrf, <span class="dt">newdata=</span>DeployDataset)</a>
-<a class="sourceLine" id="cb669-2" title="2">PredictedJobGrade</a></code></pre></div>
+  EducationLevel Experience OrgImpact ProblemSolving Supervision ContactLevel FinancialBudget
+           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;           &lt;dbl&gt;
+1              2          0         3              4           1            5               4</code></pre>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb718-1" title="1">PredictedJobGrade &lt;-<span class="st"> </span><span class="kw">predict</span>(MYrf, <span class="dt">newdata=</span>DeployDataset)</a>
+<a class="sourceLine" id="cb718-2" title="2">PredictedJobGrade</a></code></pre></div>
 <pre><code>   1 
 PG05 
 Levels: PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10</code></pre>

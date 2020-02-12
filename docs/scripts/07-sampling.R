@@ -1,4 +1,4 @@
-## ----echo=FALSE, results="asis"-----------------------------------------------
+## ----echo=FALSE, results="asis"-----------------------------------------------------------------------------------------------------
 if(knitr::is_latex_output()){
   cat("# (PART) (ref:inferpart) {-}")
 } else {
@@ -8,12 +8,12 @@ if(knitr::is_latex_output()){
 
 
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----message=FALSE, warning=FALSE---------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(moderndive)
 
 
-## ----message=FALSE, warning=FALSE, echo=FALSE---------------------------------
+## ----message=FALSE, warning=FALSE, echo=FALSE---------------------------------------------------------------------------------------
 # Packages needed internally, but not in text.
 library(knitr)
 library(kableExtra)
@@ -32,11 +32,11 @@ library(patchwork)
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 tactile_prop_red
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## ggplot(tactile_prop_red, aes(x = prop_red)) +
 ##   geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
 ##   labs(x = "Proportion of 50 balls that were red",
@@ -54,56 +54,56 @@ tactile_histogram +
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 bowl
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 fruit_basket <- tibble(
   fruit = c("Mango", "Tangerine", "Apricot", "Pamplemousse", "Lime")
 )
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 fruit_basket %>% 
   rep_sample_n(size = 3)
 
 
-## ---- eval = FALSE------------------------------------------------------------
+## ---- eval = FALSE------------------------------------------------------------------------------------------------------------------
 ## fruit_basket %>%
 ##   rep_sample_n(size = 6)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_shovel <- bowl %>% 
   rep_sample_n(size = 50)
 virtual_shovel
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_shovel %>% 
   mutate(is_red = (color == "red"))
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_shovel %>% 
   mutate(is_red = (color == "red")) %>% 
   summarize(num_red = sum(is_red))
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------------------------------------------------------------
 n_red_virtual_shovel <- virtual_shovel %>% 
   mutate(is_red = (color == "red")) %>% 
   summarize(num_red = sum(is_red)) %>% 
   pull(num_red)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_shovel %>% 
   mutate(is_red = color == "red") %>% 
   summarize(num_red = sum(is_red)) %>% 
   mutate(prop_red = num_red / 50)
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------------------------------------------------------------
 virtual_shovel_prop_red <- virtual_shovel %>% 
   mutate(is_red = color == "red") %>% 
   summarize(num_red = sum(is_red)) %>% 
@@ -112,19 +112,19 @@ virtual_shovel_prop_red <- virtual_shovel %>%
 virtual_shovel_perc_red <- virtual_shovel_prop_red * 100
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_shovel %>% 
   summarize(num_red = sum(color == "red")) %>% 
   mutate(prop_red = num_red / 50)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_samples <- bowl %>% 
   rep_sample_n(size = 50, reps = 33)
 virtual_samples
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_prop_red <- virtual_samples %>% 
   group_by(replicate) %>% 
   summarize(red = sum(color == "red")) %>% 
@@ -132,7 +132,7 @@ virtual_prop_red <- virtual_samples %>%
 virtual_prop_red
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## ggplot(virtual_prop_red, aes(x = prop_red)) +
 ##   geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
 ##   labs(x = "Proportion of 50 balls that were red",
@@ -146,7 +146,7 @@ virtual_histogram +
        title = "Distribution of 33 proportions red")
 
 
-## ----tactile-vs-virtual, echo=FALSE, fig.cap="Comparing 33 virtual and 33 tactile proportions red.", fig.height=2.9----
+## ----tactile-vs-virtual, echo=FALSE, fig.cap="Comparing 33 virtual and 33 tactile proportions red.", fig.height=2.9-----------------
 facet_compare <- bind_rows(
   virtual_prop_red %>% 
     mutate(type = "Virtual sampling"), 
@@ -177,13 +177,13 @@ if(knitr::is_latex_output()){
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_samples <- bowl %>% 
   rep_sample_n(size = 50, reps = 1000)
 virtual_samples
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 virtual_prop_red <- virtual_samples %>% 
   group_by(replicate) %>% 
   summarize(red = sum(color == "red")) %>% 
@@ -191,7 +191,7 @@ virtual_prop_red <- virtual_samples %>%
 virtual_prop_red
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## ggplot(virtual_prop_red, aes(x = prop_red)) +
 ##   geom_histogram(binwidth = 0.05, boundary = 0.4, color = "white") +
 ##   labs(x = "Proportion of 50 balls that were red",
@@ -215,7 +215,7 @@ virtual_histogram +
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Segment 1: sample size = 25 ------------------------------
 ## # 1.a) Virtually use shovel 1000 times
 ## virtual_samples_25 <- bowl %>%
@@ -332,7 +332,7 @@ if(knitr::is_latex_output()){
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # n = 25
 ## virtual_prop_red_25 %>%
 ##   summarize(sd = sd(prop_red))
@@ -346,7 +346,7 @@ if(knitr::is_latex_output()){
 ##   summarize(sd = sd(prop_red))
 
 
-## ----comparing-n, eval=TRUE, echo=FALSE---------------------------------------
+## ----comparing-n, eval=TRUE, echo=FALSE---------------------------------------------------------------------------------------------
 comparing_n_table <- virtual_prop %>% 
   group_by(n) %>% 
   summarize(sd = sd(prop_red)) %>% 
@@ -375,7 +375,7 @@ comparing_n_table  %>%
 comparing_sampling_distributions
 
 
-## ----comparing-n-repeat, eval=TRUE, echo=FALSE--------------------------------
+## ----comparing-n-repeat, eval=TRUE, echo=FALSE--------------------------------------------------------------------------------------
 comparing_n_table <- virtual_prop %>% 
   group_by(n) %>% 
   summarize(sd = sd(prop_red)) %>% 
@@ -416,7 +416,7 @@ if(knitr::is_latex_output()){
 
 
 
-## ----comparing-n-2, eval=TRUE, echo=FALSE-------------------------------------
+## ----comparing-n-2, eval=TRUE, echo=FALSE-------------------------------------------------------------------------------------------
 comparing_n_table <- virtual_prop %>% 
   group_by(n) %>% 
   summarize(sd = sd(prop_red)) %>% 
@@ -442,7 +442,7 @@ comparing_n_table  %>%
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 bowl %>% 
   summarize(sum_red = sum(color == "red"), 
             sum_not_red = sum(color != "red"))
@@ -481,7 +481,7 @@ if(knitr::is_latex_output()){
 
 
 
-## ----comparing-n-3, eval=TRUE, echo=FALSE-------------------------------------
+## ----comparing-n-3, eval=TRUE, echo=FALSE-------------------------------------------------------------------------------------------
 set.seed(76)
 comparing_n_table <- virtual_prop %>% 
   group_by(n) %>% 
@@ -510,7 +510,7 @@ comparing_n_table  %>%
 
 
 
-## ----table-ch8, echo=FALSE, message=FALSE-------------------------------------
+## ----table-ch8, echo=FALSE, message=FALSE-------------------------------------------------------------------------------------------
 # The following Google Doc is published to CSV and loaded using read_csv():
 # https://docs.google.com/spreadsheets/d/1QkOpnBGqOXGyJjwqx1T2O5G5D72wWGfWlPyufOgtkk4/edit#gid=0
 
@@ -541,7 +541,7 @@ sampling_scenarios %>%
 
 
 
-## ----echo=FALSE, results="asis"-----------------------------------------------
+## ----echo=FALSE, results="asis"-----------------------------------------------------------------------------------------------------
 if(knitr::is_latex_output()){
   cat("Solutions to all *Learning checks* can be found online in [Appendix D](https://moderndive.com/D-appendixD.html).")
 } 

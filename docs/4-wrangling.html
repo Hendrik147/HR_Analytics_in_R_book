@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 4 Data Wrangling | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
@@ -19,12 +19,12 @@
   <meta name="twitter:title" content="Chapter 4 Data Wrangling | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-10" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -803,9 +797,9 @@ FIGURE 4.3: Diagram of summarize() rows.
 <a class="sourceLine" id="cb68-3" title="3">            <span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb68-4" title="4">summary_temp</a></code></pre></div>
 <pre><code># A tibble: 1 x 2
-     mean std_dev
-    &lt;dbl&gt;   &lt;dbl&gt;
-1 55.2604 17.7879</code></pre>
+   mean std_dev
+  &lt;dbl&gt;   &lt;dbl&gt;
+1  55.3    17.8</code></pre>
 <p>Notice how the <code>na.rm = TRUE</code>  are used as arguments to the <code>mean()</code>  and <code>sd()</code>  summary functions individually, and not to the <code>summarize()</code> function.</p>
 <p>However, one needs to be cautious whenever ignoring missing values as we’ve just done. In the upcoming <em>Learning checks</em> questions, we’ll consider the possible ramifications of blindly sweeping rows with missing values “under the rug.” This is in fact why the <code>na.rm</code> argument to any summary statistic function in R is set to <code>FALSE</code> by default. In other words, R does not ignore rows with missing values by default. R is alerting you to the presence of missing data and you should be mindful of this missingness and any potential causes of this missingness throughout your analysis.</p>
 <p>What are other summary functions we can use inside the <code>summarize()</code> verb to compute summary statistics? As seen in the diagram in Figure <a href="4-wrangling.html#fig:summary-function">4.2</a>, you can use any function in R that takes many values and returns just one. Here are just a few:</p>
@@ -849,55 +843,55 @@ FIGURE 4.4: Diagram of group_by() and summarize().
 <a class="sourceLine" id="cb71-4" title="4">            <span class="dt">std_dev =</span> <span class="kw">sd</span>(temp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb71-5" title="5">summary_monthly_temp</a></code></pre></div>
 <pre><code># A tibble: 12 x 3
-   month    mean  std_dev
-   &lt;int&gt;   &lt;dbl&gt;    &lt;dbl&gt;
- 1     1 35.6357 10.2246 
- 2     2 34.2706  6.98238
- 3     3 39.8801  6.24928
- 4     4 51.7456  8.78617
- 5     5 61.795   9.68164
- 6     6 72.184   7.54637
- 7     7 80.0662  7.11990
- 8     8 74.4685  5.19161
- 9     9 67.3713  8.46590
-10    10 60.0711  8.84604
-11    11 44.9904 10.4438 
-12    12 38.4418  9.98243</code></pre>
+   month  mean std_dev
+   &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1     1  35.6   10.2 
+ 2     2  34.3    6.98
+ 3     3  39.9    6.25
+ 4     4  51.7    8.79
+ 5     5  61.8    9.68
+ 6     6  72.2    7.55
+ 7     7  80.1    7.12
+ 8     8  74.5    5.19
+ 9     9  67.4    8.47
+10    10  60.1    8.85
+11    11  45.0   10.4 
+12    12  38.4    9.98</code></pre>
 <p>This code is identical to the previous code that created <code>summary_temp</code>, but with an extra <code>group_by(month)</code> added before the <code>summarize()</code>. Grouping the <code>weather</code> dataset by <code>month</code> and then applying the <code>summarize()</code> functions yields a data frame that displays the mean and standard deviation temperature split by the 12 months of the year.</p>
 <p>It is important to note that the  <code>group_by()</code> function doesn’t change data frames by itself. Rather it changes the <em>meta-data</em>, or data about the data, specifically the grouping structure. It is only after we apply the <code>summarize()</code> function that the data frame changes.</p>
 <p>For example, let’s consider the  <code>diamonds</code> data frame included in the <code>ggplot2</code> package. Run this code:</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">diamonds</a></code></pre></div>
 <pre><code># A tibble: 53,940 x 10
-      carat cut       color clarity   depth table price     x     y       z
-      &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1 0.23     Ideal     E     SI2     61.5       55   326  3.95 3.98  2.43   
- 2 0.21     Premium   E     SI1     59.8       61   326  3.89 3.84  2.31   
- 3 0.23     Good      E     VS1     56.9       65   327  4.05 4.07  2.31   
- 4 0.290000 Premium   I     VS2     62.4       58   334  4.2  4.23  2.63   
- 5 0.31     Good      J     SI2     63.3       58   335  4.34 4.350 2.75   
- 6 0.24     Very Good J     VVS2    62.8       57   336  3.94 3.96  2.48   
- 7 0.24     Very Good I     VVS1    62.3       57   336  3.95 3.98  2.47   
- 8 0.26     Very Good H     SI1     61.9       55   337  4.07 4.11  2.53000
- 9 0.22     Fair      E     VS2     65.1000    61   337  3.87 3.78  2.49   
-10 0.23     Very Good H     VS1     59.4       61   338  4    4.05  2.39   
+   carat cut       color clarity depth table price     x     y     z
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+ 2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+ 3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+ 4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+ 5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+ 6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+ 7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+ 8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+ 9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
 # ... with 53,930 more rows</code></pre>
 <p>Observe that the first line of the output reads <code># A tibble: 53,940 x 10</code>. This is an example of meta-data, in this case the number of observations/rows and variables/columns in <code>diamonds</code>. The actual data itself are the subsequent table of values. Now let’s pipe the <code>diamonds</code> data frame into <code>group_by(cut)</code>:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb75-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(cut)</a></code></pre></div>
 <pre><code># A tibble: 53,940 x 10
 # Groups:   cut [5]
-      carat cut       color clarity   depth table price     x     y       z
-      &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1 0.23     Ideal     E     SI2     61.5       55   326  3.95 3.98  2.43   
- 2 0.21     Premium   E     SI1     59.8       61   326  3.89 3.84  2.31   
- 3 0.23     Good      E     VS1     56.9       65   327  4.05 4.07  2.31   
- 4 0.290000 Premium   I     VS2     62.4       58   334  4.2  4.23  2.63   
- 5 0.31     Good      J     SI2     63.3       58   335  4.34 4.350 2.75   
- 6 0.24     Very Good J     VVS2    62.8       57   336  3.94 3.96  2.48   
- 7 0.24     Very Good I     VVS1    62.3       57   336  3.95 3.98  2.47   
- 8 0.26     Very Good H     SI1     61.9       55   337  4.07 4.11  2.53000
- 9 0.22     Fair      E     VS2     65.1000    61   337  3.87 3.78  2.49   
-10 0.23     Very Good H     VS1     59.4       61   338  4    4.05  2.39   
+   carat cut       color clarity depth table price     x     y     z
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+ 2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+ 3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+ 4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+ 5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+ 6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+ 7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+ 8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+ 9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
 # ... with 53,930 more rows</code></pre>
 <p>Observe that now there is additional meta-data: <code># Groups: cut [5]</code> indicating that the grouping structure meta-data has been set based on the 5 possible levels of the categorical variable <code>cut</code>: <code>"Fair"</code>, <code>"Good"</code>, <code>"Very Good"</code>, <code>"Premium"</code>, and <code>"Ideal"</code>. On the other hand, observe that the data has not changed: it is still a table of 53,940 <span class="math inline">\(\times\)</span> 10 values.</p>
 <p>Only by combining a <code>group_by()</code> with another data wrangling operation, in this case <code>summarize()</code>, will the data actually be transformed.</p>
@@ -907,28 +901,28 @@ FIGURE 4.4: Diagram of group_by() and summarize().
 <pre><code># A tibble: 5 x 2
   cut       avg_price
   &lt;ord&gt;         &lt;dbl&gt;
-1 Fair        4358.76
-2 Good        3928.86
-3 Very Good   3981.76
-4 Premium     4584.26
-5 Ideal       3457.54</code></pre>
+1 Fair          4359.
+2 Good          3929.
+3 Very Good     3982.
+4 Premium       4584.
+5 Ideal         3458.</code></pre>
 <p>If you would like to remove this grouping structure meta-data, we can pipe the resulting data frame into the  <code>ungroup()</code> function:</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">diamonds <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb79-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(cut) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb79-3" title="3"><span class="st">  </span><span class="kw">ungroup</span>()</a></code></pre></div>
 <pre><code># A tibble: 53,940 x 10
-      carat cut       color clarity   depth table price     x     y       z
-      &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1 0.23     Ideal     E     SI2     61.5       55   326  3.95 3.98  2.43   
- 2 0.21     Premium   E     SI1     59.8       61   326  3.89 3.84  2.31   
- 3 0.23     Good      E     VS1     56.9       65   327  4.05 4.07  2.31   
- 4 0.290000 Premium   I     VS2     62.4       58   334  4.2  4.23  2.63   
- 5 0.31     Good      J     SI2     63.3       58   335  4.34 4.350 2.75   
- 6 0.24     Very Good J     VVS2    62.8       57   336  3.94 3.96  2.48   
- 7 0.24     Very Good I     VVS1    62.3       57   336  3.95 3.98  2.47   
- 8 0.26     Very Good H     SI1     61.9       55   337  4.07 4.11  2.53000
- 9 0.22     Fair      E     VS2     65.1000    61   337  3.87 3.78  2.49   
-10 0.23     Very Good H     VS1     59.4       61   338  4    4.05  2.39   
+   carat cut       color clarity depth table price     x     y     z
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 0.23  Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+ 2 0.21  Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+ 3 0.23  Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+ 4 0.290 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+ 5 0.31  Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+ 6 0.24  Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+ 7 0.24  Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+ 8 0.26  Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+ 9 0.22  Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+10 0.23  Very Good H     VS1      59.4    61   338  4     4.05  2.39
 # ... with 53,930 more rows</code></pre>
 <p>Observe how the <code># Groups: cut [5]</code> meta-data is no longer present.</p>
 <p>Let’s now revisit the <code>n()</code>  counting summary function we briefly introduced previously. Recall that the <code>n()</code> function counts rows. This is opposed to the <code>sum()</code> summary function that returns the sum of a numerical variable. For example, suppose we’d like to count how many flights departed each of the three airports in New York City:</p>
@@ -1028,89 +1022,92 @@ FIGURE 4.5: Diagram of mutate() columns.
 <pre><code># A tibble: 12 x 3
    month mean_temp_in_F mean_temp_in_C
    &lt;int&gt;          &lt;dbl&gt;          &lt;dbl&gt;
- 1     1        35.6357        2.01981
- 2     2        34.2706        1.26144
- 3     3        39.8801        4.37782
- 4     4        51.7456       10.9698 
- 5     5        61.795        16.5528 
- 6     6        72.184        22.3244 
- 7     7        80.0662       26.7035 
- 8     8        74.4685       23.5936 
- 9     9        67.3713       19.6507 
-10    10        60.0711       15.5951 
-11    11        44.9904        7.21691
-12    12        38.4418        3.57878</code></pre>
+ 1     1           35.6           2.02
+ 2     2           34.3           1.26
+ 3     3           39.9           4.38
+ 4     4           51.7          11.0 
+ 5     5           61.8          16.6 
+ 6     6           72.2          22.3 
+ 7     7           80.1          26.7 
+ 8     8           74.5          23.6 
+ 9     9           67.4          19.7 
+10    10           60.1          15.6 
+11    11           45.0           7.22
+12    12           38.4           3.58</code></pre>
 <p>Let’s consider another example. Passengers are often frustrated when their flight departs late, but aren’t as annoyed if, in the end, pilots can make up some time during the flight. This is known in the airline industry as <em>gain</em>, and we will create this variable using the <code>mutate()</code> function:</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">flights &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb90-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gain =</span> dep_delay <span class="op">-</span><span class="st"> </span>arr_delay)</a></code></pre></div>
-<p>Let’s take a look at only the <code>dep_delay</code>, <code>arr_delay</code>, and the resulting <code>gain</code> variables for the first 5 rows in our updated <code>flights</code> data frame in Table <a href="#tab:first-five-flights"><strong>??</strong></a>.</p>
+<p>Let’s take a look at only the <code>dep_delay</code>, <code>arr_delay</code>, and the resulting <code>gain</code> variables for the first 5 rows in our updated <code>flights</code> data frame in Table <a href="4-wrangling.html#tab:first-five-flights">4.1</a>.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:first-five-flights">TABLE 4.1: </span>First five rows of departure/arrival delay and gain variables
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 dep_delay
 </th>
-<th>
+<th style="text-align:right;">
 arr_delay
 </th>
-<th>
+<th style="text-align:right;">
 gain
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:right;">
 2
 </td>
-<td>
+<td style="text-align:right;">
 11
 </td>
-<td>
+<td style="text-align:right;">
 -9
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 4
 </td>
-<td>
+<td style="text-align:right;">
 20
 </td>
-<td>
+<td style="text-align:right;">
 -16
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 2
 </td>
-<td>
+<td style="text-align:right;">
 33
 </td>
-<td>
+<td style="text-align:right;">
 -31
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 -1
 </td>
-<td>
+<td style="text-align:right;">
 -18
 </td>
-<td>
+<td style="text-align:right;">
 17
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 -6
 </td>
-<td>
+<td style="text-align:right;">
 -25
 </td>
-<td>
+<td style="text-align:right;">
 19
 </td>
 </tr>
@@ -1131,9 +1128,9 @@ gain
 <a class="sourceLine" id="cb91-11" title="11">  )</a>
 <a class="sourceLine" id="cb91-12" title="12">gain_summary</a></code></pre></div>
 <pre><code># A tibble: 1 x 8
-    min    q1 median    q3   max    mean      sd missing
-  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
-1  -196    -3      7    17   109 5.65978 18.0436    9430</code></pre>
+    min    q1 median    q3   max  mean    sd missing
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;int&gt;
+1  -196    -3      7    17   109  5.66  18.0    9430</code></pre>
 <p>We see for example that the average gain is +5 minutes, while the largest is +109 minutes! However, this code would take some time to type out in practice. We’ll see later on in Subsection <a href="6-regression.html#model1EDA">6.1.1</a> that there is a much more succinct way to compute a variety of common summary statistics: using the <code>skim()</code> function from the <code>skimr</code> package.</p>
 <p>Recall from Section <a href="3-viz.html#histograms">3.5</a> that since <code>gain</code> is a numerical variable, we can visualize its distribution using a histogram.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> flights, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> gain)) <span class="op">+</span></a>
@@ -1270,18 +1267,18 @@ FIGURE 4.8: Diagram of inner join from <em>R for Data Science</em>.
 <a class="sourceLine" id="cb105-6" title="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">airport_name =</span> name)</a>
 <a class="sourceLine" id="cb105-7" title="7">named_dests</a></code></pre></div>
 <pre><code># A tibble: 101 x 9
-   dest  num_flights airport_name         lat       lon   alt    tz dst   tzone 
-   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 ORD         17283 Chicago Ohare I~ 41.9786  -87.9048   668    -6 A     Ameri~
- 2 ATL         17215 Hartsfield Jack~ 33.6367  -84.4281  1026    -5 A     Ameri~
- 3 LAX         16174 Los Angeles Intl 33.9425 -118.408    126    -8 A     Ameri~
- 4 BOS         15508 General Edward ~ 42.3643  -71.0052    19    -5 A     Ameri~
- 5 MCO         14082 Orlando Intl     28.4294  -81.3090    96    -5 A     Ameri~
- 6 CLT         14064 Charlotte Dougl~ 35.214   -80.9431   748    -5 A     Ameri~
- 7 SFO         13331 San Francisco I~ 37.6190 -122.375     13    -8 A     Ameri~
- 8 FLL         12055 Fort Lauderdale~ 26.0726  -80.1528     9    -5 A     Ameri~
- 9 MIA         11728 Miami Intl       25.7932  -80.2906     8    -5 A     Ameri~
-10 DCA          9705 Ronald Reagan W~ 38.8521  -77.0377    15    -5 A     Ameri~
+   dest  num_flights airport_name                         lat    lon   alt    tz dst   tzone              
+   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;                              &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;              
+ 1 ORD         17283 Chicago Ohare Intl                  42.0  -87.9   668    -6 A     America/Chicago    
+ 2 ATL         17215 Hartsfield Jackson Atlanta Intl     33.6  -84.4  1026    -5 A     America/New_York   
+ 3 LAX         16174 Los Angeles Intl                    33.9 -118.    126    -8 A     America/Los_Angeles
+ 4 BOS         15508 General Edward Lawrence Logan Intl  42.4  -71.0    19    -5 A     America/New_York   
+ 5 MCO         14082 Orlando Intl                        28.4  -81.3    96    -5 A     America/New_York   
+ 6 CLT         14064 Charlotte Douglas Intl              35.2  -80.9   748    -5 A     America/New_York   
+ 7 SFO         13331 San Francisco Intl                  37.6 -122.     13    -8 A     America/Los_Angeles
+ 8 FLL         12055 Fort Lauderdale Hollywood Intl      26.1  -80.2     9    -5 A     America/New_York   
+ 9 MIA         11728 Miami Intl                          25.8  -80.3     8    -5 A     America/New_York   
+10 DCA          9705 Ronald Reagan Washington Natl       38.9  -77.0    15    -5 A     America/New_York   
 # ... with 91 more rows</code></pre>
 <p>In case you didn’t know, <code>"ORD"</code> is the airport code of Chicago O’Hare airport and <code>"FLL"</code> is the main airport in Fort Lauderdale, Florida, which can be seen in the <code>airport_name</code> variable.</p>
 </div>
@@ -1396,64 +1393,67 @@ FIGURE 4.9: Diagram of select() columns.
 <h2><span class="header-section-number">4.9</span> Conclusion</h2>
 <div id="summary-table-1" class="section level3">
 <h3><span class="header-section-number">4.9.1</span> Summary table</h3>
-<p>Let’s recap our data wrangling verbs in Table <a href="#tab:wrangle-summary-table"><strong>??</strong></a>. Using these verbs and the pipe <code>%&gt;%</code> operator from Section <a href="4-wrangling.html#piping">4.1</a>, you’ll be able to write easily legible code to perform almost all the data wrangling and data transformation necessary for the rest of this book.</p>
+<p>Let’s recap our data wrangling verbs in Table <a href="4-wrangling.html#tab:wrangle-summary-table">4.2</a>. Using these verbs and the pipe <code>%&gt;%</code> operator from Section <a href="4-wrangling.html#piping">4.1</a>, you’ll be able to write easily legible code to perform almost all the data wrangling and data transformation necessary for the rest of this book.</p>
 <table>
+<caption>
+<span id="tab:wrangle-summary-table">TABLE 4.2: </span>Summary of data wrangling verbs
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Verb
 </th>
-<th>
+<th style="text-align:left;">
 Data wrangling operation
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 <code>filter()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Pick out a subset of rows
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 <code>summarize()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Summarize many values to one using a summary statistic function like <code>mean()</code>, <code>median()</code>, etc.
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 <code>group_by()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Add grouping structure to rows in data frame. Note this does not change values in data frame, rather only the meta-data
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 <code>mutate()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Create new variables by mutating existing ones
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 <code>arrange()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Arrange rows of a data variable in ascending (default) or <code>desc</code>ending order
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 <code>inner_join()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Join/merge two data frames, matching rows by a key variable
 </td>
 </tr>
@@ -1479,7 +1479,7 @@ FIGURE 4.10: Example of available seat miles for one flight.
 <li><strong>Crucial</strong>: Unless you are very confident in what you are doing, it is worthwhile not starting to code right away. Rather, first sketch out on paper all the necessary data wrangling steps not using exact code, but rather high-level <em>pseudocode</em> that is informal yet detailed enough to articulate what you are doing. This way you won’t confuse <em>what</em> you are trying to do (the algorithm) with <em>how</em> you are going to do it (writing <code>dplyr</code> code).</li>
 <li>Take a close look at all the datasets using the <code>View()</code> function: <code>flights</code>, <code>weather</code>, <code>planes</code>, <code>airports</code>, and <code>airlines</code> to identify which variables are necessary to compute available seat miles.</li>
 <li>Figure <a href="4-wrangling.html#fig:reldiagram">4.7</a> showing how the various datasets can be joined will also be useful.</li>
-<li>Consider the data wrangling verbs in Table <a href="#tab:wrangle-summary-table"><strong>??</strong></a> as your toolbox!</li>
+<li>Consider the data wrangling verbs in Table <a href="4-wrangling.html#tab:wrangle-summary-table">4.2</a> as your toolbox!</li>
 </ol>
 <div class="learncheck">
 

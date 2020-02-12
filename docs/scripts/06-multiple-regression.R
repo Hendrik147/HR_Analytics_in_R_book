@@ -1,10 +1,10 @@
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## library(tidyverse)
 ## library(moderndive)
 ## library(skimr)
 ## library(ISLR)
 
-## ---- echo=FALSE, message=FALSE, warning=FALSE--------------------------------
+## ---- echo=FALSE, message=FALSE, warning=FALSE--------------------------------------------------------------------------------------
 library(tidyverse)
 library(moderndive)
 # DO NOT load the skimr package as a whole as it will break all kable() code for 
@@ -14,26 +14,26 @@ library(moderndive)
 library(ISLR)
 
 
-## ---- message=FALSE, warning=FALSE, echo=FALSE--------------------------------
+## ---- message=FALSE, warning=FALSE, echo=FALSE--------------------------------------------------------------------------------------
 # Packages needed internally, but not in text:
 library(kableExtra)
 library(patchwork)
 library(gapminder)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 evals_ch6 <- evals %>%
   select(ID, score, age, gender)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 glimpse(evals_ch6)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## evals_ch6 %>% sample_n(size = 5)
 
-## ----model4-data-preview, echo=FALSE------------------------------------------
+## ----model4-data-preview, echo=FALSE------------------------------------------------------------------------------------------------
 evals_ch6 %>%
   sample_n(5) %>%
   knitr::kable(
@@ -46,16 +46,16 @@ evals_ch6 %>%
                 latex_options = c("hold_position"))
 
 
-## ---- eval =FALSE-------------------------------------------------------------
+## ---- eval =FALSE-------------------------------------------------------------------------------------------------------------------
 ## evals_ch6 %>% select(score, age, gender) %>% skim()
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 evals_ch6 %>% 
   get_correlation(formula = score ~ age)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
 ##   geom_point() +
 ##   labs(x = "Age", y = "Teaching Score", color = "Gender") +
@@ -77,7 +77,7 @@ if(knitr::is_html_output()){
 }
 
 
-## ---- echo=FALSE--------------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------------------------------------------------------------
 # Wrangle data
 gapminder2007 <- gapminder %>%
   filter(year == 2007) %>%
@@ -98,14 +98,14 @@ get_regression_table(lifeExp_model) %>%
                 latex_options = c("hold_position"))
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Fit regression model:
 ## score_model_interaction <- lm(score ~ age * gender, data = evals_ch6)
 ## 
 ## # Get regression table:
 ## get_regression_table(score_model_interaction)
 
-## ----regtable-interaction, echo=FALSE-----------------------------------------
+## ----regtable-interaction, echo=FALSE-----------------------------------------------------------------------------------------------
 score_model_interaction <- lm(score ~ age * gender, data = evals_ch6)
 get_regression_table(score_model_interaction) %>% 
   knitr::kable(
@@ -118,7 +118,7 @@ get_regression_table(score_model_interaction) %>%
                 latex_options = c("hold_position"))
 
 
-## ----interaction-summary, echo=FALSE------------------------------------------
+## ----interaction-summary, echo=FALSE------------------------------------------------------------------------------------------------
 options(digits = 4)
 tibble(
   Gender = c("Female instructors", "Male instructors"),
@@ -136,7 +136,7 @@ tibble(
 options(digits = 3)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## ggplot(evals_ch6, aes(x = age, y = score, color = gender)) +
 ##   geom_point() +
 ##   labs(x = "Age", y = "Teaching Score", color = "Gender") +
@@ -156,13 +156,13 @@ if(knitr::is_html_output()){
 }
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Fit regression model:
 ## score_model_parallel_slopes <- lm(score ~ age + gender, data = evals_ch6)
 ## # Get regression table:
 ## get_regression_table(score_model_parallel_slopes)
 
-## ----regtable-parallel-slopes, echo=FALSE-------------------------------------
+## ----regtable-parallel-slopes, echo=FALSE-------------------------------------------------------------------------------------------
 score_model_parallel_slopes <- lm(score ~ age + gender, data = evals_ch6)
 get_regression_table(score_model_parallel_slopes) %>% 
   knitr::kable(
@@ -175,13 +175,13 @@ get_regression_table(score_model_parallel_slopes) %>%
                 latex_options = c("hold_position"))
 
 
-## ----echo=FALSE---------------------------------------------------------------
+## ----echo=FALSE---------------------------------------------------------------------------------------------------------------------
 age_coef <- get_regression_table(score_model_parallel_slopes) %>% 
   filter(term == "age") %>% 
   pull(estimate)
 
 
-## ----parallel-slopes-summary, echo=FALSE--------------------------------------
+## ----parallel-slopes-summary, echo=FALSE--------------------------------------------------------------------------------------------
 options(digits = 4)
 tibble(
   Gender = c("Female instructors", "Male instructors"),
@@ -223,7 +223,7 @@ if(knitr::is_html_output()){
 }
 
 
-## ----fitted-values, echo=FALSE, warning=FALSE, fig.cap="Fitted values for two new professors.", fig.height=4.7----
+## ----fitted-values, echo=FALSE, warning=FALSE, fig.cap="Fitted values for two new professors.", fig.height=4.7----------------------
 newpoints <- evals_ch6 %>% 
   slice(c(1, 5)) %>% 
   get_regression_points(score_model_interaction, newdata = .)
@@ -242,11 +242,11 @@ if(knitr::is_html_output()){
 }
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## regression_points <- get_regression_points(score_model_interaction)
 ## regression_points
 
-## ----model4-points-table, echo=FALSE------------------------------------------
+## ----model4-points-table, echo=FALSE------------------------------------------------------------------------------------------------
 regression_points <- get_regression_points(score_model_interaction)
 regression_points %>%
   slice(1:10) %>%
@@ -263,21 +263,21 @@ regression_points %>%
 
 
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ---- warning=FALSE, message=FALSE--------------------------------------------------------------------------------------------------
 library(ISLR)
 credit_ch6 <- Credit %>% as_tibble() %>% 
   select(ID, debt = Balance, credit_limit = Limit, 
          income = Income, credit_rating = Rating, age = Age)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 glimpse(credit_ch6)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## credit_ch6 %>% sample_n(size = 5)
 
-## ----model3-data-preview, echo=FALSE------------------------------------------
+## ----model3-data-preview, echo=FALSE------------------------------------------------------------------------------------------------
 credit_ch6 %>%
   sample_n(5) %>%
   knitr::kable(
@@ -290,21 +290,21 @@ credit_ch6 %>%
                 latex_options = c("hold_position"))
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## credit_ch6 %>% select(debt, credit_limit, income) %>% skim()
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## credit_ch6 %>% get_correlation(debt ~ credit_limit)
 ## credit_ch6 %>% get_correlation(debt ~ income)
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## credit_ch6 %>%
 ##   select(debt, credit_limit, income) %>%
 ##   cor()
 
-## ----model3-correlation, echo=FALSE-------------------------------------------
+## ----model3-correlation, echo=FALSE-------------------------------------------------------------------------------------------------
 credit_ch6 %>% 
   select(debt, credit_limit, income) %>% 
   cor() %>% 
@@ -318,7 +318,7 @@ credit_ch6 %>%
                 latex_options = c("hold_position"))
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## ggplot(credit_ch6, aes(x = credit_limit, y = debt)) +
 ##   geom_point() +
 ##   labs(x = "Credit limit (in $)", y = "Credit card debt (in $)",
@@ -332,7 +332,7 @@ credit_ch6 %>%
 ##   geom_smooth(method = "lm", se = FALSE)
 
 
-## ----2numxplot1, echo=FALSE, fig.cap="Relationship between credit card debt and credit limit/income.", fig.height=3.2----
+## ----2numxplot1, echo=FALSE, fig.cap="Relationship between credit card debt and credit limit/income.", fig.height=3.2---------------
 model3_balance_vs_limit_plot <- ggplot(credit_ch6, aes(x = credit_limit, y = debt)) +
   geom_point() +
   labs(x = "Credit limit (in $)", y = "Credit card debt (in $)", 
@@ -353,7 +353,7 @@ model3_balance_vs_limit_plot + model3_balance_vs_income_plot
 
 
 
-## ---- eval=FALSE, echo=FALSE--------------------------------------------------
+## ---- eval=FALSE, echo=FALSE--------------------------------------------------------------------------------------------------------
 ## # Source code for above 3D scatterplot & regression plane.
 ## library(ISLR)
 ## library(plotly)
@@ -405,13 +405,13 @@ model3_balance_vs_limit_plot + model3_balance_vs_income_plot
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Fit regression model:
 ## debt_model <- lm(debt ~ credit_limit + income, data = credit_ch6)
 ## # Get regression table:
 ## get_regression_table(debt_model)
 
-## ----model3-table-output, echo=FALSE------------------------------------------
+## ----model3-table-output, echo=FALSE------------------------------------------------------------------------------------------------
 debt_model <- lm(debt ~ credit_limit + income, data = credit_ch6)
 credit_line <- get_regression_table(debt_model) %>%
   pull(estimate)
@@ -430,10 +430,10 @@ get_regression_table(debt_model) %>%
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## get_regression_points(debt_model)
 
-## ----model3-points-table, echo=FALSE------------------------------------------
+## ----model3-points-table, echo=FALSE------------------------------------------------------------------------------------------------
 set.seed(76)
 regression_points <- get_regression_points(debt_model)
 regression_points %>%
@@ -460,7 +460,7 @@ if(knitr::is_html_output()){
 }
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Interaction model
 ## ggplot(MA_schools,
 ##        aes(x = perc_disadvan, y = average_sat_math, color = size)) +
@@ -470,7 +470,7 @@ if(knitr::is_html_output()){
 ##        color = "School size", title = "Interaction model")
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## # Parallel slopes model
 ## ggplot(MA_schools,
 ##        aes(x = perc_disadvan, y = average_sat_math, color = size)) +
@@ -503,12 +503,12 @@ if(knitr::is_html_output()){
 
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## model_2_interaction <- lm(average_sat_math ~ perc_disadvan * size,
 ##                           data = MA_schools)
 ## get_regression_table(model_2_interaction)
 
-## ----model2-interaction, echo=FALSE-------------------------------------------
+## ----model2-interaction, echo=FALSE-------------------------------------------------------------------------------------------------
 model_2_interaction <- lm(average_sat_math ~ perc_disadvan * size, 
                           data = MA_schools)
 get_regression_table(model_2_interaction) %>% 
@@ -521,12 +521,12 @@ get_regression_table(model_2_interaction) %>%
   kable_styling(font_size = ifelse(knitr:::is_latex_output(), 10, 16),
                 latex_options = c("hold_position"))
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## model_2_parallel_slopes <- lm(average_sat_math ~ perc_disadvan + size,
 ##                               data = MA_schools)
 ## get_regression_table(model_2_parallel_slopes)
 
-## ----model2-parallel-slopes, echo=FALSE---------------------------------------
+## ----model2-parallel-slopes, echo=FALSE---------------------------------------------------------------------------------------------
 model_2_parallel_slopes <- lm(average_sat_math ~ perc_disadvan + size, 
                               data = MA_schools)
 get_regression_table(model_2_parallel_slopes) %>% 
@@ -540,12 +540,12 @@ get_regression_table(model_2_parallel_slopes) %>%
                 latex_options = c("hold_position"))
 
 
-## ---- eval=FALSE--------------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------------------------------------------------------------
 ## credit_ch6 %>% select(debt, income) %>%
 ##   mutate(income = income * 1000) %>%
 ##   cor()
 
-## ----cor-credit-2, echo=FALSE-------------------------------------------------
+## ----cor-credit-2, echo=FALSE-------------------------------------------------------------------------------------------------------
 credit_ch6 %>% 
   select(debt, income) %>% 
   mutate(income = income * 1000) %>% 
@@ -560,11 +560,11 @@ credit_ch6 %>%
                 latex_options = c("hold_position"))
 
 
-## ----2numxplot1-repeat, echo=FALSE, fig.cap="Relationship between credit card debt and income.", fig.height=1.8----
+## ----2numxplot1-repeat, echo=FALSE, fig.cap="Relationship between credit card debt and income.", fig.height=1.8---------------------
 model3_balance_vs_income_plot
 
 
-## ----model3-table-output-repeat, echo=FALSE-----------------------------------
+## ----model3-table-output-repeat, echo=FALSE-----------------------------------------------------------------------------------------
 debt_model <- lm(debt ~ credit_limit + income, data = credit_ch6)
 credit_line <- get_regression_table(debt_model) %>%
   pull(estimate)
@@ -579,14 +579,14 @@ get_regression_table(debt_model) %>%
                 latex_options = c("hold_position"))
 
 
-## ----credit-limit-quartiles, echo=FALSE, fig.height=2.5, fig.cap="Histogram of credit limits and brackets.", message=FALSE----
+## ----credit-limit-quartiles, echo=FALSE, fig.height=2.5, fig.cap="Histogram of credit limits and brackets.", message=FALSE----------
 ggplot(credit_ch6, aes(x = credit_limit)) +
   geom_histogram(color = "white") +
   geom_vline(xintercept = quantile(credit_ch6$credit_limit, probs = c(0.25, 0.5, 0.75)), linetype = "dashed", size = 1) +
   labs(x = "Credit limit", title = "Credit limit and 4 credit limit brackets.")
 
 
-## ----2numxplot4, echo=FALSE, fig.cap="Relationship between credit card debt and income by credit limit bracket.", fig.height=3----
+## ----2numxplot4, echo=FALSE, fig.cap="Relationship between credit card debt and income by credit limit bracket.", fig.height=3------
 credit_ch6 <- credit_ch6 %>% 
   mutate(limit_bracket = cut_number(credit_limit, 4)) %>% 
   mutate(limit_bracket = fct_recode(limit_bracket,
@@ -621,7 +621,7 @@ if(knitr::is_html_output()){
 }
 
 
-## ----echo=FALSE, results="asis"-----------------------------------------------
+## ----echo=FALSE, results="asis"-----------------------------------------------------------------------------------------------------
 if(knitr::is_latex_output()){
   cat("Solutions to all *Learning checks* can be found online in [Appendix D](https://moderndive.com/D-appendixD.html).")
 } 

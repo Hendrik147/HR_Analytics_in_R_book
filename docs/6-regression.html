@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 6 Basic Regression | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
@@ -19,12 +19,12 @@
   <meta name="twitter:title" content="Chapter 6 Basic Regression | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-10" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -663,7 +657,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Needed packages</h3>
 <p>Let’s now load all the packages needed for this chapter (this assumes you’ve already installed them). In this chapter, we introduce some new packages:</p>
 <ol style="list-style-type: decimal">
-<li>The <code>tidyverse</code> “umbrella” <span class="citation">(Wickham <a href="#ref-R-tidyverse" role="doc-biblioref">2019</a><a href="#ref-R-tidyverse" role="doc-biblioref">b</a>)</span> package. Recall from our discussion in Section <a href="5-tidy.html#tidyverse-package">5.4</a> that loading the <code>tidyverse</code> package by running <code>library(tidyverse)</code> loads the following commonly used data science packages all at once:
+<li>The <code>tidyverse</code> “umbrella” <span class="citation">(<span class="citeproc-not-found" data-reference-id="R-tidyverse"><strong>???</strong></span>)</span> package. Recall from our discussion in Section <a href="5-tidy.html#tidyverse-package">5.4</a> that loading the <code>tidyverse</code> package by running <code>library(tidyverse)</code> loads the following commonly used data science packages all at once:
 <ul>
 <li><code>ggplot2</code> for data visualization</li>
 <li><code>dplyr</code> for data wrangling</li>
@@ -705,10 +699,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1"><span class="kw">glimpse</span>(evals_ch5)</a></code></pre></div>
 <pre><code>Observations: 463
 Variables: 4
-$ ID      &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ...
-$ score   &lt;dbl&gt; 4.7, 4.1, 3.9, 4.8, 4.6, 4.3, 2.8, 4.1, 3.4, 4.5, 3.8, 4.5,...
-$ bty_avg &lt;dbl&gt; 5.00, 5.00, 5.00, 5.00, 3.00, 3.00, 3.00, 3.33, 3.33, 3.17,...
-$ age     &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40,...</code></pre>
+$ ID      &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31...
+$ score   &lt;dbl&gt; 4.7, 4.1, 3.9, 4.8, 4.6, 4.3, 2.8, 4.1, 3.4, 4.5, 3.8, 4.5, 4.6, 3.9, 3.9, 4.3, 4.5, 4.8, 4.6, 4.6, 4.9, 4.6, 4.5...
+$ bty_avg &lt;dbl&gt; 5.00, 5.00, 5.00, 5.00, 3.00, 3.00, 3.00, 3.33, 3.33, 3.17, 3.17, 3.17, 3.17, 3.17, 3.17, 3.17, 3.17, 7.33, 7.33,...
+$ age     &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40, 40, 40, 31, 31, 31, 31, 31, 31, 62, 62, 62, 62, 62, 6...</code></pre>
 <p>Observe that <code>Observations: 463</code> indicates that there are 463 rows/observations in <code>evals_ch5</code>, where each row corresponds to one observed course at UT Austin. It is important to note that the <em>observational unit</em>  is an individual course and not an individual instructor. Recall from Subsection <a href="2-getting-started.html#exploredataframes">2.4.3</a> that the observational unit is the “type of thing” that is being measured by our variables. Since instructors teach more than one course in an academic year, the same instructor will appear more than once in the data. Hence there are fewer than 463 unique instructors being represented in <code>evals_ch5</code>. We’ll revisit this idea in Section <a href="11-inference-for-regression.html#regression-conditions">11.3</a>, when we talk about the “independence assumption” for inference for regression.</p>
 <p>A full description of all the variables included in <code>evals</code> can be found at <a href="https://www.openintro.org/stat/data/?data=evals">openintro.org</a> or by reading the associated help file (run <code>?evals</code> in the console). However, let’s fully describe only the 4 variables we selected in <code>evals_ch5</code>:</p>
 <ol style="list-style-type: decimal">
@@ -820,7 +814,7 @@ age
 <pre><code># A tibble: 1 x 4
   mean_bty_avg mean_score median_bty_avg median_score
          &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-1      4.41784    4.17473          4.333          4.3</code></pre>
+1         4.42       4.17           4.33          4.3</code></pre>
 <p>However, what if we want other summary statistics as well, such as the standard deviation (a measure of spread), the minimum and maximum values, and various percentiles?</p>
 <p>Typing out all these summary statistic functions in <code>summarize()</code> would be long and tedious. Instead, let’s use the convenient <code>skim()</code> function from the <code>skimr</code>  package. This function takes in a data frame, “skims” it, and returns commonly used summary statistics. Let’s take our <code>evals_ch5</code> data frame, <code>select()</code> only the outcome and explanatory variables teaching <code>score</code> and <code>bty_avg</code>, and pipe them into the <code>skim()</code> function:</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" title="1">evals_ch5 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(score, bty_avg) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">skim</span>()</a></code></pre></div>
@@ -875,9 +869,9 @@ FIGURE 6.1: Nine different correlation coefficients.
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" title="1">evals_ch5 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb153-2" title="2"><span class="st">  </span><span class="kw">get_correlation</span>(<span class="dt">formula =</span> score <span class="op">~</span><span class="st"> </span>bty_avg)</a></code></pre></div>
 <pre><code># A tibble: 1 x 1
-       cor
-     &lt;dbl&gt;
-1 0.187142</code></pre>
+    cor
+  &lt;dbl&gt;
+1 0.187</code></pre>
 <p>An alternative way to compute correlation is to use the <code>cor()</code> summary function within a <code>summarize()</code>:</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" title="1">evals_ch5 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb155-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">correlation =</span> <span class="kw">cor</span>(score, bty_avg))</a></code></pre></div>
@@ -1279,10 +1273,10 @@ residual
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" title="1"><span class="kw">glimpse</span>(gapminder2007)</a></code></pre></div>
 <pre><code>Observations: 142
 Variables: 4
-$ country   &lt;fct&gt; Afghanistan, Albania, Algeria, Angola, Argentina, Austral...
-$ lifeExp   &lt;dbl&gt; 43.8, 76.4, 72.3, 42.7, 75.3, 81.2, 79.8, 75.6, 64.1, 79....
-$ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Oceania, Europe, ...
-$ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391, ...</code></pre>
+$ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Albania&quot;, &quot;Algeria&quot;, &quot;Angola&quot;, &quot;Argentina&quot;, &quot;Australia&quot;, &quot;Austria&quot;, &quot;Bahrain&quot;, &quot;Bangladesh&quot;, &quot;B...
+$ lifeExp   &lt;dbl&gt; 43.8, 76.4, 72.3, 42.7, 75.3, 81.2, 79.8, 75.6, 64.1, 79.4, 56.7, 65.6, 74.9, 50.7, 72.4, 73.0, 52.3, 49.6, 59....
+$ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Oceania, Europe, Asia, Asia, Europe, Africa, Americas, Europe, Africa, ...
+$ gdpPercap &lt;dbl&gt; 975, 5937, 6223, 4797, 12779, 34435, 36126, 29796, 1391, 33693, 1441, 3822, 7446, 12570, 9066, 10681, 1217, 430...</code></pre>
 <p>Observe that <code>Observations: 142</code> indicates that there are 142 rows/observations in <code>gapminder2007</code>, where each row corresponds to one country. In other words, the <em>observational unit</em> is an individual country. Furthermore, observe that the variable <code>continent</code> is of type <code>&lt;fct&gt;</code>, which stands for <em>factor</em>, which is R’s way of encoding categorical variables.</p>
 <p>A full description of all the variables included in <code>gapminder</code> can be found by reading the associated help file (run <code>?gapminder</code> in the console). However, let’s fully describe only the 4 variables we selected in <code>gapminder2007</code>:</p>
 <ol style="list-style-type: decimal">
@@ -2147,16 +2141,16 @@ FIGURE 6.12: Example of observed value, fitted value, and residual.
 <pre><code># A tibble: 463 x 5
       ID score bty_avg score_hat residual
    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
- 1     1 4.7   5           4.214  0.486  
- 2     2 4.100 5           4.214 -0.114  
- 3     3 3.9   5           4.214 -0.314  
- 4     4 4.8   5           4.214  0.586  
- 5     5 4.600 3           4.08   0.52   
- 6     6 4.3   3           4.08   0.22   
- 7     7 2.8   3           4.08  -1.28   
- 8     8 4.100 3.333       4.102 -0.002  
- 9     9 3.4   3.333       4.102 -0.702  
-10    10 4.5   3.16700     4.091  0.40900
+ 1     1   4.7    5         4.21    0.486
+ 2     2   4.1    5         4.21   -0.114
+ 3     3   3.9    5         4.21   -0.314
+ 4     4   4.8    5         4.21    0.586
+ 5     5   4.6    3         4.08    0.52 
+ 6     6   4.3    3         4.08    0.22 
+ 7     7   2.8    3         4.08   -1.28 
+ 8     8   4.1    3.33      4.10   -0.002
+ 9     9   3.4    3.33      4.10   -0.702
+10    10   4.5    3.17      4.09    0.409
 # ... with 453 more rows</code></pre>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1"><span class="co"># Compute sum of squared residuals</span></a>
 <a class="sourceLine" id="cb176-2" title="2">regression_points <span class="op">%&gt;%</span></a>
@@ -2165,7 +2159,7 @@ FIGURE 6.12: Example of observed value, fitted value, and residual.
 <pre><code># A tibble: 1 x 1
   sum_of_squared_residuals
                      &lt;dbl&gt;
-1                  131.879</code></pre>
+1                     132.</code></pre>
 <p>Any other straight line drawn in the figure would yield a sum of squared residuals greater than 132. This is a mathematically guaranteed fact that you can prove using calculus and linear algebra. That’s why alternative names for the linear regression line are the <em>best-fitting line</em> and the <em>least-squares line</em>. Why do we square the residuals (i.e., the arrow lengths)? So that both positive and negative deviations of the same amount are treated equally.</p>
 <div class="learncheck">
 <p>
@@ -2282,7 +2276,7 @@ bty_avg
 </table>
 <p>The <code>get_regression_table()</code> wrapper function takes two pre-existing functions in other R packages:</p>
 <ul>
-<li><code>tidy()</code>  from the <a href="https://broom.tidyverse.org/"><code>broom</code> package</a> <span class="citation">(Robinson and Hayes <a href="#ref-R-broom" role="doc-biblioref">2020</a>)</span> and</li>
+<li><code>tidy()</code>  from the <a href="https://broom.tidyverse.org/"><code>broom</code> package</a> <span class="citation">(<span class="citeproc-not-found" data-reference-id="R-broom"><strong>???</strong></span>)</span> and</li>
 <li><code>clean_names()</code>  from the <a href="https://github.com/sfirke/janitor"><code>janitor</code> package</a> <span class="citation">(Firke <a href="#ref-R-janitor" role="doc-biblioref">2020</a>)</span></li>
 </ul>
 <p>and “wraps” them into a single function that takes in a saved <code>lm()</code> linear model model, here <code>score_model</code>, and returns a regression table saved as a “tidy” data frame. Here is how we used the <code>tidy()</code> and <code>clean_names()</code> functions to produce Table <a href="6-regression.html#tab:regtable-broom">6.11</a>:</p>
@@ -2581,12 +2575,6 @@ FIGURE 6.14: Preview of “Guess the Correlation” game.
 </div>
 <div id="ref-R-skimr">
 <p>Quinn, Michael, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, and Shannon Ellis. 2019. <em>Skimr: Compact and Flexible Summaries of Data</em>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.</p>
-</div>
-<div id="ref-R-broom">
-<p>Robinson, David, and Alex Hayes. 2020. <em>Broom: Convert Statistical Analysis Objects into Tidy Tibbles</em>. <a href="https://CRAN.R-project.org/package=broom">https://CRAN.R-project.org/package=broom</a>.</p>
-</div>
-<div id="ref-R-tidyverse">
-<p>Wickham, Hadley. 2019b. <em>Tidyverse: Easily Install and Load the ’Tidyverse’</em>. <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a>.</p>
 </div>
 </div>
 <div id="disqus_thread"></div>

@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 5 Data Importing and “Tidy” Data | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
-  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
@@ -19,12 +19,12 @@
   <meta name="twitter:title" content="Chapter 5 Data Importing and “Tidy” Data | HR Analytics in R" />
   
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.png" />
+  <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
 
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-10" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -714,13 +708,13 @@ FIGURE 5.1: Importing an Excel file to R.
 <p>Let’s now switch gears and learn about the concept of “tidy” data format with a motivating example from the <code>fivethirtyeight</code> package. The <code>fivethirtyeight</code> package <span class="citation">(Kim, Ismay, and Chunn <a href="#ref-R-fivethirtyeight" role="doc-biblioref">2019</a>)</span> provides access to the datasets used in many articles published by the data journalism website, <a href="https://fivethirtyeight.com/">FiveThirtyEight.com</a>. For a complete list of all 127 datasets included in the <code>fivethirtyeight</code> package, check out the package webpage by going to: <a href="https://fivethirtyeight-r.netlify.com/articles/fivethirtyeight.html" class="uri">https://fivethirtyeight-r.netlify.com/articles/fivethirtyeight.html</a>.</p>
 <p>Let’s focus our attention on the <code>drinks</code> data frame and look at its first 5 rows:</p>
 <pre><code># A tibble: 5 x 5
-  country    beer_servings spirit_servings wine_servings total_litres_of_pure_a~
-  &lt;chr&gt;              &lt;int&gt;           &lt;int&gt;         &lt;int&gt;                   &lt;dbl&gt;
-1 Afghanist~             0               0             0                     0  
-2 Albania               89             132            54                     4.9
-3 Algeria               25               0            14                     0.7
-4 Andorra              245             138           312                    12.4
-5 Angola               217              57            45                     5.9</code></pre>
+  country     beer_servings spirit_servings wine_servings total_litres_of_pure_alcohol
+  &lt;chr&gt;               &lt;int&gt;           &lt;int&gt;         &lt;int&gt;                        &lt;dbl&gt;
+1 Afghanistan             0               0             0                          0  
+2 Albania                89             132            54                          4.9
+3 Algeria                25               0            14                          0.7
+4 Andorra               245             138           312                         12.4
+5 Angola                217              57            45                          5.9</code></pre>
 <p>After reading the help file by running <code>?drinks</code>, you’ll see that <code>drinks</code> is a data frame containing results from a survey of the average number of servings of beer, spirits, and wine consumed in 193 countries. This data was originally reported on FiveThirtyEight.com in Mona Chalabi’s article: <a href="https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/">“Dear Mona Followup: Where Do People Drink The Most Beer, Wine And Spirits?”</a>.</p>
 <p>Let’s apply some of the data wrangling verbs we learned in Chapter <a href="4-wrangling.html#wrangling">4</a> on the <code>drinks</code> data frame:</p>
 <ol style="list-style-type: decimal">
@@ -799,180 +793,189 @@ FIGURE 5.2: Comparing alcohol consumption in 4 countries.
 FIGURE 5.3: Tidy data graphic from <em>R for Data Science</em>.
 </p>
 </div>
-<p>For example, say you have the following table of stock prices in Table <a href="#tab:non-tidy-stocks"><strong>??</strong></a>:</p>
+<p>For example, say you have the following table of stock prices in Table <a href="5-tidy.html#tab:non-tidy-stocks">5.1</a>:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:non-tidy-stocks">TABLE 5.1: </span>Stock prices (non-tidy format)
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Date
 </th>
-<th>
+<th style="text-align:left;">
 Boeing stock price
 </th>
-<th>
+<th style="text-align:left;">
 Amazon stock price
 </th>
-<th>
+<th style="text-align:left;">
 Google stock price
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-01
 </td>
-<td>
+<td style="text-align:left;">
 $173.55
 </td>
-<td>
+<td style="text-align:left;">
 $174.90
 </td>
-<td>
+<td style="text-align:left;">
 $174.34
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-02
 </td>
-<td>
+<td style="text-align:left;">
 $172.61
 </td>
-<td>
+<td style="text-align:left;">
 $171.42
 </td>
-<td>
+<td style="text-align:left;">
 $170.04
 </td>
 </tr>
 </tbody>
 </table>
-<p>Although the data are neatly organized in a rectangular spreadsheet-type format, they do not follow the definition of data in “tidy” format. While there are three variables corresponding to three unique pieces of information (date, stock name, and stock price), there are not three columns. In “tidy” data format, each variable should be its own column, as shown in Table <a href="#tab:tidy-stocks"><strong>??</strong></a>. Notice that both tables present the same information, but in different formats.</p>
+<p>Although the data are neatly organized in a rectangular spreadsheet-type format, they do not follow the definition of data in “tidy” format. While there are three variables corresponding to three unique pieces of information (date, stock name, and stock price), there are not three columns. In “tidy” data format, each variable should be its own column, as shown in Table <a href="5-tidy.html#tab:tidy-stocks">5.2</a>. Notice that both tables present the same information, but in different formats.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tidy-stocks">TABLE 5.2: </span>Stock prices (tidy format)
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Date
 </th>
-<th>
+<th style="text-align:left;">
 Stock Name
 </th>
-<th>
+<th style="text-align:left;">
 Stock Price
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-01
 </td>
-<td>
+<td style="text-align:left;">
 Boeing
 </td>
-<td>
+<td style="text-align:left;">
 $173.55
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-01
 </td>
-<td>
+<td style="text-align:left;">
 Amazon
 </td>
-<td>
+<td style="text-align:left;">
 $174.90
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-01
 </td>
-<td>
+<td style="text-align:left;">
 Google
 </td>
-<td>
+<td style="text-align:left;">
 $174.34
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-02
 </td>
-<td>
+<td style="text-align:left;">
 Boeing
 </td>
-<td>
+<td style="text-align:left;">
 $172.61
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-02
 </td>
-<td>
+<td style="text-align:left;">
 Amazon
 </td>
-<td>
+<td style="text-align:left;">
 $171.42
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-02
 </td>
-<td>
+<td style="text-align:left;">
 Google
 </td>
-<td>
+<td style="text-align:left;">
 $170.04
 </td>
 </tr>
 </tbody>
 </table>
-<p>Now we have the requisite three columns Date, Stock Name, and Stock Price. On the other hand, consider the data in Table <a href="#tab:tidy-stocks-2"><strong>??</strong></a>.</p>
+<p>Now we have the requisite three columns Date, Stock Name, and Stock Price. On the other hand, consider the data in Table <a href="5-tidy.html#tab:tidy-stocks-2">5.3</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:tidy-stocks-2">TABLE 5.3: </span>Example of tidy data
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Date
 </th>
-<th>
+<th style="text-align:left;">
 Boeing Price
 </th>
-<th>
+<th style="text-align:left;">
 Weather
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-01
 </td>
-<td>
+<td style="text-align:left;">
 $173.55
 </td>
-<td>
+<td style="text-align:left;">
 Sunny
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 2009-01-02
 </td>
-<td>
+<td style="text-align:left;">
 $172.61
 </td>
-<td>
+<td style="text-align:left;">
 Overcast
 </td>
 </tr>
 </tbody>
 </table>
-<p>In this case, even though the variable “Boeing Price” occurs just like in our non-“tidy” data in Table <a href="#tab:non-tidy-stocks"><strong>??</strong></a>, the data <em>is</em> “tidy” since there are three variables corresponding to three unique pieces of information: Date, Boeing price, and the Weather that particular day.</p>
+<p>In this case, even though the variable “Boeing Price” occurs just like in our non-“tidy” data in Table <a href="5-tidy.html#tab:non-tidy-stocks">5.1</a>, the data <em>is</em> “tidy” since there are three variables corresponding to three unique pieces of information: Date, Boeing price, and the Weather that particular day.</p>
 <div class="learncheck">
 <p>
 <strong><em>Learning check</em></strong>
@@ -1079,7 +1082,7 @@ FIGURE 5.4: Comparing alcohol consumption in 4 countries using geom_col().
 <div id="nycflights13-package-1" class="section level3">
 <h3><span class="header-section-number">5.2.3</span> <code>nycflights13</code> package</h3>
 <p>Recall the <code>nycflights13</code> package we introduced in Section <a href="2-getting-started.html#nycflights13">2.4</a> with data about all domestic flights departing from New York City in 2013. Let’s revisit the <code>flights</code> data frame by running <code>View(flights)</code>. We saw that <code>flights</code> has a rectangular shape, with each of its 336,776 rows corresponding to a flight and each of its 22 columns corresponding to different characteristics/measurements of each flight. This satisfied the first two criteria of the definition of “tidy” data from Subsection <a href="5-tidy.html#tidy-definition">5.2.1</a>: that “Each variable forms a column” and “Each observation forms a row.” But what about the third property of “tidy” data that “Each type of observational unit forms a table”?</p>
-<p>Recall that we saw in Subsection <a href="2-getting-started.html#exploredataframes">2.4.3</a> that the observational unit for the <code>flights</code> data frame is an individual flight. In other words, the rows of the <code>flights</code> data frame refer to characteristics/measurements of individual flights. Also included in the <code>nycflights13</code> package are other data frames with their rows representing different observational units <span class="citation">(Wickham <a href="#ref-R-nycflights13" role="doc-biblioref">2019</a><a href="#ref-R-nycflights13" role="doc-biblioref">a</a>)</span>:</p>
+<p>Recall that we saw in Subsection <a href="2-getting-started.html#exploredataframes">2.4.3</a> that the observational unit for the <code>flights</code> data frame is an individual flight. In other words, the rows of the <code>flights</code> data frame refer to characteristics/measurements of individual flights. Also included in the <code>nycflights13</code> package are other data frames with their rows representing different observational units <span class="citation">(Wickham <a href="#ref-R-nycflights13" role="doc-biblioref">2019</a>)</span>:</p>
 <ul>
 <li><code>airlines</code>: translation between two letter IATA carrier codes and airline company names (16 in total). The observational unit is an airline company.</li>
 <li><code>planes</code>: aircraft information about each of 3,322 planes used, i.e., the observational unit is an aircraft.</li>
@@ -1226,7 +1229,7 @@ FIGURE 5.8: <em>ModernDive</em> flowchart - on to Part II!
 <p>Wickham, Hadley. 2014. “Tidy Data.” <em>Journal of Statistical Software</em> Volume 59 (Issue 10). <a href="https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf">https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf</a>.</p>
 </div>
 <div id="ref-R-nycflights13">
-<p>Wickham, Hadley. 2019a. <em>Nycflights13: Flights That Departed Nyc in 2013</em>. <a href="https://CRAN.R-project.org/package=nycflights13">https://CRAN.R-project.org/package=nycflights13</a>.</p>
+<p>Wickham, Hadley. 2019. <em>Nycflights13: Flights That Departed Nyc in 2013</em>. <a href="https://CRAN.R-project.org/package=nycflights13">https://CRAN.R-project.org/package=nycflights13</a>.</p>
 </div>
 <div id="ref-R-tidyr">
 <p>Wickham, Hadley, and Lionel Henry. 2020. <em>Tidyr: Tidy Messy Data</em>. <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a>.</p>
