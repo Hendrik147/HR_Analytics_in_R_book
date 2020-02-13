@@ -8,7 +8,8 @@ bibliography:
 - bib/packages.bib
 - bib/articles.bib
 colorlinks: yes
-cover-image: images/hranalytics.jpg
+cover-image: images/hranalytics.jpgsource('purl.R')
+
 apple-touch-icon: images/logos/favicons/apple-touch-icon.png
 description: An open-source self-training book to assist you in your journey to sustainable
   HR Analytics

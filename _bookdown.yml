@@ -73,9 +73,6 @@ rmd_files:
     "27-flexdashboards.Rmd",
     "28-data-science-product.Rmd",
     "91-appendixA.Rmd",
-    "92-appendixB.Rmd",
-    "93-appendixC.Rmd",
-    "94-appendixD.Rmd",
     "95-appendixE.Rmd",
     "96-appendixF.Rmd",
     "99-references.Rmd"
