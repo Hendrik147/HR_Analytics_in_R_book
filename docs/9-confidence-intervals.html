@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 9 Bootstrapping and Confidence Intervals | HR Analytics in R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -724,59 +718,62 @@ FIGURE 9.3: Distribution of year on 50 US pennies.
 <p>Thus, if we’re willing to assume that <code>pennies_sample</code> is a representative sample from <em>all</em> US pennies, a “good guess” of the average year of minting of all US pennies would be 1995.44. In other words, around 1995. This should all start sounding similar to what we did previously in Chapter <a href="8-sampling.html#sampling">8</a>!</p>
 <p>In Chapter <a href="8-sampling.html#sampling">8</a>, our <em>study population</em> was the bowl of <span class="math inline">\(N\)</span> = 2400 balls. Our <em>population parameter</em> was the <em>population proportion</em> of these balls that were red, denoted by <span class="math inline">\(p\)</span>. In order to estimate <span class="math inline">\(p\)</span>, we extracted a sample of 50 balls using the shovel. We then computed the relevant <em>point estimate</em>: the <em>sample proportion</em> of these 50 balls that were red, denoted mathematically by <span class="math inline">\(\widehat{p}\)</span>.</p>
 <p>Here our population is <span class="math inline">\(N\)</span> = whatever the number of pennies are being used in the US, a value which we don’t know and probably never will. The population parameter of interest is now the <em>population mean</em> year of all these pennies, a value denoted mathematically by the Greek letter <span class="math inline">\(\mu\)</span> (pronounced “mu”). In order to estimate <span class="math inline">\(\mu\)</span>, we went to the bank and obtained a sample of 50 pennies and computed the relevant point estimate: the <em>sample mean</em> year of these 50 pennies, denoted mathematically by <span class="math inline">\(\overline{x}\)</span> (pronounced “x-bar”). An alternative and more intuitive notation for the sample mean is <span class="math inline">\(\widehat{\mu}\)</span>. However, this is unfortunately not as commonly used, so in this book we’ll stick with convention and always denote the sample mean as <span class="math inline">\(\overline{x}\)</span>.</p>
-<p>We summarize the correspondence between the sampling bowl exercise in Chapter <a href="8-sampling.html#sampling">8</a> and our pennies exercise in Table <a href="#tab:table-ch8-b"><strong>??</strong></a>, which are the first two rows of the previously seen Table <a href="#tab:table-ch8"><strong>??</strong></a>.</p>
+<p>We summarize the correspondence between the sampling bowl exercise in Chapter <a href="8-sampling.html#sampling">8</a> and our pennies exercise in Table <a href="9-confidence-intervals.html#tab:table-ch8-b">9.1</a>, which are the first two rows of the previously seen Table <a href="8-sampling.html#tab:table-ch8">8.5</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:table-ch8-b">TABLE 9.1: </span>Scenarios of sampling for inference
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 Scenario
 </th>
-<th>
+<th style="text-align:left;">
 Population parameter
 </th>
-<th>
+<th style="text-align:left;">
 Notation
 </th>
-<th>
+<th style="text-align:left;">
 Point estimate
 </th>
-<th>
+<th style="text-align:left;">
 Symbol(s)
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 1
 </td>
-<td style="width: 0.7in; ">
+<td style="text-align:left;width: 0.7in; ">
 Population proportion
 </td>
-<td style="width: 1in; ">
+<td style="text-align:left;width: 1in; ">
 <span class="math inline">\(p\)</span>
 </td>
-<td style="width: 1.1in; ">
+<td style="text-align:left;width: 1.1in; ">
 Sample proportion
 </td>
-<td style="width: 1in; ">
+<td style="text-align:left;width: 1in; ">
 <span class="math inline">\(\widehat{p}\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 2
 </td>
-<td style="width: 0.7in; ">
+<td style="text-align:left;width: 0.7in; ">
 Population mean
 </td>
-<td style="width: 1in; ">
+<td style="text-align:left;width: 1in; ">
 <span class="math inline">\(\mu\)</span>
 </td>
-<td style="width: 1.1in; ">
+<td style="text-align:left;width: 1.1in; ">
 Sample mean
 </td>
-<td style="width: 1in; ">
+<td style="text-align:left;width: 1in; ">
 <span class="math inline">\(\overline{x}\)</span> or <span class="math inline">\(\widehat{\mu}\)</span>
 </td>
 </tr>
@@ -1119,7 +1116,7 @@ FIGURE 9.14: Bootstrap resampling distribution based on 1000 resamples.
 <h2><span class="header-section-number">9.3</span> Understanding confidence intervals</h2>
 <p>Let’s start this section with an analogy involving fishing. Say you are trying to catch a fish. On the one hand, you could use a spear, while on the other you could use a net. Using the net will probably allow you to catch more fish!</p>
 <p>Now think back to our pennies exercise where you are trying to estimate the true population mean year <span class="math inline">\(\mu\)</span> of <em>all</em> US pennies.  Think of the value of <span class="math inline">\(\mu\)</span> as a fish.</p>
-<p>On the one hand, we could use the appropriate <em>point estimate/sample statistic</em> to estimate <span class="math inline">\(\mu\)</span>, which we saw in Table <a href="#tab:table-ch8-b"><strong>??</strong></a> is the sample mean <span class="math inline">\(\overline{x}\)</span>. Based on our sample of 50 pennies from the bank, the sample mean was 1995.44. Think of using this value as “fishing with a spear.”</p>
+<p>On the one hand, we could use the appropriate <em>point estimate/sample statistic</em> to estimate <span class="math inline">\(\mu\)</span>, which we saw in Table <a href="9-confidence-intervals.html#tab:table-ch8-b">9.1</a> is the sample mean <span class="math inline">\(\overline{x}\)</span>. Based on our sample of 50 pennies from the bank, the sample mean was 1995.44. Think of using this value as “fishing with a spear.”</p>
 <p>What would “fishing with a net” correspond to? Look at the bootstrap distribution in Figure <a href="9-confidence-intervals.html#fig:one-thousand-sample-means">9.14</a> once more. Between which two years would you say that “most” sample means lie? While this question is somewhat subjective, saying that most sample means lie between 1992 and 2000 would not be unreasonable. Think of this interval as the “net.”</p>
 <p>What we’ve just illustrated is the concept of a <em>confidence interval</em>, which we’ll abbreviate with “CI” throughout this book. As opposed to a point estimate/sample statistic that estimates the value of an unknown population parameter with a single value, a <em>confidence interval</em>  gives what can be interpreted as a range of plausible values. Going back to our analogy, point estimates/sample statistics can be thought of as spears, whereas confidence intervals can be thought of as nets.</p>
 <!--
@@ -1732,40 +1729,43 @@ We see that the sample proportion of reds varies in the `point_estimate` column 
 FIGURE 9.29: Ten 80, 95, and 99% confidence intervals for <span class="math inline">\(p\)</span> based on <span class="math inline">\(n = 50\)</span>.
 </p>
 </div>
-<p>Observe that as the confidence level increases from 80% to 95% to 99%, the confidence intervals tend to get wider as seen in Table <a href="#tab:perc-cis-average-width"><strong>??</strong></a> where we compare their average widths.</p>
+<p>Observe that as the confidence level increases from 80% to 95% to 99%, the confidence intervals tend to get wider as seen in Table <a href="9-confidence-intervals.html#tab:perc-cis-average-width">9.2</a> where we compare their average widths.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:perc-cis-average-width">TABLE 9.2: </span>Average width of 80, 95, and 99% confidence intervals
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Confidence level
 </th>
-<th>
+<th style="text-align:right;">
 Mean width
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 80%
 </td>
-<td>
+<td style="text-align:right;">
 0.162
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 95%
 </td>
-<td>
+<td style="text-align:right;">
 0.262
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 99%
 </td>
-<td>
+<td style="text-align:right;">
 0.338
 </td>
 </tr>
@@ -1784,40 +1784,43 @@ Mean width
 FIGURE 9.30: Ten 95% confidence intervals for <span class="math inline">\(p\)</span> with <span class="math inline">\(n = 25, 50,\)</span> and <span class="math inline">\(100\)</span>.
 </p>
 </div>
-<p>Observe that as the confidence intervals are constructed from larger and larger sample sizes, they tend to get narrower. Let’s compare the average widths in Table <a href="#tab:perc-cis-average-width-2"><strong>??</strong></a>.</p>
+<p>Observe that as the confidence intervals are constructed from larger and larger sample sizes, they tend to get narrower. Let’s compare the average widths in Table <a href="9-confidence-intervals.html#tab:perc-cis-average-width-2">9.3</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:perc-cis-average-width-2">TABLE 9.3: </span>Average width of 95% confidence intervals based on <span class="math inline">\(n = 25\)</span>, <span class="math inline">\(50\)</span>, and <span class="math inline">\(100\)</span>
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Sample size
 </th>
-<th>
+<th style="text-align:right;">
 Mean width
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 n = 25
 </td>
-<td>
+<td style="text-align:right;">
 0.380
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 n = 50
 </td>
-<td>
+<td style="text-align:right;">
 0.268
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 n = 100
 </td>
-<td>
+<td style="text-align:right;">
 0.189
 </td>
 </tr>
@@ -1879,76 +1882,79 @@ A good Learning check might be to have the readers calculate confidence interval
 <h3><span class="header-section-number">9.6.2</span> Sampling scenario</h3>
 <p>Let’s review the terminology and notation related to sampling we studied in Subsection <a href="8-sampling.html#terminology-and-notation">8.3.1</a>. In Chapter <a href="8-sampling.html#sampling">8</a> our <em>study population</em> was the bowl of <span class="math inline">\(N\)</span> = 2400 balls. Our <em>population parameter</em> of interest was the <em>population proportion</em> of these balls that were red, denoted mathematically by <span class="math inline">\(p\)</span>. In order to estimate <span class="math inline">\(p\)</span>, we extracted a sample of 50 balls using the shovel and computed the relevant <em>point estimate</em>: the <em>sample proportion</em> that were red, denoted mathematically by <span class="math inline">\(\widehat{p}\)</span>.</p>
 <p>Who is the study population here? All humans? All the people who watch the show <em>Mythbusters</em>? It’s hard to say! This question can only be answered if we know how the show’s hosts recruited participants! In other words, what was the <em>sampling methodology</em> used by the <em>Mythbusters</em> to recruit participants? We alas are not provided with this information. Only for the purposes of this case study, however, we’ll <em>assume</em> that the 50 participants are a representative sample of all Americans given the popularity of this show. Thus, we’ll be assuming that any results of this experiment will generalize to all <span class="math inline">\(N\)</span> = 327 million Americans (2018 population).</p>
-<p>Just like with our sampling bowl, the population parameter here will involve proportions. However, in this case it will be the <em>difference in population proportions</em> <span class="math inline">\(p_{seed} - p_{control}\)</span>, where <span class="math inline">\(p_{seed}\)</span> is the proportion of <em>all</em> Americans who if exposed to yawning will yawn themselves, and <span class="math inline">\(p_{control}\)</span> is the proportion of <em>all</em> Americans who if not exposed to yawning still yawn themselves. Correspondingly, the point estimate/sample statistic based the <em>Mythbusters</em>’ sample of participants will be the <em>difference in sample proportions</em> <span class="math inline">\(\widehat{p}_{seed} - \widehat{p}_{control}\)</span>. Let’s extend Table <a href="#tab:table-ch8"><strong>??</strong></a> of scenarios of sampling for inference to include our latest scenario.</p>
+<p>Just like with our sampling bowl, the population parameter here will involve proportions. However, in this case it will be the <em>difference in population proportions</em> <span class="math inline">\(p_{seed} - p_{control}\)</span>, where <span class="math inline">\(p_{seed}\)</span> is the proportion of <em>all</em> Americans who if exposed to yawning will yawn themselves, and <span class="math inline">\(p_{control}\)</span> is the proportion of <em>all</em> Americans who if not exposed to yawning still yawn themselves. Correspondingly, the point estimate/sample statistic based the <em>Mythbusters</em>’ sample of participants will be the <em>difference in sample proportions</em> <span class="math inline">\(\widehat{p}_{seed} - \widehat{p}_{control}\)</span>. Let’s extend Table <a href="8-sampling.html#tab:table-ch8">8.5</a> of scenarios of sampling for inference to include our latest scenario.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:table-ch8-c">TABLE 9.4: </span>Scenarios of sampling for inference
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 Scenario
 </th>
-<th>
+<th style="text-align:left;">
 Population parameter
 </th>
-<th>
+<th style="text-align:left;">
 Notation
 </th>
-<th>
+<th style="text-align:left;">
 Point estimate
 </th>
-<th>
+<th style="text-align:left;">
 Symbol(s)
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 1
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Population proportion
 </td>
-<td style="width: 0.65in; ">
+<td style="text-align:left;width: 0.65in; ">
 <span class="math inline">\(p\)</span>
 </td>
-<td style="width: 1.6in; ">
+<td style="text-align:left;width: 1.6in; ">
 Sample proportion
 </td>
-<td style="width: 0.65in; ">
+<td style="text-align:left;width: 0.65in; ">
 <span class="math inline">\(\widehat{p}\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 2
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Population mean
 </td>
-<td style="width: 0.65in; ">
+<td style="text-align:left;width: 0.65in; ">
 <span class="math inline">\(\mu\)</span>
 </td>
-<td style="width: 1.6in; ">
+<td style="text-align:left;width: 1.6in; ">
 Sample mean
 </td>
-<td style="width: 0.65in; ">
+<td style="text-align:left;width: 0.65in; ">
 <span class="math inline">\(\overline{x}\)</span> or <span class="math inline">\(\widehat{\mu}\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 3
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Difference in population proportions
 </td>
-<td style="width: 0.65in; ">
+<td style="text-align:left;width: 0.65in; ">
 <span class="math inline">\(p_1 - p_2\)</span>
 </td>
-<td style="width: 1.6in; ">
+<td style="text-align:left;width: 1.6in; ">
 Difference in sample proportions
 </td>
-<td style="width: 0.65in; ">
+<td style="text-align:left;width: 0.65in; ">
 <span class="math inline">\(\widehat{p}_1 - \widehat{p}_2\)</span>
 </td>
 </tr>
@@ -2229,32 +2235,35 @@ FIGURE 9.35: Comparing the sampling and bootstrap distributions of <span class="
 <blockquote>
 <p>The bootstrap distribution will likely not have the same center as the sampling distribution. In other words, bootstrapping cannot improve the quality of an estimate.</p>
 </blockquote>
-<p>Second, let’s now compare the spread of the two distributions: they are somewhat similar. In the previous code, we computed the standard deviations of both distributions as well. Recall that such standard deviations have a special name: <em>standard errors</em>. Let’s compare them in Table <a href="#tab:comparing-se"><strong>??</strong></a>.</p>
+<p>Second, let’s now compare the spread of the two distributions: they are somewhat similar. In the previous code, we computed the standard deviations of both distributions as well. Recall that such standard deviations have a special name: <em>standard errors</em>. Let’s compare them in Table <a href="9-confidence-intervals.html#tab:comparing-se">9.5</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:comparing-se">TABLE 9.5: </span>Comparing standard errors
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Distribution type
 </th>
-<th>
+<th style="text-align:right;">
 Standard error
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 Sampling distribution
 </td>
-<td>
+<td style="text-align:right;">
 0.067
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Bootstrap distribution
 </td>
-<td>
+<td style="text-align:right;">
 0.071
 </td>
 </tr>
@@ -2279,40 +2288,43 @@ Bootstrap distribution
 <p>For example, recall from <code>bowl_sample_1</code> that Yohan and Ilyas sampled <span class="math inline">\(n = 50\)</span> balls and observed a sample proportion <span class="math inline">\(\widehat{p}\)</span> of 21/50 = 0.42. So, using the formula, an approximation of the standard error of <span class="math inline">\(\widehat{p}\)</span> is</p>
 <p><span class="math display">\[\text{SE}_{\widehat{p}} \approx \sqrt{\frac{0.42(1-0.42)}{50}} = \sqrt{0.004872} = 0.0698 \approx 0.070\]</span></p>
 <p>The key observation to make here is that there is an <span class="math inline">\(n\)</span> in the denominator. So as the sample size <span class="math inline">\(n\)</span> increases, the standard error decreases. We’ve demonstrated this fact using our virtual shovels in Subsection <a href="8-sampling.html#moral-of-the-story">8.3.3</a>. If you don’t recall this demonstration, we highly recommend you go back and read that subsection.</p>
-<p>Let’s compare this theory-based standard error to the standard error of the sampling and bootstrap distributions you computed previously in Subsection <a href="9-confidence-intervals.html#bootstrap-vs-sampling">9.7.1</a> in Table <a href="#tab:comparing-se-2"><strong>??</strong></a>. Notice how they are all similar!</p>
+<p>Let’s compare this theory-based standard error to the standard error of the sampling and bootstrap distributions you computed previously in Subsection <a href="9-confidence-intervals.html#bootstrap-vs-sampling">9.7.1</a> in Table <a href="9-confidence-intervals.html#tab:comparing-se-2">9.6</a>. Notice how they are all similar!</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:comparing-se-2">TABLE 9.6: </span>Comparing standard errors
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Distribution type
 </th>
-<th>
+<th style="text-align:right;">
 Standard error
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 Sampling distribution
 </td>
-<td>
+<td style="text-align:right;">
 0.067
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Bootstrap distribution
 </td>
-<td>
+<td style="text-align:right;">
 0.071
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Formula approximation
 </td>
-<td>
+<td style="text-align:right;">
 0.070
 </td>
 </tr>
@@ -2390,18 +2402,18 @@ Formula approximation
 <a class="sourceLine" id="cb352-8" title="8">    <span class="dt">upper_ci =</span> p_hat <span class="op">+</span><span class="st"> </span>MoE</a>
 <a class="sourceLine" id="cb352-9" title="9">  )</a></code></pre></div>
 <pre><code># A tibble: 33 x 9
-   group    replicate red_balls p_hat     n        SE      MoE lower_ci upper_ci
-   &lt;chr&gt;        &lt;int&gt;     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
- 1 Ilyas, ~         1        21  0.42    50 0.0697997 0.136807 0.283193 0.556807
- 2 Morgan,~         2        17  0.34    50 0.0669925 0.131305 0.208695 0.471305
- 3 Martin,~         3        21  0.42    50 0.0697997 0.136807 0.283193 0.556807
- 4 Clark, ~         4        21  0.42    50 0.0697997 0.136807 0.283193 0.556807
- 5 Riddhi,~         5        18  0.36    50 0.0678823 0.133049 0.226951 0.493049
- 6 Andrew,~         6        19  0.38    50 0.0686440 0.134542 0.245458 0.514542
- 7 Julia            7        19  0.38    50 0.0686440 0.134542 0.245458 0.514542
- 8 Rachel,~         8        11  0.22    50 0.0585833 0.114823 0.105177 0.334823
- 9 Daniel,~         9        15  0.3     50 0.0648074 0.127023 0.172977 0.427023
-10 Josh, M~        10        17  0.34    50 0.0669925 0.131305 0.208695 0.471305
+   group            replicate red_balls p_hat     n        SE      MoE lower_ci upper_ci
+   &lt;chr&gt;                &lt;int&gt;     &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+ 1 Ilyas, Yohan             1        21  0.42    50 0.0697997 0.136807 0.283193 0.556807
+ 2 Morgan, Terrance         2        17  0.34    50 0.0669925 0.131305 0.208695 0.471305
+ 3 Martin, Thomas           3        21  0.42    50 0.0697997 0.136807 0.283193 0.556807
+ 4 Clark, Frank             4        21  0.42    50 0.0697997 0.136807 0.283193 0.556807
+ 5 Riddhi, Karina           5        18  0.36    50 0.0678823 0.133049 0.226951 0.493049
+ 6 Andrew, Tyler            6        19  0.38    50 0.0686440 0.134542 0.245458 0.514542
+ 7 Julia                    7        19  0.38    50 0.0686440 0.134542 0.245458 0.514542
+ 8 Rachel, Lauren           8        11  0.22    50 0.0585833 0.114823 0.105177 0.334823
+ 9 Daniel, Caroline         9        15  0.3     50 0.0648074 0.127023 0.172977 0.427023
+10 Josh, Maeve             10        17  0.34    50 0.0669925 0.131305 0.208695 0.471305
 # ... with 23 more rows</code></pre>
 <p>In Figure <a href="9-confidence-intervals.html#fig:tactile-conf-int">9.36</a>, let’s plot the 33 confidence intervals for <span class="math inline">\(p\)</span> saved in <code>conf_ints</code> along with a vertical line at <span class="math inline">\(p\)</span> = 0.375 indicating the true proportion of the <code>bowl</code>’s balls that are red. Furthermore, let’s mark the sample proportions <span class="math inline">\(\widehat{p}\)</span> with dots since they represent the centers of these confidence intervals.</p>
 <div class="figure" style="text-align: center"><span id="fig:tactile-conf-int"></span>
@@ -2534,7 +2546,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/08-confidence-intervals.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/08-confidence-intervals.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 13 Gender Pay Gap | HR Analytics in R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -657,17 +651,34 @@ broader organizational concerns.</p>
 <p>The following example appeared on the Glassdor website in March 2017, with the title “How to Audit Your Gender Pay Gap: An Employers Guide Using R” and was written by Andrew Chamberlain, Ph.D.</p>
 <div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb469-1" title="1"><span class="co"># Load R libraries.</span></a>
 <a class="sourceLine" id="cb469-2" title="2"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb469-3" title="3"><span class="kw">library</span>(tidymodels)</a>
-<a class="sourceLine" id="cb469-4" title="4"><span class="kw">library</span>(devtools)</a>
-<a class="sourceLine" id="cb469-5" title="5"><span class="kw">install_github</span>(<span class="st">&quot;Hendrik147/HR_Analytics_in_R_book/HRAnalytics&quot;</span>)</a></code></pre></div>
-<pre><code>Skipping install of &#39;HRAnalytics&#39; from a github remote, the SHA1 (c11944f1) has not changed since last install.
-  Use `force = TRUE` to force installation</code></pre>
-<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb471-1" title="1"><span class="kw">library</span>(HRAnalytics) <span class="co"># Helper package</span></a>
-<a class="sourceLine" id="cb471-2" title="2"></a>
-<a class="sourceLine" id="cb471-3" title="3"><span class="co">#Turn off scientific notation. </span></a>
-<a class="sourceLine" id="cb471-4" title="4"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">999</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb472-1" title="1"><span class="co"># Load data. </span></a>
-<a class="sourceLine" id="cb472-2" title="2">gd_data =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://glassdoor.box.com/shared/static/beukjzgrsu35fqe59f7502hruribd5tt.csv&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb469-3" title="3"><span class="kw">library</span>(tidymodels)</a></code></pre></div>
+<pre><code>-- Attaching packages -------------------------------------- tidymodels 0.0.3 --</code></pre>
+<pre><code>v dials     0.0.4     v rsample   0.0.5
+v parsnip   0.0.5     v yardstick 0.0.5
+v recipes   0.1.9     </code></pre>
+<pre><code>-- Conflicts ----------------------------------------- tidymodels_conflicts() --
+x purrr::discard()         masks scales::discard()
+x dplyr::filter()          masks stats::filter()
+x recipes::fixed()         masks stringr::fixed()
+x kableExtra::group_rows() masks dplyr::group_rows()
+x dplyr::lag()             masks stats::lag()
+x dials::margin()          masks ggplot2::margin()
+x yardstick::spec()        masks readr::spec()
+x recipes::step()          masks stats::step()
+x recipes::yj_trans()      masks scales::yj_trans()</code></pre>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb473-1" title="1"><span class="kw">library</span>(devtools)</a></code></pre></div>
+<pre><code>Loading required package: usethis</code></pre>
+<pre><code>
+Attaching package: &#39;devtools&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:recipes&#39;:
+
+    check</code></pre>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb477-1" title="1"><span class="kw">library</span>(HRAnalytics) <span class="co"># Helper package</span></a>
+<a class="sourceLine" id="cb477-2" title="2"></a>
+<a class="sourceLine" id="cb477-3" title="3"><span class="co">#Turn off scientific notation. </span></a>
+<a class="sourceLine" id="cb477-4" title="4"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">999</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb478-1" title="1"><span class="co"># Load data. </span></a>
+<a class="sourceLine" id="cb478-2" title="2">gd_data =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://glassdoor.box.com/shared/static/beukjzgrsu35fqe59f7502hruribd5tt.csv&quot;</span>)</a></code></pre></div>
 <pre><code>Parsed with column specification:
 cols(
   jobTitle = col_character(),
@@ -680,7 +691,7 @@ cols(
   basePay = col_double(),
   bonus = col_double()
 )</code></pre>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb474-1" title="1"><span class="co"># N = 1000 total observations.</span></a></code></pre></div>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb480-1" title="1"><span class="co"># N = 1000 total observations.</span></a></code></pre></div>
 <div id="data-cleaning-and-prep." class="section level2">
 <h2><span class="header-section-number">13.1</span> Data Cleaning and Prep.</h2>
 <p>Before we can analyse whether we have gender pay gap, we need to prepare our data so it is cleaned up and has useful columns we can analyse.</p>
@@ -691,77 +702,77 @@ cols(
 <li>Take natural logarithm of compensation variables (for percentage pay gap interpretation in regressions).</li>
 <li>Convert values like department into values that can act as flags in our model and making the most commonly occuring value the default which everything else gets compared to in our model.</li>
 </ol>
-<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb475-1" title="1">gd_data <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb475-2" title="2"><span class="st">  </span><span class="co"># Age brackets</span></a>
-<a class="sourceLine" id="cb475-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bin =</span> <span class="kw">cut</span>(age,</a>
-<a class="sourceLine" id="cb475-4" title="4">                  <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">55</span>, <span class="ot">Inf</span>),</a>
-<a class="sourceLine" id="cb475-5" title="5">                  <span class="dt">right =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb475-6" title="6"><span class="st">  </span><span class="co"># Total compensation</span></a>
-<a class="sourceLine" id="cb475-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">total_pay =</span> basePay <span class="op">+</span><span class="st"> </span>bonus) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb475-8" title="8"><span class="st">  </span><span class="co"># Log of compensation</span></a>
-<a class="sourceLine" id="cb475-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_base =</span> <span class="kw">log</span>(basePay, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>)),</a>
-<a class="sourceLine" id="cb475-10" title="10">         <span class="dt">log_total =</span> <span class="kw">log</span>(total_pay, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>)),</a>
-<a class="sourceLine" id="cb475-11" title="11">         <span class="co"># Adds 1 to allow for log of 0 bonus values.</span></a>
-<a class="sourceLine" id="cb475-12" title="12">         <span class="dt">log_bonus =</span> <span class="kw">log</span>(bonus <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb475-13" title="13"><span class="st">  </span><span class="co"># Make flags</span></a>
-<a class="sourceLine" id="cb475-14" title="14"><span class="st">  </span><span class="kw">mutate_if</span>(is_character, fct_infreq) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb475-15" title="15"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bin =</span> <span class="kw">fct_infreq</span>(age_bin)) -&gt;</a>
-<a class="sourceLine" id="cb475-16" title="16"><span class="st">  </span>gd_data_clean</a></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb481-1" title="1">gd_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb481-2" title="2"><span class="st">  </span><span class="co"># Age brackets</span></a>
+<a class="sourceLine" id="cb481-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bin =</span> <span class="kw">cut</span>(age,</a>
+<a class="sourceLine" id="cb481-4" title="4">                  <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">55</span>, <span class="ot">Inf</span>),</a>
+<a class="sourceLine" id="cb481-5" title="5">                  <span class="dt">right =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb481-6" title="6"><span class="st">  </span><span class="co"># Total compensation</span></a>
+<a class="sourceLine" id="cb481-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">total_pay =</span> basePay <span class="op">+</span><span class="st"> </span>bonus) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb481-8" title="8"><span class="st">  </span><span class="co"># Log of compensation</span></a>
+<a class="sourceLine" id="cb481-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log_base =</span> <span class="kw">log</span>(basePay, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>)),</a>
+<a class="sourceLine" id="cb481-10" title="10">         <span class="dt">log_total =</span> <span class="kw">log</span>(total_pay, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>)),</a>
+<a class="sourceLine" id="cb481-11" title="11">         <span class="co"># Adds 1 to allow for log of 0 bonus values.</span></a>
+<a class="sourceLine" id="cb481-12" title="12">         <span class="dt">log_bonus =</span> <span class="kw">log</span>(bonus <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb481-13" title="13"><span class="st">  </span><span class="co"># Make flags</span></a>
+<a class="sourceLine" id="cb481-14" title="14"><span class="st">  </span><span class="kw">mutate_if</span>(is_character, fct_infreq) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb481-15" title="15"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">age_bin =</span> <span class="kw">fct_infreq</span>(age_bin)) -&gt;</a>
+<a class="sourceLine" id="cb481-16" title="16"><span class="st">  </span>gd_data_clean</a></code></pre></div>
 </div>
 <div id="summary-statistics-by-gender" class="section level2">
 <h2><span class="header-section-number">13.2</span> Summary Statistics by gender</h2>
 <p>We can look at summary statistics by gender.</p>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb476-1" title="1"><span class="co"># Base pay summary stats.</span></a>
-<a class="sourceLine" id="cb476-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb476-3" title="3"><span class="st">  </span><span class="co"># Exclude stuff with missing info</span></a>
-<a class="sourceLine" id="cb476-4" title="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(basePay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb476-5" title="5"><span class="st">  </span><span class="co"># Analyse by gender</span></a>
-<a class="sourceLine" id="cb476-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb476-7" title="7"><span class="st">  </span><span class="co"># Retrieve summary statistics</span></a>
-<a class="sourceLine" id="cb476-8" title="8"><span class="st">  </span><span class="kw">summarise</span>(</a>
-<a class="sourceLine" id="cb476-9" title="9">    <span class="dt">mean_base =</span> <span class="kw">mean</span>(basePay),</a>
-<a class="sourceLine" id="cb476-10" title="10">    <span class="dt">median_base =</span> <span class="kw">median</span>(basePay),</a>
-<a class="sourceLine" id="cb476-11" title="11">    <span class="dt">count =</span> <span class="kw">n</span>()</a>
-<a class="sourceLine" id="cb476-12" title="12">  ) -&gt;</a>
-<a class="sourceLine" id="cb476-13" title="13"><span class="st">  </span>gd_summary_gender_base</a>
-<a class="sourceLine" id="cb476-14" title="14"></a>
-<a class="sourceLine" id="cb476-15" title="15">gd_summary_gender_base</a></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb482-1" title="1"><span class="co"># Base pay summary stats.</span></a>
+<a class="sourceLine" id="cb482-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb482-3" title="3"><span class="st">  </span><span class="co"># Exclude stuff with missing info</span></a>
+<a class="sourceLine" id="cb482-4" title="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(basePay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb482-5" title="5"><span class="st">  </span><span class="co"># Analyse by gender</span></a>
+<a class="sourceLine" id="cb482-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb482-7" title="7"><span class="st">  </span><span class="co"># Retrieve summary statistics</span></a>
+<a class="sourceLine" id="cb482-8" title="8"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb482-9" title="9">    <span class="dt">mean_base =</span> <span class="kw">mean</span>(basePay),</a>
+<a class="sourceLine" id="cb482-10" title="10">    <span class="dt">median_base =</span> <span class="kw">median</span>(basePay),</a>
+<a class="sourceLine" id="cb482-11" title="11">    <span class="dt">count =</span> <span class="kw">n</span>()</a>
+<a class="sourceLine" id="cb482-12" title="12">  ) -&gt;</a>
+<a class="sourceLine" id="cb482-13" title="13"><span class="st">  </span>gd_summary_gender_base</a>
+<a class="sourceLine" id="cb482-14" title="14"></a>
+<a class="sourceLine" id="cb482-15" title="15">gd_summary_gender_base</a></code></pre></div>
 <pre><code># A tibble: 2 x 4
   gender mean_base median_base count
   &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
 1 Male     98457.5     98223     532
 2 Female   89942.8     89913.5   468</code></pre>
-<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb478-1" title="1"><span class="co"># Total pay summary stats.</span></a>
-<a class="sourceLine" id="cb478-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb478-3" title="3"><span class="st">  </span><span class="co"># Use a helper function to save typing</span></a>
-<a class="sourceLine" id="cb478-4" title="4"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">gap_summary</span>(gender, total_pay) -&gt;</a>
-<a class="sourceLine" id="cb478-5" title="5"><span class="st">  </span>gd_summary_gender_total</a>
-<a class="sourceLine" id="cb478-6" title="6"></a>
-<a class="sourceLine" id="cb478-7" title="7">gd_summary_gender_total</a></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb484-1" title="1"><span class="co"># Total pay summary stats.</span></a>
+<a class="sourceLine" id="cb484-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb484-3" title="3"><span class="st">  </span><span class="co"># Use a helper function to save typing</span></a>
+<a class="sourceLine" id="cb484-4" title="4"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">gap_summary</span>(gender, total_pay) -&gt;</a>
+<a class="sourceLine" id="cb484-5" title="5"><span class="st">  </span>gd_summary_gender_total</a>
+<a class="sourceLine" id="cb484-6" title="6"></a>
+<a class="sourceLine" id="cb484-7" title="7">gd_summary_gender_total</a></code></pre></div>
 <pre><code># A tibble: 2 x 4
   gender     mean  median count
   &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
 1 Male   104919.  105100.   532
 2 Female  96416.8  96571    468</code></pre>
-<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb480-1" title="1"><span class="co"># Bonus summary stats. </span></a>
-<a class="sourceLine" id="cb480-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb480-3" title="3"><span class="st">  </span><span class="co"># Use a helper function to save typing</span></a>
-<a class="sourceLine" id="cb480-4" title="4"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">gap_summary</span>(gender, bonus) -&gt;</a>
-<a class="sourceLine" id="cb480-5" title="5"><span class="st">  </span>gd_summary_gender_bonus</a>
-<a class="sourceLine" id="cb480-6" title="6"></a>
-<a class="sourceLine" id="cb480-7" title="7">gd_summary_gender_bonus</a></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb486-1" title="1"><span class="co"># Bonus summary stats. </span></a>
+<a class="sourceLine" id="cb486-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb486-3" title="3"><span class="st">  </span><span class="co"># Use a helper function to save typing</span></a>
+<a class="sourceLine" id="cb486-4" title="4"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">gap_summary</span>(gender, bonus) -&gt;</a>
+<a class="sourceLine" id="cb486-5" title="5"><span class="st">  </span>gd_summary_gender_bonus</a>
+<a class="sourceLine" id="cb486-6" title="6"></a>
+<a class="sourceLine" id="cb486-7" title="7">gd_summary_gender_bonus</a></code></pre></div>
 <pre><code># A tibble: 2 x 4
   gender    mean median count
   &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
 1 Male   6461.13 6480.5   532
 2 Female 6474.01 6553     468</code></pre>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb482-1" title="1"><span class="co"># Performance evaluations summary stats. </span></a>
-<a class="sourceLine" id="cb482-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb482-3" title="3"><span class="st">  </span><span class="co"># Use a helper function to save typing</span></a>
-<a class="sourceLine" id="cb482-4" title="4"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">gap_summary</span>(gender, perfEval)  -&gt;</a>
-<a class="sourceLine" id="cb482-5" title="5"><span class="st">  </span>gd_summary_gender_perf</a>
-<a class="sourceLine" id="cb482-6" title="6"></a>
-<a class="sourceLine" id="cb482-7" title="7">gd_summary_gender_perf</a></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb488-1" title="1"><span class="co"># Performance evaluations summary stats. </span></a>
+<a class="sourceLine" id="cb488-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb488-3" title="3"><span class="st">  </span><span class="co"># Use a helper function to save typing</span></a>
+<a class="sourceLine" id="cb488-4" title="4"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">gap_summary</span>(gender, perfEval)  -&gt;</a>
+<a class="sourceLine" id="cb488-5" title="5"><span class="st">  </span>gd_summary_gender_perf</a>
+<a class="sourceLine" id="cb488-6" title="6"></a>
+<a class="sourceLine" id="cb488-7" title="7">gd_summary_gender_perf</a></code></pre></div>
 <pre><code># A tibble: 2 x 4
   gender    mean median count
   &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
@@ -771,85 +782,83 @@ cols(
 <div id="avoiding-simpsons-paradox" class="section level2">
 <h2><span class="header-section-number">13.3</span> Avoiding Simpson’s Paradox</h2>
 <p>Simspson’s Paradox is where some high level aggregations lead to a different conclusion than would have been arrived at if a lower level of detail had been looked at. We should check out values split by department and job title to see if they showcase wage differences.</p>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb484-1" title="1"><span class="co"># Performance evaluations summary stats. </span></a>
-<a class="sourceLine" id="cb484-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb484-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(total_pay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb484-4" title="4"><span class="st">  </span><span class="co"># Create a summary by department and gender</span></a>
-<a class="sourceLine" id="cb484-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(dept, gender) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb484-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(</a>
-<a class="sourceLine" id="cb484-7" title="7">    <span class="dt">mean_perf =</span> <span class="kw">mean</span>(total_pay),</a>
-<a class="sourceLine" id="cb484-8" title="8">    <span class="dt">median_perf =</span> <span class="kw">median</span>(total_pay),</a>
-<a class="sourceLine" id="cb484-9" title="9">    <span class="dt">count =</span> <span class="kw">n</span>()</a>
-<a class="sourceLine" id="cb484-10" title="10">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb484-11" title="11"><span class="st">  </span><span class="co"># &quot;Unpivot&quot; the data</span></a>
-<a class="sourceLine" id="cb484-12" title="12"><span class="st">  </span><span class="kw">gather</span>(measure, value, mean_perf<span class="op">:</span>count) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb484-13" title="13"><span class="st">  </span><span class="co"># Combine the gender with measure</span></a>
-<a class="sourceLine" id="cb484-14" title="14"><span class="st">  </span><span class="kw">unite</span>(combo, measure, gender) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb484-15" title="15"><span class="st">  </span><span class="co"># &quot;Pivot&quot; the data to see all the measures split by gender</span></a>
-<a class="sourceLine" id="cb484-16" title="16"><span class="st">  </span><span class="kw">spread</span>(combo, value) -&gt;</a>
-<a class="sourceLine" id="cb484-17" title="17"><span class="st">  </span>gd_summary_dept_gender_total</a>
-<a class="sourceLine" id="cb484-18" title="18"></a>
-<a class="sourceLine" id="cb484-19" title="19">gd_summary_dept_gender_total</a></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb490-1" title="1"><span class="co"># Performance evaluations summary stats. </span></a>
+<a class="sourceLine" id="cb490-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(total_pay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-4" title="4"><span class="st">  </span><span class="co"># Create a summary by department and gender</span></a>
+<a class="sourceLine" id="cb490-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(dept, gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb490-7" title="7">    <span class="dt">mean_perf =</span> <span class="kw">mean</span>(total_pay),</a>
+<a class="sourceLine" id="cb490-8" title="8">    <span class="dt">median_perf =</span> <span class="kw">median</span>(total_pay),</a>
+<a class="sourceLine" id="cb490-9" title="9">    <span class="dt">count =</span> <span class="kw">n</span>()</a>
+<a class="sourceLine" id="cb490-10" title="10">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-11" title="11"><span class="st">  </span><span class="co"># &quot;Unpivot&quot; the data</span></a>
+<a class="sourceLine" id="cb490-12" title="12"><span class="st">  </span><span class="kw">gather</span>(measure, value, mean_perf<span class="op">:</span>count) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-13" title="13"><span class="st">  </span><span class="co"># Combine the gender with measure</span></a>
+<a class="sourceLine" id="cb490-14" title="14"><span class="st">  </span><span class="kw">unite</span>(combo, measure, gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb490-15" title="15"><span class="st">  </span><span class="co"># &quot;Pivot&quot; the data to see all the measures split by gender</span></a>
+<a class="sourceLine" id="cb490-16" title="16"><span class="st">  </span><span class="kw">spread</span>(combo, value) -&gt;</a>
+<a class="sourceLine" id="cb490-17" title="17"><span class="st">  </span>gd_summary_dept_gender_total</a>
+<a class="sourceLine" id="cb490-18" title="18"></a>
+<a class="sourceLine" id="cb490-19" title="19">gd_summary_dept_gender_total</a></code></pre></div>
 <pre><code># A tibble: 5 x 7
 # Groups:   dept [5]
-  dept  count_Female count_Male mean_perf_Female mean_perf_Male median_perf_Fem~
-  &lt;fct&gt;        &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;
-1 Oper~           96        114          93098.5        99214.7          93236.5
-2 Sales          101        106          99222.3       108388.           99069  
-3 Mana~           87        111          99172.1       106201.           96329  
-4 Admi~           95         98          93429.2       102680.           94481  
-5 Engi~           89        103          97308.1       108408.           97867  
-# ... with 1 more variable: median_perf_Male &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb486-1" title="1"><span class="co"># Performance evaluations summary stats. </span></a>
-<a class="sourceLine" id="cb486-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb486-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(total_pay)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb486-4" title="4"><span class="st">  </span><span class="co"># Create a summary by job and gender</span></a>
-<a class="sourceLine" id="cb486-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(jobTitle, gender) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb486-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(</a>
-<a class="sourceLine" id="cb486-7" title="7">    <span class="dt">mean_perf =</span> <span class="kw">mean</span>(total_pay),</a>
-<a class="sourceLine" id="cb486-8" title="8">    <span class="dt">median_perf =</span> <span class="kw">median</span>(total_pay),</a>
-<a class="sourceLine" id="cb486-9" title="9">    <span class="dt">count =</span> <span class="kw">n</span>()</a>
-<a class="sourceLine" id="cb486-10" title="10">  ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb486-11" title="11"><span class="st">  </span><span class="co"># &quot;Unpivot&quot; the data</span></a>
-<a class="sourceLine" id="cb486-12" title="12"><span class="st">  </span><span class="kw">gather</span>(measure, value, mean_perf<span class="op">:</span>count) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb486-13" title="13"><span class="st">  </span><span class="co"># Combine the gender with measure</span></a>
-<a class="sourceLine" id="cb486-14" title="14"><span class="st">  </span><span class="kw">unite</span>(combo, measure, gender) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb486-15" title="15"><span class="st">  </span><span class="co"># &quot;Pivot&quot; the data to see all the measures split by gender</span></a>
-<a class="sourceLine" id="cb486-16" title="16"><span class="st">  </span><span class="kw">spread</span>(combo, value) -&gt;</a>
-<a class="sourceLine" id="cb486-17" title="17"><span class="st">  </span>gd_summary_job_gender_total</a>
-<a class="sourceLine" id="cb486-18" title="18"></a>
-<a class="sourceLine" id="cb486-19" title="19">gd_summary_job_gender_total</a></code></pre></div>
+  dept           count_Female count_Male mean_perf_Female mean_perf_Male median_perf_Female median_perf_Male
+  &lt;fct&gt;                 &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+1 Operations               96        114          93098.5        99214.7            93236.5          98961.5
+2 Sales                   101        106          99222.3       108388.             99069           111648. 
+3 Management               87        111          99172.1       106201.             96329           105560  
+4 Administration           95         98          93429.2       102680.             94481            99353.5
+5 Engineering              89        103          97308.1       108408.             97867           108783  </code></pre>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb492-1" title="1"><span class="co"># Performance evaluations summary stats. </span></a>
+<a class="sourceLine" id="cb492-2" title="2">gd_data_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(total_pay)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-4" title="4"><span class="st">  </span><span class="co"># Create a summary by job and gender</span></a>
+<a class="sourceLine" id="cb492-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(jobTitle, gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb492-7" title="7">    <span class="dt">mean_perf =</span> <span class="kw">mean</span>(total_pay),</a>
+<a class="sourceLine" id="cb492-8" title="8">    <span class="dt">median_perf =</span> <span class="kw">median</span>(total_pay),</a>
+<a class="sourceLine" id="cb492-9" title="9">    <span class="dt">count =</span> <span class="kw">n</span>()</a>
+<a class="sourceLine" id="cb492-10" title="10">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-11" title="11"><span class="st">  </span><span class="co"># &quot;Unpivot&quot; the data</span></a>
+<a class="sourceLine" id="cb492-12" title="12"><span class="st">  </span><span class="kw">gather</span>(measure, value, mean_perf<span class="op">:</span>count) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-13" title="13"><span class="st">  </span><span class="co"># Combine the gender with measure</span></a>
+<a class="sourceLine" id="cb492-14" title="14"><span class="st">  </span><span class="kw">unite</span>(combo, measure, gender) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb492-15" title="15"><span class="st">  </span><span class="co"># &quot;Pivot&quot; the data to see all the measures split by gender</span></a>
+<a class="sourceLine" id="cb492-16" title="16"><span class="st">  </span><span class="kw">spread</span>(combo, value) -&gt;</a>
+<a class="sourceLine" id="cb492-17" title="17"><span class="st">  </span>gd_summary_job_gender_total</a>
+<a class="sourceLine" id="cb492-18" title="18"></a>
+<a class="sourceLine" id="cb492-19" title="19">gd_summary_job_gender_total</a></code></pre></div>
 <pre><code># A tibble: 10 x 7
 # Groups:   jobTitle [10]
-   jobTitle count_Female count_Male mean_perf_Female mean_perf_Male
-   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
- 1 Marketi~          107         11          82251.1        88161.6
- 2 Softwar~            8        101         101147.        113034. 
- 3 Data Sc~           53         54         102452.         95450  
- 4 Financi~           49         58         101744.        101116. 
- 5 Graphic~           48         50          98810.4        96584.1
- 6 IT                 50         46          96837.9        97239.6
- 7 Sales A~           43         51          98220.5       100894. 
- 8 Driver             46         45          93197.3        98417.8
- 9 Manager            18         72         133244.        130929. 
-10 Warehou~           46         44         100084.         93363.6
-# ... with 2 more variables: median_perf_Female &lt;dbl&gt;, median_perf_Male &lt;dbl&gt;</code></pre>
+   jobTitle            count_Female count_Male mean_perf_Female mean_perf_Male median_perf_Female median_perf_Male
+   &lt;fct&gt;                      &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1 Marketing Associate          107         11          82251.1        88161.6            82673            94565  
+ 2 Software Engineer              8        101         101147.        113034.            102700           111799  
+ 3 Data Scientist                53         54         102452.         95450             101905            97076  
+ 4 Financial Analyst             49         58         101744.        101116.            100625            99560  
+ 5 Graphic Designer              48         50          98810.4        96584.1           103792.           97337.5
+ 6 IT                            50         46          96837.9        97239.6           102574.           96952  
+ 7 Sales Associate               43         51          98220.5       100894.             94061           102701  
+ 8 Driver                        46         45          93197.3        98417.8            89087           100207  
+ 9 Manager                       18         72         133244.        130929.            131306.          128622. 
+10 Warehouse Associate           46         44         100084.         93363.6            99226.5          91015.5</code></pre>
 </div>
 <div id="model-estimation-ols-with-controls." class="section level2">
 <h2><span class="header-section-number">13.4</span> Model Estimation: OLS with controls.</h2>
 <p>Coefficient on “male” has the interpretation of approximate male pay advantage (“gender pay gap”).</p>
 <div id="logarithm-of-base-pay" class="section level3">
 <h3><span class="header-section-number">13.4.1</span> Logarithm of Base Pay</h3>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb488-1" title="1"><span class="co"># No controls. (&quot;unadjusted&quot; pay gap.)</span></a>
-<a class="sourceLine" id="cb488-2" title="2">lm_gender &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender, <span class="dt">data =</span> gd_data_clean)</a>
-<a class="sourceLine" id="cb488-3" title="3"></a>
-<a class="sourceLine" id="cb488-4" title="4"><span class="co"># Adding &quot;human capital&quot; controls (performance evals, age and education).</span></a>
-<a class="sourceLine" id="cb488-5" title="5">lm_humancapital &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu, <span class="dt">data =</span> gd_data_clean)</a>
-<a class="sourceLine" id="cb488-6" title="6"></a>
-<a class="sourceLine" id="cb488-7" title="7"><span class="co"># Adding all controls. (&quot;adjusted&quot; pay gap.)</span></a>
-<a class="sourceLine" id="cb488-8" title="8">lm_allcontrols &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>dept <span class="op">+</span><span class="st"> </span>seniority <span class="op">+</span><span class="st"> </span>jobTitle, <span class="dt">data =</span> gd_data_clean)</a></code></pre></div>
-<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb489-1" title="1">lm_gender <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb489-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb494-1" title="1"><span class="co"># No controls. (&quot;unadjusted&quot; pay gap.)</span></a>
+<a class="sourceLine" id="cb494-2" title="2">lm_gender &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender, <span class="dt">data =</span> gd_data_clean)</a>
+<a class="sourceLine" id="cb494-3" title="3"></a>
+<a class="sourceLine" id="cb494-4" title="4"><span class="co"># Adding &quot;human capital&quot; controls (performance evals, age and education).</span></a>
+<a class="sourceLine" id="cb494-5" title="5">lm_humancapital &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu, <span class="dt">data =</span> gd_data_clean)</a>
+<a class="sourceLine" id="cb494-6" title="6"></a>
+<a class="sourceLine" id="cb494-7" title="7"><span class="co"># Adding all controls. (&quot;adjusted&quot; pay gap.)</span></a>
+<a class="sourceLine" id="cb494-8" title="8">lm_allcontrols &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>dept <span class="op">+</span><span class="st"> </span>seniority <span class="op">+</span><span class="st"> </span>jobTitle, <span class="dt">data =</span> gd_data_clean)</a></code></pre></div>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb495-1" title="1">lm_gender <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb495-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <pre><code>
 Call:
 lm(formula = log_base ~ gender, data = gd_data_clean)
@@ -868,27 +877,27 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 0.283 on 998 degrees of freedom
 Multiple R-squared:  0.0275,    Adjusted R-squared:  0.0265 
 F-statistic: 28.2 on 1 and 998 DF,  p-value: 0.000000136</code></pre>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb491-1" title="1">lm_gender <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb491-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
-<a class="sourceLine" id="cb491-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb491-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
-<a class="sourceLine" id="cb491-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb491-6" title="6"><span class="st">  </span><span class="co"># Build a chart</span></a>
-<a class="sourceLine" id="cb491-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb491-8" title="8"><span class="st">  </span><span class="co"># Add columns to it</span></a>
-<a class="sourceLine" id="cb491-9" title="9"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>actual, <span class="dt">y=</span>predicted) <span class="op">+</span></a>
-<a class="sourceLine" id="cb491-10" title="10"><span class="st">  </span><span class="co"># Choose chart type</span></a>
-<a class="sourceLine" id="cb491-11" title="11"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb491-12" title="12"><span class="st">  </span><span class="co"># Add a diagonal line representing perfect predictions</span></a>
-<a class="sourceLine" id="cb491-13" title="13"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">slope=</span><span class="dv">1</span>, <span class="dt">intercept=</span><span class="dv">0</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb491-14" title="14"><span class="st">  </span><span class="co"># Split by gender</span></a>
-<a class="sourceLine" id="cb491-15" title="15"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>gender) <span class="op">+</span></a>
-<a class="sourceLine" id="cb491-16" title="16"><span class="st">  </span><span class="co"># Add some labels</span></a>
-<a class="sourceLine" id="cb491-17" title="17"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
-<a class="sourceLine" id="cb491-18" title="18">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model containing gender&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb497-1" title="1">lm_gender <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb497-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
+<a class="sourceLine" id="cb497-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb497-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
+<a class="sourceLine" id="cb497-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb497-6" title="6"><span class="st">  </span><span class="co"># Build a chart</span></a>
+<a class="sourceLine" id="cb497-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb497-8" title="8"><span class="st">  </span><span class="co"># Add columns to it</span></a>
+<a class="sourceLine" id="cb497-9" title="9"><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x=</span>actual, <span class="dt">y=</span>predicted) <span class="op">+</span></a>
+<a class="sourceLine" id="cb497-10" title="10"><span class="st">  </span><span class="co"># Choose chart type</span></a>
+<a class="sourceLine" id="cb497-11" title="11"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb497-12" title="12"><span class="st">  </span><span class="co"># Add a diagonal line representing perfect predictions</span></a>
+<a class="sourceLine" id="cb497-13" title="13"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="dt">slope=</span><span class="dv">1</span>, <span class="dt">intercept=</span><span class="dv">0</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb497-14" title="14"><span class="st">  </span><span class="co"># Split by gender</span></a>
+<a class="sourceLine" id="cb497-15" title="15"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>gender) <span class="op">+</span></a>
+<a class="sourceLine" id="cb497-16" title="16"><span class="st">  </span><span class="co"># Add some labels</span></a>
+<a class="sourceLine" id="cb497-17" title="17"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
+<a class="sourceLine" id="cb497-18" title="18">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model containing gender&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/lm_gender%20viz-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb492-1" title="1">lm_humancapital <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb492-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb498-1" title="1">lm_humancapital <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb498-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <pre><code>
 Call:
 lm(formula = log_base ~ gender + perfEval + age_bin + edu, data = gd_data_clean)
@@ -915,18 +924,18 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 0.231 on 990 degrees of freedom
 Multiple R-squared:  0.361, Adjusted R-squared:  0.355 
 F-statistic: 62.2 on 9 and 990 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb494-1" title="1">lm_humancapital <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb494-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
-<a class="sourceLine" id="cb494-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb494-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
-<a class="sourceLine" id="cb494-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb494-6" title="6"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb494-7" title="7"><span class="st">  </span><span class="co"># Add some labels</span></a>
-<a class="sourceLine" id="cb494-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
-<a class="sourceLine" id="cb494-9" title="9">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model containing human capital measures&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb500-1" title="1">lm_humancapital <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb500-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
+<a class="sourceLine" id="cb500-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb500-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
+<a class="sourceLine" id="cb500-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb500-6" title="6"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb500-7" title="7"><span class="st">  </span><span class="co"># Add some labels</span></a>
+<a class="sourceLine" id="cb500-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
+<a class="sourceLine" id="cb500-9" title="9">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model containing human capital measures&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/lm_humancapital%20viz-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb495-1" title="1">lm_allcontrols <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb495-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb501-1" title="1">lm_allcontrols <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb501-2" title="2"><span class="st">  </span><span class="kw">summary</span>()</a></code></pre></div>
 <pre><code>
 Call:
 lm(formula = log_base ~ gender + perfEval + age_bin + edu + dept + 
@@ -937,80 +946,55 @@ Residuals:
 -0.5679 -0.0824  0.0099  0.0865  0.3378 
 
 Coefficients:
-                             Estimate Std. Error t value             Pr(&gt;|t|)
-(Intercept)                 11.006946   0.022887  480.93 &lt; 0.0000000000000002
-genderFemale                -0.010945   0.009246   -1.18               0.2368
-perfEval                     0.000107   0.002948    0.04               0.9709
-age_bin[25,35)              -0.336882   0.012492  -26.97 &lt; 0.0000000000000002
-age_bin[45,55)              -0.100828   0.012613   -7.99   0.0000000000000037
-age_bin[35,45)              -0.197028   0.012808  -15.38 &lt; 0.0000000000000002
-age_bin[0,25)               -0.432314   0.013127  -32.93 &lt; 0.0000000000000002
-eduMasters                   0.068456   0.011553    5.93   0.0000000043195308
-eduCollege                   0.012278   0.011735    1.05               0.2957
-eduPhD                       0.080431   0.011793    6.82   0.0000000000158866
-deptSales                    0.077778   0.012933    6.01   0.0000000025571978
-deptManagement               0.034401   0.013069    2.63               0.0086
-deptAdministration           0.002596   0.013114    0.20               0.8431
-deptEngineering              0.035649   0.013148    2.71               0.0068
-seniority                    0.108084   0.002990   36.15 &lt; 0.0000000000000002
-jobTitleSoftware Engineer    0.345077   0.019067   18.10 &lt; 0.0000000000000002
-jobTitleData Scientist       0.206233   0.017899   11.52 &lt; 0.0000000000000002
-jobTitleFinancial Analyst    0.252215   0.018063   13.96 &lt; 0.0000000000000002
-jobTitleGraphic Designer     0.178280   0.018388    9.70 &lt; 0.0000000000000002
-jobTitleIT                   0.179373   0.018364    9.77 &lt; 0.0000000000000002
-jobTitleSales Associate      0.212518   0.018659   11.39 &lt; 0.0000000000000002
-jobTitleDriver               0.168299   0.018679    9.01 &lt; 0.0000000000000002
-jobTitleManager              0.511504   0.019565   26.14 &lt; 0.0000000000000002
-jobTitleWarehouse Associate  0.198159   0.018752   10.57 &lt; 0.0000000000000002
-                               
-(Intercept)                 ***
-genderFemale                   
-perfEval                       
-age_bin[25,35)              ***
-age_bin[45,55)              ***
-age_bin[35,45)              ***
-age_bin[0,25)               ***
-eduMasters                  ***
-eduCollege                     
-eduPhD                      ***
-deptSales                   ***
-deptManagement              ** 
-deptAdministration             
-deptEngineering             ** 
-seniority                   ***
-jobTitleSoftware Engineer   ***
-jobTitleData Scientist      ***
-jobTitleFinancial Analyst   ***
-jobTitleGraphic Designer    ***
-jobTitleIT                  ***
-jobTitleSales Associate     ***
-jobTitleDriver              ***
-jobTitleManager             ***
-jobTitleWarehouse Associate ***
+                             Estimate Std. Error t value             Pr(&gt;|t|)    
+(Intercept)                 11.006946   0.022887  480.93 &lt; 0.0000000000000002 ***
+genderFemale                -0.010945   0.009246   -1.18               0.2368    
+perfEval                     0.000107   0.002948    0.04               0.9709    
+age_bin[25,35)              -0.336882   0.012492  -26.97 &lt; 0.0000000000000002 ***
+age_bin[45,55)              -0.100828   0.012613   -7.99   0.0000000000000037 ***
+age_bin[35,45)              -0.197028   0.012808  -15.38 &lt; 0.0000000000000002 ***
+age_bin[0,25)               -0.432314   0.013127  -32.93 &lt; 0.0000000000000002 ***
+eduMasters                   0.068456   0.011553    5.93   0.0000000043195308 ***
+eduCollege                   0.012278   0.011735    1.05               0.2957    
+eduPhD                       0.080431   0.011793    6.82   0.0000000000158866 ***
+deptSales                    0.077778   0.012933    6.01   0.0000000025571978 ***
+deptManagement               0.034401   0.013069    2.63               0.0086 ** 
+deptAdministration           0.002596   0.013114    0.20               0.8431    
+deptEngineering              0.035649   0.013148    2.71               0.0068 ** 
+seniority                    0.108084   0.002990   36.15 &lt; 0.0000000000000002 ***
+jobTitleSoftware Engineer    0.345077   0.019067   18.10 &lt; 0.0000000000000002 ***
+jobTitleData Scientist       0.206233   0.017899   11.52 &lt; 0.0000000000000002 ***
+jobTitleFinancial Analyst    0.252215   0.018063   13.96 &lt; 0.0000000000000002 ***
+jobTitleGraphic Designer     0.178280   0.018388    9.70 &lt; 0.0000000000000002 ***
+jobTitleIT                   0.179373   0.018364    9.77 &lt; 0.0000000000000002 ***
+jobTitleSales Associate      0.212518   0.018659   11.39 &lt; 0.0000000000000002 ***
+jobTitleDriver               0.168299   0.018679    9.01 &lt; 0.0000000000000002 ***
+jobTitleManager              0.511504   0.019565   26.14 &lt; 0.0000000000000002 ***
+jobTitleWarehouse Associate  0.198159   0.018752   10.57 &lt; 0.0000000000000002 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 0.131 on 976 degrees of freedom
 Multiple R-squared:  0.798, Adjusted R-squared:  0.793 
 F-statistic:  167 on 23 and 976 DF,  p-value: &lt;0.0000000000000002</code></pre>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb497-1" title="1">lm_allcontrols <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb497-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
-<a class="sourceLine" id="cb497-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb497-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
-<a class="sourceLine" id="cb497-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb497-6" title="6"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb497-7" title="7"><span class="st">  </span><span class="co"># Add some labels</span></a>
-<a class="sourceLine" id="cb497-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
-<a class="sourceLine" id="cb497-9" title="9">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb503-1" title="1">lm_allcontrols <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb503-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
+<a class="sourceLine" id="cb503-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb503-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
+<a class="sourceLine" id="cb503-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb503-6" title="6"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb503-7" title="7"><span class="st">  </span><span class="co"># Add some labels</span></a>
+<a class="sourceLine" id="cb503-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
+<a class="sourceLine" id="cb503-9" title="9">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/lm_allcontrols%20viz-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb498-1" title="1"><span class="co">#  Gather up all the models</span></a>
-<a class="sourceLine" id="cb498-2" title="2"><span class="kw">list</span>(lm_gender, lm_humancapital, lm_allcontrols) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb498-3" title="3"><span class="st">  </span><span class="co"># Extract coefficients for all models at once and combine into a single table</span></a>
-<a class="sourceLine" id="cb498-4" title="4"><span class="st">  </span><span class="kw">map_df</span>(tidy, <span class="dt">.id =</span> <span class="st">&quot;model&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb498-5" title="5"><span class="st">  </span><span class="co"># Let&#39;s look at the impact of gender</span></a>
-<a class="sourceLine" id="cb498-6" title="6"><span class="st">  </span><span class="kw">filter</span>(term<span class="op">==</span><span class="st">&quot;genderFemale&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb498-7" title="7"><span class="st">  </span><span class="co"># P values less than 0.05 are usually taken to mean an estimate is reliable</span></a>
-<a class="sourceLine" id="cb498-8" title="8"><span class="st">  </span><span class="kw">select</span>(model, <span class="dt">log_gap=</span>estimate, p.value)</a></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb504-1" title="1"><span class="co">#  Gather up all the models</span></a>
+<a class="sourceLine" id="cb504-2" title="2"><span class="kw">list</span>(lm_gender, lm_humancapital, lm_allcontrols) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb504-3" title="3"><span class="st">  </span><span class="co"># Extract coefficients for all models at once and combine into a single table</span></a>
+<a class="sourceLine" id="cb504-4" title="4"><span class="st">  </span><span class="kw">map_df</span>(tidy, <span class="dt">.id =</span> <span class="st">&quot;model&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb504-5" title="5"><span class="st">  </span><span class="co"># Let&#39;s look at the impact of gender</span></a>
+<a class="sourceLine" id="cb504-6" title="6"><span class="st">  </span><span class="kw">filter</span>(term<span class="op">==</span><span class="st">&quot;genderFemale&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb504-7" title="7"><span class="st">  </span><span class="co"># P values less than 0.05 are usually taken to mean an estimate is reliable</span></a>
+<a class="sourceLine" id="cb504-8" title="8"><span class="st">  </span><span class="kw">select</span>(model, <span class="dt">log_gap=</span>estimate, p.value)</a></code></pre></div>
 <pre><code># A tibble: 3 x 3
   model    log_gap     p.value
   &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;
@@ -1024,10 +1008,10 @@ F-statistic:  167 on 23 and 976 DF,  p-value: &lt;0.0000000000000002</code></pre
 <p>(Interaction of gender x dept)
 To test for differences by department, examine significance of each “gender x dept” coefficient.
 For the gender pay gap by department, add the “gender” + “gender x dept” coefficients from this model.</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb500-1" title="1"><span class="co"># All controls with department interaction terms. </span></a>
-<a class="sourceLine" id="cb500-2" title="2">lm_allcontrols_dept &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender<span class="op">*</span>dept <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>seniority <span class="op">+</span><span class="st"> </span>jobTitle, <span class="dt">data =</span> gd_data_clean)</a>
-<a class="sourceLine" id="cb500-3" title="3"></a>
-<a class="sourceLine" id="cb500-4" title="4"><span class="kw">tidy</span>(lm_allcontrols_dept)</a></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb506-1" title="1"><span class="co"># All controls with department interaction terms. </span></a>
+<a class="sourceLine" id="cb506-2" title="2">lm_allcontrols_dept &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender<span class="op">*</span>dept <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>seniority <span class="op">+</span><span class="st"> </span>jobTitle, <span class="dt">data =</span> gd_data_clean)</a>
+<a class="sourceLine" id="cb506-3" title="3"></a>
+<a class="sourceLine" id="cb506-4" title="4"><span class="kw">tidy</span>(lm_allcontrols_dept)</a></code></pre></div>
 <pre><code># A tibble: 28 x 5
    term                    estimate  std.error    statistic      p.value
    &lt;chr&gt;                      &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -1042,15 +1026,15 @@ For the gender pay gap by department, add the “gender” + “gender x dept”
  9 age_bin[45,55)     -0.100342     0.0126338   -7.94233    5.46121e- 15
 10 age_bin[35,45)     -0.196490     0.0128459  -15.2959     1.73511e- 47
 # ... with 18 more rows</code></pre>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb502-1" title="1">lm_allcontrols_dept <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb502-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
-<a class="sourceLine" id="cb502-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb502-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
-<a class="sourceLine" id="cb502-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb502-6" title="6"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb502-7" title="7"><span class="st">  </span><span class="co"># Add some labels</span></a>
-<a class="sourceLine" id="cb502-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
-<a class="sourceLine" id="cb502-9" title="9">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls &amp; department interaction&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb508-1" title="1">lm_allcontrols_dept <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
+<a class="sourceLine" id="cb508-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
+<a class="sourceLine" id="cb508-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb508-6" title="6"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb508-7" title="7"><span class="st">  </span><span class="co"># Add some labels</span></a>
+<a class="sourceLine" id="cb508-8" title="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
+<a class="sourceLine" id="cb508-9" title="9">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls &amp; department interaction&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/lm_allcontrols_dept-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 </div>
 <div id="results-by-job-title" class="section level3">
@@ -1058,10 +1042,10 @@ For the gender pay gap by department, add the “gender” + “gender x dept”
 <p>(Interaction of gender x job )
 To test for differences by department, examine significance of each “gender x job title” coefficient.
 For the gender pay gap by job, add the “gender” + “gender x job title” coefficients from this model.</p>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb503-1" title="1"><span class="co"># All controls with department interaction terms. </span></a>
-<a class="sourceLine" id="cb503-2" title="2">lm_allcontrols_job &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender<span class="op">*</span>jobTitle <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>seniority <span class="op">+</span><span class="st"> </span>dept, <span class="dt">data =</span> gd_data_clean)</a>
-<a class="sourceLine" id="cb503-3" title="3"></a>
-<a class="sourceLine" id="cb503-4" title="4"><span class="kw">tidy</span>(lm_allcontrols_job)</a></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb509-1" title="1"><span class="co"># All controls with department interaction terms. </span></a>
+<a class="sourceLine" id="cb509-2" title="2">lm_allcontrols_job &lt;-<span class="st"> </span><span class="kw">lm</span>(log_base <span class="op">~</span><span class="st"> </span>gender<span class="op">*</span>jobTitle <span class="op">+</span><span class="st"> </span>perfEval <span class="op">+</span><span class="st"> </span>age_bin <span class="op">+</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>seniority <span class="op">+</span><span class="st"> </span>dept, <span class="dt">data =</span> gd_data_clean)</a>
+<a class="sourceLine" id="cb509-3" title="3"></a>
+<a class="sourceLine" id="cb509-4" title="4"><span class="kw">tidy</span>(lm_allcontrols_job)</a></code></pre></div>
 <pre><code># A tibble: 33 x 5
    term                        estimate std.error statistic     p.value
    &lt;chr&gt;                          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
@@ -1076,16 +1060,16 @@ For the gender pay gap by job, add the “gender” + “gender x job title” c
  9 jobTitleDriver             0.106498  0.0442196   2.40840 1.62091e- 2
 10 jobTitleManager            0.455642  0.0426281  10.6888  2.77904e-25
 # ... with 23 more rows</code></pre>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb505-1" title="1">lm_allcontrols_job <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb505-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
-<a class="sourceLine" id="cb505-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb505-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
-<a class="sourceLine" id="cb505-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb505-6" title="6"><span class="st">  </span><span class="co"># Build a chart</span></a>
-<a class="sourceLine" id="cb505-7" title="7"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb505-8" title="8"><span class="st">  </span><span class="co"># Add some labels</span></a>
-<a class="sourceLine" id="cb505-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
-<a class="sourceLine" id="cb505-10" title="10">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls &amp; job interaction&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb511-1" title="1">lm_allcontrols_job <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb511-2" title="2"><span class="st">  </span><span class="co"># Get the predicted values</span></a>
+<a class="sourceLine" id="cb511-3" title="3"><span class="st">  </span><span class="kw">augment</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb511-4" title="4"><span class="st">  </span><span class="co"># Rename columns to more friendly names</span></a>
+<a class="sourceLine" id="cb511-5" title="5"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">actual =</span> log_base, <span class="dt">predicted =</span> .fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb511-6" title="6"><span class="st">  </span><span class="co"># Build a chart</span></a>
+<a class="sourceLine" id="cb511-7" title="7"><span class="st">  </span>HRAnalytics<span class="op">::</span><span class="kw">pred_vs_actuals</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb511-8" title="8"><span class="st">  </span><span class="co"># Add some labels</span></a>
+<a class="sourceLine" id="cb511-9" title="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </a>
+<a class="sourceLine" id="cb511-10" title="10">       <span class="dt">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls &amp; job interaction&quot;</span>)</a></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/lm_allcontrols_job-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>For additional analysis via Oaxaca-Blinder decomposition, please see documentation for the <a href="https://cran.r-project.org/package=oaxaca"><code>oaxaca</code> package</a> in R.</p>
 
@@ -1149,7 +1133,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/12-pay-gap.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/12-pay-gap.Rmd",
 "text": "Edit"
 },
 "history": {

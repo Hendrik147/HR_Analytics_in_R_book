@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 8 Sampling | HR Analytics in R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -1140,40 +1134,43 @@ FIGURE 8.12: Comparing the distributions of proportion red for different sample 
 <a class="sourceLine" id="cb238-9" title="9"><span class="co"># n = 100</span></a>
 <a class="sourceLine" id="cb238-10" title="10">virtual_prop_red_<span class="dv">100</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb238-11" title="11"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">sd =</span> <span class="kw">sd</span>(prop_red))</a></code></pre></div>
-<p>Let’s compare these three measures of distributional variation in Table <a href="#tab:comparing-n"><strong>??</strong></a>.</p>
+<p>Let’s compare these three measures of distributional variation in Table <a href="8-sampling.html#tab:comparing-n">8.1</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:comparing-n">TABLE 8.1: </span>Comparing standard deviations of proportions red for three different shovels
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 Number of slots in shovel
 </th>
-<th>
+<th style="text-align:right;">
 Standard deviation of proportions red
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:right;">
 25
 </td>
-<td>
+<td style="text-align:right;">
 0.094
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 50
 </td>
-<td>
+<td style="text-align:right;">
 0.069
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 100
 </td>
-<td>
+<td style="text-align:right;">
 0.045
 </td>
 </tr>
@@ -1204,7 +1201,7 @@ Standard deviation of proportions red
 </div>
 <div id="sampling-framework" class="section level2">
 <h2><span class="header-section-number">8.3</span> Sampling framework</h2>
-<p>In both our tactile and our virtual sampling activities, we used sampling for the purpose of estimation. We extracted samples in order to <em>estimate</em> the proportion of the bowl’s balls that are red. We used sampling as a less time-consuming approach than performing an exhaustive count of all the balls. Our virtual sampling activity built up to the results shown in Figure <a href="8-sampling.html#fig:comparing-sampling-distributions">8.12</a> and Table <a href="#tab:comparing-n"><strong>??</strong></a>: comparing 1000 proportions red based on samples of size 25, 50, and 100. This was our first attempt at understanding two key concepts relating to sampling for estimation:</p>
+<p>In both our tactile and our virtual sampling activities, we used sampling for the purpose of estimation. We extracted samples in order to <em>estimate</em> the proportion of the bowl’s balls that are red. We used sampling as a less time-consuming approach than performing an exhaustive count of all the balls. Our virtual sampling activity built up to the results shown in Figure <a href="8-sampling.html#fig:comparing-sampling-distributions">8.12</a> and Table <a href="8-sampling.html#tab:comparing-n">8.1</a>: comparing 1000 proportions red based on samples of size 25, 50, and 100. This was our first attempt at understanding two key concepts relating to sampling for estimation:</p>
 <ol style="list-style-type: decimal">
 <li>The effect of <em>sampling variation</em> on our estimates.</li>
 <li>The effect of sample size on <em>sampling variation</em>.</li>
@@ -1265,40 +1262,43 @@ FIGURE 8.13: Previously seen three distributions of the sample proportion <span 
 </p>
 </div>
 <p>These types of distributions have a special name: <strong>sampling distributions</strong>;  their visualization displays the effect of sampling variation on the distribution of any point estimate, in this case, the sample proportion <span class="math inline">\(\widehat{p}\)</span>. Using these sampling distributions, for a given sample size <span class="math inline">\(n\)</span>, we can make statements about what values we can typically expect.</p>
-<p>For example, observe the centers of all three sampling distributions: they are all roughly centered around <span class="math inline">\(0.4 = 40\%\)</span>. Furthermore, observe that while we are somewhat likely to observe sample proportions of red balls of <span class="math inline">\(0.2 = 20\%\)</span> when using the shovel with 25 slots, we will almost never observe a proportion of 20% when using the shovel with 100 slots. Observe also the effect of sample size on the sampling variation. As the sample size <span class="math inline">\(n\)</span> increases from 25 to 50 to 100,  the variation of the sampling distribution decreases and thus the values cluster more and more tightly around the same center of around 40%. We quantified this variation using the standard deviation of our sample proportions in Table <a href="#tab:comparing-n"><strong>??</strong></a>, which we display again as Table <a href="#tab:comparing-n-repeat"><strong>??</strong></a>:</p>
+<p>For example, observe the centers of all three sampling distributions: they are all roughly centered around <span class="math inline">\(0.4 = 40\%\)</span>. Furthermore, observe that while we are somewhat likely to observe sample proportions of red balls of <span class="math inline">\(0.2 = 20\%\)</span> when using the shovel with 25 slots, we will almost never observe a proportion of 20% when using the shovel with 100 slots. Observe also the effect of sample size on the sampling variation. As the sample size <span class="math inline">\(n\)</span> increases from 25 to 50 to 100,  the variation of the sampling distribution decreases and thus the values cluster more and more tightly around the same center of around 40%. We quantified this variation using the standard deviation of our sample proportions in Table <a href="8-sampling.html#tab:comparing-n">8.1</a>, which we display again as Table <a href="8-sampling.html#tab:comparing-n-repeat">8.2</a>:</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:comparing-n-repeat">TABLE 8.2: </span>Previously seen comparing standard deviations of proportions red for three different shovels
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 Number of slots in shovel
 </th>
-<th>
+<th style="text-align:right;">
 Standard deviation of proportions red
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:right;">
 25
 </td>
-<td>
+<td style="text-align:right;">
 0.094
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 50
 </td>
-<td>
+<td style="text-align:right;">
 0.069
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 100
 </td>
-<td>
+<td style="text-align:right;">
 0.045
 </td>
 </tr>
@@ -1313,40 +1313,43 @@ Standard deviation of proportions red
 FIGURE 8.14: Three sampling distributions of the sample proportion <span class="math inline">\(\widehat{p}\)</span>.
 </p>
 </div>
-<p>Furthermore, let’s re-display Table <a href="#tab:comparing-n"><strong>??</strong></a> but using our new terminology, notation, and definitions relating to sampling in Table <a href="#tab:comparing-n-2"><strong>??</strong></a>.</p>
+<p>Furthermore, let’s re-display Table <a href="8-sampling.html#tab:comparing-n">8.1</a> but using our new terminology, notation, and definitions relating to sampling in Table <a href="8-sampling.html#tab:comparing-n-2">8.3</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:comparing-n-2">TABLE 8.3: </span>Standard errors of the sample proportion based on sample sizes of 25, 50, and 100
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Sample size (n)
 </th>
-<th>
+<th style="text-align:right;">
 Standard error of <span class="math inline">\(\widehat{p}\)</span>
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 n = 25
 </td>
-<td>
+<td style="text-align:right;">
 0.094
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 n = 50
 </td>
-<td>
+<td style="text-align:right;">
 0.069
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 n = 100
 </td>
-<td>
+<td style="text-align:right;">
 0.045
 </td>
 </tr>
@@ -1404,40 +1407,43 @@ FIGURE 8.16: Comparing accuracy and precision.
 <strong><em>Learning check</em></strong>
 </p>
 </div>
-<p><strong>(LC7.16)</strong> The table that follows is a version of Table <a href="#tab:comparing-n-2"><strong>??</strong></a> matching sample sizes <span class="math inline">\(n\)</span> to different <em>standard errors</em> of the sample proportion <span class="math inline">\(\widehat{p}\)</span>, but with the rows randomly re-ordered and the sample sizes removed. Fill in the table by matching the correct sample sizes to the correct standard errors.</p>
+<p><strong>(LC7.16)</strong> The table that follows is a version of Table <a href="8-sampling.html#tab:comparing-n-2">8.3</a> matching sample sizes <span class="math inline">\(n\)</span> to different <em>standard errors</em> of the sample proportion <span class="math inline">\(\widehat{p}\)</span>, but with the rows randomly re-ordered and the sample sizes removed. Fill in the table by matching the correct sample sizes to the correct standard errors.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:comparing-n-3">TABLE 8.4: </span>Standard errors of <span class="math inline">\(\widehat{p}\)</span> based on n = 25, 50, 100
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Sample size
 </th>
-<th>
+<th style="text-align:right;">
 Standard error of <span class="math inline">\(\widehat{p}\)</span>
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 n =
 </td>
-<td>
+<td style="text-align:right;">
 0.094
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 n =
 </td>
-<td>
+<td style="text-align:right;">
 0.045
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 n =
 </td>
-<td>
+<td style="text-align:right;">
 0.069
 </td>
 </tr>
@@ -1559,110 +1565,113 @@ As big point of confusion is the difference between random sampling and random a
 -->
 <div id="sampling-conclusion-table" class="section level3">
 <h3><span class="header-section-number">8.5.1</span> Sampling scenarios</h3>
-<p>In this chapter, we performed both tactile and virtual sampling exercises to infer about an unknown proportion. We also presented a case study of sampling in real life with polls. In each case, we used the sample proportion <span class="math inline">\(\widehat{p}\)</span> to estimate the population proportion <span class="math inline">\(p\)</span>. However, we are not just limited to scenarios related to proportions. In other words, we can use sampling to estimate other population parameters using other point estimates as well. We present four more such scenarios in Table <a href="#tab:table-ch8"><strong>??</strong></a>.</p>
+<p>In this chapter, we performed both tactile and virtual sampling exercises to infer about an unknown proportion. We also presented a case study of sampling in real life with polls. In each case, we used the sample proportion <span class="math inline">\(\widehat{p}\)</span> to estimate the population proportion <span class="math inline">\(p\)</span>. However, we are not just limited to scenarios related to proportions. In other words, we can use sampling to estimate other population parameters using other point estimates as well. We present four more such scenarios in Table <a href="8-sampling.html#tab:table-ch8">8.5</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:table-ch8">TABLE 8.5: </span>Scenarios of sampling for inference
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 Scenario
 </th>
-<th>
+<th style="text-align:left;">
 Population parameter
 </th>
-<th>
+<th style="text-align:left;">
 Notation
 </th>
-<th>
+<th style="text-align:left;">
 Point estimate
 </th>
-<th>
+<th style="text-align:left;">
 Symbol(s)
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 1
 </td>
-<td style="width: 1.2in; ">
+<td style="text-align:left;width: 1.2in; ">
 Population proportion
 </td>
-<td style="width: 0.8in; ">
+<td style="text-align:left;width: 0.8in; ">
 <span class="math inline">\(p\)</span>
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Sample proportion
 </td>
-<td style="width: 0.6in; ">
+<td style="text-align:left;width: 0.6in; ">
 <span class="math inline">\(\widehat{p}\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 2
 </td>
-<td style="width: 1.2in; ">
+<td style="text-align:left;width: 1.2in; ">
 Population mean
 </td>
-<td style="width: 0.8in; ">
+<td style="text-align:left;width: 0.8in; ">
 <span class="math inline">\(\mu\)</span>
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Sample mean
 </td>
-<td style="width: 0.6in; ">
+<td style="text-align:left;width: 0.6in; ">
 <span class="math inline">\(\overline{x}\)</span> or <span class="math inline">\(\widehat{\mu}\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 3
 </td>
-<td style="width: 1.2in; ">
+<td style="text-align:left;width: 1.2in; ">
 Difference in population proportions
 </td>
-<td style="width: 0.8in; ">
+<td style="text-align:left;width: 0.8in; ">
 <span class="math inline">\(p_1 - p_2\)</span>
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Difference in sample proportions
 </td>
-<td style="width: 0.6in; ">
+<td style="text-align:left;width: 0.6in; ">
 <span class="math inline">\(\widehat{p}_1 - \widehat{p}_2\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 4
 </td>
-<td style="width: 1.2in; ">
+<td style="text-align:left;width: 1.2in; ">
 Difference in population means
 </td>
-<td style="width: 0.8in; ">
+<td style="text-align:left;width: 0.8in; ">
 <span class="math inline">\(\mu_1 - \mu_2\)</span>
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Difference in sample means
 </td>
-<td style="width: 0.6in; ">
+<td style="text-align:left;width: 0.6in; ">
 <span class="math inline">\(\overline{x}_1 - \overline{x}_2\)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 0.5in; ">
+<td style="text-align:right;width: 0.5in; ">
 5
 </td>
-<td style="width: 1.2in; ">
+<td style="text-align:left;width: 1.2in; ">
 Population regression slope
 </td>
-<td style="width: 0.8in; ">
+<td style="text-align:left;width: 0.8in; ">
 <span class="math inline">\(\beta_1\)</span>
 </td>
-<td style="width: 1.5in; ">
+<td style="text-align:left;width: 1.5in; ">
 Fitted regression slope
 </td>
-<td style="width: 0.6in; ">
+<td style="text-align:left;width: 0.6in; ">
 <span class="math inline">\(b_1\)</span> or <span class="math inline">\(\widehat{\beta}_1\)</span>
 </td>
 </tr>
@@ -1687,7 +1696,7 @@ Fitted regression slope
 </div>
 <div id="sampling-conclusion-central-limit-theorem" class="section level3">
 <h3><span class="header-section-number">8.5.2</span> Central Limit Theorem</h3>
-<p>What you visualized in Figures <a href="8-sampling.html#fig:comparing-sampling-distributions">8.12</a> and <a href="8-sampling.html#fig:comparing-sampling-distributions-2">8.14</a> and summarized in Tables <a href="#tab:comparing-n"><strong>??</strong></a> and <a href="#tab:comparing-n-2"><strong>??</strong></a> was a demonstration of a famous theorem, or mathematically proven truth, called the  <em>Central Limit Theorem</em>. It loosely states that when sample means are based on larger and larger sample sizes, the sampling distribution of these sample means becomes both more and more normally shaped and more and more narrow.</p>
+<p>What you visualized in Figures <a href="8-sampling.html#fig:comparing-sampling-distributions">8.12</a> and <a href="8-sampling.html#fig:comparing-sampling-distributions-2">8.14</a> and summarized in Tables <a href="8-sampling.html#tab:comparing-n">8.1</a> and <a href="8-sampling.html#tab:comparing-n-2">8.3</a> was a demonstration of a famous theorem, or mathematically proven truth, called the  <em>Central Limit Theorem</em>. It loosely states that when sample means are based on larger and larger sample sizes, the sampling distribution of these sample means becomes both more and more normally shaped and more and more narrow.</p>
 <p>In other words, their sampling distribution increasingly follows a <em>normal distribution</em> and the variation of these sampling distributions gets smaller, as quantified by their standard errors.</p>
 <p>Shuyi Chiou, Casey Dunn, and Pathikrit Bhattacharyya created a 3-minute and 38-second video at <a href="https://youtu.be/jvoxEYmQHNM" class="uri">https://youtu.be/jvoxEYmQHNM</a> explaining this crucial statistical theorem using the average weight of wild bunny rabbits and the average wingspan of dragons as examples. Figure <a href="8-sampling.html#fig:CLT-video-preview">8.17</a> shows a preview of this video.</p>
 <div class="figure" style="text-align: center"><span id="fig:CLT-video-preview"></span>
@@ -1769,7 +1778,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/07-sampling.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/07-sampling.Rmd",
 "text": "Edit"
 },
 "history": {

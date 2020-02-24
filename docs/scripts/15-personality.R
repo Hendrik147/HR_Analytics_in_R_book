@@ -1,4 +1,4 @@
-## ----personality, include=FALSE-----------------------------------------------
+## ----personality, include=FALSE-----------------------------------------------------------------------------------------------------
 chap <- 16
 lc <- 0
 rq <- 0
@@ -19,20 +19,20 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## ----include=FALSE, warning=FALSE, message=FALSE------------------------------
+## ----include=FALSE, warning=FALSE, message=FALSE------------------------------------------------------------------------------------
 if(!require(httr)) install.packages("httr")
 if(!require(janeaustenr)) install.packages("janeaustenr")
 if (!require(ibmsunburst)) install.packages("ibmsunburst")
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## key = "aOWMNztQ_VVlz9fINhc3v67rtnJqcN6JuubQorAvhq"
 ## url = "https://gateway.watsonplatform.net/personality-insights/api/v3/profile?version=2017-10-13"
 ## uname="a4a4ea65-e8e7-492c-a95e-128f10fc5f"
 ## pword="LuFm4BELs"
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## library(httr)
 ## library(janeaustenr)
 ## cr=POST(url,
@@ -44,7 +44,7 @@ if (!require(ibmsunburst)) install.packages("ibmsunburst")
 ## status_code(cr)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## library(ibmsunburst)
 ## ibmsunburst(content(cr), version = "v3")
 

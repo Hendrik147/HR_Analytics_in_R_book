@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 26 Ranking Medical Schools | HR Analytics in R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -645,29 +639,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this module, we will do another type of web scraping, this time we scrape from a pdf document. We will analyse the results of the “épreuves classantes nationales (ECN)”, which is a nationwide competitive examination at the end of the 6th year of medical schools in France. The candidates ranking first can choose first where they want to continue their medical training. It is a very clean dataset in pdf format containing the results of 8370 medical school examns for a total of 124 pages.</p>
 <p>Source code: <a href="https://privefl.github.io/blog/scraping-some-french-medical-school-rankings/" class="uri">https://privefl.github.io/blog/scraping-some-french-medical-school-rankings/</a></p>
 <p>Source pdf document: <a href="http://www.remede.org/documents/IMG/pdf/liste_classement_ecn_20170628.pdf" class="uri">http://www.remede.org/documents/IMG/pdf/liste_classement_ecn_20170628.pdf</a></p>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb839-1" title="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb839-2" title="2"><span class="kw">library</span>(pdftools)</a>
-<a class="sourceLine" id="cb839-3" title="3"><span class="kw">library</span>(data.table)</a>
-<a class="sourceLine" id="cb839-4" title="4"><span class="kw">library</span>(bigstatsr)</a>
-<a class="sourceLine" id="cb839-5" title="5"><span class="kw">library</span>(plotly)</a>
-<a class="sourceLine" id="cb839-6" title="6"><span class="kw">library</span>(stringr)</a>
-<a class="sourceLine" id="cb839-7" title="7"><span class="co">#library(gsubfn)</span></a></code></pre></div>
+<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb886-1" title="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb886-2" title="2"><span class="kw">library</span>(pdftools)</a></code></pre></div>
+<pre><code>Warning: package &#39;pdftools&#39; was built under R version 3.6.2</code></pre>
+<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb888-1" title="1"><span class="kw">library</span>(data.table)</a></code></pre></div>
+<pre><code>Warning: package &#39;data.table&#39; was built under R version 3.6.2</code></pre>
+<pre><code>data.table 1.12.8 using 4 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
+<pre><code>
+Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:lubridate&#39;:
+
+    hour, isoweek, mday, minute, month, quarter, second, wday, week, yday, year</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    transpose</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    between, first, last</code></pre>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb895-1" title="1"><span class="kw">library</span>(bigstatsr)</a>
+<a class="sourceLine" id="cb895-2" title="2"><span class="kw">library</span>(plotly)</a></code></pre></div>
+<pre><code>Warning: package &#39;plotly&#39; was built under R version 3.6.2</code></pre>
+<pre><code>
+Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:MASS&#39;:
+
+    select</code></pre>
+<pre><code>The following object is masked from &#39;package:igraph&#39;:
+
+    groups</code></pre>
+<pre><code>The following objects are masked from &#39;package:googleway&#39;:
+
+    add_heatmap, add_markers, add_polygons</code></pre>
+<pre><code>The following object is masked from &#39;package:httr&#39;:
+
+    config</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    last_plot</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    filter</code></pre>
+<pre><code>The following object is masked from &#39;package:graphics&#39;:
+
+    layout</code></pre>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb905-1" title="1"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb905-2" title="2"><span class="co">#library(gsubfn)</span></a></code></pre></div>
 <p>First, let’s get some data from our service desk by exporting a CSV. We can then read this CSV (or excel spreadsheet) into R for us to perform analysis.</p>
-<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb840-1" title="1"><span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> <span class="st">&quot;Europe/London&quot;</span>)</a>
-<a class="sourceLine" id="cb840-2" title="2"><span class="kw">Sys.setlocale</span>(<span class="dt">locale=</span><span class="st">&quot;fr_FR.UTF-8&quot;</span>)</a></code></pre></div>
-<pre><code>Warning in Sys.setlocale(locale = &quot;fr_FR.UTF-8&quot;): OS reports request to set
-locale to &quot;fr_FR.UTF-8&quot; cannot be honored</code></pre>
+<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb906-1" title="1"><span class="kw">Sys.setenv</span>(<span class="dt">TZ =</span> <span class="st">&quot;Europe/London&quot;</span>)</a>
+<a class="sourceLine" id="cb906-2" title="2"><span class="kw">Sys.setlocale</span>(<span class="dt">locale=</span><span class="st">&quot;fr_FR.UTF-8&quot;</span>)</a></code></pre></div>
+<pre><code>Warning in Sys.setlocale(locale = &quot;fr_FR.UTF-8&quot;): OS reports request to set locale to &quot;fr_FR.UTF-8&quot; cannot be honored</code></pre>
 <pre><code>[1] &quot;&quot;</code></pre>
 <p>We will use package pdftools to get the text from the pdf document. to be on the safe side, I have dowloaded the document already, but it is also possible to dowload it afresh from the internet.</p>
-<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb843-1" title="1"><span class="co">#pdfdocument &lt;- &quot;https://goo.gl/wUXvjk&quot; #Internet download</span></a>
-<a class="sourceLine" id="cb843-2" title="2"><span class="co">#pdfdocument &lt;- &quot;https://hranalyticslive.netlify.com/data/liste_classement_ecn_20170628.pdf&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb909-1" title="1"><span class="co">#pdfdocument &lt;- &quot;https://goo.gl/wUXvjk&quot; #Internet download</span></a>
+<a class="sourceLine" id="cb909-2" title="2"><span class="co">#pdfdocument &lt;- &quot;https://hranalyticslive.netlify.com/data/liste_classement_ecn_20170628.pdf&quot;</span></a></code></pre></div>
 <p>gsub</p>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb844-1" title="1">txt &lt;-<span class="st"> </span>pdftools<span class="op">::</span><span class="kw">pdf_text</span>(pdfdocument)</a>
-<a class="sourceLine" id="cb844-2" title="2"><span class="kw">head</span>(txt, <span class="dt">n =</span> <span class="dv">1</span>) <span class="co">#Inspection of first page</span></a></code></pre></div>
+<div class="sourceCode" id="cb910"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb910-1" title="1">txt &lt;-<span class="st"> </span>pdftools<span class="op">::</span><span class="kw">pdf_text</span>(pdfdocument)</a>
+<a class="sourceLine" id="cb910-2" title="2"><span class="kw">head</span>(txt, <span class="dt">n =</span> <span class="dv">1</span>) <span class="co">#Inspection of first page</span></a></code></pre></div>
 <pre><code>[1] &quot;                                                                              Paris, le 28 juin 2017\r\n     Liste des étudiants et des internes de médecine, classés par ordre de\r\n     mérite, ayant satisfait aux épreuves classantes nationales anonymes\r\n    donnant accès au troisième cycle des études médicales, organisées au\r\n                            titre de l’année universitaire 2017-2018.\r\n        Nota : Il est demandé aux étudiants de vérifier les informations d’état civil les\r\n  concernant et d’envoyer à la gestionnaire des ECN la copie d’une pièce d’identité pour\r\n  prise en compte des modifications. Ces corrections sont importantes avant parution de\r\n                      cette liste au Journal officiel de la République française.\r\n0001 Mme Beaumont (Anne-Lise), née le 1 septembre 1993.\r\n0002 M. Petitdemange (Arthur, Paul, Joseph), né le 15 septembre 1993.\r\n0003 M. Bacon (Seraphin, Charly, Philippe), né le 29 janvier 1993.\r\n0004 M. Ditac (Geoffroy, Arnaud, André), né le 23 juin 1994.\r\n0005 M. Faure (Guillaume, Thomas), né le 7 août 1992.\r\n0006 Mme Weil (Amandine), née le 4 mars 1992.\r\n0007 M. Ezzouhairi (Nacim), né le 1 juin 1993.\r\n0008 M. Coulon (Antoine), né le 11 juin 1992.\r\n0009 Mme Le Gaudu (Violette, Luce, Catherine), née le 3 juin 1994.\r\n0010 M. Boyer (Jeremy), né le 14 mai 1993.\r\n0011 M. Villemaire (Axel, Michaël, Pierre), né le 24 juillet 1991.\r\n0012 M. Azoulay (Levi-Dan), né le 13 décembre 1993.\r\n0013 M. Assouline (Allan), né le 14 janvier 1994.\r\n0014 M. Rouchaud (Aymeric), né le 16 mai 1993.\r\n0015 M. Padden (Michael, James), né le 6 février 1993.\r\n0016 M. Gavoille (Antoine, Paul, Jean), né le 12 juillet 1994.\r\n0017 M. Marie (Benjamin, Pierre, Alexandre), né le 14 mars 1994.\r\n0018 Mlle Boulle (Charlotte, Marie, Cécile), née le 3 septembre 1988.\r\n0019 Mme Chatelain (Juliette), née le 23 juillet 1993.\r\n0020 Mme Laporte (Amandine, Capucine), née le 9 octobre 1993.\r\n0021 M. D&#39;izarny Gargas (Thibaut, François, Arnaud), né le 2 mai 1993.\r\n0022 Mme Boccon Gibod (Clémentine, Raphaëlle), née le 24 avril 1993.\r\n0023 Mme Chan (Camille, Marie), née le 11 juillet 1990.\r\n0024 M. Lemasle (Aymeric), né le 7 avril 1994.\r\n0025 M. Sulman (David), né le 9 novembre 1992.\r\n0026 Mlle Fresnel (Clémentine), née le 5 mars 1992.\r\n0027 M. Dumortier (Pierre, Antoine, Frédéric), né le 19 juillet 1993.\r\n0028 Mme Torres-Villaros (Héloïse, Laure, Barbara), née le 18 septembre 1992.\r\n0029 M. Memmi (Benjamin), né le 3 décembre 1993.\r\n0030 Mme Kherabi (Yousra), née le 23 décembre 1993.\r\n                                                              1\r\n&quot;</code></pre>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb846-1" title="1">data &lt;-<span class="st"> </span><span class="kw">strsplit</span>(txt, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb846-2" title="2"></a>
-<a class="sourceLine" id="cb846-3" title="3"><span class="kw">head</span>(data)</a></code></pre></div>
+<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb912-1" title="1">data &lt;-<span class="st"> </span><span class="kw">strsplit</span>(txt, <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
+<a class="sourceLine" id="cb912-2" title="2"></a>
+<a class="sourceLine" id="cb912-3" title="3"><span class="kw">head</span>(data)</a></code></pre></div>
 <pre><code>[[1]]
  [1] &quot;                                                                              Paris, le 28 juin 2017\r&quot;
  [2] &quot;     Liste des étudiants et des internes de médecine, classés par ordre de\r&quot;                          
@@ -1064,13 +1095,12 @@ locale to &quot;fr_FR.UTF-8&quot; cannot be honored</code></pre>
 [67] &quot;0369 Mlle Dupessey (Florence), née le 26 février 1993.\r&quot;                  
 [68] &quot;0370 Mme Delaie (Camille, Angele, Geneviève), née le 21 août 1993.\r&quot;      
 [69] &quot;                                                             6\r&quot;          </code></pre>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb848-1" title="1">data_parsed &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA_character_</span>, <span class="kw">length</span>(data), <span class="dv">7</span>)</a>
-<a class="sourceLine" id="cb848-2" title="2">data_words &lt;-<span class="st"> </span><span class="kw">str_extract_all</span>(data, <span class="kw">boundary</span>(<span class="st">&quot;word&quot;</span>))</a></code></pre></div>
-<pre><code>Warning in stri_extract_all_boundaries(string, pattern, simplify = simplify, :
-argument is not an atomic vector; coercing</code></pre>
-<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb850-1" title="1">data_parsed[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">sapply</span>(data_words, head, <span class="dt">n =</span> <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb850-2" title="2">data_parsed[, <span class="dv">5</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">sapply</span>(data_words, tail, <span class="dt">n =</span> <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb850-3" title="3"><span class="kw">head</span>(data_parsed)</a></code></pre></div>
+<div class="sourceCode" id="cb914"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb914-1" title="1">data_parsed &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA_character_</span>, <span class="kw">length</span>(data), <span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb914-2" title="2">data_words &lt;-<span class="st"> </span><span class="kw">str_extract_all</span>(data, <span class="kw">boundary</span>(<span class="st">&quot;word&quot;</span>))</a></code></pre></div>
+<pre><code>Warning in stri_extract_all_boundaries(string, pattern, simplify = simplify, : argument is not an atomic vector; coercing</code></pre>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb916-1" title="1">data_parsed[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">sapply</span>(data_words, head, <span class="dt">n =</span> <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb916-2" title="2">data_parsed[, <span class="dv">5</span><span class="op">:</span><span class="dv">7</span>] &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">sapply</span>(data_words, tail, <span class="dt">n =</span> <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb916-3" title="3"><span class="kw">head</span>(data_parsed)</a></code></pre></div>
 <pre><code>     [,1] [,2]    [,3]  [,4]         [,5] [,6] [,7]
 [1,] &quot;c&quot;  &quot;Paris&quot; &quot;le&quot;  &quot;28&quot;         &quot;r&quot;  &quot;1&quot;  &quot;r&quot; 
 [2,] &quot;c&quot;  &quot;0031&quot;  &quot;Mme&quot; &quot;Bourhis&quot;    &quot;r&quot;  &quot;2&quot;  &quot;r&quot; 
@@ -1078,19 +1108,21 @@ argument is not an atomic vector; coercing</code></pre>
 [4,] &quot;c&quot;  &quot;0167&quot;  &quot;M&quot;   &quot;Orion&quot;      &quot;r&quot;  &quot;4&quot;  &quot;r&quot; 
 [5,] &quot;c&quot;  &quot;0235&quot;  &quot;Mme&quot; &quot;Lemonnier&quot;  &quot;r&quot;  &quot;5&quot;  &quot;r&quot; 
 [6,] &quot;c&quot;  &quot;0303&quot;  &quot;M&quot;   &quot;Pantalacci&quot; &quot;r&quot;  &quot;6&quot;  &quot;r&quot; </code></pre>
-<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb852-1" title="1">data_parsed2 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(data_parsed) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb852-2" title="2"><span class="st">  </span><span class="kw">transmute</span>(</a>
-<a class="sourceLine" id="cb852-3" title="3">    <span class="dt">ranking =</span> <span class="kw">as.integer</span>(V1),</a>
-<a class="sourceLine" id="cb852-4" title="4">    <span class="dt">is_male =</span> (V2 <span class="op">==</span><span class="st"> &quot;M&quot;</span>),</a>
-<a class="sourceLine" id="cb852-5" title="5">    <span class="dt">family_name =</span> V3,</a>
-<a class="sourceLine" id="cb852-6" title="6">    <span class="dt">first_name =</span> V4,</a>
-<a class="sourceLine" id="cb852-7" title="7">    <span class="dt">birth_date =</span> <span class="kw">pmap</span>(<span class="kw">list</span>(V5, V6, V7), <span class="cf">function</span>(d, m, y) {</a>
-<a class="sourceLine" id="cb852-8" title="8">      <span class="kw">paste</span>(d, m, y, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</a>
-<a class="sourceLine" id="cb852-9" title="9">    }) <span class="op">%&gt;%</span><span class="st"> </span>lubridate<span class="op">::</span><span class="kw">dmy</span>()</a>
-<a class="sourceLine" id="cb852-10" title="10">  ) </a></code></pre></div>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb918-1" title="1">data_parsed2 &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(data_parsed) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb918-2" title="2"><span class="st">  </span><span class="kw">transmute</span>(</a>
+<a class="sourceLine" id="cb918-3" title="3">    <span class="dt">ranking =</span> <span class="kw">as.integer</span>(V1),</a>
+<a class="sourceLine" id="cb918-4" title="4">    <span class="dt">is_male =</span> (V2 <span class="op">==</span><span class="st"> &quot;M&quot;</span>),</a>
+<a class="sourceLine" id="cb918-5" title="5">    <span class="dt">family_name =</span> V3,</a>
+<a class="sourceLine" id="cb918-6" title="6">    <span class="dt">first_name =</span> V4,</a>
+<a class="sourceLine" id="cb918-7" title="7">    <span class="dt">birth_date =</span> <span class="kw">pmap</span>(<span class="kw">list</span>(V5, V6, V7), <span class="cf">function</span>(d, m, y) {</a>
+<a class="sourceLine" id="cb918-8" title="8">      <span class="kw">paste</span>(d, m, y, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</a>
+<a class="sourceLine" id="cb918-9" title="9">    }) <span class="op">%&gt;%</span><span class="st"> </span>lubridate<span class="op">::</span><span class="kw">dmy</span>()</a>
+<a class="sourceLine" id="cb918-10" title="10">  ) </a></code></pre></div>
+<pre><code>Warning: `as_tibble.matrix()` requires a matrix with column names or a `.name_repair` argument. Using compatibility `.name_repair`.
+This warning is displayed once per session.</code></pre>
 <pre><code>Warning: NAs introduced by coercion</code></pre>
 <pre><code>Warning: All formats failed to parse. No formats found.</code></pre>
-<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb855-1" title="1">data_parsed2</a></code></pre></div>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb922-1" title="1">data_parsed2</a></code></pre></div>
 <pre><code># A tibble: 124 x 5
    ranking is_male family_name first_name     birth_date
      &lt;int&gt; &lt;lgl&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;date&gt;    
@@ -1106,28 +1138,28 @@ argument is not an atomic vector; coercing</code></pre>
 10      NA FALSE   M           Meguerditchian NA        
 # ... with 114 more rows</code></pre>
 <p>Note: there is a problem with people who have a family name composed of multiple words.</p>
-<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb857-1" title="1"><span class="co"># Proportion male/female</span></a>
-<a class="sourceLine" id="cb857-2" title="2"><span class="kw">mean</span>(data_parsed2<span class="op">$</span>is_male)</a>
-<a class="sourceLine" id="cb857-3" title="3"><span class="co"># 43% of males.</span></a>
-<a class="sourceLine" id="cb857-4" title="4"></a>
-<a class="sourceLine" id="cb857-5" title="5"></a>
-<a class="sourceLine" id="cb857-6" title="6">myggplot &lt;-<span class="st"> </span><span class="cf">function</span>(...) bigstatsr<span class="op">:::</span><span class="kw">MY_THEME</span>(<span class="kw">ggplot</span>(...))</a>
-<a class="sourceLine" id="cb857-7" title="7"></a>
-<a class="sourceLine" id="cb857-8" title="8"><span class="kw">myggplot</span>(data_parsed2) <span class="op">+</span></a>
-<a class="sourceLine" id="cb857-9" title="9"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> birth_date), <span class="dt">bins =</span> <span class="dv">100</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb924-1" title="1"><span class="co"># Proportion male/female</span></a>
+<a class="sourceLine" id="cb924-2" title="2"><span class="kw">mean</span>(data_parsed2<span class="op">$</span>is_male)</a>
+<a class="sourceLine" id="cb924-3" title="3"><span class="co"># 43% of males.</span></a>
+<a class="sourceLine" id="cb924-4" title="4"></a>
+<a class="sourceLine" id="cb924-5" title="5"></a>
+<a class="sourceLine" id="cb924-6" title="6">myggplot &lt;-<span class="st"> </span><span class="cf">function</span>(...) bigstatsr<span class="op">:::</span><span class="kw">MY_THEME</span>(<span class="kw">ggplot</span>(...))</a>
+<a class="sourceLine" id="cb924-7" title="7"></a>
+<a class="sourceLine" id="cb924-8" title="8"><span class="kw">myggplot</span>(data_parsed2) <span class="op">+</span></a>
+<a class="sourceLine" id="cb924-9" title="9"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> birth_date), <span class="dt">bins =</span> <span class="dv">100</span>)</a></code></pre></div>
 <p>If a recent A-level graduate attempts the exam for the first time, they would be born in 1993. Due to the very competitive nature of the exam, a second and more attempts are also possible. Those who attempts the exam for the second time were born in 1992. Nonetheless, one can attempt the exam at any age, so a lot of older people are also appearing in the dataset.</p>
-<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb858-1" title="1"><span class="kw">myggplot</span>(<span class="kw">mutate</span>(data_parsed2, <span class="dt">prop_male =</span> <span class="kw">cummean</span>(data_parsed2<span class="op">$</span>is_male))) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb858-2" title="2"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(data_parsed2<span class="op">$</span>is_male), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb858-3" title="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ranking, <span class="dt">y =</span> prop_male))</a>
-<a class="sourceLine" id="cb858-4" title="4"></a>
-<a class="sourceLine" id="cb858-5" title="5">(<span class="kw">myggplot</span>(data_parsed2) <span class="op">+</span></a>
-<a class="sourceLine" id="cb858-6" title="6"><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(ranking, birth_date, <span class="dt">color =</span> is_male)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb858-7" title="7"><span class="st">   </span><span class="kw">aes</span>(<span class="dt">text =</span> bigstatsr<span class="op">::</span><span class="kw">asPlotlyText</span>(data_parsed2))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb858-8" title="8"><span class="st">  </span>plotly<span class="op">::</span><span class="kw">ggplotly</span>(<span class="dt">tooltip =</span> <span class="st">&quot;text&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb925"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb925-1" title="1"><span class="kw">myggplot</span>(<span class="kw">mutate</span>(data_parsed2, <span class="dt">prop_male =</span> <span class="kw">cummean</span>(data_parsed2<span class="op">$</span>is_male))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb925-2" title="2"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(data_parsed2<span class="op">$</span>is_male), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb925-3" title="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ranking, <span class="dt">y =</span> prop_male))</a>
+<a class="sourceLine" id="cb925-4" title="4"></a>
+<a class="sourceLine" id="cb925-5" title="5">(<span class="kw">myggplot</span>(data_parsed2) <span class="op">+</span></a>
+<a class="sourceLine" id="cb925-6" title="6"><span class="st">   </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(ranking, birth_date, <span class="dt">color =</span> is_male)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb925-7" title="7"><span class="st">   </span><span class="kw">aes</span>(<span class="dt">text =</span> bigstatsr<span class="op">::</span><span class="kw">asPlotlyText</span>(data_parsed2))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb925-8" title="8"><span class="st">  </span>plotly<span class="op">::</span><span class="kw">ggplotly</span>(<span class="dt">tooltip =</span> <span class="st">&quot;text&quot;</span>)</a></code></pre></div>
 <p>We can see a female 19 year old (with a really high ranking!) and a 54-year old man (with a poor ranking).</p>
-<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb859-1" title="1"><span class="kw">myggplot</span>(data_parsed2, <span class="kw">aes</span>(ranking, birth_date)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb859-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb859-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> is_male), <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb926-1" title="1"><span class="kw">myggplot</span>(data_parsed2, <span class="kw">aes</span>(ranking, birth_date)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb926-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb926-3" title="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> is_male), <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 
 </div>
 <div id="disqus_thread"></div>
@@ -1187,7 +1219,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/25-ranking-medical-schools.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/25-ranking-medical-schools.Rmd",
 "text": "Edit"
 },
 "history": {

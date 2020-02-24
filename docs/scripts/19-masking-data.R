@@ -1,4 +1,4 @@
-## ----masking-data, include=FALSE----------------------------------------------
+## ----masking-data, include=FALSE----------------------------------------------------------------------------------------------------
 chap <- 20
 lc <- 0
 rq <- 0
@@ -19,27 +19,27 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## ----include=FALSE------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------------------------------------------------------------
 if(!require(tidyverse)) install.packages("tidyverse")
 if(!require(randNames)) install.packages("randNames")
 if(!require(smoothmest)) install.packages("smoothmest")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(randNames)
 library(smoothmest)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## whitehouse <- read_csv("https://hranalytics.netlify.com/data/2016-Report-White-House-Staff.csv")
 
 
-## ----read_data7, echo=FALSE, warning=FALSE, message=FALSE---------------------
+## ----read_data7, echo=FALSE, warning=FALSE, message=FALSE---------------------------------------------------------------------------
 whitehouse <- read_csv("data/2016-Report-White-House-Staff.csv")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 #Create a set of new names of equal length as the original dataset
 
 fake <- nrow(whitehouse) %>%
@@ -68,7 +68,7 @@ colnames(whitehouse_masked)[1] <- "Name"
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # Set seed for reproducibility of the random numbers
 set.seed(42)
 
@@ -77,7 +77,7 @@ whitehouse_no_names <- whitehouse_masked %>%
   mutate(Name = sample(1:1000, nrow(whitehouse_masked)))
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # Rounding Salary to the nearest ten thousand
 whitehouse_no_identifiers <- whitehouse_no_names %>%
   mutate(Salary = round(Salary, digits = -4))
@@ -93,15 +93,15 @@ whitehouse.bottom <- whitehouse_masked %>%
 
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## fertility <- read_csv("https://https://hranalytics.netlify.com/data/fertility_Diagnosis.txt", col_names = FALSE)
 
 
-## ----read_data10, echo=FALSE, warning=FALSE, message=FALSE--------------------
+## ----read_data10, echo=FALSE, warning=FALSE, message=FALSE--------------------------------------------------------------------------
 fertility <- read_csv("data/fertility_Diagnosis.txt", col_names = FALSE)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # Let us assign significant column titles
 colnames(fertility) <- c("Season", "Age", "Child_Disease", "Accident_Trauma", "Surgical_Intervention","High_Fevers", "Alcohol_Consumption","Smoking_Habit","Hours_Sitting","Diagnosis")
 
@@ -109,7 +109,7 @@ colnames(fertility) <- c("Season", "Age", "Child_Disease", "Accident_Trauma", "S
 fertility
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # Number of participants with Surgical_Intervention and Diagnosis
 fertility %>%
   group_by(Diagnosis) %>%
@@ -132,7 +132,7 @@ fertility %>%
   summarise_at(vars(Child_Disease), mean)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 fert <- fertility %>%
     mutate(Hours_Sitting = log(Hours_Sitting))
@@ -154,7 +154,7 @@ range(hours.sit)
 fert$Hours_Sitting <- hours.sit
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # Square root Transformation of Salary
 whitehouse.salary <- whitehouse_masked %>%
   mutate(Salary = sqrt(Salary))
@@ -173,7 +173,7 @@ salary_original <- salary_transformed^2
 salary <- ifelse(salary_original < 0, 0, salary_original)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 fertility %>%
     summarise_at(vars(Child_Disease), sum)
 
@@ -184,7 +184,7 @@ library(smoothmest)
 #rdoublex is a random number generator. It creates a vector of random numbers generated by the double exponential distribution.
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 set.seed(42)
 
 rdoublex(1, 87, 1 / 10)
@@ -195,7 +195,7 @@ rdoublex(1, 87, 1 / 0.1)
 #[1] 88.98337
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 #Set Value of Epsilon
 eps <- 0.1 / 2
@@ -213,7 +213,7 @@ rdoublex(1, 0.19, gs.var / eps)
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 #High_Fevers and Mean of Hours_Sitting
 
 fertility %>%
@@ -243,7 +243,7 @@ rdoublex(1, 0.54, gs.mean / eps)
 #[1] 0.5683491
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # Set Value of Epsilon
 eps <- 0.01
 # GS of counts
@@ -278,7 +278,7 @@ smoking3
 #[1] 11
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 # Set Value of Epsilon
 eps <- 0.01

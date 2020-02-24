@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 25 Interview attendance problem | HR Analytics in R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -677,124 +671,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Source: <a href="https://www.kaggle.com/hugohk/learning-ml-with-caret" class="uri">https://www.kaggle.com/hugohk/learning-ml-with-caret</a></p>
 <div id="data-reading-1" class="section level2">
 <h2><span class="header-section-number">25.1</span> Data reading</h2>
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb829-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
-<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb830-1" title="1">interview_attendance &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalyticslive.netlify.com/data/interview.csv&quot;</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb831-1" title="1"><span class="kw">head</span>(interview_attendance, <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb876-1" title="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb877-1" title="1">interview_attendance &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://hranalyticslive.netlify.com/data/interview.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb878-1" title="1"><span class="kw">head</span>(interview_attendance, <span class="dv">5</span>)</a></code></pre></div>
 <pre><code># A tibble: 5 x 28
-  `Date of Interv~ `Client name` Industry Location `Position to be~
-  &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;           
-1 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~
-2 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~
-3 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~
-4 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~
-5 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~
-# ... with 23 more variables: `Nature of Skillset` &lt;chr&gt;, `Interview
-#   Type` &lt;chr&gt;, `Name(Cand ID)` &lt;chr&gt;, Gender &lt;chr&gt;, `Candidate Current
-#   Location` &lt;chr&gt;, `Candidate Job Location` &lt;chr&gt;, `Interview Venue` &lt;chr&gt;,
-#   `Candidate Native location` &lt;chr&gt;, `Have you obtained the necessary
-#   permission to start at the required time` &lt;chr&gt;, `Hope there will be no
-#   unscheduled meetings` &lt;chr&gt;, `Can I Call you three hours before the
-#   interview and follow up on your attendance for the interview` &lt;chr&gt;, `Can I
-#   have an alternative number/ desk number. I assure you that I will not
-#   trouble you too much` &lt;chr&gt;, `Have you taken a printout of your updated
-#   resume. Have you read the JD and understood the same` &lt;chr&gt;, `Are you clear
-#   with the venue details and the landmark.` &lt;chr&gt;, `Has the call letter been
-#   shared` &lt;chr&gt;, `Expected Attendance` &lt;chr&gt;, `Observed Attendance` &lt;chr&gt;,
-#   `Marital Status` &lt;chr&gt;, X24 &lt;lgl&gt;, X25 &lt;lgl&gt;, X26 &lt;lgl&gt;, X27 &lt;lgl&gt;,
-#   X28 &lt;lgl&gt;</code></pre>
+  `Date of Interv~ `Client name` Industry Location `Position to be~ `Nature of Skil~ `Interview Type` `Name(Cand ID)` Gender
+  &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt; 
+1 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~ Routine          Scheduled Walkin Candidate 1     Male  
+2 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~ Routine          Scheduled Walkin Candidate 2     Male  
+3 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~ Routine          Scheduled Walkin Candidate 3     Male  
+4 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~ Routine          Scheduled Walkin Candidate 4     Male  
+5 13.02.2015       Hospira       Pharmac~ Chennai  Production- Ste~ Routine          Scheduled Walkin Candidate 5     Male  
+# ... with 19 more variables: `Candidate Current Location` &lt;chr&gt;, `Candidate Job Location` &lt;chr&gt;, `Interview Venue` &lt;chr&gt;, `Candidate
+#   Native location` &lt;chr&gt;, `Have you obtained the necessary permission to start at the required time` &lt;chr&gt;, `Hope there will be no
+#   unscheduled meetings` &lt;chr&gt;, `Can I Call you three hours before the interview and follow up on your attendance for the
+#   interview` &lt;chr&gt;, `Can I have an alternative number/ desk number. I assure you that I will not trouble you too much` &lt;chr&gt;, `Have
+#   you taken a printout of your updated resume. Have you read the JD and understood the same` &lt;chr&gt;, `Are you clear with the venue
+#   details and the landmark.` &lt;chr&gt;, `Has the call letter been shared` &lt;chr&gt;, `Expected Attendance` &lt;chr&gt;, `Observed
+#   Attendance` &lt;chr&gt;, `Marital Status` &lt;chr&gt;, X24 &lt;lgl&gt;, X25 &lt;lgl&gt;, X26 &lt;lgl&gt;, X27 &lt;lgl&gt;, X28 &lt;lgl&gt;</code></pre>
 </div>
 <div id="data-cleaning" class="section level2">
 <h2><span class="header-section-number">25.2</span> Data cleaning</h2>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb833-1" title="1">interview_attendance &lt;-<span class="st"> </span>interview_attendance[<span class="op">-</span><span class="dv">1234</span>,] <span class="co">#remove the last row that contains only missing values</span></a>
-<a class="sourceLine" id="cb833-2" title="2"></a>
-<a class="sourceLine" id="cb833-3" title="3">interview_attendance<span class="op">$</span>X24   &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
-<a class="sourceLine" id="cb833-4" title="4">interview_attendance<span class="op">$</span>X25 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
-<a class="sourceLine" id="cb833-5" title="5">interview_attendance<span class="op">$</span>X26 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
-<a class="sourceLine" id="cb833-6" title="6">interview_attendance<span class="op">$</span>X27 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
-<a class="sourceLine" id="cb833-7" title="7">interview_attendance<span class="op">$</span>X28 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
-<a class="sourceLine" id="cb833-8" title="8"></a>
-<a class="sourceLine" id="cb833-9" title="9"><span class="co"># Here we create a vector with column titles</span></a>
-<a class="sourceLine" id="cb833-10" title="10">mycolnames &lt;-<span class="kw">c</span>(<span class="st">&#39;date_of_interview&#39;</span>,<span class="st">&#39;client_name&#39;</span>,<span class="st">&#39;industry&#39;</span>,<span class="st">&#39;location&#39;</span>,<span class="st">&#39;position&#39;</span>,</a>
-<a class="sourceLine" id="cb833-11" title="11">               <span class="st">&#39;skillset&#39;</span>,<span class="st">&#39;interview_type&#39;</span>,<span class="st">&#39;name&#39;</span>, <span class="st">&#39;gender&#39;</span>,<span class="st">&#39;current_location&#39;</span>,</a>
-<a class="sourceLine" id="cb833-12" title="12">               <span class="st">&#39;cjob_location&#39;</span>,<span class="st">&#39;interview_venue&#39;</span>,<span class="st">&#39;cnative_location&#39;</span>,</a>
-<a class="sourceLine" id="cb833-13" title="13">               <span class="st">&#39;permission_obtained&#39;</span>,<span class="st">&#39;unscheduled_meetings&#39;</span>,<span class="st">&#39;call_three_hours_before&#39;</span>,</a>
-<a class="sourceLine" id="cb833-14" title="14">               <span class="st">&#39;alternative_number&#39;</span>,<span class="st">&#39;printout_resume_jd&#39;</span>,<span class="st">&#39;clear_with_venue&#39;</span>,</a>
-<a class="sourceLine" id="cb833-15" title="15">               <span class="st">&#39;letter_been_shared&#39;</span>,<span class="st">&#39;expected_attendance&#39;</span>,<span class="st">&#39;observed_attendance&#39;</span>,</a>
-<a class="sourceLine" id="cb833-16" title="16">               <span class="st">&#39;marital_status&#39;</span>)  </a>
-<a class="sourceLine" id="cb833-17" title="17"></a>
-<a class="sourceLine" id="cb833-18" title="18"><span class="co">#Here we assign the previously defined column titles</span></a>
-<a class="sourceLine" id="cb833-19" title="19"><span class="kw">colnames</span>(interview_attendance) &lt;-<span class="st"> </span>mycolnames </a>
-<a class="sourceLine" id="cb833-20" title="20"></a>
-<a class="sourceLine" id="cb833-21" title="21"><span class="kw">rm</span>(mycolnames) <span class="co"># Here we remove the mycolnames vector, as it is not required anymore</span></a>
-<a class="sourceLine" id="cb833-22" title="22"></a>
-<a class="sourceLine" id="cb833-23" title="23">interview_attendance&lt;-<span class="st"> </span><span class="kw">mutate_all</span>(interview_attendance, <span class="kw">funs</span>(tolower)) <span class="co"># Sets all words to lower case</span></a>
-<a class="sourceLine" id="cb833-24" title="24"></a>
-<a class="sourceLine" id="cb833-25" title="25"><span class="co"># Cancels all empty spaces in the observed attendance column</span></a>
-<a class="sourceLine" id="cb833-26" title="26">interview_attendance<span class="op">$</span>observed_attendance &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>observed_attendance)</a>
-<a class="sourceLine" id="cb833-27" title="27"></a>
-<a class="sourceLine" id="cb833-28" title="28"><span class="co"># Cancels all empty spaces in the location column</span></a>
-<a class="sourceLine" id="cb833-29" title="29">interview_attendance<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>location) </a>
-<a class="sourceLine" id="cb833-30" title="30"></a>
-<a class="sourceLine" id="cb833-31" title="31"><span class="co"># Cancels all empty spaces in the interview type column</span></a>
-<a class="sourceLine" id="cb833-32" title="32">interview_attendance<span class="op">$</span>interview_type &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>interview_type)</a>
-<a class="sourceLine" id="cb833-33" title="33"></a>
-<a class="sourceLine" id="cb833-34" title="34"><span class="co"># Corrects a typo in the interview type column</span></a>
-<a class="sourceLine" id="cb833-35" title="35">interview_attendance<span class="op">$</span>interview_type &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;sceduledwalkin&quot;</span>, <span class="st">&quot;scheduledwalkin&quot;</span>, interview_attendance<span class="op">$</span>interview_type)</a>
-<a class="sourceLine" id="cb833-36" title="36"></a>
-<a class="sourceLine" id="cb833-37" title="37"><span class="co"># Cancels all empty spaces in the candidate current location column</span></a>
-<a class="sourceLine" id="cb833-38" title="38">interview_attendance<span class="op">$</span>current_location &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>current_location)</a>
-<a class="sourceLine" id="cb833-39" title="39"></a>
-<a class="sourceLine" id="cb833-40" title="40"></a>
-<a class="sourceLine" id="cb833-41" title="41"><span class="co">#Converts values from character to numbers for Yes/no answers, just to keep things simple.</span></a>
-<a class="sourceLine" id="cb833-42" title="42">  colstoyesno &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">14</span><span class="op">:</span><span class="dv">22</span>) <span class="co"># Here we define which column numbers to look at.</span></a>
-<a class="sourceLine" id="cb833-43" title="43"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(colstoyesno)){   <span class="co"># Here we tell R to examine all variables in the previously defined columns</span></a>
-<a class="sourceLine" id="cb833-44" title="44">  j &lt;-<span class="st"> </span>colstoyesno[i]</a>
-<a class="sourceLine" id="cb833-45" title="45">  interview_attendance[,j][interview_attendance[,j] <span class="op">!=</span><span class="st">&quot;yes&quot;</span>] &lt;-<span class="st"> &quot;no&quot;</span>   </a>
-<a class="sourceLine" id="cb833-46" title="46">  interview_attendance[,j][<span class="kw">is.na</span>(interview_attendance[,j]) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>] &lt;-<span class="st"> &quot;no&quot;</span></a>
-<a class="sourceLine" id="cb833-47" title="47">  <span class="co">#With the previous two lines all values different to yes, become a no, i.e. &quot;uncertain&quot; and &quot;NA&quot; are set to a &quot;no&quot;.</span></a>
-<a class="sourceLine" id="cb833-48" title="48">}</a>
-<a class="sourceLine" id="cb833-49" title="49"><span class="kw">rm</span>(colstoyesno, i, j) <span class="co">#Here we remove the three just created vectors as a claen up.</span></a></code></pre></div>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb880-1" title="1">interview_attendance &lt;-<span class="st"> </span>interview_attendance[<span class="op">-</span><span class="dv">1234</span>,] <span class="co">#remove the last row that contains only missing values</span></a>
+<a class="sourceLine" id="cb880-2" title="2"></a>
+<a class="sourceLine" id="cb880-3" title="3">interview_attendance<span class="op">$</span>X24   &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
+<a class="sourceLine" id="cb880-4" title="4">interview_attendance<span class="op">$</span>X25 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
+<a class="sourceLine" id="cb880-5" title="5">interview_attendance<span class="op">$</span>X26 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
+<a class="sourceLine" id="cb880-6" title="6">interview_attendance<span class="op">$</span>X27 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
+<a class="sourceLine" id="cb880-7" title="7">interview_attendance<span class="op">$</span>X28 &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></a>
+<a class="sourceLine" id="cb880-8" title="8"></a>
+<a class="sourceLine" id="cb880-9" title="9"><span class="co"># Here we create a vector with column titles</span></a>
+<a class="sourceLine" id="cb880-10" title="10">mycolnames &lt;-<span class="kw">c</span>(<span class="st">&#39;date_of_interview&#39;</span>,<span class="st">&#39;client_name&#39;</span>,<span class="st">&#39;industry&#39;</span>,<span class="st">&#39;location&#39;</span>,<span class="st">&#39;position&#39;</span>,</a>
+<a class="sourceLine" id="cb880-11" title="11">               <span class="st">&#39;skillset&#39;</span>,<span class="st">&#39;interview_type&#39;</span>,<span class="st">&#39;name&#39;</span>, <span class="st">&#39;gender&#39;</span>,<span class="st">&#39;current_location&#39;</span>,</a>
+<a class="sourceLine" id="cb880-12" title="12">               <span class="st">&#39;cjob_location&#39;</span>,<span class="st">&#39;interview_venue&#39;</span>,<span class="st">&#39;cnative_location&#39;</span>,</a>
+<a class="sourceLine" id="cb880-13" title="13">               <span class="st">&#39;permission_obtained&#39;</span>,<span class="st">&#39;unscheduled_meetings&#39;</span>,<span class="st">&#39;call_three_hours_before&#39;</span>,</a>
+<a class="sourceLine" id="cb880-14" title="14">               <span class="st">&#39;alternative_number&#39;</span>,<span class="st">&#39;printout_resume_jd&#39;</span>,<span class="st">&#39;clear_with_venue&#39;</span>,</a>
+<a class="sourceLine" id="cb880-15" title="15">               <span class="st">&#39;letter_been_shared&#39;</span>,<span class="st">&#39;expected_attendance&#39;</span>,<span class="st">&#39;observed_attendance&#39;</span>,</a>
+<a class="sourceLine" id="cb880-16" title="16">               <span class="st">&#39;marital_status&#39;</span>)  </a>
+<a class="sourceLine" id="cb880-17" title="17"></a>
+<a class="sourceLine" id="cb880-18" title="18"><span class="co">#Here we assign the previously defined column titles</span></a>
+<a class="sourceLine" id="cb880-19" title="19"><span class="kw">colnames</span>(interview_attendance) &lt;-<span class="st"> </span>mycolnames </a>
+<a class="sourceLine" id="cb880-20" title="20"></a>
+<a class="sourceLine" id="cb880-21" title="21"><span class="kw">rm</span>(mycolnames) <span class="co"># Here we remove the mycolnames vector, as it is not required anymore</span></a>
+<a class="sourceLine" id="cb880-22" title="22"></a>
+<a class="sourceLine" id="cb880-23" title="23">interview_attendance&lt;-<span class="st"> </span><span class="kw">mutate_all</span>(interview_attendance, <span class="kw">funs</span>(tolower)) <span class="co"># Sets all words to lower case</span></a>
+<a class="sourceLine" id="cb880-24" title="24"></a>
+<a class="sourceLine" id="cb880-25" title="25"><span class="co"># Cancels all empty spaces in the observed attendance column</span></a>
+<a class="sourceLine" id="cb880-26" title="26">interview_attendance<span class="op">$</span>observed_attendance &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>observed_attendance)</a>
+<a class="sourceLine" id="cb880-27" title="27"></a>
+<a class="sourceLine" id="cb880-28" title="28"><span class="co"># Cancels all empty spaces in the location column</span></a>
+<a class="sourceLine" id="cb880-29" title="29">interview_attendance<span class="op">$</span>location &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>location) </a>
+<a class="sourceLine" id="cb880-30" title="30"></a>
+<a class="sourceLine" id="cb880-31" title="31"><span class="co"># Cancels all empty spaces in the interview type column</span></a>
+<a class="sourceLine" id="cb880-32" title="32">interview_attendance<span class="op">$</span>interview_type &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>interview_type)</a>
+<a class="sourceLine" id="cb880-33" title="33"></a>
+<a class="sourceLine" id="cb880-34" title="34"><span class="co"># Corrects a typo in the interview type column</span></a>
+<a class="sourceLine" id="cb880-35" title="35">interview_attendance<span class="op">$</span>interview_type &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;sceduledwalkin&quot;</span>, <span class="st">&quot;scheduledwalkin&quot;</span>, interview_attendance<span class="op">$</span>interview_type)</a>
+<a class="sourceLine" id="cb880-36" title="36"></a>
+<a class="sourceLine" id="cb880-37" title="37"><span class="co"># Cancels all empty spaces in the candidate current location column</span></a>
+<a class="sourceLine" id="cb880-38" title="38">interview_attendance<span class="op">$</span>current_location &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="op">$</span>current_location)</a>
+<a class="sourceLine" id="cb880-39" title="39"></a>
+<a class="sourceLine" id="cb880-40" title="40"></a>
+<a class="sourceLine" id="cb880-41" title="41"><span class="co">#Converts values from character to numbers for Yes/no answers, just to keep things simple.</span></a>
+<a class="sourceLine" id="cb880-42" title="42">  colstoyesno &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">14</span><span class="op">:</span><span class="dv">22</span>) <span class="co"># Here we define which column numbers to look at.</span></a>
+<a class="sourceLine" id="cb880-43" title="43"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(colstoyesno)){   <span class="co"># Here we tell R to examine all variables in the previously defined columns</span></a>
+<a class="sourceLine" id="cb880-44" title="44">  j &lt;-<span class="st"> </span>colstoyesno[i]</a>
+<a class="sourceLine" id="cb880-45" title="45">  interview_attendance[,j][interview_attendance[,j] <span class="op">!=</span><span class="st">&quot;yes&quot;</span>] &lt;-<span class="st"> &quot;no&quot;</span>   </a>
+<a class="sourceLine" id="cb880-46" title="46">  interview_attendance[,j][<span class="kw">is.na</span>(interview_attendance[,j]) <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>] &lt;-<span class="st"> &quot;no&quot;</span></a>
+<a class="sourceLine" id="cb880-47" title="47">  <span class="co">#With the previous two lines all values different to yes, become a no, i.e. &quot;uncertain&quot; and &quot;NA&quot; are set to a &quot;no&quot;.</span></a>
+<a class="sourceLine" id="cb880-48" title="48">}</a>
+<a class="sourceLine" id="cb880-49" title="49"><span class="kw">rm</span>(colstoyesno, i, j) <span class="co">#Here we remove the three just created vectors as a claen up.</span></a></code></pre></div>
 <p>In the following step we figure out what is the content of each relevant column and identify its unique values. Once we have done that a number is assigned for a later step.</p>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb834-1" title="1"><span class="kw">dir.create</span>(<span class="st">&quot;codefiles_interview_attendance&quot;</span>, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb834-2" title="2"><span class="co">#detach(&quot;package:plyr&quot;, unload = TRUE)</span></a>
-<a class="sourceLine" id="cb834-3" title="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">colnames</span>(interview_attendance))){</a>
-<a class="sourceLine" id="cb834-4" title="4">  vvar &lt;-<span class="st"> </span><span class="kw">colnames</span>(interview_attendance)[i]</a>
-<a class="sourceLine" id="cb834-5" title="5">  outdata &lt;-<span class="st"> </span>interview_attendance <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(<span class="dt">.dots =</span> vvar) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">count</span>(<span class="dt">.dots =</span> vvar)</a>
-<a class="sourceLine" id="cb834-6" title="6">  outdata<span class="op">$</span>idt &lt;-<span class="st"> </span>LETTERS[<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="kw">nrow</span>(outdata))]</a>
-<a class="sourceLine" id="cb834-7" title="7">  outdata<span class="op">$</span>id  &lt;-<span class="st"> </span><span class="kw">row.names</span>(outdata)</a>
-<a class="sourceLine" id="cb834-8" title="8">  outfile &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, vvar, <span class="st">&quot;.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb834-9" title="9">  <span class="kw">write.csv</span>(outdata, <span class="dt">file=</span>outfile, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb834-10" title="10">}</a>
-<a class="sourceLine" id="cb834-11" title="11"><span class="kw">rm</span>(outdata, i, outfile, vvar)</a></code></pre></div>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb881-1" title="1"><span class="kw">dir.create</span>(<span class="st">&quot;codefiles_interview_attendance&quot;</span>, <span class="dt">showWarnings =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb881-2" title="2"><span class="co">#detach(&quot;package:plyr&quot;, unload = TRUE)</span></a>
+<a class="sourceLine" id="cb881-3" title="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">colnames</span>(interview_attendance))){</a>
+<a class="sourceLine" id="cb881-4" title="4">  vvar &lt;-<span class="st"> </span><span class="kw">colnames</span>(interview_attendance)[i]</a>
+<a class="sourceLine" id="cb881-5" title="5">  outdata &lt;-<span class="st"> </span>interview_attendance <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(<span class="dt">.dots =</span> vvar) <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">count</span>(<span class="dt">.dots =</span> vvar)</a>
+<a class="sourceLine" id="cb881-6" title="6">  outdata<span class="op">$</span>idt &lt;-<span class="st"> </span>LETTERS[<span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="kw">nrow</span>(outdata))]</a>
+<a class="sourceLine" id="cb881-7" title="7">  outdata<span class="op">$</span>id  &lt;-<span class="st"> </span><span class="kw">row.names</span>(outdata)</a>
+<a class="sourceLine" id="cb881-8" title="8">  outfile &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, vvar, <span class="st">&quot;.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb881-9" title="9">  <span class="kw">write.csv</span>(outdata, <span class="dt">file=</span>outfile, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb881-10" title="10">}</a>
+<a class="sourceLine" id="cb881-11" title="11"><span class="kw">rm</span>(outdata, i, outfile, vvar)</a></code></pre></div>
 <p>This step uses the csv files created in the previous step and replaces the words with a number (except for the variable that we would like to predict) in order to prepare the data for machine learning.</p>
-<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb835-1" title="1">colstomap &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">21</span>, <span class="dv">23</span>)</a>
-<a class="sourceLine" id="cb835-2" title="2"><span class="kw">library</span>(plyr)</a>
-<a class="sourceLine" id="cb835-3" title="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(colstomap)){</a>
-<a class="sourceLine" id="cb835-4" title="4">    j &lt;-<span class="st"> </span>colstomap[i]</a>
-<a class="sourceLine" id="cb835-5" title="5">    vfilename &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, <span class="kw">colnames</span>(interview_attendance)[j], <span class="st">&quot;.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb835-6" title="6">    dfcodes &lt;-<span class="st"> </span><span class="kw">read.csv</span>(vfilename, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb835-7" title="7">    vfrom &lt;-<span class="st"> </span><span class="kw">as.vector</span>(dfcodes[,<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb835-8" title="8">    vto &lt;-<span class="st"> </span><span class="kw">as.vector</span>(dfcodes[,<span class="dv">4</span>])</a>
-<a class="sourceLine" id="cb835-9" title="9">    interview_attendance[,j] &lt;-<span class="st"> </span><span class="kw">mapvalues</span>(interview_attendance[,j], <span class="dt">from=</span>vfrom, <span class="dt">to=</span>vto)</a>
-<a class="sourceLine" id="cb835-10" title="10">    interview_attendance[,j] &lt;-<span class="st"> </span><span class="kw">as.integer</span>(interview_attendance[,j])</a>
-<a class="sourceLine" id="cb835-11" title="11">}</a>
-<a class="sourceLine" id="cb835-12" title="12"><span class="kw">rm</span>(colstomap, i, j, vfilename, vfrom, vto, dfcodes)</a></code></pre></div>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb882-1" title="1">colstomap &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">7</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">21</span>, <span class="dv">23</span>)</a>
+<a class="sourceLine" id="cb882-2" title="2"><span class="kw">library</span>(plyr)</a>
+<a class="sourceLine" id="cb882-3" title="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(colstomap)){</a>
+<a class="sourceLine" id="cb882-4" title="4">    j &lt;-<span class="st"> </span>colstomap[i]</a>
+<a class="sourceLine" id="cb882-5" title="5">    vfilename &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, <span class="kw">colnames</span>(interview_attendance)[j], <span class="st">&quot;.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb882-6" title="6">    dfcodes &lt;-<span class="st"> </span><span class="kw">read.csv</span>(vfilename, <span class="dt">stringsAsFactors=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb882-7" title="7">    vfrom &lt;-<span class="st"> </span><span class="kw">as.vector</span>(dfcodes[,<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb882-8" title="8">    vto &lt;-<span class="st"> </span><span class="kw">as.vector</span>(dfcodes[,<span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb882-9" title="9">    interview_attendance[,j] &lt;-<span class="st"> </span><span class="kw">mapvalues</span>(interview_attendance[,j], <span class="dt">from=</span>vfrom, <span class="dt">to=</span>vto)</a>
+<a class="sourceLine" id="cb882-10" title="10">    interview_attendance[,j] &lt;-<span class="st"> </span><span class="kw">as.integer</span>(interview_attendance[,j])</a>
+<a class="sourceLine" id="cb882-11" title="11">}</a>
+<a class="sourceLine" id="cb882-12" title="12"><span class="kw">rm</span>(colstomap, i, j, vfilename, vfrom, vto, dfcodes)</a></code></pre></div>
 <p>Here we pick the data that are needed for the predictor.</p>
-<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb836-1" title="1">interview_attendanceml &lt;-<span class="st"> </span>interview_attendance <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>date_of_interview, <span class="op">-</span>name)</a>
-<a class="sourceLine" id="cb836-2" title="2">interview_attendanceml &lt;-<span class="st"> </span>interview_attendanceml <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(client_name<span class="op">:</span>expected_attendance, </a>
-<a class="sourceLine" id="cb836-3" title="3">                                observed_attendance)</a>
-<a class="sourceLine" id="cb836-4" title="4"><span class="kw">head</span>(interview_attendanceml, <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb883-1" title="1">interview_attendanceml &lt;-<span class="st"> </span>interview_attendance <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>date_of_interview, <span class="op">-</span>name)</a>
+<a class="sourceLine" id="cb883-2" title="2">interview_attendanceml &lt;-<span class="st"> </span>interview_attendanceml <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(client_name<span class="op">:</span>expected_attendance, </a>
+<a class="sourceLine" id="cb883-3" title="3">                                observed_attendance)</a>
+<a class="sourceLine" id="cb883-4" title="4"><span class="kw">head</span>(interview_attendanceml, <span class="dv">5</span>)</a></code></pre></div>
 <p>Here we start the real machine learning part. The training dataset is created containing 75% of the observations [interview_attendanceml_train] and the remaining observations are assigned to the test dataset [interview_attendanceml_test].</p>
-<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb837-1" title="1"><span class="kw">library</span>(caret) <span class="co"># Calls the caret library</span></a>
-<a class="sourceLine" id="cb837-2" title="2"></a>
-<a class="sourceLine" id="cb837-3" title="3"><span class="kw">set.seed</span>(<span class="dv">144</span>) <span class="co"># Sets a seed for reproducability</span></a>
-<a class="sourceLine" id="cb837-4" title="4"></a>
-<a class="sourceLine" id="cb837-5" title="5">index &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(interview_attendanceml<span class="op">$</span>observed_attendance, <span class="dt">p=</span><span class="fl">0.75</span>, <span class="dt">list=</span><span class="ot">FALSE</span>) <span class="co">#Creates an index vector of the length of all the observations</span></a>
-<a class="sourceLine" id="cb837-6" title="6"></a>
-<a class="sourceLine" id="cb837-7" title="7">interview_attendanceml_train &lt;-<span class="st"> </span>interview_attendanceml[index,] <span class="co"># Creates a subset of 75% of data for training dataset</span></a>
-<a class="sourceLine" id="cb837-8" title="8">interview_attendanceml_test  &lt;-<span class="st"> </span>interview_attendanceml[<span class="op">-</span>index,] <span class="co"># Creates a subset of the remaining 25% of data for test dataset</span></a>
-<a class="sourceLine" id="cb837-9" title="9"></a>
-<a class="sourceLine" id="cb837-10" title="10"><span class="kw">rm</span>(index,interview_attendanceml)</a></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb884-1" title="1"><span class="kw">library</span>(caret) <span class="co"># Calls the caret library</span></a>
+<a class="sourceLine" id="cb884-2" title="2"></a>
+<a class="sourceLine" id="cb884-3" title="3"><span class="kw">set.seed</span>(<span class="dv">144</span>) <span class="co"># Sets a seed for reproducability</span></a>
+<a class="sourceLine" id="cb884-4" title="4"></a>
+<a class="sourceLine" id="cb884-5" title="5">index &lt;-<span class="st"> </span><span class="kw">createDataPartition</span>(interview_attendanceml<span class="op">$</span>observed_attendance, <span class="dt">p=</span><span class="fl">0.75</span>, <span class="dt">list=</span><span class="ot">FALSE</span>) <span class="co">#Creates an index vector of the length of all the observations</span></a>
+<a class="sourceLine" id="cb884-6" title="6"></a>
+<a class="sourceLine" id="cb884-7" title="7">interview_attendanceml_train &lt;-<span class="st"> </span>interview_attendanceml[index,] <span class="co"># Creates a subset of 75% of data for training dataset</span></a>
+<a class="sourceLine" id="cb884-8" title="8">interview_attendanceml_test  &lt;-<span class="st"> </span>interview_attendanceml[<span class="op">-</span>index,] <span class="co"># Creates a subset of the remaining 25% of data for test dataset</span></a>
+<a class="sourceLine" id="cb884-9" title="9"></a>
+<a class="sourceLine" id="cb884-10" title="10"><span class="kw">rm</span>(index,interview_attendanceml)</a></code></pre></div>
 </div>
 <div id="choosing-a-model" class="section level2">
 <h2><span class="header-section-number">25.3</span> Choosing a model</h2>
@@ -803,16 +790,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="training" class="section level2">
 <h2><span class="header-section-number">25.4</span> Training</h2>
 <p>We use the train function of the caret library to train the training data set determined in the previous step.</p>
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb838-1" title="1">myml_model &lt;-<span class="st"> </span><span class="kw">train</span>(interview_attendanceml_train[,<span class="dv">1</span><span class="op">:</span><span class="dv">19</span>], interview_attendanceml_train[,<span class="dv">20</span>], <span class="dt">method=</span><span class="st">&#39;gbm&#39;</span>)</a>
-<a class="sourceLine" id="cb838-2" title="2"></a>
-<a class="sourceLine" id="cb838-3" title="3"><span class="kw">summary</span>(myml_model)</a>
-<a class="sourceLine" id="cb838-4" title="4"></a>
-<a class="sourceLine" id="cb838-5" title="5">predictions &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> myml_model, interview_attendanceml_test,</a>
-<a class="sourceLine" id="cb838-6" title="6">                       <span class="dt">type =</span> <span class="st">&#39;raw&#39;</span>)</a>
-<a class="sourceLine" id="cb838-7" title="7"></a>
-<a class="sourceLine" id="cb838-8" title="8"><span class="kw">head</span>(predictions)</a>
-<a class="sourceLine" id="cb838-9" title="9"></a>
-<a class="sourceLine" id="cb838-10" title="10"><span class="kw">print</span>(<span class="kw">postResample</span>(<span class="dt">pred=</span>predictions, <span class="dt">obs=</span><span class="kw">as.factor</span>(interview_attendanceml_test[,<span class="dv">20</span>])))</a></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb885-1" title="1">myml_model &lt;-<span class="st"> </span><span class="kw">train</span>(interview_attendanceml_train[,<span class="dv">1</span><span class="op">:</span><span class="dv">19</span>], interview_attendanceml_train[,<span class="dv">20</span>], <span class="dt">method=</span><span class="st">&#39;gbm&#39;</span>)</a>
+<a class="sourceLine" id="cb885-2" title="2"></a>
+<a class="sourceLine" id="cb885-3" title="3"><span class="kw">summary</span>(myml_model)</a>
+<a class="sourceLine" id="cb885-4" title="4"></a>
+<a class="sourceLine" id="cb885-5" title="5">predictions &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> myml_model, interview_attendanceml_test,</a>
+<a class="sourceLine" id="cb885-6" title="6">                       <span class="dt">type =</span> <span class="st">&#39;raw&#39;</span>)</a>
+<a class="sourceLine" id="cb885-7" title="7"></a>
+<a class="sourceLine" id="cb885-8" title="8"><span class="kw">head</span>(predictions)</a>
+<a class="sourceLine" id="cb885-9" title="9"></a>
+<a class="sourceLine" id="cb885-10" title="10"><span class="kw">print</span>(<span class="kw">postResample</span>(<span class="dt">pred=</span>predictions, <span class="dt">obs=</span><span class="kw">as.factor</span>(interview_attendanceml_test[,<span class="dv">20</span>])))</a></code></pre></div>
 
 </div>
 </div>
@@ -873,7 +860,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/24-interview-attendance.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/24-interview-attendance.Rmd",
 "text": "Edit"
 },
 "history": {

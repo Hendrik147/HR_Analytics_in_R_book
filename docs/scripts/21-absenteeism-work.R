@@ -1,4 +1,4 @@
-## ----absenteism-work, include=FALSE-------------------------------------------
+## ----absenteism-work, include=FALSE-------------------------------------------------------------------------------------------------
 chap <- 22
 lc <- 0
 rq <- 0
@@ -19,7 +19,7 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## ----include=FALSE------------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------------------------------------------------------------
 if(!require(tidyverse)) install.packages("tidyverse")
 if(!require(DataExplorer)) install.packages("DataExplorer")
 if(!require(ggthemes)) install.packages("ggthemes")
@@ -29,7 +29,7 @@ if(!require(factoextra)) install.packages("factoextra")
 if(!require(FactoMineR)) install.packages("FactoMineR")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(DataExplorer)
 library(ggthemes)
@@ -39,15 +39,15 @@ library(factoextra)
 library(FactoMineR)
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## absenteeism_at_work <- read_delim(na = "NA", delim = ";", col_types = cols(col = col_character()), "https://hranalytics.netlify.com/data/Absenteeism_at_work.csv")
 
 
-## ----read_data9, echo=FALSE, warning=FALSE, message=FALSE---------------------
+## ----read_data9, echo=FALSE, warning=FALSE, message=FALSE---------------------------------------------------------------------------
 absenteeism_at_work <- read_delim(na = "NA", delim = ";", col_types = cols(col = col_character()), "data/Absenteeism_at_work.csv")
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 str(absenteeism_at_work)
 summary(absenteeism_at_work)
 
@@ -85,7 +85,7 @@ absenteeism_at_work_factored <- absenteeism_at_work_factored %>%
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 p <- absenteeism_at_work_factored %>% 
   ggplot() +
@@ -117,7 +117,7 @@ grid.arrange(SS,S, nrow = 1)
 grid.arrange(Day, nrow = 1)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 absent <- as.data.frame(absenteeism_at_work_factored %>% dplyr::select(everything()) %>% dplyr::filter(`Absenteeism time in hours` > 0))
 
 season1 <- as.data.frame(absent %>% dplyr::group_by(Seasons) %>% dplyr::summarise(count= n(), percent = round(count*100/nrow(absent),1)) %>% arrange(desc(count)))
@@ -131,7 +131,7 @@ ggplot() +
   xlab('Seasons')
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 disciplinary <- as.data.frame(absent %>% dplyr::group_by(`Disciplinary failure`) %>% dplyr::summarise(count= n(), percent = round(count*100/nrow(absent),1))%>% arrange(desc(count)))
 
 disciplinary %>%
@@ -144,7 +144,7 @@ disciplinary %>%
   xlab('Disciplinary failure')
 
 
-## ---- fig.width=8.6, fig.height= 8.5------------------------------------------
+## ---- fig.width=8.6, fig.height= 8.5------------------------------------------------------------------------------------------------
                                       
 
 Reason <-  as.data.frame(absent %>% group_by(`Reason for absence`) %>% dplyr::summarise(count= n(), percent = round(count*100/nrow(absent),1))%>% arrange(desc(count)))
@@ -160,7 +160,7 @@ ggplot() +
   xlab('Reason for absence')
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 absent %>%
 ggplot() + 
   aes(x= Age,y= `Absenteeism time in hours`,fill= `Social drinker`)+ 
@@ -169,7 +169,7 @@ ggplot() +
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 absent %>%
 ggplot() + 
@@ -183,7 +183,7 @@ ggplot() +
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 absent %>%
 ggplot() + 
@@ -196,7 +196,7 @@ ggplot() +
 
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 absent %>%
 ggplot() + 
@@ -208,7 +208,7 @@ ggplot() +
        y='Service time')
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 absenteeism_at_work$`Work load Average/day ` <- as.numeric(as.character(absenteeism_at_work$`Work load Average/day ` ))
 
 d1 <- absenteeism_at_work %>%
@@ -218,7 +218,7 @@ d1 <- absenteeism_at_work %>%
 d1 <- scale(d1)  
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 pcaex <- PCA(d1,graph = F) 
 
 #The output of the function PCA() is a list including :
@@ -241,7 +241,7 @@ egv1 <- get_eigenvalue(pcaex)
 fviz_eig(pcaex,addlabels=T)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 # correlation of variables with PCA components-
 fviz_pca_var(pcaex,col.var='red')
 

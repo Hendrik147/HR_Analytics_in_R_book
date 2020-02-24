@@ -1,4 +1,4 @@
-## ----ranking-medical1, include=FALSE------------------------------------------
+## ----ranking-medical1, include=FALSE------------------------------------------------------------------------------------------------
 chap <- 26
 lc <- 0
 rq <- 0
@@ -19,7 +19,7 @@ options(scipen = 99, digits = 3)
 set.seed(76)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 library(tidyverse)
 library(pdftools)
 library(data.table)
@@ -29,21 +29,21 @@ library(stringr)
 #library(gsubfn)
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 Sys.setenv(TZ = "Europe/London")
 Sys.setlocale(locale="fr_FR.UTF-8")
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## #pdfdocument <- "https://goo.gl/wUXvjk" #Internet download
 ## #pdfdocument <- "https://hranalyticslive.netlify.com/data/liste_classement_ecn_20170628.pdf"
 
 
-## ----read_data_medical_schools, echo=FALSE, warning=FALSE, message=FALSE------
+## ----read_data_medical_schools, echo=FALSE, warning=FALSE, message=FALSE------------------------------------------------------------
 pdfdocument <- "data/liste_classement_ecn_20170628.pdf"
 
 
-## -----------------------------------------------------------------------------
+## -----------------------------------------------------------------------------------------------------------------------------------
 
 txt <- pdftools::pdf_text(pdfdocument)
 head(txt, n = 1) #Inspection of first page
@@ -72,7 +72,7 @@ data_parsed2 <- as_tibble(data_parsed) %>%
 data_parsed2
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## # Proportion male/female
 ## mean(data_parsed2$is_male)
 ## # 43% of males.
@@ -85,7 +85,7 @@ data_parsed2
 ## 
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## myggplot(mutate(data_parsed2, prop_male = cummean(data_parsed2$is_male))) +
 ##   geom_hline(yintercept = mean(data_parsed2$is_male), col = "red") +
 ##   geom_line(aes(x = ranking, y = prop_male))
@@ -96,7 +96,7 @@ data_parsed2
 ##   plotly::ggplotly(tooltip = "text")
 
 
-## ----eval=FALSE---------------------------------------------------------------
+## ----eval=FALSE---------------------------------------------------------------------------------------------------------------------
 ## myggplot(data_parsed2, aes(ranking, birth_date)) +
 ##   geom_point() +
 ##   geom_smooth(aes(color = is_male), lwd = 2)

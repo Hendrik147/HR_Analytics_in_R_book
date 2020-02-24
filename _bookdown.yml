@@ -55,7 +55,6 @@ rmd_files:
     "09-hypothesis-testing.Rmd",
     "10-inference-for-regression.Rmd",
     "11-tell-your-story-with-data.Rmd",
-"11-tell-your-story-with-data.Rmd",
     "12-pay-gap.Rmd",
     "13-stop-appraisals.Rmd",
     "14-service-desk.Rmd",
@@ -74,9 +73,6 @@ rmd_files:
     "27-flexdashboards.Rmd",
     "28-data-science-product.Rmd",
     "91-appendixA.Rmd",
-    "92-appendixB.Rmd",
-    "93-appendixC.Rmd",
-    "94-appendixD.Rmd",
     "95-appendixE.Rmd",
     "96-appendixF.Rmd",
     "99-references.Rmd"

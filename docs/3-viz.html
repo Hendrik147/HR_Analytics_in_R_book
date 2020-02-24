@@ -13,7 +13,7 @@
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
   <meta property="og:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
-  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book2" />
+  <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 3 Data Visualization | HR Analytics in R" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-02-09" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -149,9 +149,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./"></a></li>
-
-<li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sec:intro-for-students"><i class="fa fa-check"></i><b>1.1</b> Introduction for students</a><ul>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html#workingwithmaterials"><i class="fa fa-check"></i>Working with the material</a></li>
@@ -617,9 +614,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="F.6" data-path="F-appendixF.html"><a href="F-appendixF.html#absenteeism-at-work"><i class="fa fa-check"></i><b>F.6</b> Absenteeism at work</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-
 </ul>
 
       </nav>
@@ -671,76 +665,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="gapminder" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Gapminder data</h3>
-<p>In February 2006, a Swedish physician and data advocate named Hans Rosling gave a TED talk titled <a href="https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen">“The best stats you’ve ever seen”</a> where he presented global economic, health, and development data from the website <a href="http://www.gapminder.org/tools/#_locale_id=en;&amp;chart-type=bubbles">gapminder.org</a>. For example, for data on 142 countries in 2007, let’s consider only a few countries in Table <a href="#tab:gapminder-2007"><strong>??</strong></a> as a peak into the data.</p>
+<p>In February 2006, a Swedish physician and data advocate named Hans Rosling gave a TED talk titled <a href="https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen">“The best stats you’ve ever seen”</a> where he presented global economic, health, and development data from the website <a href="http://www.gapminder.org/tools/#_locale_id=en;&amp;chart-type=bubbles">gapminder.org</a>. For example, for data on 142 countries in 2007, let’s consider only a few countries in Table <a href="3-viz.html#tab:gapminder-2007">3.1</a> as a peak into the data.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:gapminder-2007">TABLE 3.1: </span>Gapminder 2007 Data: First 3 of 142 countries
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 Country
 </th>
-<th>
+<th style="text-align:left;">
 Continent
 </th>
-<th>
+<th style="text-align:right;">
 Life Expectancy
 </th>
-<th>
+<th style="text-align:right;">
 Population
 </th>
-<th>
+<th style="text-align:right;">
 GDP per Capita
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 Afghanistan
 </td>
-<td>
+<td style="text-align:left;">
 Asia
 </td>
-<td>
+<td style="text-align:right;">
 43.8
 </td>
-<td>
+<td style="text-align:right;">
 31889923
 </td>
-<td>
+<td style="text-align:right;">
 975
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Albania
 </td>
-<td>
+<td style="text-align:left;">
 Europe
 </td>
-<td>
+<td style="text-align:right;">
 76.4
 </td>
-<td>
+<td style="text-align:right;">
 3600523
 </td>
-<td>
+<td style="text-align:right;">
 5937
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Algeria
 </td>
-<td>
+<td style="text-align:left;">
 Africa
 </td>
-<td>
+<td style="text-align:right;">
 72.3
 </td>
-<td>
+<td style="text-align:right;">
 33333216
 </td>
-<td>
+<td style="text-align:right;">
 6223
 </td>
 </tr>
@@ -772,63 +769,66 @@ FIGURE 3.1: Life expectancy over GDP per capita in 2007.
 <li>The <code>data</code> variable <strong>Continent</strong> gets mapped to the <code>color</code> <code>aes</code>thetic of the points.</li>
 </ol>
 <p>We’ll see shortly that <code>data</code> corresponds to the particular data frame where our data is saved and that “data variables” correspond to particular columns in the data frame. Furthermore, the type of <code>geom</code>etric object  considered in this plot are points. That being said, while in this example we are considering points, graphics are not limited to just points. We can also use lines, bars, and other geometric objects.</p>
-<p>Let’s summarize the three essential components of the grammar in Table <a href="#tab:summary-table-gapminder"><strong>??</strong></a>.</p>
+<p>Let’s summarize the three essential components of the grammar in Table <a href="3-viz.html#tab:summary-table-gapminder">3.2</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:summary-table-gapminder">TABLE 3.2: </span>Summary of the grammar of graphics for this plot
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 data variable
 </th>
-<th>
+<th style="text-align:left;">
 aes
 </th>
-<th>
+<th style="text-align:left;">
 geom
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 GDP per Capita
 </td>
-<td>
+<td style="text-align:left;">
 x
 </td>
-<td>
+<td style="text-align:left;">
 point
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Life Expectancy
 </td>
-<td>
+<td style="text-align:left;">
 y
 </td>
-<td>
+<td style="text-align:left;">
 point
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Population
 </td>
-<td>
+<td style="text-align:left;">
 size
 </td>
-<td>
+<td style="text-align:left;">
 point
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 Continent
 </td>
-<td>
+<td style="text-align:left;">
 color
 </td>
-<td>
+<td style="text-align:left;">
 point
 </td>
 </tr>
@@ -1337,144 +1337,147 @@ FIGURE 3.20: Barplot when counts are pre-counted.
 FIGURE 3.21: Number of flights departing NYC in 2013 by airline using geom_bar().
 </p>
 </div>
-<p>Observe in Figure <a href="3-viz.html#fig:flightsbar">3.21</a> that United Airlines (UA), JetBlue Airways (B6), and ExpressJet Airlines (EV) had the most flights depart NYC in 2013. If you don’t know which airlines correspond to which carrier codes, then run <code>View(airlines)</code> to see a directory of airlines. For example, B6 is JetBlue Airways. Alternatively, say you had a data frame where the number of flights for each <code>carrier</code> was pre-counted as in Table <a href="#tab:flights-counted"><strong>??</strong></a>.</p>
+<p>Observe in Figure <a href="3-viz.html#fig:flightsbar">3.21</a> that United Airlines (UA), JetBlue Airways (B6), and ExpressJet Airlines (EV) had the most flights depart NYC in 2013. If you don’t know which airlines correspond to which carrier codes, then run <code>View(airlines)</code> to see a directory of airlines. For example, B6 is JetBlue Airways. Alternatively, say you had a data frame where the number of flights for each <code>carrier</code> was pre-counted as in Table <a href="3-viz.html#tab:flights-counted">3.3</a>.</p>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:flights-counted">TABLE 3.3: </span>Number of flights pre-counted for each carrier
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:left;">
 carrier
 </th>
-<th>
+<th style="text-align:right;">
 number
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:left;">
 9E
 </td>
-<td>
+<td style="text-align:right;">
 18460
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 AA
 </td>
-<td>
+<td style="text-align:right;">
 32729
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 AS
 </td>
-<td>
+<td style="text-align:right;">
 714
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 B6
 </td>
-<td>
+<td style="text-align:right;">
 54635
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 DL
 </td>
-<td>
+<td style="text-align:right;">
 48110
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 EV
 </td>
-<td>
+<td style="text-align:right;">
 54173
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 F9
 </td>
-<td>
+<td style="text-align:right;">
 685
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 FL
 </td>
-<td>
+<td style="text-align:right;">
 3260
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 HA
 </td>
-<td>
+<td style="text-align:right;">
 342
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 MQ
 </td>
-<td>
+<td style="text-align:right;">
 26397
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 OO
 </td>
-<td>
+<td style="text-align:right;">
 32
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 UA
 </td>
-<td>
+<td style="text-align:right;">
 58665
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 US
 </td>
-<td>
+<td style="text-align:right;">
 20536
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 VX
 </td>
-<td>
+<td style="text-align:right;">
 5162
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 WN
 </td>
-<td>
+<td style="text-align:right;">
 12275
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:left;">
 YV
 </td>
-<td>
+<td style="text-align:right;">
 601
 </td>
 </tr>
@@ -1601,107 +1604,110 @@ FIGURE 3.27: Faceted barplot comparing the number of flights by carrier and orig
 <h2><span class="header-section-number">3.9</span> Conclusion</h2>
 <div id="summary-table" class="section level3">
 <h3><span class="header-section-number">3.9.1</span> Summary table</h3>
-<p>Let’s recap all five of the five named graphs (5NG)  in Table <a href="#tab:viz-summary-table"><strong>??</strong></a> summarizing their differences. Using these 5NG, you’ll be able to visualize the distributions and relationships of variables contained in a wide array of datasets. This will be even more the case as we start to map more variables to more of each <code>geom</code>etric object’s <code>aes</code>thetic attribute options, further unlocking the awesome power of the <code>ggplot2</code> package.</p>
+<p>Let’s recap all five of the five named graphs (5NG)  in Table <a href="3-viz.html#tab:viz-summary-table">3.4</a> summarizing their differences. Using these 5NG, you’ll be able to visualize the distributions and relationships of variables contained in a wide array of datasets. This will be even more the case as we start to map more variables to more of each <code>geom</code>etric object’s <code>aes</code>thetic attribute options, further unlocking the awesome power of the <code>ggplot2</code> package.</p>
 <table>
+<caption>
+<span id="tab:viz-summary-table">TABLE 3.4: </span>Summary of Five Named Graphs
+</caption>
 <thead>
 <tr>
-<th>
+<th style="text-align:right;">
 </th>
-<th>
+<th style="text-align:left;">
 Named graph
 </th>
-<th>
+<th style="text-align:left;">
 Shows
 </th>
-<th>
+<th style="text-align:left;">
 Geometric object
 </th>
-<th>
+<th style="text-align:left;">
 Notes
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
+<td style="text-align:right;">
 1
 </td>
-<td>
+<td style="text-align:left;">
 Scatterplot
 </td>
-<td>
+<td style="text-align:left;">
 Relationship between 2 numerical variables
 </td>
-<td>
+<td style="text-align:left;">
 <code>geom_point()</code>
 </td>
-<td>
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 2
 </td>
-<td>
+<td style="text-align:left;">
 Linegraph
 </td>
-<td>
+<td style="text-align:left;">
 Relationship between 2 numerical variables
 </td>
-<td>
+<td style="text-align:left;">
 <code>geom_line()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Used when there is a sequential order to x-variable, e.g., time
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 3
 </td>
-<td>
+<td style="text-align:left;">
 Histogram
 </td>
-<td>
+<td style="text-align:left;">
 Distribution of 1 numerical variable
 </td>
-<td>
+<td style="text-align:left;">
 <code>geom_histogram()</code>
 </td>
-<td>
+<td style="text-align:left;">
 Facetted histograms show the distribution of 1 numerical variable split by the values of another variable
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 4
 </td>
-<td>
+<td style="text-align:left;">
 Boxplot
 </td>
-<td>
+<td style="text-align:left;">
 Distribution of 1 numerical variable split by the values of another variable
 </td>
-<td>
+<td style="text-align:left;">
 <code>geom_boxplot()</code>
 </td>
-<td>
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
-<td>
+<td style="text-align:right;">
 5
 </td>
-<td>
+<td style="text-align:left;">
 Barplot
 </td>
-<td>
+<td style="text-align:left;">
 Distribution of 1 categorical variable
 </td>
-<td>
+<td style="text-align:left;">
 <code>geom_bar()</code> when counts are not pre-counted, <code>geom_col()</code> when counts are pre-counted
 </td>
-<td>
+<td style="text-align:left;">
 Stacked, side-by-side, and faceted barplots show the joint distribution of 2 categorical variables
 </td>
 </tr>
@@ -1833,7 +1839,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book2/edit/master/02-visualization.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book/edit/master/02-visualization.Rmd",
 "text": "Edit"
 },
 "history": {
